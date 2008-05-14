@@ -1,0 +1,64 @@
+====================
+INSTALL instructions
+====================
+
+:Last update:   $Date: 2007-12-18 14:32:42 +0100 (Di, 18 Dez 2007) $
+:Revision:      $Revision: 10 $
+:Contact:       p@rdus.de
+
+Obtaining the software
+----------------------
+
+Download the software at 
+
+  http://sourceforge.net/project/showfiles.php?group_id=226506
+
+Prerequisites
+-------------
+
+  p@rdalys requires the following to work:
+
+    - >=puppet-0.24 (http://reductivelabs.com/trac/puppet)
+
+  Puppet should also support LDAP (meaning ruby-ldap needs to be
+  installed).
+
+
+Installing the software
+-----------------------
+
+  Download the package, unpack it and include the unpacked "modules"
+  directory in your puppet modules.
+
+
+Configuring the software
+------------------------
+
+  Nothing yet.
+
+
+Upgrading the software
+----------------------
+
+  Simply download and install a newer version following the
+  instructions given above.
+
+
+Obtaining support
+-----------------
+
+  You can either
+
+   - Post to the mailing list
+     (http://groups.google.com/group/pardalys)
+
+  or
+
+   - Post a bug report
+     (http://sourceforge.net/tracker/?group_id=226506)
+
+  or
+
+   - Ask for help at the Kolab2/Gentoo forum
+     (http://forum.pardus.de)
+

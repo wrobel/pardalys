@@ -1,5 +1,9 @@
 2008-05-14  Gunnar Wrobel  <p@rdus.de>
 
+	* etc/puppet.conf: Added a first dummy puppet.conf
+
+	* bin/pardalys: Added a simple shell script.
+
 	* AUTHORS: Added.
 
 	* CHANGES: Added.

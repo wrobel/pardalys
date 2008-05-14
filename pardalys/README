@@ -61,6 +61,7 @@ CHANGES      : A summary of the project changes
 COPYING      : Licensing information
 HACKING      : Developers notes for the project
 INSTALL      : Installation instructions
+Makefile     : The Makefile for the project
 README       : This file.
 RELEASE_NOTES: Release notes for the latest version
 TODO         : Task list for the project

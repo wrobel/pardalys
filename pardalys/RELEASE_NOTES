@@ -1,15 +1,17 @@
-Version 0.0.1 - 
+Version 0.0.1 - Released 2008/05/14
 ===================================
 
 FULL CHANGES
 ------------
 
-
+The initial project release is primarily meant to provide a basic
+package so that an ebuild for the Kolab2/Gentoo project can be
+prepared.
 
 SHORT CHANGES
 -------------
 
-
+ - Started the project
 
 FRESHMEAT
 =========

@@ -1,0 +1,3 @@
+#!/bin/sh
+
+puppet --confdir="/usr/share/pardalys" --verbose /usr/share/pardalys/manifests/kolab.pp

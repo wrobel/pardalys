@@ -1,0 +1,3 @@
+open -u anonymous,p@rdus.de upload.sourceforge.net
+cd incoming
+mput pardalys-*.tar.bz2

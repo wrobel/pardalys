@@ -1,0 +1,5 @@
+check process slapd with pidfile /var/run/openldap/slapd.pid
+  start program = "/etc/init.d/slapd start"
+  stop program = "/etc/init.d/slapd stop"
+  if failed host <%= hostname %> port 389 protocol ldap3 then restart
+  if 5 restarts within 5 cycles then timeout

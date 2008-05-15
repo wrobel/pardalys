@@ -1,0 +1,14 @@
+This package abstracts a complete Kolab server.
+
+Import the class with
+
+import 'meta_kolab_complete'
+
+and use it within a node definition with
+
+include meta::kolab::complete
+
+
+@author Gunnar Wrobel <p@rdus.de>
+@version 1.0
+@package meta_kolab_complete

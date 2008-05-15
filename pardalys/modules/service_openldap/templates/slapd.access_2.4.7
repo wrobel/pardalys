@@ -1,0 +1,21 @@
+access to dn.children="cn=domains,cn=internal,<%= base_dn %>"
+        by group/kolabGroupOfNames="cn=admin,cn=internal,<%= base_dn %>" write
+        by group/kolabGroupOfNames="cn=maintainer,cn=internal,<%= base_dn %>" write
+        by dn="cn=nobody,cn=internal,<%= base_dn %>" read
+<% postfix_mydestination.each do |domain| %>        by group/kolabGroupOfNames="cn=<%= domain %>,cn=domains,cn=internal,<%= base_dn %>" read
+<% end %>        by * search stop
+
+# Domain specific access
+<% postfix_mydestination.each do |domain| %>
+access to filter=(&(objectClass=kolabInetOrgPerson)(mail=*@<%= domain %>)(|(!(alias=*))(alias=*@<%= domain %>)))
+        by group/kolabGroupOfNames="cn=<%= domain %>,cn=domains,cn=internal,<%= base_dn %>" write
+        by * break
+
+access to filter=(&(objectClass=kolabGroupOfNames)(mail=*@<%= domain %>))
+        by group/kolabGroupOfNames="cn=<%= domain %>,cn=domains,cn=internal,<%= base_dn %>" write
+        by * break
+
+access to filter=(&(objectClass=kolabSharedFolder)(cn=*@<%= domain %>))
+        by group/kolabGroupOfNames="cn=<%= domain %>,cn=domains,cn=internal,<%= base_dn %>" write
+        by * break
+<% end %>

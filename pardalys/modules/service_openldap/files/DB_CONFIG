@@ -1,0 +1,13 @@
+set_cachesize   0       26214400        1
+set_tmp_dir /dev/shm
+
+#http://www.sleepycat.com/docs/api_c/env_set_lk_detect.html
+#Set if the deadlock detector is to be run whenever 
+#a lock conflict occurs, and specify what lock request(s) should be rejected.
+#
+# DB_LOCK_DEFAULT
+# Use whatever lock policy was specified when the database environment 
+# was created. If no lock policy has yet been specified, 
+# set the lock policy to DB_LOCK_RANDOM.
+set_lk_detect DB_LOCK_DEFAULT
+

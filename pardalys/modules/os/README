@@ -1,0 +1,6 @@
+This package provides a subclass to the 'os' class and handles Gentoo
+specific parameters.
+
+@author Gunnar Wrobel <p@rdus.de>
+@version 1.0
+@package os_gentoo

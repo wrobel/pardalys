@@ -1,0 +1,12 @@
+#! /bin/sh
+
+export EINFO_COLOR="no"
+source /etc/init.d/functions.sh
+
+einfo "Started openldap backup"
+
+/usr/sbin/slapcat > /var/backup/data/openldap/data.ldif
+
+RESULT=$?
+ebegin "Finished openldap backup"
+eend $RESULT

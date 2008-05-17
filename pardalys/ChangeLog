@@ -1,5 +1,11 @@
 2008-05-17  Gunnar Wrobel  <p@rdus.de>
 
+	* bin/pardalys: Allow additional parameters for the puppet call
+
+	* etc/puppet.conf: Configure two different environments.
+
+	* bin/pardalys (ENVIRONMENT): Add ENVIRONMENT setting.
+
 	* etc/puppet.conf: Simplify the initial puppet configuration.
 
 	* bin/pardalys: Allow for a development environment.

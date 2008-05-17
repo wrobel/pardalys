@@ -20,4 +20,4 @@ if [ ! -e "${MANIFEST}" ]; then
     exit 1
 fi
 
-puppet --confdir="${CONFDIR}" ${ENVIRONMENT} --verbose ${MANIFEST}
+puppet --confdir="${CONFDIR}" ${ENVIRONMENT} --verbose ${MANIFEST} $*

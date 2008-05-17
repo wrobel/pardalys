@@ -1,0 +1,1 @@
+../modules/os_gentoo/plugins/facter/keyword.rb

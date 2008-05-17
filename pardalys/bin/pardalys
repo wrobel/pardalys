@@ -3,11 +3,13 @@
 CONFDIR="/usr/share/pardalys/etc"
 MANIFEST="/usr/share/pardalys/manifests/kolab.pp"
 ENVIRONMENT="--environment=production"
+FACTS="--factpath=/usr/share/pardalys/facter"
 
 if [ -e "/usr/share/pardalys/dev-pardalys/pardalys" ]; then
     CONFDIR="/usr/share/pardalys/dev-pardalys/pardalys/etc"
     MANIFEST="/usr/share/pardalys/dev-pardalys/pardalys/manifests/kolab.pp"
     ENVIRONMENT="--environment=development"
+    FACTS="--factpath=/usr/share/pardalys/dev-pardalys/pardalys/facter"
 fi
 
 if [ ! -e "${CONFDIR}" ]; then
@@ -20,4 +22,4 @@ if [ ! -e "${MANIFEST}" ]; then
     exit 1
 fi
 
-puppet --confdir="${CONFDIR}" ${ENVIRONMENT} --verbose ${MANIFEST} $*
+puppet --confdir="${CONFDIR}" ${ENVIRONMENT} ${FACTS} --verbose ${MANIFEST} $*

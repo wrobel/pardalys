@@ -2,6 +2,7 @@
 
 USER="wrobel"
 METHOD="://"
+SEP="/"
 DEST="/usr/share/pardalys"
 
 usage() {
@@ -36,6 +37,7 @@ while getopts hsu:D: ARGS; do
             ;;
         s) # Use SSH
             METHOD="@"
+            SEP=":"
             ;;
         D) # User specified an alternative destination path
             DEST="$OPTARG"
@@ -59,4 +61,4 @@ if [ -e "${DEST}"/dev-pardalys ]; then
     exit 1
 fi
 
-git clone "git${METHOD}github.com/${USER}/pardalys.git" "${DEST}"/dev-pardalys
+git clone "git${METHOD}github.com${SEP}${USER}/pardalys.git" "${DEST}"/dev-pardalys

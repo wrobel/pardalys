@@ -1,7 +1,12 @@
 2008-05-17  Gunnar Wrobel  <p@rdus.de>
 
-	* bin/dev-pardalys: Allow specifying the connection method.
+	* etc/puppet.conf: Remove the factpath here.
 
+	* bin/pardalys (FACTS): Set the correct factpath.
+
+	* bin/dev-pardalys: Allow specifying the connection method.
+	Fixed separator for ssh connections.
+	
 	* modules/service_openldap/manifests/init.pp: Fixes to the
 	openldap installation section.
 

@@ -1,5 +1,7 @@
 2008-05-17  Gunnar Wrobel  <p@rdus.de>
 
+	* etc/puppet.conf: Specify the factpath.
+
 	* bin/pardalys: Allow additional parameters for the puppet call
 
 	* etc/puppet.conf: Configure two different environments.

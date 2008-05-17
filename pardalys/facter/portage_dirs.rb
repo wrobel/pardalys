@@ -1,0 +1,1 @@
+../modules/os_gentoo/plugins/facter/portage_dirs.rb

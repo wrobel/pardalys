@@ -1,17 +1,24 @@
-Version 0.0.1 - Released 2008/05/14
+Version 0.0.2 - Released 2008/05/17
 ===================================
 
 FULL CHANGES
 ------------
 
-The initial project release is primarily meant to provide a basic
-package so that an ebuild for the Kolab2/Gentoo project can be
-prepared.
+ - Added a basic manifest for a Kolab server.
+
+ - Added os puppet module.
+
+ - Added os_gentoo puppet module.
+
+ - Added service_openldap puppet module.
+
+ - Added meta_kolab_complete puppet module.
 
 SHORT CHANGES
 -------------
 
- - Started the project
+ p@rdalys-0.0.2 provides basic puppet modules that are only intended
+ for initial testing at the moment.
 
 FRESHMEAT
 =========

@@ -1,3 +1,13 @@
+2008-05-17  Gunnar Wrobel  <p@rdus.de>
+
+	* INSTALL: Fixed required puppet version though that one is not
+	released yet.
+
+	* manifests/kolab.pp: The basic node definition that will pull in
+	a complete Kolab server.
+
+	* modules/*: Added a basic set of modules.
+
 2008-05-14  Gunnar Wrobel  <p@rdus.de>
 
 	* etc/puppet.conf: Added a first dummy puppet.conf

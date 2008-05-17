@@ -18,7 +18,7 @@ Prerequisites
 
   p@rdalys requires the following to work:
 
-    - >=puppet-0.24 (http://reductivelabs.com/trac/puppet)
+    - >=puppet-0.24.5 (http://reductivelabs.com/trac/puppet)
 
   Puppet should also support LDAP (meaning ruby-ldap needs to be
   installed).

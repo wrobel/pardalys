@@ -59,3 +59,15 @@ Testing
  No tests yet.
 
 
+Release
+-------
+
+  1) README, INSTALL and HACKING up-to-date?
+  2) Make sure ChangeLog is up-to-date
+  3) Update CHANGES for the next release
+  4) Copy CHANGES to RELEASE_NOTES (short or long)?
+  5) Write a release comment in RELEASE_NOTES, set focus
+  6) Prepare release package
+  7) Prepare the sourceforge release
+  8) Prepare the freshmeat announcement
+  9) Announce the package on the forum/blog

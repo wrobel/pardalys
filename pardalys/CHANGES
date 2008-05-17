@@ -1,6 +1,14 @@
 CHANGES
 -------
 
+Version 0.0.4 - Released 2008/05/17
+===================================
+
+ - Fixed setting the factpath.
+
+ - Fixed the dev script.
+
+
 Version 0.0.3 - Released 2008/05/17
 ===================================
 

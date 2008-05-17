@@ -1,24 +1,19 @@
-Version 0.0.3 - Released 2008/05/17
+Version 0.0.4 - Released 2008/05/17
 ===================================
 
 FULL CHANGES
 ------------
 
- - First working version
+ - Fixed setting the factpath.
 
- - os_gentoo provides the required tools to manage
-   /etc/portage/package.*
-
- - service_openldap installs openldap now.
+ - Fixed the dev script.
 
 
 SHORT CHANGES
 -------------
 
- p@rdalys-0.0.3 is a first working version of the package. It is
- capable of managing some basic aspects of Gentoo (primarily the
- /etc/portage/package.* files/directories) and installs an
- experimental version of openldap.
+Testing revealed some problems with the script delivered by the
+package. These were fixed in version 0.0.4.
 
 
 FRESHMEAT

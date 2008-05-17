@@ -1,6 +1,7 @@
 #!/bin/sh
 
 USER="wrobel"
+METHOD="://"
 DEST="/usr/share/pardalys"
 
 usage() {
@@ -12,6 +13,11 @@ usage() {
     echo "Options:"
     echo
     echo "  -u USER    (clone from an alternate user on github.com [default: wrobel])"
+    echo "  -s         (use SSH for the github.com connection. This is required if"
+    echo "              you want to commit your changes to the forked repository. Use"
+    echo "              this only with -u YOUR_ACCOUNT as you won't have commit"
+    echo "              access on the main pardalys repository.)"
+    echo
     echo "  -D DEST    (base destination path [default: /usr/share/pardalys/]"
     echo "              The repository will be placed in 'dev-pardalys' there.)"
     echo
@@ -19,7 +25,7 @@ usage() {
     echo
 }
 
-while getopts hu:D: ARGS; do
+while getopts hsu:D: ARGS; do
     case $ARGS in
         h) # Display help
             usage
@@ -27,6 +33,9 @@ while getopts hu:D: ARGS; do
             ;;
         u) # User specified an alternative user name
             USER="$OPTARG"
+            ;;
+        s) # Use SSH
+            METHOD="@"
             ;;
         D) # User specified an alternative destination path
             DEST="$OPTARG"
@@ -50,4 +59,4 @@ if [ -e "${DEST}"/dev-pardalys ]; then
     exit 1
 fi
 
-git clone "git://github.com/${USER}/pardalys.git" "${DEST}"/dev-pardalys
+git clone "git${METHOD}github.com/${USER}/pardalys.git" "${DEST}"/dev-pardalys

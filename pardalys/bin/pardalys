@@ -1,3 +1,21 @@
 #!/bin/sh
 
-puppet --confdir="/usr/share/pardalys" --verbose /usr/share/pardalys/manifests/kolab.pp
+CONFDIR="/usr/share/pardalys/etc"
+MANIFEST="/usr/share/pardalys/manifests/kolab.pp"
+
+if [ -e "/usr/share/pardalys/dev-pardalys/pardalys" ]; then
+    CONFDIR="/usr/share/pardalys/dev-pardalys/pardalys/etc"
+    MANIFEST="/usr/share/pardalys/dev-pardalys/pardalys/manifests/kolab.pp"
+fi
+
+if [ ! -e "${CONFDIR}" ]; then
+    echo "Configuration directory ${CONFDIR} is missing. Aborting!"
+    exit 1
+fi
+
+if [ ! -e "${MANIFEST}" ]; then
+    echo "Manifest ${MANIFEST} is missing. Aborting!"
+    exit 1
+fi
+
+puppet --confdir="${CONFDIR}" --verbose ${MANIFEST}

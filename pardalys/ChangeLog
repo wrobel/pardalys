@@ -1,5 +1,9 @@
 2008-05-17  Gunnar Wrobel  <p@rdus.de>
 
+	* etc/puppet.conf: Simplify the initial puppet configuration.
+
+	* bin/pardalys: Allow for a development environment.
+
 	* bin/dev-pardalys: Added a simple pardalys checkout script for
 	the hackers among the Kolab2/Gentoo users.
 

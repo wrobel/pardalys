@@ -1,0 +1,53 @@
+#!/bin/sh
+
+USER="wrobel"
+DEST="/usr/share/pardalys"
+
+usage() {
+    echo "Usage:"
+    echo
+    echo "  $0         (will clone the master pardalys repository from "
+    echo "              github.com into /usr/share/pardalys/dev-pardalys)"
+    echo
+    echo "Options:"
+    echo
+    echo "  -u USER    (clone from an alternate user on github.com [default: wrobel])"
+    echo "  -D DEST    (base destination path [default: /usr/share/pardalys/]"
+    echo "              The repository will be placed in 'dev-pardalys' there.)"
+    echo
+    echo "  -h         (display this help)"
+    echo
+}
+
+while getopts hu:D: ARGS; do
+    case $ARGS in
+        h) # Display help
+            usage
+            exit 0
+            ;;
+        u) # User specified an alternative user name
+            USER="$OPTARG"
+            ;;
+        D) # User specified an alternative destination path
+            DEST="$OPTARG"
+            ;;
+        *) # Unknown Option
+            echo
+            usage
+            exit 1
+            ;;
+    esac
+done
+
+if [ ! -e "${DEST}" ]; then
+    mkdir -p "${DEST}"
+fi
+
+if [ -e "${DEST}"/dev-pardalys ]; then
+    echo "The destination path ${DEST}/dev-pardalys already exist!"
+    echo "Remove whatever is located there to install the pardalys"
+    echo "repository there."
+    exit 1
+fi
+
+git clone "git://github.com/${USER}/pardalys.git" "${DEST}"/dev-pardalys

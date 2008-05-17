@@ -1,5 +1,8 @@
 2008-05-17  Gunnar Wrobel  <p@rdus.de>
 
+	* bin/dev-pardalys: Added a simple pardalys checkout script for
+	the hackers among the Kolab2/Gentoo users.
+
 	* INSTALL: Fixed required puppet version though that one is not
 	released yet.
 

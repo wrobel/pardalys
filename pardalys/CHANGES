@@ -1,6 +1,17 @@
 CHANGES
 -------
 
+Version 0.0.3 - Released 2008/05/17
+===================================
+
+ - First working version
+
+ - os_gentoo provides the required tools to manage
+   /etc/portage/package.*
+
+ - service_openldap installs openldap now.
+
+
 Version 0.0.2 - Released 2008/05/17
 ===================================
 

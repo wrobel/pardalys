@@ -1,24 +1,25 @@
-Version 0.0.2 - Released 2008/05/17
+Version 0.0.3 - Released 2008/05/17
 ===================================
 
 FULL CHANGES
 ------------
 
- - Added a basic manifest for a Kolab server.
+ - First working version
 
- - Added os puppet module.
+ - os_gentoo provides the required tools to manage
+   /etc/portage/package.*
 
- - Added os_gentoo puppet module.
+ - service_openldap installs openldap now.
 
- - Added service_openldap puppet module.
-
- - Added meta_kolab_complete puppet module.
 
 SHORT CHANGES
 -------------
 
- p@rdalys-0.0.2 provides basic puppet modules that are only intended
- for initial testing at the moment.
+ p@rdalys-0.0.3 is a first working version of the package. It is
+ capable of managing some basic aspects of Gentoo (primarily the
+ /etc/portage/package.* files/directories) and installs an
+ experimental version of openldap.
+
 
 FRESHMEAT
 =========

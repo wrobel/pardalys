@@ -1,5 +1,13 @@
 2008-05-17  Gunnar Wrobel  <p@rdus.de>
 
+	* bin/dev-pardalys: Allow specifying the connection method.
+
+	* modules/service_openldap/manifests/init.pp: Fixes to the
+	openldap installation section.
+
+	* modules/os_gentoo/plugins/facter/keyword.rb: Determines the
+	system keyword.
+
 	* modules/os/manifests/init.pp: Allow to backup the
 	/etc/portage/package.* files.
 

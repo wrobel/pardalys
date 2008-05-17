@@ -6,6 +6,35 @@ DEVELOPMENT NOTES
 :Revision:      $Revision: 8 $
 :Contact:       p@rdus.de
 
+Development
+-----------
+
+If you want to follow development you should run
+
+ dev-pardalys
+
+The tool can be found in the 'bin' subdirectory (or in /usr/bin if you
+installed pardalys in your system). It will checkout the master branch
+of pardalys from github.com and place it in
+/usr/share/pardalys/dev-pardalys. 
+
+If you want to be able to commit your fixes you can fork the main
+repository from http://github.com/wrobel/pardalys/tree/master to your
+own github.com account.
+
+Then use
+
+ dev-pardalys -u YOUR_ACCOUNT -s
+
+in order to retrieve your forked version over ssh (Note: You will have
+to put your public SSH key on github.com for this to work).
+
+After that you can start modifying the sources and commit to your
+fork. Once you are pleased with the results you may send a pull requst
+to the main repository on github.com. If your changes have the
+required quality they might get integrated in the main repository.
+
+
 Changes
 -------
 

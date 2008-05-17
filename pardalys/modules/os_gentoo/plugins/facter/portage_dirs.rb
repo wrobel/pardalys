@@ -2,8 +2,8 @@
 
 package_use = '/etc/portage/package.use'
 
-Facter.add('use_isfile') do                             
-  setcode do                                                                        
+Facter.add('use_isfile') do
+  setcode do
     if FileTest.file?(package_use)
       true
     else
@@ -14,8 +14,8 @@ end
 
 package_keywords = '/etc/portage/package.keywords'
 
-Facter.add('keywords_isfile') do                             
-  setcode do                                                                        
+Facter.add('keywords_isfile') do
+  setcode do
     if FileTest.file?(package_keywords)
       true
     else
@@ -26,8 +26,8 @@ end
 
 package_mask = '/etc/portage/package.mask'
 
-Facter.add('mask_isfile') do                             
-  setcode do                                                                        
+Facter.add('mask_isfile') do
+  setcode do
     if FileTest.file?(package_mask)
       true
     else
@@ -38,8 +38,8 @@ end
 
 package_unmask = '/etc/portage/package.unmask'
 
-Facter.add('unmask_isfile') do                             
-  setcode do                                                                        
+Facter.add('unmask_isfile') do
+  setcode do
     if FileTest.file?(package_unmask)
       true
     else

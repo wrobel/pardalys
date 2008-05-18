@@ -1,3 +1,8 @@
+2008-05-18  Gunnar Wrobel  <p@rdus.de>
+
+	* modules/os_gentoo/manifests/init.pp: Simplify the file creation
+	in /etc/portage/package.*/ and rely on the defaults.
+
 2008-05-17  Gunnar Wrobel  <p@rdus.de>
 
 	* etc/puppet.conf: Remove the factpath here.

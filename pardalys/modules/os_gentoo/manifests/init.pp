@@ -158,9 +158,6 @@ define gentoo_keywords ($context  = '',
 
   file { "/etc/portage/package.keywords/${context}":
     content => "$package $keywords",
-    owner => 'root',
-    group => 'root',
-    mode => 644,
     require => File['package.keywords::directory'],
     tag    => 'buildhost'
   }
@@ -180,9 +177,6 @@ define gentoo_unmask ($context  = '',
 
   file { "/etc/portage/package.unmask/${context}":
     content => "$package",
-    owner => 'root',
-    group => 'root',
-    mode => 644,
     require => File['package.unmask::directory'],
     tag    => 'buildhost'
   }
@@ -202,9 +196,6 @@ define gentoo_mask ($context  = '',
 
   file { "/etc/portage/package.mask/${context}":
     content => "$package",
-    owner => 'root',
-    group => 'root',
-    mode => 644,
     require => File['package.mask::directory'],
     tag    => 'buildhost'
   }

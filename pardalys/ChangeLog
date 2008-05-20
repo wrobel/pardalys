@@ -1,5 +1,8 @@
 2008-05-20  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/os_gentoo/plugins/facter/keyword.rb: Include a check for
+	the operating system.
+
 	* modules/os/plugins/facter/00_paths.rb: Added facts for the
 	system settings.
 

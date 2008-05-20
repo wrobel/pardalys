@@ -2,6 +2,10 @@
 
 Facter.add('keyword') do
   setcode do
-    `/usr/bin/portageq envvar ACCEPT_KEYWORDS`
+    if Facter.operatingsystem == 'Gentoo'
+      `/usr/bin/portageq envvar ACCEPT_KEYWORDS`
+    else
+      false
+    end
   end
 end

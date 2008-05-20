@@ -1,0 +1,1 @@
+../modules/os/plugins/facter/00_paths.rb

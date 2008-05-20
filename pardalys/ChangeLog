@@ -1,5 +1,8 @@
 2008-05-20  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_openldap/*: A first draft for the configuration
+	of the OpenLDAP slapd server.
+
 	* modules/service_kolab/*: Added new module that provides the
 	basic kolab files and should later hold the bootstrapping process.
 

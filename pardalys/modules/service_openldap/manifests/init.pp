@@ -167,7 +167,7 @@ class service::openldap::serve {
     {
       file {
         '/etc/conf.d/slapd':
-        source  => 'puppet://service_openldap/conf.d-slapd'),
+        source  => 'puppet://service_openldap/conf.d-slapd',
         require => Package['openldap']
       }
       # Ensure that the service starts with the system

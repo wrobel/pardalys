@@ -15,9 +15,9 @@ class service::kolab {
 
   $fqdnhostname    = get_var('kolab_fqdnhostname',    get_var('kolab_bootstrap_fqdnhostname', $hostname))
   $is_master       = get_var('kolab_is_master',       get_var('kolab_bootstrap_is_master',    'true'))
-  $domain          = get_var('kolab_domain',          get_var('kolab_bootstrap_domain',       $fqdnhostname)
-  $base_dn         = get_var('kolab_base_dn',         get_var('kolab_bootstrap_base_dn',      dnfromdomain($domain))
-  $bind_pw         = get_var('kolab_bind_pw',         get_var('kolab_bootstrap_bind_pw',      generate("$bindir/openssl rand -base64 12"))
+  $domain          = get_var('kolab_domain',          get_var('kolab_bootstrap_domain',       $fqdnhostname))
+  $base_dn         = get_var('kolab_base_dn',         get_var('kolab_bootstrap_base_dn',      dnfromdomain($domain)))
+  $bind_pw         = get_var('kolab_bind_pw',         get_var('kolab_bootstrap_bind_pw',      generate("$bindir/openssl rand -base64 12")))
   $bind_pw_sq      = shellquote($pw)
   $bind_pw_hash    = generate("$sbindir$/slappasswd -s $bind_pw_sq")
   $ldap_uri        = get_var('kolab_ldap_uri',        'ldap://127.0.0.1:389')

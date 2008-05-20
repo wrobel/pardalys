@@ -1,5 +1,9 @@
 2008-05-20  Gunnar Wrobel  <p@rdus.de>
 
+	* etc/puppet.conf: Remove the modulepath here.
+
+	* bin/pardalys: Add the modulepath
+
 	* modules/meta_kolab_complete/manifests/init.pp: Import the root
 	module to make its functions available.
 

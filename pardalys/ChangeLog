@@ -1,5 +1,11 @@
 2008-05-20  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_kolab/plugins/puppet/parser/functions/shellquote.rb:
+	Added custom function.
+
+	* modules/service_kolab/plugins/puppet/parser/functions/dnfromdomain.rb:
+	Added custom function.
+
 	* modules/os/plugins/facter/00_paths.rb: Fixed typos.
 
 	* modules/service_kolab/plugins/facter/01_kolab_paths.rb: Renamed

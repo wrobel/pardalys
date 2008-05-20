@@ -1,5 +1,13 @@
 2008-05-20  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/os/plugins/facter/00_paths.rb: Added facts for the
+	system settings.
+
+	* modules/os_gentoo/manifests/init.pp: Removed settings class.
+
+	* modules/os/manifests/init.pp: The basic system settings are now
+	handled as facts
+
 	* modules/meta_kolab_complete/manifests/init.pp: Included two new
 	classes.
 

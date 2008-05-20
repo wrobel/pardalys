@@ -18,16 +18,11 @@ import 'os_gentoo'
 class os {
   case $operatingsystem {
     gentoo: {
-      include gentoo::settings
       include gentoo::etc::portage::backup
       include gentoo::etc::portage
       include gentoo::etc::portage::restore
-
-      $sysconfdir = $gentoo::settings::sysconfdir
     }
-    # Provide some sane defaults
     default: {
-      $sysconfdir = '/etc'
     }
   }
 }

@@ -1,16 +1,3 @@
-# Class gentoo::settings
-#
-#  Provide basic system values for the Gentoo distributions
-#
-# @author Gunnar Wrobel <p@rdus.de>
-# @version 1.0
-# @package os_gentoo
-#
-class gentoo::settings
-{
-  $sysconfdir = '/etc'
-}
-
 # Class gentoo::etc::portage::backup
 #
 #  Stores user settings in the /etc/portage/package.* files.

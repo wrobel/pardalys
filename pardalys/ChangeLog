@@ -1,5 +1,8 @@
 2008-05-20  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/meta_kolab_complete/manifests/init.pp: Import the root
+	module to make its functions available.
+
 	* modules/service_openldap/*: A first draft for the configuration
 	of the OpenLDAP slapd server.
 

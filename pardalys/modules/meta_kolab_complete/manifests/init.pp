@@ -1,3 +1,4 @@
+import 'root'
 import 'os'
 import 'service_kolab'
 import 'service_openldap'

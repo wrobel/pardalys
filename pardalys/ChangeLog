@@ -1,5 +1,8 @@
 2008-05-20  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_kolab/*: Added new module that provides the
+	basic kolab files and should later hold the bootstrapping process.
+
 	* modules/root/*: Added new module that will hold basic extensions.
 
 	* modules/os_gentoo/plugins/facter/keyword.rb: Include a check for

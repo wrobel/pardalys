@@ -1,0 +1,51 @@
+conn_refresh_period : 60
+cyrus-admin : manager
+cyrus-admins : manager
+cyrus-autocreatequota : 100000
+cyrus-imap : TRUE
+cyrus-imaps : TRUE
+cyrus-pop3 : FALSE
+cyrus-pop3s : TRUE
+cyrus-sieve : TRUE
+directory_mode : slurpd
+gyard_deletion_period : 10080
+ldap_uri : ldap://127.0.0.1:389
+log_level : 2
+debug : 0
+postfix-mydestination : $mydomain
+sf_field_deleted : kolabdeleteflag
+sf_field_guid : entryUUID
+sf_field_modified : modifytimestamp
+sf_field_quota : cyrus-userquota
+sf_object_class : kolabsharedfolder
+slurpd_addr : 127.0.0.1
+slurpd_accept_addr : 127.0.0.1
+slurpd_port : 9999
+uid : freebusy
+userPassword : freebusy
+user_field_deleted : kolabdeleteflag
+user_field_guid : entryUUID
+user_field_modified : modifytimestamp
+user_field_quota : cyrus-userquota
+user_object_class : inetOrgPerson
+kolabconf_script: <%= kolabconf_script %>
+kolab_locals: <%= sysconfdir %>/kolab/kolab.conf
+kolab_usr: <%= kolab_usr %>
+kolab_grp: <%= kolab_grp %>
+kolab_rusr: <%= kolab_rusr %>
+kolab_rgrp: <%= kolab_rgrp %>
+kolab_musr: <%= kolab_musr %>
+kolab_mgrp: <%= kolab_mgrp %>
+hashmethod: <%= sbindir %>/slappasswd -s
+templatedir: <%= sysconfdir %>/kolab/templates
+kolabdir: <%= sysconfdir %>/kolab/
+postmapping: <%= sbindir %>/postmap -o @emailserver_confdir@
+KOLABRC: <%= KOLABRC %>
+sbindir: <%= sbindir %>
+webserver_logdir: <%= webserver_logdir %>
+webserver_document_root: <%= webserver_document_root %>
+local_addr : 127.0.0.1
+bind_any : TRUE
+bind_addr : 0.0.0.0
+calendar_id : calendar
+syslog_facility : user

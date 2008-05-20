@@ -1,5 +1,7 @@
 2008-05-20  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/root/*: Added new module that will hold basic extensions.
+
 	* modules/os_gentoo/plugins/facter/keyword.rb: Include a check for
 	the operating system.
 

@@ -1,5 +1,8 @@
 2008-05-20  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_kolab/manifests/init.pp: Fixed typos, variable
+	names and added the kolab config directory.
+
 	* modules/service_kolab/plugins/facter/kolab.rb: Fixed variable
 	names.
 

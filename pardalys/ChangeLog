@@ -1,5 +1,8 @@
 2008-05-20  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_kolab/templates/kolab.globals: Removed some
+	variables we don't need at the moment and fixed variable names.
+
 	* modules/service_kolab/plugins/puppet/parser/functions/shellquote.rb:
 	Added custom function.
 

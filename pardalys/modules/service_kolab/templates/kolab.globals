@@ -28,7 +28,7 @@ user_field_guid : entryUUID
 user_field_modified : modifytimestamp
 user_field_quota : cyrus-userquota
 user_object_class : inetOrgPerson
-kolabconf_script: <%= kolabconf_script %>
+kolabconf_script: <%= kolab_confscript %>
 kolab_locals: <%= sysconfdir %>/kolab/kolab.conf
 kolab_usr: <%= kolab_usr %>
 kolab_grp: <%= kolab_grp %>
@@ -40,10 +40,10 @@ hashmethod: <%= sbindir %>/slappasswd -s
 templatedir: <%= sysconfdir %>/kolab/templates
 kolabdir: <%= sysconfdir %>/kolab/
 postmapping: <%= sbindir %>/postmap -o @emailserver_confdir@
-KOLABRC: <%= KOLABRC %>
+KOLABRC: 
 sbindir: <%= sbindir %>
-webserver_logdir: <%= webserver_logdir %>
-webserver_document_root: <%= webserver_document_root %>
+webserver_logdir: 
+webserver_document_root: 
 local_addr : 127.0.0.1
 bind_any : TRUE
 bind_addr : 0.0.0.0

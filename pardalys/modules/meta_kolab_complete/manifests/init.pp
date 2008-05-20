@@ -1,4 +1,5 @@
 import 'os'
+import 'service_kolab'
 import 'service_openldap'
 
 # Class meta::kolab::complete
@@ -11,5 +12,7 @@ import 'service_openldap'
 #
 class meta::kolab::complete {
   include os
+  include service::kolab
   include service::openldap
+  include service::openldap::serve
 }

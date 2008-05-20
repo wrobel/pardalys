@@ -1,3 +1,8 @@
+2008-05-20  Gunnar Wrobel  <p@rdus.de>
+
+	* modules/meta_kolab_complete/manifests/init.pp: Included two new
+	classes.
+
 2008-05-18  Gunnar Wrobel  <p@rdus.de>
 
 	* modules/os_gentoo/manifests/init.pp: Simplify the file creation
@@ -11,7 +16,7 @@
 
 	* bin/dev-pardalys: Allow specifying the connection method.
 	Fixed separator for ssh connections.
-	
+
 	* modules/service_openldap/manifests/init.pp: Fixes to the
 	openldap installation section.
 

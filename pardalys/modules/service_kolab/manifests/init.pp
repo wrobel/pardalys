@@ -21,7 +21,7 @@ class service::kolab {
   $base_dn         = get_var('kolab_base_dn',         get_var('kolab_bootstrap_base_dn',      dnfromdomain($domain)))
   $bind_pw         = get_var('kolab_bind_pw',         get_var('kolab_bootstrap_bind_pw',      generate("$bindir/openssl", 'rand', '-base64',  '12')))
   $bind_pw_sq      = shellquote($bind_pw)
-  $bind_pw_hash    = generate("$sbindir/slappasswd",'-s',"$bind_pw_sq")
+  $bind_pw_hash    = get_var('kolab_bind_pw_hash',    generate("$sbindir/slappasswd",'-s',"$bind_pw_sq"))
   $ldap_uri        = get_var('kolab_ldap_uri',        'ldap://127.0.0.1:389')
   # We do not support slave setup at the moment
   $ldap_master_uri = get_var('kolab_ldap_master_uri', 'ldap://127.0.0.1:389')

@@ -1,3 +1,8 @@
+2008-05-21  Gunnar Wrobel  <p@rdus.de>
+
+	* modules/service_kolab/manifests/init.pp: Do not recalculate
+	kolab_bind_pw_hash each time.
+
 2008-05-20  Gunnar Wrobel  <p@rdus.de>
 
 	* modules/service_kolab/manifests/init.pp: Fixed typos, variable

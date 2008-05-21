@@ -1,10 +1,11 @@
 # Get the Kolab settings for our system
 
 if FileTest.file?(Facter.kolab_configfile)
-  File.open(Facter.kolabconfigfile).each do |line|
+  facts = {}
+  File.open(Facter.kolab_configfile).each do |line|
     var = $1 and value = $2 if line =~ /^(.+):(.+)$/
     if var != nil && value != nil
-      facts[var.trim()] = value.trim()
+      facts[var.strip()] = value.strip()
       var = nil
       value = nil
     end
@@ -19,10 +20,11 @@ if FileTest.file?(Facter.kolab_configfile)
 end
 
 if FileTest.file?(Facter.kolab_bootstrapfile)
-  File.open(Facter.kolabbootstrapfile).each do |line|
+  facts = {}
+  File.open(Facter.kolab_bootstrapfile).each do |line|
     var = $1 and value = $2 if line =~ /^(.+):(.+)$/
     if var != nil && value != nil
-      facts[var.trim()] = value.trim()
+      facts[var.strip()] = value.strip()
       var = nil
       value = nil
     end

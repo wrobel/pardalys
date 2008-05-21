@@ -1,5 +1,8 @@
 2008-05-21  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_kolab/plugins/facter/kolab.rb: Fix the ruby code
+	for this fact.
+
 	* modules/service_kolab/manifests/init.pp: Do not recalculate
 	kolab_bind_pw_hash each time.
 

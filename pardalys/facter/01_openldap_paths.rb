@@ -1,0 +1,1 @@
+../modules/service_openldap/plugins/facter/01_openldap_paths.rb

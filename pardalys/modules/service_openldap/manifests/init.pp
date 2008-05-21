@@ -103,7 +103,6 @@ class service::openldap {
 
 class service::openldap::serve {
 
-  #FIXME!!!
   $template_openldap = template_version($version_openldap, '2.4.7@:2.4.7,', '2.4.7')
 
   # Make the fact available within the template
@@ -114,7 +113,7 @@ class service::openldap::serve {
   # OpenLDAP configuration
   file { 
     "$openldap_confdir/ldap.conf":
-    source  => 'puppet://service_openldap/ldap.conf',
+    source  => 'puppet:///service_openldap/ldap.conf',
     owner   => "$openldap_usr",
     group   => "$openldap_grp",
     require => Package['openldap'];
@@ -125,37 +124,37 @@ class service::openldap::serve {
     mode    => '640',
     notify => Service['slapd'],
     require => Package['openldap'];
-    "$openldap_confdir/slapd.access":
-    content => template("service_openldap/slapd.access_${template_openldap}"),
-    owner   => "$openldap_usr",
-    group   => "$openldap_grp",
-    mode    => '640',
-    notify => Service['slapd'],
-    require => Package['openldap'];
+#     "$openldap_confdir/slapd.access":
+#     content => template("service_openldap/slapd.access_${template_openldap}"),
+#     owner   => "$openldap_usr",
+#     group   => "$openldap_grp",
+#     mode    => '640',
+#     notify => Service['slapd'],
+#     require => Package['openldap'];
     "$openldap_confdir/rootDSE.ldif":
-    source  => 'puppet://service_openldap/rootDSE.ldif',
+    source  => 'puppet:///service_openldap/rootDSE.ldif',
     owner   => "$openldap_usr",
     group   => "$openldap_grp",
     notify => Service['slapd'],
     require => Package['openldap'];
     "$openldap_schemadir/puppet.schema":
-    source  => 'puppet://service_openldap/puppet.schema',
+    source  => 'puppet:///service_openldap/puppet.schema',
     notify => Service['slapd'],
     require => Package['openldap'];
     "$openldap_schemadir/horde.schema":
-    source  => 'puppet://service_openldap/horde.schema',
+    source  => 'puppet:///service_openldap/horde.schema',
     notify => Service['slapd'],
     require => Package['openldap'];
     "$openldap_schemadir/kolab2.schema":
-    source  => 'puppet://service_openldap/kolab2.schema',
+    source  => 'puppet:///service_openldap/kolab2.schema',
     notify => Service['slapd'],
     require => Package['openldap'];
     "$openldap_schemadir/rfc2739.schema":
-    source  => 'puppet://service_openldap/rfc2739.schema',
+    source  => 'puppet:///service_openldap/rfc2739.schema',
     notify => Service['slapd'],
     require => Package['openldap'];
     "$openldap_datadir/DB_CONFIG":
-    source  => 'puppet://service_openldap/DB_CONFIG',
+    source  => 'puppet:///service_openldap/DB_CONFIG',
     owner   => "$openldap_rusr",
     group   => "$openldap_grp",
     notify  => Service['slapd'],
@@ -167,7 +166,7 @@ class service::openldap::serve {
     {
       file {
         '/etc/conf.d/slapd':
-        source  => 'puppet://service_openldap/conf.d-slapd',
+        source  => 'puppet:///service_openldap/conf.d-slapd',
         require => Package['openldap']
       }
       # Ensure that the service starts with the system
@@ -188,32 +187,32 @@ class service::openldap::serve {
     enable    => true
   }
 
-      file { '/etc/monit.d/openldap':
-        content => template("service_openldap/monit_ldap"),
-        require => [Package['openldap'], Package['monit']]
-      }
+#       file { '/etc/monit.d/openldap':
+#         content => template("service_openldap/monit_ldap"),
+#         require => [Package['openldap'], Package['monit']]
+#       }
 
-      file {
-        '/usr/libexec/munin/plugins/slapd_':
-          source  => 'puppet:///service_openldap/slapd_',
-          mode    => 755;
-        ['/etc/munin/plugins/slapd_connections',
-         '/etc/munin/plugins/slapd_statistics_bytes',
-         '/etc/munin/plugins/slapd_operations',
-         '/etc/munin/plugins/slapd_statistics_entries']:
+#       file {
+#         '/usr/libexec/munin/plugins/slapd_':
+#           source  => 'puppet:///service_openldap/slapd_',
+#           mode    => 755;
+#         ['/etc/munin/plugins/slapd_connections',
+#          '/etc/munin/plugins/slapd_statistics_bytes',
+#          '/etc/munin/plugins/slapd_operations',
+#          '/etc/munin/plugins/slapd_statistics_entries']:
 
-          ensure  => '/usr/libexec/munin/plugins/slapd_',
-          require => File['/usr/libexec/munin/plugins/syslog_ng'];
-        '/etc/munin/plugin-conf.d/openldap':
-          content  => template("service_openldap/munin_ldap.conf");
-      }
+#           ensure  => '/usr/libexec/munin/plugins/slapd_',
+#           require => File['/usr/libexec/munin/plugins/syslog_ng'];
+#         '/etc/munin/plugin-conf.d/openldap':
+#           content  => template("service_openldap/munin_ldap.conf");
+#       }
 
-      file { 
-        '/etc/cron.daily/openldap_backup':
-        source  => 'puppet:///service_openldap/openldap_backup',
-        mode    => 755;
-        '/var/backup/data/openldap':
-        ensure  => 'directory';
-      }
+#       file { 
+#         '/etc/cron.daily/openldap_backup':
+#         source  => 'puppet:///service_openldap/openldap_backup',
+#         mode    => 755;
+#         '/var/backup/data/openldap':
+#         ensure  => 'directory';
+#       }
 
 }

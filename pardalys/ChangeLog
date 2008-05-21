@@ -1,5 +1,8 @@
 2008-05-21  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_openldap/manifests/init.pp: Allow writing the
+	first openldap configuration files.
+
 	* modules/service_openldap/templates/slapd.conf_2.4.7: Fix
 	variable names.
 

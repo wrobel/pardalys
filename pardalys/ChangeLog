@@ -1,5 +1,8 @@
 2008-05-21  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_openldap/templates/slapd.conf_2.4.7: Fix
+	variable names.
+
 	* modules/service_openldap/templates/slapd.access_2.4.7: Fix
 	variable names.
 

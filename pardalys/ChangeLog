@@ -1,5 +1,8 @@
 2008-05-21  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_openldap/plugins/facter/01_openldap_paths.rb:
+	Fix setting the openldap facts.
+
 	* modules/root/plugins/facter/package_versions.rb: Fix this fact
 	so that it can be used in a sensible way.
 

@@ -1,5 +1,11 @@
 2008-05-21  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/root/plugins/facter/package_versions.rb: Fix this fact
+	so that it can be used in a sensible way.
+
+	* etc/package_versions: Add a supporting file for the package
+	version fact.
+
 	* modules/service_kolab/templates/kolab.conf: Remove newlines.
 
 	* modules/service_kolab/plugins/facter/kolab.rb: Fix the ruby code

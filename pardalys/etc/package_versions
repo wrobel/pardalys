@@ -1,0 +1,16 @@
+baselayout:sys-apps/baselayout@Gentoo
+bash:app-shells/bash@Gentoo
+coreutils:sys-apps/coreutils@Gentoo
+fcron:sys-process/fcron@Gentoo
+layman:app-portage/layman@Gentoo
+lighttpd:www-servers/lighttpd@Gentoo
+logwatch:sys-apps/logwatch@Gentoo
+monit:app-admin/monin@Gentoo
+munin:net-analyzer/munin@Gentoo
+nagios:net-analyzer/nagios@Gentoo
+openldap:net-nds/openldap@Gentoo
+openssh:net-misc/openssh@Gentoo
+portage:sys-apps/portage@Gentoo
+postfix:mail-mta/postfix@Gentoo
+syslog_ng:app-admin/syslog-ng@Gentoo
+layman:app-portage/layman@Gentoo

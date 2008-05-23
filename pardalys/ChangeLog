@@ -1,7 +1,13 @@
 2008-05-23  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_kolab/manifests/init.pp: Added facts.
+
+	* modules/service_kolab/plugins/facter/kolab.rb: Add additional
+	facts.
+
 	* modules/service_kolab/templates/kolab.conf (postfix_mydomain):
 	Added postfix_mydomain value.
+	(bind_dn): Replace some variables by facts.
 
 	* modules/service_kolab/manifests/init.pp: Moved the default value
 	handling into the fact script.

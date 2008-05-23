@@ -18,12 +18,15 @@
 # @fact kolab_fqdnhostname     The fully qualified hostname
 # @fact kolab_is_master        Is this a master kolab server?
 # @fact kolab_postfix_mydomain The mail domain served by this server
-# @fact kolab_base_dn          Base LDAP dn for the server
+# @fact kolab_base_dn          Base LDAP DN for the server
+# @fact kolab_bind_dn          Manager DN for the server
 # @fact kolab_bind_pw          Manager pass for the server
 # @fact kolab_bind_pw_hash     Hash of the manager pass
 # @fact kolab_ldap_uri         Location of the LDAP server
 # @fact kolab_ldap_master_uri  Location of the LDAP master server
+# @fact kolab_php_dn           Unpriviled user DN
 # @fact kolab_php_pw           Unpriviled user password
+# @fact kolab_calendar_id      Calendar user id
 # @fact kolab_calendar_pw      Calendar user password
 #
 class service::kolab {

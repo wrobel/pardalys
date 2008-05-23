@@ -93,6 +93,14 @@ if !Facter.method_defined? 'kolab_base_dn'
   end
 end
 
+if !Facter.method_defined? 'kolab_bind_dn'
+  Facter.add('kolab_bind_dn') do
+    setcode do
+      'cn=manager,cn=internal,' + Facter.kolab_base_dn
+    end
+  end
+end
+
 if !Facter.method_defined? 'kolab_bind_pw'
   Facter.add('kolab_bind_pw') do
     setcode do
@@ -132,10 +140,26 @@ if !Facter.method_defined? 'kolab_ldap_master_uri'
   end
 end
 
+if !Facter.method_defined? 'kolab_php_dn'
+  Facter.add('kolab_php_dn') do
+    setcode do
+      'cn=nobody,cn=internal,' + Facter.kolab_base_dn
+    end
+  end
+end
+
 if !Facter.method_defined? 'kolab_php_pw'
   Facter.add('kolab_php_pw') do
     setcode do
       `#{Facter.bindir}/openssl rand -base64 30`
+    end
+  end
+end
+
+if !Facter.method_defined? 'kolab_calendar_id'
+  Facter.add('kolab_calendar_id') do
+    setcode do
+      'calendar'
     end
   end
 end

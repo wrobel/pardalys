@@ -1,5 +1,11 @@
 2008-05-23  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/tool_pardalys/manifests/init.pp: Require the latest
+	pardalys.
+
+	* modules/meta_kolab_complete/manifests/init.pp: Include
+	tool::pardalys.
+
 	* modules/service_kolab/manifests/init.pp: Added facts.
 
 	* modules/service_kolab/plugins/facter/kolab.rb: Add additional

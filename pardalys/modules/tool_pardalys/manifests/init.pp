@@ -84,7 +84,7 @@ class tool::pardalys {
       }
       package { pardalys:
         category => 'app-admin',
-        ensure   => 'installed',
+        ensure   => 'latest',
         require  =>  Gentoo_keywords['pardalys'],
         tag      => 'buildhost'
       }

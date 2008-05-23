@@ -1,5 +1,13 @@
 2008-05-23  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/root/spec/spec_helper.rb: A unit test helper.
+
+	* modules/root/plugins/puppet/parser/functions/template_version.rb: 
+	Tried fixing some problmens after unit testing.
+
+	* modules/root/spec/unit/parser/functions/template_version.rb: A
+	first unit test for plugin functions.
+
 	* modules/tool_pardalys/manifests/init.pp: Require the latest
 	pardalys.
 

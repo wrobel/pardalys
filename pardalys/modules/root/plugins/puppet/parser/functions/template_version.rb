@@ -1,7 +1,14 @@
 require 'puppet/util/autoload'
+
 # Return the matching template version
 module Puppet::Parser::Functions
   newfunction(:template_version, :type => :rvalue) do |args|
+    if not args or not args[0]
+      raise Puppet::ParseError, "No package version has been provided!"
+    end
+    if not args[1]
+      raise Puppet::ParseError, "No mappings provided!"
+    end
     tversion = nil
     args[1].split(',').each do |tv|
       convert = tv.split(':')
@@ -10,12 +17,10 @@ module Puppet::Parser::Functions
         break
       end
     end
-    if not tversion and args[2]
-      send(:crit, 'Unknown package version! Returning default ' + args[2] + '.')
+    if not tversion and args.length == 3
       tversion = args[2]
     elsif not tversion
-      send(:crit, 'Unknown package version!')
-      tversion = 'UNKNOWN'
+      raise Puppet::ParseError, "Unknown package version!"
     end
     return tversion
   end

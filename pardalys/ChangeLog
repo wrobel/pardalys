@@ -1,3 +1,8 @@
+2008-05-23  Gunnar Wrobel  <p@rdus.de>
+
+	* modules/tool_pardalys/*: Added package installation module for
+	p@rdalys.
+
 2008-05-21  Gunnar Wrobel  <p@rdus.de>
 
 	* modules/service_openldap/manifests/init.pp: Allow writing the

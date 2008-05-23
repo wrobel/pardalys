@@ -1,5 +1,17 @@
 2008-05-23  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_kolab/templates/kolab.conf (postfix_mydomain):
+	Added postfix_mydomain value.
+
+	* modules/service_kolab/manifests/init.pp: Moved the default value
+	handling into the fact script.
+
+	* modules/service_kolab/plugins/puppet/*: Moved the ruby functions
+	into the fact script.
+
+	* modules/service_kolab/plugins/facter/kolab.rb: Integrated
+	default value handling from the manifast into the fact script.
+	
 	* modules/tool_pardalys/*: Added package installation module for
 	p@rdalys.
 

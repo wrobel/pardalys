@@ -6,27 +6,27 @@
 # @version 1.0
 # @package service_kolab
 #
-# @fact operatingsystem Allows to choose the correct package name
-#                       depending on the operating system
-# @fact sbindir         Directory with super user applications
-# @fact bindir          Directory with user applications
-# @fact keyword         The keyword for the system which is used to
-#                       select unstable packages
+# @fact sbindir                Path to administrator programs
+# @fact sysconfdir             System configuration directory
+# @fact kolab_confscript       The script handling the kolab configuration
+# @fact kolab_usr              The kolab user
+# @fact kolab_grp              The kolab group
+# @fact kolab_rusr             The restricted kolab user
+# @fact kolab_rgrp             The restricted kolab group
+# @fact kolab_musr             The unpriviledged kolab user
+# @fact kolab_mgrp             The unpriviledged kolab group
+# @fact kolab_fqdnhostname     The fully qualified hostname
+# @fact kolab_is_master        Is this a master kolab server?
+# @fact kolab_postfix_mydomain The mail domain served by this server
+# @fact kolab_base_dn          Base LDAP dn for the server
+# @fact kolab_bind_pw          Manager pass for the server
+# @fact kolab_bind_pw_hash     Hash of the manager pass
+# @fact kolab_ldap_uri         Location of the LDAP server
+# @fact kolab_ldap_master_uri  Location of the LDAP master server
+# @fact kolab_php_pw           Unpriviled user password
+# @fact kolab_calendar_pw      Calendar user password
 #
 class service::kolab {
-
-  $fqdnhostname    = get_var('kolab_fqdnhostname',    get_var('kolab_bootstrap_fqdnhostname', $hostname))
-  $is_master       = get_var('kolab_is_master',       get_var('kolab_bootstrap_is_master',    'true'))
-  $domain          = get_var('kolab_domain',          get_var('kolab_bootstrap_domain',       $fqdnhostname))
-  $base_dn         = get_var('kolab_base_dn',         get_var('kolab_bootstrap_base_dn',      dnfromdomain($domain)))
-  $bind_pw         = get_var('kolab_bind_pw',         get_var('kolab_bootstrap_bind_pw',      generate("$bindir/openssl", 'rand', '-base64',  '12')))
-  $bind_pw_sq      = shellquote($bind_pw)
-  $bind_pw_hash    = get_var('kolab_bind_pw_hash',    generate("$sbindir/slappasswd",'-s',"$bind_pw_sq"))
-  $ldap_uri        = get_var('kolab_ldap_uri',        'ldap://127.0.0.1:389')
-  # We do not support slave setup at the moment
-  $ldap_master_uri = get_var('kolab_ldap_master_uri', 'ldap://127.0.0.1:389')
-  $php_pw          = get_var('kolab_php_pw',          generate("$bindir/openssl", 'rand', '-base64', '30'))
-  $calendar_pw     = get_var('kolab_calendar_pw',     generate("$bindir/openssl", 'rand', '-base64', '30'))
 
   file { 
     "$kolab_confdir":

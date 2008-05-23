@@ -1,0 +1,4 @@
+Defines the installation of OpenLDAP and provides the configuration
+for an OpenLDAP server as required for the Kolab server.
+
+OpenLDAP is one of the central components of a Kolab server.

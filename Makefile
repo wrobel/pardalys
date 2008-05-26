@@ -1,4 +1,4 @@
-VERSION=0.0.4
+VERSION=0.0.5
 
 pardalys-$(VERSION).tar.bz2:
 	tar cvjf pardalys-$(VERSION).tar.bz2 pardalys --exclude=".git" --exclude=".svn"

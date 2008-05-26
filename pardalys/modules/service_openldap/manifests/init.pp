@@ -103,6 +103,25 @@ class service::openldap {
 
 class service::openldap::serve {
 
+  $sysconfdir         = $os::sysconfdir
+
+  $openldap_confdir   = "${os::sysconfdir}/openldap"
+  $openldap_schemadir = "${openldap_confdir}/schema"
+  $openldap_datadir   = "${os::statelibdir}/openldap-data"
+  $openldap_pidfile   = "${os::sysrundir}/openldap/slapd.pid"
+  $openldap_argsfile  = "${os::sysrundir}/openldap/slapd.args"
+  $openldap_usr       = 'root'
+  $openldap_rusr      = 'ldap'
+  $openldap_grp       = 'ldap'
+
+  user {
+    "$openldap_rusr":
+    ensure     => 'present',
+    gid        => "$openldap_grp",
+    groups     => ["${service::kolab::kolab_grp}"],
+    membership => 'minimum';
+  }
+
   $template_openldap = template_version($version_openldap, '2.4.7@:2.4.7,', '2.4.7')
 
   # Make the fact available within the template
@@ -185,6 +204,17 @@ class service::openldap::serve {
     'slapd':
     ensure    => 'running',
     enable    => true
+  }
+
+  if $kolab_bootstrap {
+    kolabldap { 
+      "$kolab_ldap_uri":
+      basedn  => "$kolab_base_dn",
+      binddn  => "$kolab_bind_dn",
+      passwd  => "$kolab_bind_pw",
+      ensure  => 'present',
+      require => Service['slapd']
+    }
   }
 
 #       file { '/etc/monit.d/openldap':

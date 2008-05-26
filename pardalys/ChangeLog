@@ -1,5 +1,9 @@
 2008-05-26  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_kolab/manifests/init.pp: Add bootstrap
+	functions, move facts back into the manifests, allow slapd
+	recovery.
+
 	* modules/meta_kolab_complete/manifests/init.pp: Add a clause for
 	slapd recovery.
 

@@ -1,5 +1,7 @@
 2008-05-26  Gunnar Wrobel  <p@rdus.de>
 
+	* Makefile (SHELL): A basic Makefile for installing the package.
+
 	* modules/tool_pardalys/manifests/init.pp: Fixed typos and revert
 	back to "installed". "latest" did not seem to work at the moment.
 

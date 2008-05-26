@@ -1,5 +1,8 @@
 2008-05-26  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_kolab/plugins/puppet/type/sslcert.rb: The self
+	signed certificate type.
+
 	* modules/service_kolab/plugins/puppet/provider/sslcert/sslcert.rb:
 	A provider for a self signed certificate.
 

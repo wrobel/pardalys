@@ -1,1 +1,0 @@
-../modules/service_kolab/plugins/facter/kolab.rb

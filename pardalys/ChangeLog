@@ -1,3 +1,8 @@
+2008-05-26  Gunnar Wrobel  <p@rdus.de>
+
+	* modules/service_kolab/plugins/facter/*: Renamed facts more
+	appropriately.
+
 2008-05-23  Gunnar Wrobel  <p@rdus.de>
 
 	* modules/root/spec/spec_helper.rb: A unit test helper.

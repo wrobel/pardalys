@@ -1,9 +1,28 @@
 # Get the Kolab settings for our system
 
+if FileTest.file?(Facter.kolab_globalsfile)
+  facts = {}
+  File.open(Facter.kolab_globalsfile).each do |line|
+    var = $1 and value = $2 if line =~ /^([^#].+):(.+)$/
+    if var != nil && value != nil
+      facts[var.strip()] = value.strip()
+      var = nil
+      value = nil
+    end
+  end
+  facts.each{|var,val|
+    Facter.add('kolab_' + var) do
+      setcode do
+        val
+      end
+    end
+  }
+end
+
 if FileTest.file?(Facter.kolab_configfile)
   facts = {}
   File.open(Facter.kolab_configfile).each do |line|
-    var = $1 and value = $2 if line =~ /^(.+):(.+)$/
+    var = $1 and value = $2 if line =~ /^([^#].+):(.+)$/
     if var != nil && value != nil
       facts[var.strip()] = value.strip()
       var = nil
@@ -22,7 +41,7 @@ end
 if FileTest.file?(Facter.kolab_bootstrapfile)
   facts = {}
   File.open(Facter.kolab_bootstrapfile).each do |line|
-    var = $1 and value = $2 if line =~ /^(.+):(.+)$/
+    var = $1 and value = $2 if line =~ /^([^#].+):(.+)$/
     if var != nil && value != nil
       facts[var.strip()] = value.strip()
       var = nil
@@ -170,4 +189,21 @@ if !Facter.method_defined? 'kolab_calendar_pw'
       `#{Facter.bindir}/openssl rand -base64 30`
     end
   end
+end
+
+require ldap
+
+host = lookupvar('kolab_ldap_uri').split('://')[1]
+(server, port) = host.split(':')
+@connection = LDAP::Conn.new(server, port)
+@connection.set_option(LDAP::LDAP_OPT_PROTOCOL_VERSION, 3)
+@connection.set_option(LDAP::LDAP_OPT_REFERRALS, LDAP::LDAP_OPT_ON)
+@connection.simple_bind(lookupvar('kolab_bind_dn'), lookupvar('kolab_bind_pw'))
+
+base_dn = lookupvar('kolab_base_dn')
+
+kolab = @connection.search('k=kolab,' + base_dn, 'one', '(objectclass=kolab)')
+
+kolab.each do |key, val|
+  Facter.add(key) = val
 end

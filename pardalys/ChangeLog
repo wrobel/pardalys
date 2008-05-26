@@ -1,5 +1,8 @@
 2008-05-26  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_kolab/plugins/facter/kolab.rb: A first draft for
+	the complete kolab configuration scheme.
+
 	* modules/service_kolab/templates/kolab.globals: Started
 	converting this into a more sensible configuration file.
 

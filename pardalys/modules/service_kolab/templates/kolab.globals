@@ -1,3 +1,85 @@
+# ------------------------------------------------------------------------------
+#                   The Kolab Server configuration system
+# ------------------------------------------------------------------------------
+#
+# This file belongs to the Kolab server configuration system. This header should
+# give you a short overview about the Kolab Server configuration hierarchy and
+# provide some details on the specific role of this file.
+#
+# The Kolab Server accepts information from six sources:
+#
+#  A) The defaults for the distribution on which you installed the server
+#     (pardalys/modules/service_kolab/plugins/facter/01_kolab_defaults.rb)
+#
+#  B) The <%= kolab_globalsfile %>
+#
+#  C) The <%= kolab_configfile %>
+#
+#  D) The <%= kolab_bootstrapfile %>
+#
+#  E) Internal default generation based on global system settings
+#     (pardalys/modules/service_kolab/plugins/facter/25_kolab.rb)
+#
+#  F) Settings within LDAP
+#     (pardalys/modules/service_kolab/plugins/facter/50_kolab_ldap.rb)
+#
+# The sources get evaluated in the order presented above. Each source will
+# overwrite the settings from the previous source.
+#
+# => The role of this file (B) <=
+#
+# This file will get generated during the initial server bootstrap. It holds
+# all values relevant for the different Kolab Server components including
+# p@rdalys.
+# 
+# You can change values in this file but for a standard installation all the
+# defaults should be fine.
+#
+
+# ------------------------------------------------------------------------------
+#                                  USER VARIABLES
+# ------------------------------------------------------------------------------
+#
+
+# ------------------------------------------------------------------------------
+#                               DEVELOPER VARIABLES
+# ------------------------------------------------------------------------------
+#
+# DO NOT CHANGE ANYTHING BELOW THIS IF YOU DON'T KNOW EXACTLY WHAT YOU ARE DOING
+#
+
+# The directory where the Kolab Server configuration is being stored
+confdir:<%= kolab_confdir %>
+
+# Full path to the Kolab Server application settings
+configfile:<%= kolab_configfile %>
+
+# Full path to the Kolab Server admin settings
+globalsfile:<%= kolab_globalsfile %>
+
+# Full path to the Kolab Server bootstrap settings
+bootstrapfile:<%= kolab_bootstrapfile %>
+
+# Full path to configuration tool that generates the Kolab Server configuration
+confscript:<%= kolab_confscript %>
+
+
+usr:<%= kolab_usr %>
+grp:<%= kolab_grp %>
+rusr:<%= kolab_rusr %>
+rgrp:<%= kolab_rgrp %>
+musr:<%= kolab_musr %>
+mgrp:<%= kolab_mgrp %>
+
+kolabconf_script: <%= kolab_confscript %>
+kolab_locals: <%= kolab_configfile %>
+kolab_usr: <%= kolab_usr %>
+kolab_grp: <%= kolab_grp %>
+kolab_rusr: <%= kolab_rusr %>
+kolab_rgrp: <%= kolab_rgrp %>
+kolab_musr: <%= kolab_musr %>
+kolab_mgrp: <%= kolab_mgrp %>
+
 conn_refresh_period : 60
 cyrus-admin : manager
 cyrus-admins : manager
@@ -28,17 +110,8 @@ user_field_guid : entryUUID
 user_field_modified : modifytimestamp
 user_field_quota : cyrus-userquota
 user_object_class : inetOrgPerson
-kolabconf_script: <%= kolab_confscript %>
-kolab_locals: <%= sysconfdir %>/kolab/kolab.conf
-kolab_usr: <%= kolab_usr %>
-kolab_grp: <%= kolab_grp %>
-kolab_rusr: <%= kolab_rusr %>
-kolab_rgrp: <%= kolab_rgrp %>
-kolab_musr: <%= kolab_musr %>
-kolab_mgrp: <%= kolab_mgrp %>
 hashmethod: <%= sbindir %>/slappasswd -s
 templatedir: <%= sysconfdir %>/kolab/templates
-kolabdir: <%= sysconfdir %>/kolab/
 postmapping: <%= sbindir %>/postmap -o @emailserver_confdir@
 KOLABRC: 
 sbindir: <%= sbindir %>

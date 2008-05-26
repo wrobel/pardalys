@@ -1,5 +1,8 @@
 2008-05-26  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_kolab/templates/kolab.globals: Started
+	converting this into a more sensible configuration file.
+
 	* modules/service_kolab/manifests/init.pp: Add bootstrap
 	functions, move facts back into the manifests, allow slapd
 	recovery.

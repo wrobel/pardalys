@@ -1,5 +1,7 @@
 2008-05-26  Gunnar Wrobel  <p@rdus.de>
 
+	* bin/kolab_ca: A script to create a self signed ssl certificate.
+
 	* modules/service_kolab/plugins/facter/kolab.rb: A first draft for
 	the complete kolab configuration scheme.
 

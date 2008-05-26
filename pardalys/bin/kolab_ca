@@ -1,0 +1,290 @@
+#!/bin/bash
+##
+##  Copyright (c) 2004  Klaraelvdalens Datakonsult AB
+##   Written by Steffen Hansen <steffen@klaralvdalens-datakonsult.se>
+##
+## CA management script that is heavily inspired by Tim Hudson's
+## CA.sh script from the openssl distribution
+
+if [ -z "$BINDIR" ]; then
+    BINDIR="/usr/bin"
+fi
+
+if [ -z "$SYSCONFDIR" ]; then
+    SYSCONFDIR="/etc"
+fi
+
+DAYS="-days 3650"
+REQ="$BINDIR/openssl req"
+CA="$BINDIR/openssl ca"
+VERIFY="$BINDIR/openssl verify"
+X509="$BINDIR/openssl x509"
+RSA="$BINDIR/openssl rsa"
+GENRSA="$BINDIR/openssl genrsa"
+
+CATOP=$SYSCONFDIR/kolab/ca
+CAKEY=cakey.pem
+CACERT=cacert.pem
+
+# Make sure not to create world readable files
+umask 0077
+
+cd $SYSCONFDIR/kolab
+
+# Config
+function createconf() {
+local DNAME=$1
+echo "Using dn $hostname"
+#if [ ! -d "$SYSCONFDIR/kolab/ca" ]; then
+#    mkdir $SYSCONFDIR/kolab/ca
+#fi
+export OPENSSL_CONF=$SYSCONFDIR/kolab/kolab-ssl.cnf
+cat > ${OPENSSL_CONF} <<EOF
+[ req ]
+distinguished_name = req_distinguished_name
+default_bits = 1024
+prompt = no
+x509_extensions = v3_req
+attributes = req_attributes
+
+string_mask = nombstr
+
+[ req_attributes ]
+
+[ req_distinguished_name ]
+#C = 
+#ST = 
+#L = 
+#O = 
+#OU = 
+#CN = 
+#emailAddress = 
+$DNAME
+
+[ v3_req ]
+basicConstraints = CA:TRUE
+
+[ ca ]
+default_ca      = CA_kolab
+
+[ CA_kolab ]
+dir = $CATOP
+certs           = \$dir/certs            # Where the issued certs are kept
+crl_dir         = \$dir/crl              # Where the issued crl are kept
+database        = \$dir/index.txt        # database index file.
+unique_subject = no                    # Set to 'no' to allow creation of
+                                        # several ctificates with same subject.
+new_certs_dir   = \$dir/newcerts         # default place for new certs.
+
+certificate     = \$dir/cacert.pem       # The CA certificate
+serial          = \$dir/serial           # The current serial number
+#crlnumber      = \$dir/crlnumber        # the current crl number
+                                        # must be commented out to leave a V1 CRL
+crl             = \$dir/crl.pem          # The current CRL
+private_key     = \$dir/private/cakey.pem# The private key
+RANDFILE        = \$dir/private/.rand    # private random number file
+
+x509_extensions = usr_cert              # The extentions to add to the cert
+# Comment out the following two lines for the "traditional"
+# (and highly broken) format.
+name_opt        = ca_default            # Subject Name options
+cert_opt        = ca_default            # Certificate field options
+
+# Extension copying option: use with caution.
+# copy_extensions = copy
+
+# Extensions to add to a CRL. Note: Netscape communicator chokes on V2 CRLs
+# so this is commented out by default to leave a V1 CRL.
+# crlnumber must also be commented out to leave a V1 CRL.
+# crl_extensions        = crl_ext
+
+default_days    = 3650                  # how long to certify for
+default_crl_days= 30                    # how long before next CRL
+default_md      = md5                   # which md to use.
+preserve        = no                    # keep passed DN ordering
+
+# For the 'anything' policy
+# At this point in time, you must list all acceptable 'object'
+# types.
+[ policy_anything ]
+commonName              = supplied
+
+[ usr_cert ]
+
+# These extensions are added when 'ca' signs a request.
+
+# This goes against PKIX guidelines but some CAs do it and some software
+# requires this to avoid interpreting an end user certificate as a CA.
+
+basicConstraints=CA:FALSE
+
+# Here are some examples of the usage of nsCertType. If it is omitted
+# the certificate can be used for anything *except* object signing.
+
+# This is OK for an SSL server.
+# nsCertType = server
+
+# For an object signing certificate this would be used.
+# nsCertType = objsign
+
+# For normal client use this is typical
+# nsCertType = client, email
+
+# and for everything including object signing:
+# nsCertType = client, email, objsign
+
+# This is typical in keyUsage for a client certificate.
+# keyUsage = nonRepudiation, digitalSignature, keyEncipherment
+
+# This will be displayed in Netscape's comment listbox.
+nsComment                       = "OpenSSL Generated Certificate"
+
+# PKIX recommendations harmless if included in all certificates.
+subjectKeyIdentifier=hash
+authorityKeyIdentifier=keyid,issuer:always
+
+EOF
+}
+
+function readinput() {
+    local p=$1
+    local d=$2
+    read -ep "$p [$d]: " value
+    if [ -z "$value" ]; then
+	    value="$d"
+    fi
+}
+
+appname=$0
+while [ $# -gt 0 ]; do
+case $1 in
+-h|-help|--help)
+    echo "Usage: $appname {-newca hostname [organization organizational-unit]|-newreq hostname [keyfile] [certfile]|-sign [filename]|-verify [filename]|-help}"
+    ;;
+-newca)
+    if [ ! -f ${CATOP}/serial ]; then
+        # create the directory hierarchy
+        mkdir ${CATOP}
+        mkdir ${CATOP}/certs
+        mkdir ${CATOP}/crl
+        mkdir ${CATOP}/newcerts
+        mkdir ${CATOP}/private
+        echo "01" > ${CATOP}/serial
+        touch ${CATOP}/index.txt
+    fi
+    if [ ! -f ${CATOP}/private/$CAKEY ]; then
+	cn=$2
+	shift
+	if [ -n "$2" ]; then
+	    o=$2
+	    shift
+	else
+	    o="Kolab"
+	fi
+	if [ -n "$2" ]; then
+	    ou=$2
+	    shift
+	else
+	    ou="Test-CA"
+	fi
+	shift
+	echo "Using subject O=$o,OU=$ou,CN=$cn";
+	createconf "O=$o
+OU=$ou
+CN=$cn"
+
+	if [ -n "$2" ]; then
+	    FILE=$2
+	    shift
+	else
+	    FILE=""
+	fi
+
+        # ask user for existing CA certificate
+        if [ "$FILE" ]; then
+            cp $FILE ${CATOP}/private/$CAKEY
+            RET=$?
+        else
+            echo "Making CA certificate ..."
+            $REQ -new -x509 -keyout ${CATOP}/private/$CAKEY \
+                           -out ${CATOP}/$CACERT $DAYS
+            RET=$?
+        fi
+    else
+        while [ -n "$2" ]; do
+            shift
+        done
+    fi
+    ;;
+-newkey)
+    # create a new priv. key
+    createconf "CN=$2"
+    keyfile=key.pem
+    if [ -n "$3" ]; then
+	keyfile=$3
+    fi
+    shift 2
+    echo "secret"|$GENRSA -des3 -passout fd:0 -out .tmp.pass.key 1024
+    echo "secret"|$RSA -passin fd:0 -in .tmp.pass.key -out $keyfile
+    rm .tmp.pass.key
+    ;;
+-newreq)
+    # create a certificate request
+    createconf "CN=$2"
+    reqfile=newreq.pem
+    if [ -n "$3" ]; then
+	keyfile=$3
+    fi
+    if [ -n "$4" ]; then
+	reqfile=$4
+    fi
+    shift 3
+    $REQ -new -nodes -key ${keyfile} -out ${reqfile} $DAYS
+    RET=$?
+    echo "Request is in $reqfile and private key is in $keyfile"
+    ;;
+-sign|-signreq)
+    createconf
+    infile=newreq.pem
+    outfile=newcert.pem
+    if [ -n "$2" ]; then
+	infile=$2
+    fi
+    if [ -n "$3" ]; then
+	outfile=$3
+    fi
+    shift 2
+    $CA -policy policy_anything -out ${outfile} -infiles ${infile}
+    RET=$?
+    #cat ${outfile}
+    echo "Signed certificate is in ${outfile}"
+    ;;
+-verify)
+    createconf
+    shift
+    if [ -z "$1" ]; then
+            $VERIFY -CAfile $CATOP/$CACERT newcert.pem	    
+            RET=$?
+    else
+        for j
+        do
+            $VERIFY -CAfile $CATOP/$CACERT $j
+            if [ $? != 0 ]; then
+                    RET=$?
+            fi
+        done
+    fi
+    exit 0
+    ;;
+*)
+    echo "Unknown arg $i";
+    exit 1
+    ;;
+esac
+shift
+done
+
+cd -
+
+exit $RET
+

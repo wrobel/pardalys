@@ -1,6 +1,14 @@
 CHANGES
 -------
 
+Version 0.0.5 - Released 2008/05/26
+===================================
+
+ - Implemented a draft of the Kolab bootstrap
+
+ - Added a Makefile to install the package
+
+
 Version 0.0.4 - Released 2008/05/17
 ===================================
 

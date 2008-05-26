@@ -4,16 +4,15 @@ Version 0.0.4 - Released 2008/05/17
 FULL CHANGES
 ------------
 
- - Fixed setting the factpath.
+ - Implemented a draft of the Kolab bootstrap
 
- - Fixed the dev script.
+ - Added a Makefile to install the package
 
 
 SHORT CHANGES
 -------------
 
-Testing revealed some problems with the script delivered by the
-package. These were fixed in version 0.0.4.
+p@rdalys-0.0.5 implements a rough draft of the Kolab bootstrap.
 
 
 FRESHMEAT

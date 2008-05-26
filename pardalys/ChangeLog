@@ -1,5 +1,8 @@
 2008-05-26  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_openldap/plugins/puppet/provider/kolabldap/kolabldap.rb:
+	A provider for bootstrapping LDAP. This is not yet functional.
+
 	* bin/kolab_ca: A script to create a self signed ssl certificate.
 
 	* modules/service_kolab/plugins/facter/kolab.rb: A first draft for

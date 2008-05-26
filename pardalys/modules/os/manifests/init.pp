@@ -16,6 +16,15 @@ import 'os_gentoo'
 #                       on the operating system
 #
 class os {
+
+  $sysconfdir    = '/etc'
+  $sbindir       = '/usr/sbin'
+  $bindir        = '/usr/bin'
+  $localstatedir = '/var'
+  $sysrundir     = "${localstatedir}/run"
+  $statelibdir   = "${localstatedir}/lib"
+  $logdir        = "${localstatedir}/log"
+
   case $operatingsystem {
     gentoo: {
       include gentoo::etc::portage::backup

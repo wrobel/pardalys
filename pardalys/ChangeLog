@@ -1,5 +1,8 @@
 2008-05-26  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/os/manifests/init.pp: Move the facts back into the
+	manifest.
+
 	* modules/service_kolab/plugins/facter/*: Renamed facts more
 	appropriately.
 

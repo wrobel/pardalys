@@ -1,5 +1,8 @@
 2008-05-26  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/tool_pardalys/manifests/init.pp: Fixed typos and revert
+	back to "installed". "latest" did not seem to work at the moment.
+
 	* modules/service_openldap/manifests/init.pp: Add the facts back
 	into the manifest, add the ldap user membership in the kolab group
 	and add bootstrapping.

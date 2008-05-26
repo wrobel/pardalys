@@ -84,15 +84,15 @@ class tool::pardalys {
       }
       package { pardalys:
         category => 'app-admin',
-        ensure   => 'latest',
+        ensure   => 'installed',
         require  =>  Gentoo_keywords['pardalys'],
         tag      => 'buildhost'
       }
     }
     default:
     {
-      package { openldap:
-        ensure   => 'latest',
+      package { pardalys:
+        ensure   => 'installed',
       }
     }
   }

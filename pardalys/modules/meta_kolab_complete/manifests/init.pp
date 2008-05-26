@@ -13,9 +13,18 @@ import 'service_openldap'
 # @package meta_kolab_complete
 #
 class meta::kolab::complete {
+
   include os
   include tool::pardalys
   include service::kolab
   include service::openldap
   include service::openldap::serve
+  case $kolab_slapd_recovery {
+    default: {
+    }
+    "true": {
+      crit('LDAP recovery - Any additional Kolab configuration files remain untouched.')
+    }
+  }
+
 }

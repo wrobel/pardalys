@@ -1,5 +1,8 @@
 2008-05-26  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/meta_kolab_complete/manifests/init.pp: Add a clause for
+	slapd recovery.
+
 	* modules/os/manifests/init.pp: Move the facts back into the
 	manifest.
 

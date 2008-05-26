@@ -1,5 +1,8 @@
 2008-05-26  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_openldap/plugins/puppet/type/kolabldap.rb: The
+	LDAP bootstrap type.
+
 	* modules/service_openldap/plugins/puppet/provider/kolabldap/kolabldap.rb:
 	A provider for bootstrapping LDAP. This is not yet functional.
 

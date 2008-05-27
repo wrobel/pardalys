@@ -72,35 +72,6 @@ class service::openldap {
 # @fact openldap_rusr      The user running the slapd server process
 # @fact openldap_grp       The group running the slapd server process
 #                          (also needs read access to the configuration files)
-
-# Required parameters 
-#
-#  * base_dn: The base_dn of the LDAP tree.
-#
-#  * bind_dn: The master user for the LDAP server
-#
-#  * bind_pw: The master password for the LDAP server
-#
-#  * bind_pw_hash: Hashed version of the master password for the LDAP
-#    server
-#
-#  * postfix_mydestination: The destination domains of this Kolab
-#    server
-#
-# Optional parameters 
-#
-#  * service_openldap_db_config: Sets the path to the DB_CONFIG file
-#    if LDAP uses BDB as a backend
-#
-#  * service_openldap_ruser: The user OpenLDAP will be run with
-#
-#  * service_openldap_rgroup: The group OpenLDAP will be run with
-#
-# Templates
-#
-#  * DB_CONFIG_*: The configuration for the BDB backend
-#
-
 class service::openldap::serve {
 
   $sysconfdir         = $os::sysconfdir

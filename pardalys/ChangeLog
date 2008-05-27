@@ -1,5 +1,8 @@
 2008-05-27  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_openldap/manifests/init.pp: Removed incorrect
+	docs.
+
 	* modules/service_kolab/templates/kolab.globals: Start documenting
 	variables with relevance to postfix.
 

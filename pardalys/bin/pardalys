@@ -1,25 +1,72 @@
 #!/bin/sh
 
+usage() {
+
+    echo "Usage:"
+    echo ""
+    echo "  pardalys [options]"
+    echo ""
+    echo "Info:"
+    echo ""
+    echo "  pardalys is a small wrapper around puppet and allows you"
+    echo "  to easily install and configure a Kolab server."
+    echo "  To this end the p@rdalys package delivers a set of puppet"
+    echo "  modules that should be installed in your system if this"
+    echo "  script is present."
+    echo ""
+    echo "  The pardalys command will determine the location of these "
+    echo "  modules and provide puppet with the required parameters."
+    echo ""
+    echo "  In order to customize what puppet will do, you can also"
+    echo "  provide your own puppet configuration in"
+    echo "  /etc/pardalys/puppet.conf as well as a basic manifest in"
+    echo "  /etc/pardalys/site.pp"
+    echo ""
+    echo "  If you want to modify the p@rdalys modules you should run"
+    echo "  the script \"dev-pardalys\" to download the p@rdalys"
+    echo "  repository."
+
+    exit 0
+}
+
+if [ "$1" == "--help" -o "$1" == "-?" -o "$1" == "-h" ]; then
+    usage
+fi
+
 CONFDIR="/usr/share/pardalys/etc"
 MANIFEST="/usr/share/pardalys/manifests/kolab.pp"
 ENVIRONMENT="--environment=production"
 FACTS="--factpath=/usr/share/pardalys/facter"
 MODULES="--modulepath=/usr/share/pardalys/modules"
 
-if [ -e "/usr/share/pardalys/dev-pardalys/pardalys" ]; then
+if [ -d "/usr/share/pardalys/dev-pardalys/pardalys" ]; then
     CONFDIR="/usr/share/pardalys/dev-pardalys/pardalys/etc"
     MANIFEST="/usr/share/pardalys/dev-pardalys/pardalys/manifests/kolab.pp"
     ENVIRONMENT="--environment=development"
     FACTS="--factpath=/usr/share/pardalys/dev-pardalys/pardalys/facter"
     MODULES="--modulepath=/usr/share/pardalys/dev-pardalys/pardalys/modules"
+
+    cd /usr/share/pardalys/dev-pardalys && git pull origin master > /dev/null || ERROR="1"
+    if [ -n "$ERROR" ]; then
+	echo "Updating repository failed! Check your connection."
+	exit $RESULT
+    fi
 fi
 
-if [ ! -e "${CONFDIR}" ]; then
+if [ -d "/etc/pardalys" ]; then
+    CONFDIR="/etc/pardalys"
+fi
+
+if [ -f "/etc/pardalys/site.pp" ]; then
+    MANIFEST="/etc/pardalys/site.pp"
+fi
+
+if [ ! -d "${CONFDIR}" ]; then
     echo "Configuration directory ${CONFDIR} is missing. Aborting!"
     exit 1
 fi
 
-if [ ! -e "${MANIFEST}" ]; then
+if [ ! -f "${MANIFEST}" ]; then
     echo "Manifest ${MANIFEST} is missing. Aborting!"
     exit 1
 fi

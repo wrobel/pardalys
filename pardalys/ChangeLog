@@ -4,6 +4,8 @@
 
 	* facter/kolab.rb: Fix bindir and sbindir in the Kolab fact.
 
+	* bin/pardalys: Allow a custom puppet configuration directory.
+
 2008-05-26  Gunnar Wrobel  <p@rdus.de>
 
 	* Makefile (SHELL): A basic Makefile for installing the package.

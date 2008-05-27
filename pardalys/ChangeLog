@@ -1,5 +1,8 @@
 2008-05-27  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_kolab/manifests/init.pp: Print the error we
+	received while trying to connect the LDAP server.
+
 	* modules/*: Added new modules.
 
 	* facter/kolab.rb: Fix bindir and sbindir in the Kolab fact.

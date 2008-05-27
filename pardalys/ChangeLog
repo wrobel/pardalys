@@ -1,5 +1,8 @@
 2008-05-27  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_postfix/templates/master.cf_2.4.6-r2: Allow
+	enabling/disabling the amavis fallback.
+
 	* modules/service_postfix/templates/main.cf_2.4.6-r2: Fix the
 	filenames for the postfix configuration files.
 

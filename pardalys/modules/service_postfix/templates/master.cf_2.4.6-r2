@@ -158,7 +158,9 @@ smtp-amavis unix -	-	n	-	2       smtp
 <%= local_addr %>:10025 inet n	-	n	-	3  smtpd
 <% if enable_virus_scan -%>
     -o content_filter=smtp-amavis:[<%= local_addr %>]:10024
+<% if enable_amavis_fallback -%>
     -o smtp_fallback_relay=[<%= local_addr %>]:10026
+<% end -%>
 <% else -%>
     -o content_filter=
 <% end -%>

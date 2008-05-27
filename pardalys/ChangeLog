@@ -1,5 +1,7 @@
 2008-05-27  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_postfix/manifests/init.pp: Fix a default value.
+
 	* modules/service_kolab/plugins/facter/kolab.rb: Fix reading of
 	the LDAP values into a fact.
 

@@ -73,7 +73,7 @@ class service::postfix {
   $mydestination = split(get_var('postfix_mydestination'), ',')
   $relayhost = get_var('postfix_relayhost', false)
   $relayport = get_var('postfix_relayport', 25)
-  $ldap_uri = get_var('kolab_ldap_uri', 'ldap://127.0.0.1')
+  $ldap_uri = get_var('kolab_ldap_uri', 'ldap://127.0.0.1:389')
 
   file { 
     '/etc/postfix/master.cf':

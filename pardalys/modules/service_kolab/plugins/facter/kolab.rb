@@ -224,33 +224,33 @@ if ldap_present
 
   begin
     @connection = LDAP::Conn.new(server, port.to_i)
-
+    
     @connection.set_option(LDAP::LDAP_OPT_PROTOCOL_VERSION, 3)
     @connection.set_option(LDAP::LDAP_OPT_REFERRALS, LDAP::LDAP_OPT_ON)
     @connection.simple_bind(Facter.kolab_bind_dn, Facter.kolab_bind_pw)
-    kolab = @connection.search('k=kolab,' + base_dn, 'one', '(objectclass=kolab)')
-  rescue Exception
+    kolab_obj = @connection.search2(base_dn, LDAP::LDAP_SCOPE_ONELEVEL, '(&(objectclass=kolab)(k=kolab))')
+  rescue Exception => e
     if not Facter.kolab_bootstrap
       Facter.add('kolab_ldap_error') do
         setcode do
-          true
+          e.to_s
         end
       end
     end
   end
 
-  if kolab 
-
+  if kolab_obj
     Facter.add('kolab_ldap_error') do
       setcode do
         false
       end
     end
-
-    kolab.each do |key, val|
-      Facter.add(key.gsub(/-/, '_')) do
-        setcode do
-          val
+    kolab_obj.each do |entry|
+      entry.each_pair do |key, val|
+        Facter.add(key.gsub(/-/, '_')) do
+          setcode do
+            val
+          end
         end
       end
     end

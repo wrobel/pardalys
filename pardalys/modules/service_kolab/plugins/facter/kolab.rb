@@ -2,6 +2,7 @@
 
 sysconfdir = '/etc'
 sbindir    = '/usr/sbin'
+bindir     = '/usr/bin'
 
 # Overwrite operating specific values here
 #if Facter.operatingsystem == 'Gentoo'
@@ -136,13 +137,13 @@ end
 if !Facter.method_defined? 'kolab_bind_pw'
   Facter.add('kolab_bind_pw') do
     setcode do
-      `#{Facter.bindir}/openssl rand -base64 12`
+      `#{bindir}/openssl rand -base64 12`
     end
   end
   Facter.add('kolab_bind_pw_hash') do
     setcode do
       bind_pw_sq = Facter.kolab_bind_pw.gsub('/([\\"$]/','\\\1')
-      `#{Facter.sbindir}/slappasswd -s #{bind_pw_sq}`
+      `#{sbindir}/slappasswd -s #{bind_pw_sq}`
     end
   end
 end
@@ -151,7 +152,7 @@ if !Facter.method_defined? 'kolab_bind_pw_hash'
   Facter.add('kolab_bind_pw_hash') do
     setcode do
       bind_pw_sq = Facter.kolab_bind_pw.gsub('/([\\"$]/','\\\1')
-      `#{Facter.sbindir}/slappasswd -s #{bind_pw_sq}`
+      `#{sbindir}/slappasswd -s #{bind_pw_sq}`
     end
   end
 end
@@ -183,7 +184,7 @@ end
 if !Facter.method_defined? 'kolab_php_pw'
   Facter.add('kolab_php_pw') do
     setcode do
-      `#{Facter.bindir}/openssl rand -base64 30`
+      `#{bindir}/openssl rand -base64 30`
     end
   end
 end
@@ -199,7 +200,7 @@ end
 if !Facter.method_defined? 'kolab_calendar_pw'
   Facter.add('kolab_calendar_pw') do
     setcode do
-      `#{Facter.bindir}/openssl rand -base64 30`
+      `#{bindir}/openssl rand -base64 30`
     end
   end
 end

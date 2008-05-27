@@ -1,3 +1,7 @@
+2008-05-27  Gunnar Wrobel  <p@rdus.de>
+
+	* facter/kolab.rb: Fix bindir and sbindir in the Kolab fact.
+
 2008-05-26  Gunnar Wrobel  <p@rdus.de>
 
 	* Makefile (SHELL): A basic Makefile for installing the package.

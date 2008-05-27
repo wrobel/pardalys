@@ -1,5 +1,7 @@
 2008-05-27  Gunnar Wrobel  <p@rdus.de>
 
+	* etc/README: Add a README file.
+
 	* modules/*: Added new modules.
 
 	* facter/kolab.rb: Fix bindir and sbindir in the Kolab fact.
@@ -52,7 +54,7 @@
 
 	* modules/root/spec/spec_helper.rb: A unit test helper.
 
-	* modules/root/plugins/puppet/parser/functions/template_version.rb: 
+	* modules/root/plugins/puppet/parser/functions/template_version.rb:
 	Tried fixing some problmens after unit testing.
 
 	* modules/root/spec/unit/parser/functions/template_version.rb: A
@@ -81,7 +83,7 @@
 
 	* modules/service_kolab/plugins/facter/kolab.rb: Integrated
 	default value handling from the manifast into the fact script.
-	
+
 	* modules/tool_pardalys/*: Added package installation module for
 	p@rdalys.
 

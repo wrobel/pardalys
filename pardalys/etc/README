@@ -1,0 +1,77 @@
+###############################################################################
+                               CUSTOMIZING P@RDALYS
+###############################################################################
+
+By default p@rdalys will use the puppet configuration 
+stored at
+
+  $(datadir)/pardalys/etc/puppet.conf
+
+and the manifest at
+
+  $(datadir)/pardalys/manifests/kolab.pp
+
+This will install and configure a default Kolab server based on the
+puppet modules stored at
+
+  $(datadir)/pardalys/modules/
+
+
+If you want to customize the bahaviour of p@rdalys you have several
+options.
+
+
+1) Using a modified puppet.conf
+
+   You can create your own puppet.conf file in
+
+     /etc/pardalys/puppet.conf
+
+   This gives you a lot of additional control over the different
+   elements puppet will take into account. You can specify additional
+   module paths or you could switch to a different type of node
+   configuration.
+
+
+2) Using a custom site.pp
+
+   Instead of using the kolab.pp manifest delivered by p@rdalys you can
+   of alternatively use your own manifest and place it in
+
+     /etc/pardalys/site.pp
+
+   This allows you to deviate from the main Kolab server configuration
+   and enables you to hand pick the puppet modules you actually want to
+   use for you setup.
+
+
+3) Using p@rdalys in development mode
+
+   You can also use the script 
+
+     dev-pardalys
+
+   to download the p@rdalys repository and install it in your machine at
+
+     $(datadir)/pardalys/dev-pardalys/
+
+   This will be a checkout of the master git repository kept at
+
+     git://github.com/wrobel/pardalys.git
+
+   Just downloading the master repository will not allow you to commit
+   your changes though. If you want to actively contribute to the
+   project you should got to
+
+     http://github.com
+
+   and create your own account there. Once you did that you can fork
+   the master p@rdalys repository to your own account and check this
+   out to you local machine using
+
+     dev-pardalys -u MY_USER_NAME -s
+
+   With this checkout you can commit your own changes back. Once you
+   are satisfied with a set of modifications you can send a pull
+   request to the p@rdalys master repository so that the changes can
+   be included after review.

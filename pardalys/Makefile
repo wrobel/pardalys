@@ -34,5 +34,7 @@ install:
 	done
 	mkdir -p $(DESTDIR)$(docdir)
 	$(INSTALL_DATA) INSTALL HACKING README CHANGES $(DESTDIR)$(docdir)
+	mkdir -p $(DESTDIR)$(sysconfdir)/$(PACKAGE)
+	$(INSTALL_DATA) etc/README $(DESTDIR)$(sysconfdir)/$(PACKAGE)
 
 #FIXME: Add a basic bootstrap config file

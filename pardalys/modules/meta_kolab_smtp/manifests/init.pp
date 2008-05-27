@@ -1,3 +1,5 @@
+import 'os'
+import 'service_kolab'
 import 'service_openldap'
 import 'service_postfix'
 
@@ -18,6 +20,8 @@ import 'service_postfix'
 #
 class meta::kolab::smtp {
 
+  include os
+  include service::kolab
   include service::openldap
   include service::openldap::serve
   include service::postfix

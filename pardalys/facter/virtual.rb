@@ -1,0 +1,1 @@
+../modules/root/plugins/facter/virtual.rb

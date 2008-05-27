@@ -1,0 +1,14 @@
+LogDir = /var/log
+TmpDir = /var/cache/logwatch
+MailTo = root
+MailFrom = Logwatch
+Print = No
+Range = All
+Detail = High
+HostLimit = No
+
+<% my_logwatch_services.each do |service| %>
+Service = <%= service %>
+<% end %>
+
+mailer = "sendmail -t"

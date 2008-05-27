@@ -1,0 +1,8 @@
+use_bayes 1
+bayes_auto_learn 1
+bayes_auto_learn_threshold_nonspam 0.1
+bayes_auto_learn_threshold_spam 12.0
+bayes_file_mode 770
+<% if service_spamassassin_amavisd_bayes != "NONE" %>
+bayes_path <%= service_spamassassin_amavisd_bayes %>
+<% end %>

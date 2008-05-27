@@ -1,0 +1,13 @@
+#! /bin/sh
+
+export EINFO_COLOR="no"
+source /etc/init.d/functions.sh
+
+einfo "Started synchronizing layman"
+
+layman -S > /dev/null
+
+RESULT=$?
+
+ebegin "Finished synchronizing layman"
+eend $RESULT

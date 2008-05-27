@@ -1,0 +1,85 @@
+#!/usr/bin/perl -w
+#
+# Plugin to monitor the syslog activity.
+#
+# Usage: Place in /etc/munin/plugins (or link it there  using ln -s)
+#
+# Parameters understood:
+#
+# 	config   (required)
+#
+# Config variables:
+#
+#       syslog    - file where the syslog is written
+#
+#%# family=auto
+#%# capabilities=autoconf
+
+my $pluginstate = $ENV{'MUNIN_PLUGSTATE'} || "/var/lib/munin/plugin-state";
+my $statefile = $pluginstate . "/syslog.lines";
+my $syslog = $ENV{'syslog'} || '/var/log/messages';
+
+if ( $ARGV[0] and $ARGV[0] eq "autoconf" )
+{
+    if (-f "$syslog")
+    {
+	if (-r "$syslog")
+	{
+	    print "yes\n";
+	    exit 0;
+	}
+	else
+	{
+	    print "no (syslog not readable)\n";
+	}
+    }
+    else
+    {
+	print "no (syslog not found)\n";
+    }
+}
+
+
+if ( $ARGV[0] and $ARGV[0] eq "config" )
+{
+    print "graph_title Syslog lines\n";
+    print "graph_order added\n";
+    print "graph_vlabel nb\n";
+    print "added.label lines added\n";
+    exit 0;
+}
+
+my $added = 0;
+my $new = 0;
+my $old = 0;
+
+if (-f "$statefile")
+{
+    open (IN, "$statefile") or exit 4;
+    if (<IN> =~ /^(\d+)$/)
+    {
+	$old = $1;
+    }
+    close IN;
+}
+
+if (-f "$syslog")
+{
+    system("cat \"$syslog\" | wc -l > \"$statefile\"");
+}
+
+if (-f "$statefile")
+{
+    open (IN, "$statefile") or exit 4;
+    if (<IN> =~ /^(\d+)$/)
+    {
+	$new = $1;
+    }
+    close IN;
+}
+
+if ($old > 0 and $new > 0 and $new - $old > 0) {
+    $added = $new - $old;
+}
+
+print "added.value $added\n";

@@ -1,0 +1,115 @@
+###########################################################
+# Set color options for ls
+# To get colors first read in the .dir_colors in case
+# it is present in the users home directory
+# This file needs to be processed by /bin/dircolors
+# Afterwards ls is aliased to always include colors
+# if possible
+ 
+#
+# //BEGIN  taken from SuSE
+#
+ 
+#
+# Colored file listings
+#
+ 
+if test -x /usr/bin/dircolors ; then
+ 
+#
+# //END  taken from SuSE
+#
+ 
+#
+# //BEGIN  taken from RedHat
+#
+
+    COLORS=/etc/DIR_COLORS
+    [ -e "/etc/DIR_COLORS.$TERM" ] && COLORS="/etc/DIR_COLORS.$TERM"
+    [ -e "$HOME/.dircolors" ] && COLORS="$HOME/.dircolors"
+    [ -e "$HOME/.dircolors.$TERM" ] && COLORS="$HOME/.dircolors.$TERM"
+    [ -e "$HOME/.dir_colors" ] && COLORS="$HOME/.dir_colors"
+    [ -e "$HOME/.dir_colors.$TERM" ] && COLORS="$HOME/.dir_colors.$TERM"
+                               
+ 
+#
+# //BEGIN  taken from Gentoo
+#
+
+# While I do not think it is wise to store terminals capable
+# of colors in the /etc/DIR_COLORS file, it is also not horrible.
+
+    use_color=false
+    safe_term=${TERM//[^[:alnum:]]/.}   # sanitize TERM
+    
+    if [ -e "$COLORS" ]; then
+        grep -q "^TERM ${safe_term}" $COLORS && use_color=true
+    elif dircolors --print-database | grep -q "^TERM ${safe_term}"; then
+        use_color=true
+        return
+    fi
+    
+#
+# //END  taken from Gentoo
+#
+
+if ${use_color}
+    then
+    COLOR_RED="\[\033[01;31m\]"
+    COLOR_GREEN="\[\033[01;32m\]"
+    COLOR_YELLOW="\[\033[01;33m\]"
+    COLOR_BLUE="\[\033[01;34m\]"
+    COLOR_MAGENTA="\[\033[01;35m\]"
+    COLOR_CYAN="\[\033[01;36m\]"
+    
+    COLOR_RED_BOLD="\[\e[31;1m\]"
+    COLOR_GREEN_BOLD="\[\e[32;1m\]"
+    COLOR_YELLOW_BOLD="\[\e[33;1m\]"
+    COLOR_BLUE_BOLD="\[\e[34;1m\]"
+    COLOR_MAGENTA_BOLD="\[\e[35;1m\]"
+    COLOR_CYAN_BOLD="\[\e[36;1m\]"
+    
+    COLOR_NONE="\[\e[0m\]"
+else
+    COLOR_RED=""
+    COLOR_GREEN=""
+    COLOR_YELLOW=""
+    COLOR_BLUE=""
+    COLOR_MAGENTA=""
+    COLOR_CYAN=""
+    
+    COLOR_RED_BOLD=""
+    COLOR_GREEN_BOLD=""
+    COLOR_YELLOW_BOLD=""
+    COLOR_BLUE_BOLD=""
+    COLOR_MAGENTA_BOLD=""
+    COLOR_CYAN_BOLD=""
+    
+    COLOR_NONE=""
+fi
+ 
+#
+# //BEGIN  taken from RedHat
+#
+
+    eval `/usr/bin/dircolors --sh "$COLORS"`
+    [ -z "$LS_COLORS" ] && return
+    
+    if ! egrep -qi "^COLOR.*none" $COLORS >/dev/null 2>/dev/null ; then
+        alias ll='ls -l --color=tty' 2>/dev/null
+        alias l.='ls -d .* --color=tty' 2>/dev/null
+        alias ls='ls --color=tty' 2>/dev/null
+        alias la='ls -l -a --color=tty' 2>/dev/null
+    else
+        alias ll='ls -l' 2>/dev/null
+        alias l.='ls -d .*' 2>/dev/null
+        alias la='ls -l -a' 2>/dev/null
+    fi
+
+#
+# //END taken from RedHat
+#
+fi
+ 
+alias ls="ls --color=auto"
+###########################################################

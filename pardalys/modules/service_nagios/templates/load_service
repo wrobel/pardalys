@@ -1,0 +1,5 @@
+define service {
+       use                  munin-service
+       host_name            <%= name %>
+       service_description  Load average
+}

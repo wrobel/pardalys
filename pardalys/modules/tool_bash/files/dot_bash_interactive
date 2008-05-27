@@ -1,0 +1,12 @@
+# Bash interactive features.
+# This file is intended to be source by
+# the user configuration in ~/.bashrc and ~/.bash_profile
+
+# Activate this if you want my long prompt
+PROMPT_COMMAND=promptFunc
+
+# Use this for a short prompt
+#PS1='\u@\h:\w > '
+
+# Comment if you are not fluent in german
+export LC_ALL=de_DE.utf8

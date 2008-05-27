@@ -1,0 +1,3 @@
+# Allows sending mails to "kolab+shared.*@.*"
+
+/^(kolab\+.*)@(.*)/ ${1}@${2}

@@ -1,0 +1,28 @@
+var.basedir  = "/var/www/localhost"
+var.logdir   = "/var/log/lighttpd"
+var.statedir = "/var/lib/lighttpd"
+server.modules = (
+    "mod_access",
+    "mod_accesslog",
+    "mod_auth",
+    "mod_redirect"
+)
+include "mime-types.conf"
+server.username      = "lighttpd"
+server.groupname     = "lighttpd"
+server.document-root = var.basedir + "/htdocs"
+server.pid-file      = "/var/run/lighttpd.pid"
+server.errorlog      = var.logdir  + "/error.log"
+server.indexfiles    = ("index.html")
+accesslog.filename   = var.logdir + "/access.log"
+url.access-deny = ("~", ".inc")
+ssl.engine = "enable"
+ssl.pemfile = "<%= ssl_cert_path %>/server.pem"
+$SERVER["socket"] == ":80" {
+  $HTTP["host"] =~ "(^|\.)monitor\.pardus\.de$" {
+    url.redirect = ( "^/(.*)" => "https://%1/$1" )
+  }
+}
+
+<% my_lighttpd_modules.each do |my_module| %>include "<%= my_module %>.conf"
+<% end %>

@@ -1,0 +1,11 @@
+# /etc/skel/.bash_profile:
+
+# This file is sourced by bash for login shells.  The following line
+# runs your .bashrc and is recommended by the bash info pages.
+
+# /etc/profile will be run before this file gets executed.
+# /etc/profile will also source /etc/bash/bash-interactive
+
+if [ -f ~/.bash-interactive ]; then
+    . ~/.bash-interactive
+fi

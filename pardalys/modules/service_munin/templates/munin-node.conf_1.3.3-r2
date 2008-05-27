@@ -1,0 +1,29 @@
+log_level 4
+log_file Sys::Syslog
+port 4949
+pid_file /var/run/munin/munin-node.pid
+background 1
+setseid 1
+tls enabled
+
+# Which port to bind to;
+host *
+user root
+group root
+setsid yes
+
+# Regexps for files to ignore
+
+ignore_file ~$
+ignore_file \.bak$
+ignore_file %$
+ignore_file \.dpkg-(tmp|new|old|dist)$
+ignore_file \.rpm(save|new)$
+
+# A list of addresses that are allowed to connect. 
+
+allow ^127\.0\.0\.1$
+<% munin_master_rgx.each do |rgx| %>
+allow <%= rgx %>
+<% end %>
+

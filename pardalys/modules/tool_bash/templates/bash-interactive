@@ -1,0 +1,70 @@
+# This file is intended to be sourced by all *interactive* bash
+# shells on startup
+
+# Test for an interactive shell.  There is no need to set anything
+# past this point for scp and rcp, and it's important to refrain from
+# outputting anything in those cases.
+if [[ $- != *i* ]]; then
+        # Shell is non-interactive.  Be done now
+        return
+fi
+
+# Bash won't get SIGWINCH if another process is in the foreground.
+# Enable checkwinsize so that bash will check the terminal size when
+# it regains control.  #65623
+# http://cnswww.cns.cwru.edu/~chet/bash/FAQ (E11)
+shopt -s checkwinsize
+
+# Enable history appending instead of overwriting.  #139609
+shopt -s histappend
+
+##
+## INTERACTIVE SHELL task
+## 
+## activate bash completion
+##
+## Bash completion is not transferred to the sub shell
+
+[ -f /etc/profile.d/bash-completion ] && source /etc/profile.d/bash-completion
+
+## 
+## activate cdargs enhancement
+##
+
+[ -f /usr/share/cdargs/cdargs-bash.sh ] && source /usr/share/cdargs/cdargs-bash.sh
+
+##
+## INTERACTIVE SHELL task
+## 
+## set the ls alias
+## 
+## This also sets the variable "use_color" that is necessary for the prompt setup
+
+[ -f /etc/bash/bash-ls ] && source /etc/bash/bash-ls
+
+COLOR_SERVER=${COLOR_<%= hostcolor %>}
+
+##
+## INTERACTIVE SHELL task
+## 
+## set the prompt
+##
+
+[ -f /etc/bash/bash-prompt ] && source /etc/bash/bash-prompt
+
+##
+## INTERACTIVE SHELL task
+## 
+## set the xterm window title
+##
+
+[ -f /etc/bash/bash-window ] && source /etc/bash/bash-window
+
+
+##
+## INTERACTIVE SHELL task
+## 
+## set the python startup file
+##
+
+export PYTHONSTARTUP=${HOME}/.pystartup

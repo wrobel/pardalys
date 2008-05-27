@@ -1,0 +1,7 @@
+# Cyrus does not like empty Message-Id: headers, see kolab/issue2350
+/^Message-Id:[[:space:]]*$/ IGNORE
+
+# Do not allow receiving mails which are already marked as read, flagged, etc.
+/^Status:/     IGNORE
+/^X-Status:/   IGNORE
+/^X-Label:/    IGNORE

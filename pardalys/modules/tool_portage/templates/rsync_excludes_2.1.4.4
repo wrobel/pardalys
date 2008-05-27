@@ -1,0 +1,11 @@
+<% rsync_includes.each do |include| %>+ <%= include %>
+<% end %>
+/*-*/*
+<% rsync_includes.each do |include| %>+ metadata/cache/<%= include %>*
+<% end %>
++ local*
+/licenses/
+/metadata/cache/*/*
+/metadata/glsa/
+metadata/timestamp*
+P /local*

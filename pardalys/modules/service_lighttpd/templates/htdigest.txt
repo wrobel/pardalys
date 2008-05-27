@@ -1,0 +1,2 @@
+<% my_lighttpd_users.each do |user| %><%= user %>
+<% end %>

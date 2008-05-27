@@ -1,0 +1,17 @@
+##
+##  /etc/postfix/relocated -- relocate obsolete addresses
+##
+##  Searched for relocated addresses user@domain, user and @domain
+##  (in this order). It bounces mail for all recipients.
+##
+
+#   Syntax (see relocated(5)):
+#   | user@domain     address
+#   | user            address
+#   | @domain         address
+#
+#   Examples:
+#   | john@invalid    john@example.com
+#   | john            john@example.com
+#   | @invalid        john@example.com
+

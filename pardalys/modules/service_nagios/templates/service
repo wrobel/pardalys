@@ -1,0 +1,6 @@
+define service {
+       use                  generic-service
+       host_name            <%= servicehost %>
+       service_description  <%= servicedesc %>
+       check_command        <%= servicecheck %>
+}

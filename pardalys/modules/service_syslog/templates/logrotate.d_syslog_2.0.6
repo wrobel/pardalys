@@ -1,0 +1,20 @@
+# syslog-ng facilities
+/var/log/syslog.d/auth.log /var/log/syslog.d/cron.log /var/log/syslog.d/daemon.log /var/log/syslog.d/ftp.log /var/log/syslog.d/kern.log /var/log/syslog.d/local.log /var/log/syslog.d/mail.log /var/log/syslog.d/news.log /var/log/syslog.d/user.log 
+{
+    missingok
+    notifempty
+    rotate 15
+    sharedscripts
+    postrotate
+        /etc/init.d/syslog-ng reload > /dev/null 2>&1 || true
+    endscript
+}
+
+/var/log/syslog.d/main.log 
+{
+    rotate 200
+    sharedscripts
+    postrotate
+        /etc/init.d/syslog-ng reload > /dev/null 2>&1 || true
+    endscript
+}

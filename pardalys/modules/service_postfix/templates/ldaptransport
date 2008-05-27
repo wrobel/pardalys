@@ -1,0 +1,15 @@
+#
+# LDAP Transport for multilocation support
+#
+
+server_host = <%= ldap_uri %>
+search_base = <%= base_dn %>
+query_filter = (&(mail=%s)(objectClass=kolabInetOrgPerson)(!(kolabHomeServer=<%= hostname %>)))
+result_attribute = kolabHomeServer
+result_filter = smtp:[%s]
+search_timeout = 15
+scope = sub
+bind = yes
+bind_dn = <%= bind_dn_nobody %>
+bind_pw = <%= bind_pw_nobody %>
+version = 3

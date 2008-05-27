@@ -1,0 +1,6 @@
+##
+##  /etc/postfix/transport -- specify a mapping from email 
+##                            addresses to message delivery
+##                            transports
+##
+##

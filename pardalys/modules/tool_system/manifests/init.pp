@@ -1,0 +1,128 @@
+import 'os'
+import 'os_gentoo'
+
+# Class tool::system
+#  Provides some common system tools
+#
+# Required parameters 
+#
+#  * sysadmin :
+#
+#  * mailserver :
+#
+#  * hostname :
+#
+#  * domainname :
+#
+# Optional parameters 
+#
+#  * :
+#
+# Templates
+#
+#  * :
+#
+class tool::system {
+
+  # Package installation
+  case $operatingsystem {
+    gentoo:
+    {
+      gentoo_use_flags { perl:
+        context => 'tools_system_common_perl',
+        package => 'dev-lang/perl',
+        use     => '"berkdb gdbm',
+        tag     => 'buildhost'
+      }
+      package { perl:
+        category => 'dev-lang',
+        ensure   => 'installed',
+        tag      => 'buildhost',
+        require  => Gentoo_use_flags['perl']
+      }
+
+      gentoo_use_flags { libpcre:
+        context => 'tools_system_common_libpcre',
+        package => 'dev-libs/libpcre',
+        use     => 'cxx zlib bzip2 unicode',
+        tag     => 'buildhost'
+      }
+      package { libpcre:
+        category => 'dev-libs',
+        ensure   => 'installed',
+        tag      => 'buildhost',
+        require  => Gentoo_use_flags['libpcre']
+      }
+
+      package { unzip:
+        category => 'app-arch',
+        ensure   => 'installed',
+        tag      => 'buildhost',
+        require  => Gentoo_use_flags['libpcre']
+      }
+
+      gentoo_unmask { nagios-nsca:
+        context  => 'service_nagios_nagios_nsca',
+        package  => '=net-analyzer/nagios-nsca-2.7.2-r100',
+        tag      => 'buildhost'
+      }
+      gentoo_keywords { nagios-nsca:
+        context  => 'service_nagios_nagios_nsca',
+        package  => '=net-analyzer/nagios-nsca-2.7.2-r100',
+        keywords => "~$arch",
+        tag      => 'buildhost'
+      }
+      package { nagios-nsca:
+        category => 'net-analyzer',
+        ensure   => 'installed',
+        tag      => 'buildhost',
+        require  => Gentoo_keywords['nagios-nsca']
+      }
+
+      if $virtual {
+        gentoo_mask { glibc:
+          context => 'tools_system_common_glibc',
+          package => '>sys-libs/glibc-2.5-r4',
+          tag     => 'buildhost'
+        }
+        gentoo_use_flags { glibc:
+          context => 'tools_system_common_glibc',
+          package => 'sys-libs/glibc',
+          use     => '-nptl -nptlonly',
+          tag     => 'buildhost'
+        }
+        package { glibc:
+          category => 'sys-libs',
+          ensure   => 'installed',
+          tag      => 'buildhost',
+          require  => [Gentoo_mask['glibc'], Gentoo_use_flags['glibc']]
+        }
+        package { iproute2:
+          category => 'sys-apps',
+          ensure   => 'installed',
+          tag      => 'buildhost'
+        }
+      }
+
+    }
+    default:
+    {
+    }
+  }
+
+  file {
+    '/etc/nagios/send_nsca.cfg':
+    content => template("tool_system/send_nsca.cfg_3.0.1"),
+    mode    => 640,
+    group   => 'nagios',
+    require => Package['nagios-nsca'];
+  }
+
+  file {
+    '/var/backup':
+    ensure => 'directory';
+    '/var/backup/data':
+    ensure => 'directory';
+  }
+
+}

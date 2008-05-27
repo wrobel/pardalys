@@ -1,5 +1,7 @@
 2008-05-27  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/*: Added new modules.
+
 	* facter/kolab.rb: Fix bindir and sbindir in the Kolab fact.
 
 2008-05-26  Gunnar Wrobel  <p@rdus.de>

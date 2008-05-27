@@ -1,0 +1,17 @@
+##
+##  /etc/postfix/canonical -- address canonification on mail receiving
+##
+##  Searched for canonical addresses for user@domain, user and @domain
+##  (in this order).
+##
+
+#   Syntax (see canonical(5)):
+#   | user@domain  address
+#   | user         address
+#   | @domain      address
+#
+#   Examples:
+#   | postmaster@mail.example.com postmaster@example.com
+#   | john                        John.Doe
+#   | @example.com                @example.com
+

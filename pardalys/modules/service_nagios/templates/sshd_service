@@ -1,0 +1,6 @@
+define service {
+       use                  generic-service
+       host_name            <%= name %>
+       service_description  SSH
+       check_command        check_ssh
+}

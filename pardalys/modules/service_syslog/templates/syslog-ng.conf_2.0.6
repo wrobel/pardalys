@@ -1,0 +1,109 @@
+# $Header: /var/cvsroot/gentoo-x86/app-admin/syslog-ng/files/syslog-ng.conf.gentoo,v 1.5 2005/05/12 05:46:10 mr_bones_ Exp $
+#
+# Syslog-ng default configuration file for Gentoo Linux
+# contributed by Michael Sterrett
+
+options { 
+	chain_hostnames(off); 
+	sync(0); 
+	stats(43200);
+<% if accept_remote %>
+        use_fqdn(on);
+<% end %>
+};
+
+###################
+###### INPUT ######
+###################
+
+source s_src  { unix-stream("/dev/log"); };
+source s_sys  { internal(); };
+source s_kern { file("/proc/kmsg"); };
+
+###################
+### FACILITIES ####
+###################
+
+filter f_auth { facility(auth, authpriv); };
+filter f_cron { facility(cron);   };
+filter f_daem { facility(daemon); };
+filter f_lpr  { facility(lpr);  };
+filter f_mail { facility(mail); };
+filter f_user { facility(user); };
+filter f_uucp { facility(uucp); };
+filter f_news { facility(news); };
+filter f_ftp  { facility(ftp);  };
+filter f_locl { facility(local0,local1,local2,local3,local4,local5,local6,local7); };
+
+###################
+###### LEVELS #####
+###################
+
+filter f_emer { level(emerg);  };
+filter f_info { level(info);   };
+filter f_notc { level(notice); };
+filter f_warn { level(warn);   };
+filter f_crit { level(crit);   };
+filter f_err  { level(err);    };
+
+###################
+## DESTINATIONS ###
+###################
+
+destination d_main { file("/var/log/syslog.d/main.log"); };
+destination d_auth { file("/var/log/syslog.d/auth.log"); };
+destination d_cron { file("/var/log/syslog.d/cron.log"); };
+destination d_daem { file("/var/log/syslog.d/daemon.log"); };
+destination d_lpr  { file("/var/log/syslog.d/lpr.log"); };
+destination d_ftp  { file("/var/log/syslog.d/ftp.log"); };
+destination d_kern { file("/var/log/syslog.d/kern.log"); };
+destination d_locl { file("/var/log/syslog.d/local.log"); };
+destination d_user { file("/var/log/syslog.d/user.log"); };
+destination d_uucp { file("/var/log/syslog.d/uucp.log"); };
+destination d_mail { file("/var/log/syslog.d/mail.log"); };
+destination d_news { file("/var/log/syslog.d/news.log"); };
+
+destination console { usertty("root"); };
+#destination console_all { file("/dev/tty12"); };
+
+# ...if you intend to use /dev/console for programs like xconsole
+# you can comment out the destination line above that references /dev/tty12
+# and uncomment the line below.
+#destination console_all { file("/dev/console"); };
+
+###################
+##### LOGGING #####
+###################
+
+log { source(s_src ); source(s_kern); source(s_sys); destination(d_main);};
+log { source(s_src ); source(s_kern); source(s_sys); filter(f_emer); destination(console); };
+log { source(s_src ); filter(f_auth); destination(d_auth); };
+log { source(s_src ); filter(f_cron); destination(d_cron); };
+log { source(s_src ); filter(f_lpr ); destination(d_lpr ); };
+log { source(s_src ); filter(f_daem); destination(d_daem); };
+log { source(s_kern);                 destination(d_kern); };
+log { source(s_src ); filter(f_user); destination(d_user); };
+log { source(s_src ); filter(f_uucp); destination(d_uucp); };
+log { source(s_src ); filter(f_mail); destination(d_mail); };
+log { source(s_src ); filter(f_news); destination(d_news); };
+log { source(s_src ); filter(f_locl); destination(d_locl); };
+log { source(s_src ); filter(f_ftp ); destination(d_ftp ); };
+
+<% if remote_ip %>
+##################
+# REMOTE LOGGING #
+##################
+
+destination d_udp { udp("<%= remote_ip %>" port(<%= remote_port %>)); };
+log { source(s_src ); source(s_kern); source(s_sys); destination(d_udp);};
+<% end %>
+
+<% if accept_remote %>
+################
+# REMOTE INPUT #
+################
+
+source s_tcp  { tcp(ip(0.0.0.0) port(514) max-connections(1000)); };
+source s_udp  { udp(ip(0.0.0.0) port(514)); };
+log { source(s_src ); source(s_sys); source(s_tcp); source(s_udp); destination(d_main);};
+<% end %>

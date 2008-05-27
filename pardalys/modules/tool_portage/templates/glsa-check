@@ -1,0 +1,21 @@
+#! /bin/sh
+
+export EINFO_COLOR="no"
+source /etc/init.d/functions.sh
+
+einfo "Started glsa-check"
+
+A=`glsa-check --list --nocolor 2>&1 | grep ' \[[AN]\]'`
+
+if [ -z "${A}" ]; then
+    OK=0
+    MSG='No vulnerable packages.'
+else
+    OK=1
+    MSG='Vulnerable packages found!'
+fi
+
+echo -e "`hostname -f`\tGLSA\t${OK}\t${MSG}" | /usr/lib/nagios/plugins/send_nsca -H <%= monitor %> -c /etc/nagios/send_nsca.cfg
+
+ebegin "Finished glsa-check"
+eend $OK

@@ -1,0 +1,224 @@
+##########################################################################
+# $Id: syslog-ng,v 1.0 2008/02/02 11:25:00 stefan Exp $
+##########################################################################
+
+##########################################################################
+# This was written and is maintained by:
+#    Stefan Jakobs <stefan.jakobs@rus.uni-stuttgart.de>
+#
+# Please send all comments, suggestions, bug reports,
+#    etc, to stefan.jakobs@rus.uni-stuttgart.de.
+##########################################################################
+
+#use warnings;
+use strict;
+
+my $Detail 	= $ENV{'LOGWATCH_DETAIL_LEVEL'} || 0;
+my $Version	= "1.0-20080202";
+
+# initialize logwatch variables 
+my $ThisLine	= "";
+my %OtherList 	= ();
+
+# initialize variables which save the stats
+my ($ReloadConf,$Starts,$Stops,$Reloads)	= ( 0, 0, 0, 0);
+my ($Perms,$FileOpenErrors)	= ( 0, 0);
+my ($Drops, $BrokenConnsSum)	= ( 0, 0);
+my (%BrokenConns, %PermFiles, %OpenFiles)	= ( (), (), ());
+my (%Stats_center, %Stats_source, %Stats_dest) = ( (), (), ());
+
+### Parse the lines ###
+
+while (defined($ThisLine = <STDIN>)) {
+   chomp($ThisLine);
+
+   #TD syslog-ng[9754]: new configuration initialized
+   if ($ThisLine =~ /^new configuration initialized$/) {
+      $ReloadConf++;
+   }
+
+   #TD syslog-ng[9754]: Changing permissions on special file /dev/xconsole
+   elsif ($ThisLine =~ /^Changing permissions on special file ((\/[a-zA-Z0-9_]*)*)$/) {
+      %PermFiles = (%PermFiles, $1 => $PermFiles{$1}+1);
+      $Perms++;
+   }
+
+   #TD syslog-ng[9754]: Cannot open file /tmp/.adir/afile for writing (No such file or directory)
+   elsif ($ThisLine =~ /^Cannot open file ((\/[a-zA-Z0-9_.]*)*) .*/) {
+      # $1 fq file name, $2 only filename
+      %OpenFiles = (%OpenFiles, $1 => $OpenFiles{$1}+1);
+      $FileOpenErrors++;
+   }
+
+   #TD syslog-ng[9754]: SIGHUP received, restarting syslog-ng
+   elsif ($ThisLine =~ /^SIGHUP received, restarting syslog-ng$/) {
+      if ($ReloadConf == 1) {
+         $ReloadConf=0;
+         $Reloads++;
+      } else { $Starts++; }
+   }
+
+   #TD syslog-ng[9754]: syslog-ng version 1.6.2 starting
+   elsif ($ThisLine =~ /^syslog-ng version ([0-9]*\.)*[0-9]* starting$/) {
+      $Starts++;
+   }
+
+   #TD syslog-ng[9754]: syslog-ng version 1.6.2 going down
+   elsif ($ThisLine =~ /^syslog-ng version ([0-9]*\.)*[0-9]* going down$/) {
+      $Stops++;
+   }
+
+   #TD syslog-ng[4833]: STATS: dropped 0
+   elsif ($ThisLine =~ /^STATS: dropped ([0-9]*)$/) {
+      if ($1 != 0) { $Drops = $Drops + $1; }
+   }
+
+   #TD syslog-ng[4833]: Connection broken to AF_INET(XXX.YYY.ZZZ.AAA:BBB), reopening in 60 seconds
+   elsif ($ThisLine =~ /^Connection broken to [A-Z_]*\((([0-9]{1,3}\.){3}[0-9]{1,3}:[0-9]{1,5})\), reopening in [0-9]* seconds$/) {
+      %BrokenConns = (%BrokenConns, $1 => $BrokenConns{$1}+1);
+      $BrokenConnsSum++;
+   }
+
+   # Log statistics from gentoo systems
+   # TD syslog-ng[4883]: Log statistics; processed='center(queued)=1717', processed='center(received)=916', ...	
+   elsif ($ThisLine =~ /^Log statistics; /) {
+      my @processed = 
+	  $ThisLine =~ /processed='([a-z]*)\(([a-z0-9_]*)\)=([0-9]*)'/g;
+      for (my $i=0; $i<@processed; $i=$i+3)
+      {
+	  if ($processed[$i] eq "center") { 
+	     $Stats_center{$processed[$i+1]} = 
+		$Stats_center{$processed[$i+1]} + $processed[$i+2]; 
+	  } elsif ($processed[$i] eq "destination") {
+	     $Stats_dest{$processed[$i+1]} = 
+		$Stats_dest{$processed[$i+1]} + $processed[$i+2];
+	  } elsif ($processed[$i] eq "source") {
+	     $Stats_source{$processed[$i+1]} = 
+		$Stats_source{$processed[$i+1]} + $processed[$i+2];
+	  } else { chomp($ThisLine); $OtherList{$ThisLine}++; }  
+       }
+   }
+  
+   else {
+      # Report any unmatched entries...
+      chomp($ThisLine);
+      $OtherList{$ThisLine}++;
+   }
+}
+
+### generate the output ###
+
+if ($Starts) {
+    printf "\nSyslog-ng started:\t\t%5i Time(s)", $Starts;
+}
+
+if ($Stops) {
+    printf "\nSyslog-ng stopped:\t\t%5i Time(s)", $Stops;
+}
+
+if ($Reloads) {
+    printf "\nSyslog-ng reloaded:\t\t%5i Time(s)", $Reloads;
+}
+if ($Starts || $Stops || $Reloads) { print "\n"; }
+
+if ($Perms) {
+    if ($Detail >= 5) {
+        print "\nSyslog-ng changed the permission on the file(s):";
+        foreach my $file (keys %PermFiles) {
+ 	    printf "\n\t$file\t\t%5i Time(s)", $PermFiles{$file};
+	}
+	print "\n";
+    } else {
+	print "\nSyslog-ng changed $Perms time(s) permission on file(s)\n";
+    }
+}
+
+if ($FileOpenErrors) {
+    if ($Detail >= 5) {
+        print "\nSyslog-ng could not open the file(s):";
+        foreach my $file (keys %OpenFiles) {
+            printf "\n\t$file\t\t%5i Time(s)", $OpenFiles{$file};
+        }
+	print "\n";
+    } else {
+	printf "\nSyslog-ng could not open file:\t%5i Time(s)", $FileOpenErrors;
+    }
+}
+
+if (keys %BrokenConns) {
+    if ($Detail >= 5) {
+        print "\nBroken connection(s) to:";
+        foreach my $IP (keys %BrokenConns) {
+            printf "\n\t$IP\t\t%5i Time(s)", $BrokenConns{$IP}; 
+        }
+	print "\n";
+    } else {
+        printf "\nBroken connection(s):\t\t%5i Time(s)\n", $BrokenConnsSum;
+    }
+}    
+
+if (keys %Stats_center || keys %Stats_dest || keys %Stats_source) {
+    my ($lost_rcvd, $lost_dest) = ( 0, 0);
+
+    if (defined $Stats_center{received} && defined $Stats_source{src}) {
+	$lost_rcvd = $Stats_source{src} - $Stats_center{received};
+    }
+    if (defined $Stats_center{queued} && defined %Stats_dest) {
+	$lost_dest = $Stats_center{queued};	
+	map { $lost_dest = $lost_dest - $Stats_dest{$_} } keys %Stats_dest;
+    }
+
+    if ($Detail >= 5) { print "\nLog Statistics:"; }
+    if ($lost_rcvd != 0 || $lost_dest != 0) {
+	if ($lost_rcvd != 0) { 
+	   if ($Detail >= 5) { 
+	       print "\n- Failed to receive $lost_rcvd message(s)!"; 
+	   }
+	}
+	if ($lost_dest != 0) {
+	   if ($Detail >= 5 ) {
+	       print "\n- Failed to save $lost_dest message(s) in logfile(s)!";
+	   } else { $Drops = $Drops +  $lost_dest; }
+	}
+	if ($Detail >= 5) { print "\n"; }
+    }
+
+    if ($Detail >= 6) {
+	if (keys %Stats_center) {
+	   print "\nCenter:";
+	   foreach my $center (keys %Stats_center) {
+		printf "\n\t%-15s\t%8i", $center, $Stats_center{$center};
+	   }
+	}
+	if (keys %Stats_dest) {
+	   print "\nDestination:";
+           foreach my $dest (keys %Stats_dest) {
+                printf "\n\t%-15s\t%8i", $dest, $Stats_dest{$dest};
+           }
+        }
+        if (keys %Stats_source) {
+           print "\nSource:";
+           foreach my $source (keys %Stats_source) {
+                printf "\n\t%-15s\t%8i", $source, $Stats_source{$source};
+           }
+        }
+	print "\n";
+     }
+}
+
+if ($Drops) {
+    print "\nSyslog-ng dropped " . $Drops ." line(s)\n";
+}
+
+if (keys %OtherList) {
+   print "\n**** Unmatched entries ****\n";
+   foreach my $Error (keys %OtherList) {
+      print "    $Error : $OtherList{$Error} Times\n";
+   }
+}
+
+### return without a failure ###
+exit(0);
+
+# vi: shiftwidth=3 tabstop=3 syntax=perl et
+

@@ -1,0 +1,7 @@
+check process syslog-ng with pidfile /var/run/syslog-ng.pid 
+  start program = "/etc/init.d/syslog-ng start"
+  stop  program = "/etc/init.d/syslog-ng stop"  
+<% if accept_remote -%>
+  if failed port 514 type udp then restart
+<% end -%>
+  if 5 restarts within 5 cycles then timeout  

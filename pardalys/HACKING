@@ -96,8 +96,10 @@ Release
   3) Update CHANGES for the next release
   4) Copy CHANGES to RELEASE_NOTES (short or long)?
   5) Write a release comment in RELEASE_NOTES, set focus
-  6) Prepare release package
-  7) Prepare the sourceforge release
-  8) Prepare the freshmeat announcement
-  9) Prepare the ebuild
- 10) Announce the package on the forum/blog
+  6) Commit to git
+  7) Commit to subversion
+  8) Run "make release"
+  9) Prepare the sourceforge release
+ 10) Prepare the freshmeat announcement
+ 11) Prepare the ebuild
+ 12) Announce the package on the forum/blog

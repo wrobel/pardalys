@@ -1,0 +1,4 @@
+check process fcron with pidfile /var/run/fcron.pid
+  start program = "/etc/init.d/fcron start"
+  stop  program = "/etc/init.d/fcron stop"
+  if 5 restarts within 5 cycles then timeout

@@ -1,0 +1,221 @@
+# Postfix master process configuration file.  For details on the format
+# of the file, see the Postfix master(5) manual page.
+#
+
+# INCOMING MAIL
+# ==========================================================================
+# service type  private unpriv  chroot  wakeup  maxproc command + args
+#               (yes)   (yes)   (yes)   (never) (100)
+# ==========================================================================
+
+# The SMTP service on port 25
+<%= bind_addr %>:smtp      inet  n       -       n       -       5       smtpd
+
+# secure smtp on port 465
+<%= bind_addr %>:465       inet  n       -       n       -       -       smtpd -o smtpd_tls_wrappermode=yes -o smtpd_sasl_auth_enable=yes 
+
+#submission inet n      -       n       -       -       smtpd
+#	    -o smtpd_etrn_restrictions=reject
+#	    -o smtpd_client_restrictions=permit_sasl_authenticated,reject
+
+#submission   inet    n       -       n       -       -       smtpd
+#  -o smtpd_etrn_restrictions=reject
+#  -o smtpd_enforce_tls=yes -o smtpd_sasl_auth_enable=yes
+#628      inet  n       -       n       -       -       qmqpd
+
+# Picks up locally generated mails and feeds them to the cleanup process
+pickup    fifo  n       -       n       60      1       pickup
+
+# Helps handling TLS connections
+tlsmgr    unix  -       -       n       1000?   1       tlsmgr
+
+# POSTFIX INTERNALS
+# ==========================================================================
+# service type  private unpriv  chroot  wakeup  maxproc command + args
+#               (yes)   (yes)   (yes)   (never) (100)
+# ==========================================================================
+
+# Checks incoming mail for correctnes, rewrites incorrect data as much as
+# possible and moves the mail into the incoming queue
+cleanup   unix  n       -       n       -       0       cleanup
+
+# Handles the central postfix queues for mail delivery
+qmgr      fifo  n       -       n       300     1       qmgr
+#qmgr     fifo  n       -       n       300     1       oqmgr
+
+# Rewriting of incomplete addresses, transport determination, address verification
+rewrite   unix  -       -       n       -       -       trivial-rewrite
+
+# bouncing mails
+bounce    unix  -       -       n       -       0       bounce
+defer     unix  -       -       n       -       0       bounce
+
+# address verification (recommended by postfix manual to be turned off on heavy load servers)
+verify    unix  -       -       n       -       1       verify
+
+# flushing mails
+flush     unix  n       -       n       1000?   0       flush
+
+# proxies files for a chrooted postfix
+proxymap  unix  -       -       n       -       -       proxymap
+
+# report queue status
+showq     unix  n       -       n       -       -       showq
+
+# Rejects clients hammering the server
+anvil     unix  -       -       n       -       1       anvil
+
+# Session cache management
+scache	    unix	-	-	n	-	1	scache
+
+# Trace service
+trace     unix  -       -       n       -       0       bounce
+
+# Handles discarded mails
+discard	    unix    -	-	n	-	-	discard
+
+# Defer a mail for retry
+retry     unix  -       -       n       -       -       error
+
+# DELIVERING MAIL
+# ==========================================================================
+# service type  private unpriv  chroot  wakeup  maxproc command + args
+#               (yes)   (yes)   (yes)   (never) (100)
+# ==========================================================================
+
+# transport mails to destination via smtp
+smtp      unix  -       -       n       -       -       smtp
+
+# When relaying mail as backup MX, disable fallback_relay to avoid MX loops
+relay	  unix	-	-	n	-	-	smtp
+#relay     unix  -       -       n       -       -       smtp
+#	   -o fallback_relay=
+#       -o smtp_helo_timeout=5 -o smtp_connect_timeout=5
+
+# error delivery
+error     unix  -       -       n       -       -       error
+
+# transport mail to local recipient
+local     unix  -       n       n       -       -       local
+
+# lmtp delivery (does this really need to be active?)
+lmtp      unix  -       -       n       -       -       lmtp
+
+# What is this being used for?
+post-cleanup unix  n    -       n       -       0       cleanup -o virtual_maps=
+
+#
+# ====================================================================
+# Interfaces to non-Postfix software. Be sure to examine the manual
+# pages of the non-Postfix software to find out what options it wants.
+#
+# Many of the following services use the Postfix pipe(8) delivery
+# agent.  See the pipe(8) man page for information about ${recipient}
+# and other message envelope options.
+# ====================================================================
+#
+# maildrop. See the Postfix MAILDROP_README file for details.
+# Also specify in main.cf: maildrop_destination_recipient_limit=1
+#
+#maildrop  unix  -       n       n       -       -       pipe
+#  flags=DRhu user=vmail argv=/usr/local/bin/maildrop -d ${recipient}
+#
+# The Cyrus deliver program has changed incompatibly, multiple times.
+#
+#old-cyrus unix  -       n       n       -       -       pipe
+#  flags=R user=cyrus argv=/cyrus/bin/deliver -e -m ${extension} ${user}
+# Cyrus 2.1.5 (Amos Gouaux)
+# Also specify in main.cf: cyrus_destination_recipient_limit=1
+#cyrus     unix  -       n       n       -       -       pipe
+#  user=cyrus argv=/cyrus/bin/deliver -e -r ${sender} -m ${extension} ${user}
+#
+# See the Postfix UUCP_README file for configuration details.
+#
+#uucp      unix  -       n       n       -       -       pipe
+#  flags=Fqhu user=uucp argv=uux -r -n -z -a$sender - $nexthop!rmail ($recipient)
+#
+# Other external delivery methods.
+#
+#ifmail    unix  -       n       n       -       -       pipe
+#  flags=F user=ftn argv=/usr/lib/ifmail/ifmail -r $nexthop ($recipient)
+#bsmtp     unix  -       n       n       -       -       pipe
+#  flags=Fq. user=foo argv=/usr/local/sbin/bsmtp -f $sender $nexthop $recipient
+
+# SPECIAL KOLAB DELIVERY
+# ==========================================================================
+# service type  private unpriv  chroot  wakeup  maxproc command + args
+#               (yes)   (yes)   (yes)   (never) (100)
+# ==========================================================================
+
+# The connection to the amavis content filter
+smtp-amavis unix -	-	n	-	2       smtp
+    -o smtp_data_done_timeout=1200
+    -o smtp_send_xforward_command=yes
+    -o disable_dns_lookups=yes
+
+# SMTP interface for injecting mail back into postfix
+# from kolabfilter
+<%= local_addr %>:10025 inet n	-	n	-	3  smtpd
+<% if enable_virus_scan -%>
+    -o content_filter=smtp-amavis:[<%= local_addr %>]:10024
+    -o smtp_fallback_relay=[<%= local_addr %>]:10026
+<% else -%>
+    -o content_filter=
+<% end -%>
+    -o cleanup_service_name=post-cleanup
+    -o local_recipient_maps=
+    -o relay_recipient_maps=
+    -o smtpd_restriction_classes=
+    -o smtpd_client_restrictions=
+    -o smtpd_helo_restrictions=
+    -o smtpd_sender_restrictions=
+    -o smtpd_recipient_restrictions=permit_mynetworks,reject
+    -o mynetworks=127.0.0.0/8
+    -o smtpd_authorized_xforward_hosts=127.0.0.0/8
+    -o strict_rfc821_envelopes=yes
+    -o smtpd_error_sleep_time=0
+    -o smtpd_soft_error_limit=1001
+    -o smtpd_hard_error_limit=1000
+
+# SMTP interface for injecting mail back into postfix
+# from amavis
+<%= local_addr %>:10026 inet n	-	n	-	3  smtpd
+    -o content_filter=
+    -o cleanup_service_name=post-cleanup
+    -o local_recipient_maps=
+    -o relay_recipient_maps=
+    -o smtpd_restriction_classes=
+    -o smtpd_client_restrictions=
+    -o smtpd_helo_restrictions=
+    -o smtpd_sender_restrictions=
+    -o smtpd_recipient_restrictions=permit_mynetworks,reject
+    -o mynetworks=127.0.0.0/8
+    -o strict_rfc821_envelopes=yes
+    -o smtpd_error_sleep_time=0
+    -o smtpd_soft_error_limit=1001
+    -o smtpd_hard_error_limit=1000
+
+# The Kolab SMTP policy script
+kolabpolicy    unix  -       n       n       -       3       spawn user=kolab argv=/usr/bin/kolab_smtpdpolicy 
+
+# Filter In/Outgoing mail
+kolabfilter     unix  -       n       n       -       3       pipe user=kolab null_sender= argv=/usr/bin/php
+    -c /etc/php/cli-php5/php.ini
+    -f /usr/bin/kolabfilter
+    --
+    -h <%= hostname %>
+    -s ${sender}
+    -r ${recipient}
+    -c ${client_address}
+    -u ${sasl_username}
+
+# Filter incoming mail for resource updates (iTip)
+kolabmailboxfilter     unix  -       n       n       -       3       pipe user=kolab null_sender= argv=/usr/bin/php
+    -c /etc/php/cli-php5/php.ini
+    -f /usr/bin/kolabmailboxfilter
+    --
+    -h <%= hostname %>
+    -s ${sender}
+    -r ${recipient}
+    -c ${client_address}
+

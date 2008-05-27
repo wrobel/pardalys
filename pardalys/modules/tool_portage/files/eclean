@@ -1,0 +1,18 @@
+#! /bin/sh
+
+export EINFO_COLOR="no"
+source /etc/init.d/functions.sh
+
+einfo "Started eclean"
+
+eclean -q -d --nocolor distfiles
+
+RESULT=$?
+ebegin "Finished cleaning distfiles"
+eend $RESULT
+
+eclean -q -d --nocolor packages
+
+RESULT=$?
+ebegin "Finished cleaning packages"
+eend $RESULT

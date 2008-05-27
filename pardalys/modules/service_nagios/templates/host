@@ -1,0 +1,10 @@
+define host{
+       use                     linux-server            ; Name of host template to use
+       host_name               <%= hostname %>
+       address                 <%= hostip %>
+       alias                   <%= hostalias %>
+<% if hostgroup -%>   
+       hostgroups              <%= hostgroup %>
+<% end -%>
+}
+

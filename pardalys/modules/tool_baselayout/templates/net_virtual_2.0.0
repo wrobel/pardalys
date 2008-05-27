@@ -1,0 +1,7 @@
+modules="iproute2"
+modules="!ifconfig"
+
+config_venet0="<%= ipHostNumber %> netmask 255.255.255.0 broadcast 0.0.0.0"
+
+routes_venet0="191.255.255.0/24 scope link
+               default via 191.255.255.1"

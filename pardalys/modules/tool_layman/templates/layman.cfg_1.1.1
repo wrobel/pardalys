@@ -1,0 +1,40 @@
+[MAIN]
+
+#-----------------------------------------------------------
+# Path to the config directory
+
+config_dir: /etc/layman
+
+#-----------------------------------------------------------
+# Defines the directory where overlays should be installed
+
+storage   : <%= layman_storage %>
+
+#-----------------------------------------------------------
+# Remote overlay lists will be stored here
+# layman will append _md5(url).xml to each filename
+
+cache     : %(storage)s/cache
+
+#-----------------------------------------------------------
+# The list of locally installed overlays
+
+local_list: %(storage)s/overlays.xml
+
+#-----------------------------------------------------------
+# Path to the make.conf file that should be modified by 
+# layman
+
+make_conf : %(storage)s/make.conf
+
+#-----------------------------------------------------------
+# URLs of the remote lists of overlays (one per line)
+#
+#overlays  : http://www.gentoo.org/proj/en/overlays/layman-global.txt
+#            http://dev.gentoo.org/~wrobel/layman/global-overlays.xml
+#            http://mydomain.org/my-layman-list.xml
+
+overlays  : http://www.gentoo.org/proj/en/overlays/layman-global.txt
+<% layman_remote_lists.each do |list| -%>
+            <% list %>
+<% end -%>

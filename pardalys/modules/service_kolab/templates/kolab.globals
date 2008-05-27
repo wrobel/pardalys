@@ -39,7 +39,19 @@
 # ------------------------------------------------------------------------------
 #                                  USER VARIABLES
 # ------------------------------------------------------------------------------
-#
+
+# NETWORK
+# ~~~~~~~
+
+# Interfaces we should bind to (e.g. postfix server)
+bind_addr : 0.0.0.0
+
+# Should the services bind to all IP addresses?
+bind_any : TRUE
+
+# Our local IP address
+local_addr : 127.0.0.1
+
 
 # ------------------------------------------------------------------------------
 #                               DEVELOPER VARIABLES
@@ -117,8 +129,5 @@ KOLABRC:
 sbindir: <%= sbindir %>
 webserver_logdir: 
 webserver_document_root: 
-local_addr : 127.0.0.1
-bind_any : TRUE
-bind_addr : 0.0.0.0
 calendar_id : calendar
 syslog_facility : user

@@ -1,5 +1,8 @@
 2008-05-27  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_kolab/templates/kolab.globals: Start documenting
+	variables with relevance to postfix.
+
 	* modules/service_postfix/manifests/init.pp: Fix a default value.
 
 	* modules/service_kolab/plugins/facter/kolab.rb: Fix reading of

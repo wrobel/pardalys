@@ -1,0 +1,4 @@
+Defines the installation of postfix and provides the configuration
+for a postfix MTA server as required for the Kolab groupware server.
+
+Postfix is one of the central components of a Kolab groupware server.

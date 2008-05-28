@@ -93,20 +93,19 @@ kolab_musr: <%= kolab_musr %>
 kolab_mgrp: <%= kolab_mgrp %>
 
 conn_refresh_period : 60
-cyrus-admin : manager
-cyrus-admins : manager
-cyrus-autocreatequota : 100000
-cyrus-imap : TRUE
-cyrus-imaps : TRUE
-cyrus-pop3 : FALSE
-cyrus-pop3s : TRUE
-cyrus-sieve : TRUE
+cyrus_admin : manager
+cyrus_admins : manager
+cyrus_autocreatequota : 100000
+cyrus_imap : TRUE
+cyrus_imaps : TRUE
+cyrus_pop3 : FALSE
+cyrus_pop3s : TRUE
+cyrus_sieve : TRUE
 directory_mode : slurpd
 gyard_deletion_period : 10080
 ldap_uri : ldap://127.0.0.1:389
 log_level : 2
 debug : 0
-postfix-mydestination : $mydomain
 sf_field_deleted : kolabdeleteflag
 sf_field_guid : entryUUID
 sf_field_modified : modifytimestamp

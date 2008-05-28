@@ -247,6 +247,13 @@ class service::postfix {
 
   case $operatingsystem {
     gentoo: {
+      # SASL configuration for the smtpd process
+      file { 
+        "${service::sasl::sasl_confdir}/smtpd.conf":
+        source => 'puppet:///service_postfix/smtpd.conf',
+        require => Package['postfix'];
+      }
+
       # Ensure that the service starts with the system
       file { '/etc/runlevels/default/postfix':
         ensure => '/etc/init.d/postfix',

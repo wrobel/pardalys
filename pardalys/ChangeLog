@@ -1,5 +1,8 @@
 2008-05-28  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_postfix/manifests/init.pp: Add the smtpd SASL
+	configuration.
+
 	* modules/service_postfix/files/smtpd.conf: Gentoo SASL
 	configuration file for the smtpd process.
 

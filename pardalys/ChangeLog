@@ -1,3 +1,9 @@
+2008-05-28  Gunnar Wrobel  <p@rdus.de>
+
+	* modules/service_kolab/plugins/facter/kolab.rb: Convert
+	TRUE/FALSE, convert older variable names, prepend "kolab_" to LDAP
+	parameters.
+
 2008-05-27  Gunnar Wrobel  <p@rdus.de>
 
 	* modules/service_postfix/README: Add a readme for the module.

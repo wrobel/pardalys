@@ -26,6 +26,11 @@ if FileTest.file?(Facter.kolab_globalsfile)
   end
   facts.each{|var,val|
     Facter.add('kolab_' + var) do
+      if val == 'TRUE'
+        val = true
+      elsif val == 'FALSE'
+        val = false
+      end
       setcode do
         val
       end
@@ -173,16 +178,34 @@ if !Facter.method_defined? 'kolab_ldap_master_uri'
   end
 end
 
-if !Facter.method_defined? 'kolab_php_dn'
-  Facter.add('kolab_php_dn') do
+# Rewrite the older kolab_php_dn into the newer variable names
+if Facter.method_defined? 'kolab_php_dn'
+  Facter.add('kolab_bind_dn_restricted') do
+    setcode do
+      Facter.kolab_php_dn
+    end
+  end
+end
+
+# Rewrite the older kolab_php_pw into the newer variable names
+if Facter.method_defined? 'kolab_php_pw'
+  Facter.add('kolab_bind_pw_restricted') do
+    setcode do
+      Facter.kolab_php_pw
+    end
+  end
+end
+
+if !Facter.method_defined? 'kolab_bind_dn_restricted'
+  Facter.add('kolab_bind_dn_restricted') do
     setcode do
       'cn=nobody,cn=internal,' + Facter.kolab_base_dn
     end
   end
 end
 
-if !Facter.method_defined? 'kolab_php_pw'
-  Facter.add('kolab_php_pw') do
+if !Facter.method_defined? 'kolab_bind_pw_restricted'
+  Facter.add('kolab_bind_pw_restricted') do
     setcode do
       `#{bindir}/openssl rand -base64 30`
     end
@@ -247,7 +270,12 @@ if ldap_present
     end
     kolab_obj.each do |entry|
       entry.each_pair do |key, val|
-        Facter.add(key.gsub(/-/, '_')) do
+        Facter.add('kolab_' + key.gsub(/-/, '_')) do
+          if val[0] == 'TRUE'
+            val = true
+          elsif val[0] == 'FALSE'
+            val = false
+          end
           setcode do
             val
           end

@@ -45,6 +45,20 @@ class service::postfix {
   case $operatingsystem {
     gentoo:
     {
+      # Keep the basic ssmtp mailer around
+      gentoo_use_flags { 'ssmtp':
+        context => 'service_postfix_ssmtp',
+        package => 'mail-mta/ssmtp',
+        use     => 'mailwrapper',
+        tag     => 'buildhost'
+      }
+      package { 'ssmtp':
+        category => 'mail-mta',
+        ensure   => 'installed',
+        require  => Gentoo_use_flags['ssmtp'],
+        tag      => 'buildhost';
+      }
+      # The main postfix package
       gentoo_use_flags { 'postfix':
         context => 'service_postfix_postfix',
         package => 'mail-mta/postfix',
@@ -57,17 +71,39 @@ class service::postfix {
         require  => Gentoo_use_flags['postfix'],
         tag      => 'buildhost';
       }
-      gentoo_use_flags { 'ssmtp':
-        context => 'service_postfix_ssmtp',
-        package => 'mail-mta/ssmtp',
-        use     => 'mailwrapper',
+      # We need kolab_smtpdpolicy from perl-kolab
+      gentoo_unmask { 'perl-kolab':
+        context => 'service_postfix_perlkolab',
+        package => '=dev-perl/perl-kolab-2.2*',
         tag     => 'buildhost'
       }
-      package { 'ssmtp':
-        category => 'mail-mta',
-        ensure   => 'installed',
-        require  => Gentoo_use_flags['ssmtp'],
-        tag      => 'buildhost';
+      gentoo_keywords { 'perl-kolab':
+        context => 'service_postfix_perlkolab',
+        package => '=dev-perl/perl-kolab-2.2*',
+        keywords => "~$keyword",
+        tag      => 'buildhost'
+      }
+      # FIXME: This is bad as we should not require cyrus at this
+      #        point. Maybe perl-kolab can be split at some point.
+      gentoo_unmask { 'cyrus-imap-admin':
+        context => 'service_postfix_cyrusimapadmin',
+        package => '=net-mail/cyrus-imap-admin-2.3.12_p2',
+        tag     => 'buildhost'
+      }
+      gentoo_keywords { 'cyrus-imap-admin':
+        context => 'service_postfix_cyrusimapadmin',
+        package => '=net-mail/cyrus-imap-admin-2.3.12_p2',
+        keywords => "~$keyword",
+        tag      => 'buildhost'
+      }
+      package { 'perl-kolab':
+        category => 'dev-perl',
+        ensure   => 'latest',
+        require  =>  [ Gentoo_unmask['perl-kolab'],
+                       Gentoo_keywords['perl-kolab'],
+                       Gentoo_unmask['cyrus-imap-admin'],
+                       Gentoo_keywords['cyrus-imap-admin'] ],
+        tag      => 'buildhost'
       }
     }
     default:
@@ -111,12 +147,12 @@ class service::postfix {
     "${postfix_confdir}/master.cf":
     content => template("service_postfix/master.cf_${template_postfix}"),
     mode    => 640,
-    require => Package['postfix'],
+    require => [Package['postfix'], Package['perl-kolab']],
     notify  => Service['postfix'];
     "${postfix_confdir}/main.cf":
     content => template("service_postfix/main.cf_${template_postfix}"),
     mode    => 640,
-    require => Package['postfix'],
+    require => [Package['postfix'], Package['perl-kolab']],
     notify  => Service['postfix'];
     "${postfix_aliases}":
     source  => 'puppet:///service_postfix/aliases',

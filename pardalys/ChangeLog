@@ -1,5 +1,8 @@
 2008-05-28  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_postfix/files/smtpd.conf: Gentoo SASL
+	configuration file for the smtpd process.
+
 	* modules/service_sasl/files/saslauthd: Gentoo configuration file
 	for saslauthd.
 

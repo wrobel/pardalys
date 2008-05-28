@@ -205,7 +205,7 @@ kolabfilter     unix  -       n       n       -       3       pipe user=kolab nu
     -c /etc/php/cli-php5/php.ini
     -f /usr/bin/kolabfilter
     --
-    -h <%= hostname %>
+    -h <%= kolab_hostname %>
     -s ${sender}
     -r ${recipient}
     -c ${client_address}
@@ -216,7 +216,7 @@ kolabmailboxfilter     unix  -       n       n       -       3       pipe user=k
     -c /etc/php/cli-php5/php.ini
     -f /usr/bin/kolabmailboxfilter
     --
-    -h <%= hostname %>
+    -h <%= kolab_hostname %>
     -s ${sender}
     -r ${recipient}
     -c ${client_address}

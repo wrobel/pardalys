@@ -1,5 +1,8 @@
 2008-05-28  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_kolab/templates/kolab.conf (php_*): Rename
+	php_*. These were also counter intuitive.
+
 	* modules/service_kolab/plugins/facter/kolab.rb: Convert
 	TRUE/FALSE, convert older variable names, prepend "kolab_" to LDAP
 	parameters.

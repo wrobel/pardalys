@@ -105,6 +105,32 @@ class service::postfix {
                        Gentoo_keywords['cyrus-imap-admin'] ],
         tag      => 'buildhost'
       }
+      # We need the Horde::Kolab modules
+      gentoo_use_flags { 'php':
+        context => 'service_postfix_php',
+        package => 'dev-lang/php',
+        use     => 'kolab imap ldap nls session xml',
+        tag     => 'buildhost'
+      }
+      gentoo_unmask { 'horde-framework-kolab':
+        context => 'service_postfix_hordeframeworkkolab',
+        package => '=dev-php/horde-framework-kolab-3.2_rc3-r20080508',
+        tag     => 'buildhost'
+      }
+      gentoo_keywords { 'horde-framework-kolab':
+        context => 'service_postfix_hordeframeworkkolab',
+        package => '=dev-php/horde-framework-kolab-3.2_rc3-r20080508',
+        keywords => "~$keyword",
+        tag      => 'buildhost'
+      }
+      package { 'horde-framework-kolab':
+        category => 'dev-php',
+        ensure   => 'latest',
+        require  =>  [ Gentoo_use_flags['php'],
+                       Gentoo_keywords['horde-framework-kolab'],
+                       Gentoo_unmask['horde-framework-kolab'] ],
+        tag      => 'buildhost'
+      }
     }
     default:
     {

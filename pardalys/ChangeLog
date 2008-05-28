@@ -1,7 +1,8 @@
 2008-05-28  Gunnar Wrobel  <p@rdus.de>
 
 	* modules/service_postfix/manifests/init.pp: Add perl-kolab to the
-	installed packages.
+	installed packages. Add horde-framework-kolab to the installed
+	packages.
 
 	* modules/service_sasl/manifests/init.pp: Add the saslauthd
 	configuration.

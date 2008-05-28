@@ -1,5 +1,7 @@
 2008-05-28  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_kolab/templates/kolab.conf: Reorder parameters.
+
 	* modules/service_postfix/manifests/init.pp: Add perl-kolab to the
 	installed packages. Add horde-framework-kolab to the installed
 	packages.

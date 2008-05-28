@@ -1,5 +1,8 @@
 2008-05-28  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/meta_kolab_smtp/manifests/init.pp: Include the sasl
+	module.
+
 	* modules/meta_kolab_complete/manifests/init.pp: Include the sasl
 	and postfix modules.
 

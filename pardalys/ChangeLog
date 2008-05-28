@@ -1,5 +1,11 @@
 2008-05-28  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_postfix/templates/kolab_smtpdpolicy.conf: 
+	* modules/service_postfix/templates/master.cf_2.4.6-r2: 
+	* modules/service_postfix/manifests/init.pp: 
+	Allow logging the smtpdpolicy filter and provide a configuration
+	for the policy script.
+
 	* modules/service_kolab/templates/kolab.conf: Reorder parameters.
 
 	* modules/service_postfix/manifests/init.pp: Add perl-kolab to the

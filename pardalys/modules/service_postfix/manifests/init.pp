@@ -14,6 +14,7 @@ import 'os_gentoo'
 #                        paths.
 # @module os_gentoo      The os_gentoo module is required for Gentoo specific
 #                        package installation.
+# @module service_kolab  Provides the kolab configuration directory.
 # @module service_sasl   Provides the required saslauthd service.
 #
 # @fact operatingsystem  Allows to choose the correct package name
@@ -35,9 +36,14 @@ import 'os_gentoo'
 # @fact kolab_postfix_mydestination Our mail domains
 # @fact kolab_postfix_relayhost     We relay through this host
 # @fact kolab_postfix_relayport     Port of the relay host
-#
+# @fact kolab_kolabhost             The hosts of our Kolab network
 # @fact kolab_postfix_enable_virus_scan Enable the amavis scan
+# @fact kolab_postfix_allow_unauthenticated Allow unauthenticated
+#                                           receiving of mails
+#
 # @fact postfix_enable_amavis_fallback  Exclude amavis if it is down
+# @fact postfix_log_kolabpolicy         If you need verbose information from
+#                                       the kolab policy script
 #
 class service::postfix {
 
@@ -126,12 +132,12 @@ class service::postfix {
       }
       gentoo_unmask { 'horde-framework-kolab':
         context => 'service_postfix_hordeframeworkkolab',
-        package => '=dev-php/horde-framework-kolab-3.2_rc3-r20080508',
+        package => '=dev-php/horde-framework-kolab-3.2_rc3-r*',
         tag     => 'buildhost'
       }
       gentoo_keywords { 'horde-framework-kolab':
         context => 'service_postfix_hordeframeworkkolab',
-        package => '=dev-php/horde-framework-kolab-3.2_rc3-r20080508',
+        package => '=dev-php/horde-framework-kolab-3.2_rc3-r*',
         keywords => "~$keyword",
         tag      => 'buildhost'
       }
@@ -180,8 +186,12 @@ class service::postfix {
   $relayhost = get_var('kolab_postfix_relayhost', false)
   $relayport = get_var('kolab_postfix_relayport', 25)
 
+  $permithosts = get_var('kolab_kolabhost')
+
+  $allow_unauthenticated = get_var('kolab_postfix_allow_unauthenticated', true)
   $enable_virus_scan = get_var('kolab_postfix_enable_virus_scan', true)
   $enable_amavis_fallback = get_var('postfix_enable_amavis_fallback', false)
+  $log_kolabpolicy = get_var('postfix_log_kolabpolicy', false)
 
   file { 
     "${postfix_confdir}/master.cf":
@@ -244,6 +254,9 @@ class service::postfix {
     mode    => 640,
     require => Package['postfix'],
     notify  => Service['postfix'];
+    "${kolab_confdir}/kolab_smtpdpolicy.conf":
+    content => template("service_postfix/kolab_smtpdpolicy.conf"),
+    require => Package['perl-kolab'];
 #
 #    '/etc/monit.d/postfix':
 #    source  => 'puppet:///service_cron/monit_postfix';

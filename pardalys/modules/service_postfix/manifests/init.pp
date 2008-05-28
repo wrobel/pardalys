@@ -20,9 +20,23 @@ import 'os_gentoo'
 #                        required to set additional tasks depending on
 #                        the distribution.
 # @fact version_postfix  The postfix version currently installed
-# @fact kolab_bind_addr  The interface postfix should bind to
-# @fact kolab_bind_any   Should we bind to any interface?
-# @fact kolab_local_addr Our local IP (usually 127.0.0.1)
+#
+# @fact kolab_fqdnhostname          Our primary Kolab hostname
+# @fact kolab_ldap_uri              URI for our LDAP server
+# @fact kolab_base_dn               The base DN of the LDAP server
+# @fact kolab_bind_dn_restricted    The DN for the user with restricted access
+# @fact kolab_bind_pw_restricted    The password for the user with restricted access
+# @fact kolab_bind_addr             The interface postfix should bind to
+# @fact kolab_bind_any              Should we bind to any interface?
+# @fact kolab_local_addr            Our local IP (usually 127.0.0.1)
+# @fact kolab_postfix_mydomain      Our primary mail domain
+# @fact kolab_postfix_mynetworks    Networks that may relay through us
+# @fact kolab_postfix_mydestination Our mail domains
+# @fact kolab_postfix_relayhost     We relay through this host
+# @fact kolab_postfix_relayport     Port of the relay host
+#
+# @fact kolab_postfix_enable_virus_scan Enable the amavis scan
+# @fact postfix_enable_amavis_fallback  Exclude amavis if it is down
 #
 class service::postfix {
 
@@ -71,30 +85,26 @@ class service::postfix {
 
   $template_postfix = template_version($version_postfix, '2.4.6-r2@:2.4.6-r2,', '2.4.6-r2')
 
+  $kolab_hostname = get_var('kolab_fqdnhostname')
+
+  $ldap_uri = get_var('kolab_ldap_uri', 'ldap://127.0.0.1:389')
+  $base_dn = get_var('kolab_base_dn')
+  $bind_dn_nobody = get_var('kolab_bind_dn_restricted')
+  $bind_pw_nobody = get_var('kolab_bind_pw_restricted')
+
   $bind_addr = get_var('kolab_bind_addr', '0.0.0.0')
   $local_addr = get_var('kolab_local_addr', '127.0.0.1')
-  $kolab_bind_any = get_var('kolab_bind_any', 'TRUE')
-  case $kolab_bind_any {
-    'TRUE': {
-      $bind_any = true
-    }
-    default: {
-      $bind_any = false
-    }
-  }
+  $bind_any = get_var('kolab_bind_any', true)
 
-  $enable_virus_scan = get_var('postfix_enable_virus_scan', true)
+  $mydomain = get_var('kolab_postfix_mydomain')
+  $mynetworks = get_var('kolab_postfix_mynetworks', '127.0.0.0/8')
+  $mydestination = get_var('kolab_postfix_mydestination')
+
+  $relayhost = get_var('kolab_postfix_relayhost', false)
+  $relayport = get_var('kolab_postfix_relayport', 25)
+
+  $enable_virus_scan = get_var('kolab_postfix_enable_virus_scan', true)
   $enable_amavis_fallback = get_var('postfix_enable_amavis_fallback', false)
-  $mydomain = get_var('postfix_mydomain')
-  $mynetworks = get_var('postfix_mynetworks', '127.0.0.0/8')
-  $mydestination = split(get_var('postfix_mydestination'), ',')
-  $relayhost = get_var('postfix_relayhost', false)
-  $relayport = get_var('postfix_relayport', 25)
-  $ldap_uri = get_var('kolab_ldap_uri', 'ldap://127.0.0.1:389')
-  $base_dn = get_var('kolab_base_dn', 'dc=example,dc=com')
-  $bind_dn_nobody = get_var('kolab_bind_dn_nobody')
-  $bind_pw_nobody = get_var('kolab_base_pw_nobody')
-  $hostname = get_var('kolab_fqdnhostname')
 
   file { 
     "${postfix_confdir}/master.cf":

@@ -1,5 +1,8 @@
 2008-05-28  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_postfix/manifests/init.pp: Finish the variable
+	cleanup.
+
 	* modules/service_kolab/templates/kolab.globals: Convert "-" to
 	"_"
 

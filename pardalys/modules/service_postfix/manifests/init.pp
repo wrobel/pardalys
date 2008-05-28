@@ -106,6 +106,18 @@ class service::postfix {
         tag      => 'buildhost'
       }
       # We need the Horde::Kolab modules
+      gentoo_use_flags { 'c-client':
+        context => 'service_postfix_cclient',
+        package => 'net-libs/c-client',
+        use     => 'kolab',
+        tag     => 'buildhost'
+      }
+      gentoo_keywords { 'php':
+        context => 'service_postfix_php',
+        package => '=dev-lang/php-5.2.6',
+        keywords => "~$keyword",
+        tag     => 'buildhost'
+      }
       gentoo_use_flags { 'php':
         context => 'service_postfix_php',
         package => 'dev-lang/php',
@@ -126,7 +138,9 @@ class service::postfix {
       package { 'horde-framework-kolab':
         category => 'dev-php',
         ensure   => 'latest',
-        require  =>  [ Gentoo_use_flags['php'],
+        require  =>  [ Gentoo_use_flags['c-client'],
+                       Gentoo_use_flags['php'],
+                       Gentoo_keywords['php'],
                        Gentoo_keywords['horde-framework-kolab'],
                        Gentoo_unmask['horde-framework-kolab'] ],
         tag      => 'buildhost'

@@ -82,6 +82,14 @@ class service::sasl {
 
   case $operatingsystem {
     gentoo: {
+      # Configuration for the saslauthd
+      file { 
+        '/etc/conf.d/saslauthd':
+        source => 'puppet:///service_sasl/saslauthd',
+        require => Package['cyrus-sasl'],
+        notify  => Service['saslauthd'];
+      }
+
       # Ensure that the service starts with the system
       file { '/etc/runlevels/default/saslauthd':
         ensure => '/etc/init.d/saslauthd',

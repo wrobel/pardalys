@@ -1,5 +1,7 @@
 2008-05-28  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_sasl/*: Added the SASL configuration module.
+
 	* modules/service_postfix/templates/*: Use kolab_hostname instead
 	of hostname.
 

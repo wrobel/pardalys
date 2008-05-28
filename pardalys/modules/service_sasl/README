@@ -1,0 +1,4 @@
+Defines the installation of SASL and provides the configuration
+for SASL authentication required for the Kolab groupware server.
+
+SASL is one of the central components of a Kolab groupware server.

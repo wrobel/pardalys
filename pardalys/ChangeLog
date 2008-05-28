@@ -1,5 +1,8 @@
 2008-05-28  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_postfix/manifests/init.pp: Require the saslauthd
+	service.
+
 	* modules/meta_kolab_smtp/manifests/init.pp: Include the sasl
 	module.
 

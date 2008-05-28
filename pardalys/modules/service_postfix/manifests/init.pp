@@ -14,6 +14,7 @@ import 'os_gentoo'
 #                        paths.
 # @module os_gentoo      The os_gentoo module is required for Gentoo specific
 #                        package installation.
+# @module service_sasl   Provides the required saslauthd service.
 #
 # @fact operatingsystem  Allows to choose the correct package name
 #                        depending on the operating system. In addition
@@ -241,7 +242,7 @@ class service::postfix {
   service { 'postfix':
     ensure    => 'running',
     enable    => true,
-    require => Package['postfix'];
+    require => [ Package['postfix'], Service['saslauthd']];
   }
 
   case $operatingsystem {

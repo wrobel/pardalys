@@ -1,0 +1,2 @@
+# Config file for /etc/init.d/saslauthd
+SASLAUTHD_OPTS=" -a ldap -O /etc/sasl2/saslauthd.conf"

@@ -132,12 +132,12 @@ class service::postfix {
       }
       gentoo_unmask { 'horde-framework-kolab':
         context => 'service_postfix_hordeframeworkkolab',
-        package => '=dev-php/horde-framework-kolab-3.2_rc3-r*',
+        package => '=dev-php/horde-framework-kolab-3.2_rc3*',
         tag     => 'buildhost'
       }
       gentoo_keywords { 'horde-framework-kolab':
         context => 'service_postfix_hordeframeworkkolab',
-        package => '=dev-php/horde-framework-kolab-3.2_rc3-r*',
+        package => '=dev-php/horde-framework-kolab-3.2_rc3*',
         keywords => "~$keyword",
         tag      => 'buildhost'
       }

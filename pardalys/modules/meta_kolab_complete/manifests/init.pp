@@ -3,6 +3,8 @@ import 'os'
 import 'tool_pardalys'
 import 'service_kolab'
 import 'service_openldap'
+import 'service_sasl'
+import 'service_postfix'
 
 # Class meta::kolab::complete
 #
@@ -21,6 +23,8 @@ class meta::kolab::complete {
   include service::openldap::serve
   case $kolab_slapd_recovery {
     default: {
+      include service::sasl
+      include service::postfix
     }
     "true": {
       crit('LDAP recovery - Any additional Kolab configuration files remain untouched.')

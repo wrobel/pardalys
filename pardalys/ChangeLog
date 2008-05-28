@@ -1,5 +1,8 @@
 2008-05-28  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/meta_kolab_complete/manifests/init.pp: Include the sasl
+	and postfix modules.
+
 	* modules/service_sasl/*: Added the SASL configuration module.
 
 	* modules/service_postfix/templates/*: Use kolab_hostname instead

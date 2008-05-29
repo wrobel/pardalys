@@ -152,15 +152,15 @@ smtp-amavis unix -	-	n	-	2       smtp
     -o smtp_data_done_timeout=1200
     -o smtp_send_xforward_command=yes
     -o disable_dns_lookups=yes
+<% if enable_amavis_fallback -%>
+    -o fallback_relay=[<%= local_addr %>]:10026
+<% end -%>
 
 # SMTP interface for injecting mail back into postfix
 # from kolabfilter
 <%= local_addr %>:10025 inet n	-	n	-	3  smtpd
 <% if enable_virus_scan -%>
     -o content_filter=smtp-amavis:[<%= local_addr %>]:10024
-<% if enable_amavis_fallback -%>
-    -o smtp_fallback_relay=[<%= local_addr %>]:10026
-<% end -%>
 <% else -%>
     -o content_filter=
 <% end -%>
@@ -209,6 +209,7 @@ kolabfilter     unix  -       n       n       -       3       pipe user=kolab nu
     -s ${sender}
     -r ${recipient}
     -c ${client_address}
+    -C <%= kolabfilterconfig %>
     -u ${sasl_username}
 
 # Filter incoming mail for resource updates (iTip)
@@ -220,4 +221,5 @@ kolabmailboxfilter     unix  -       n       n       -       3       pipe user=k
     -s ${sender}
     -r ${recipient}
     -c ${client_address}
+    -C <%= kolabfilterconfig %>
 

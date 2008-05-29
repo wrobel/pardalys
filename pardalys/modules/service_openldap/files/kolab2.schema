@@ -96,10 +96,18 @@ attributetype ( 1.3.6.1.4.1.19414.2.1.6
   SUBSTR caseIgnoreIA5SubstringsMatch
   SYNTAX 1.3.6.1.4.1.1466.115.121.1.26{256} )
 
-# fqdn of the server containg the actual user mailbox
+# fqdn of the server handling user mail transport
 attributetype ( 1.3.6.1.4.1.19419.1.1.1.1
   NAME 'kolabHomeServer'
-  DESC 'server which keeps the users mailbox'
+  DESC 'server which handles the users mail tansport'
+  EQUALITY caseIgnoreIA5Match
+  SUBSTR caseIgnoreIA5SubstringsMatch
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.26{256} )
+
+# fqdn of the imap server containg the actual user mailbox
+attributetype ( 1.3.6.1.4.1.19419.1.1.1.19
+  NAME 'kolabImapServer'
+  DESC 'imap server which keeps the users mailbox'
   EQUALITY caseIgnoreIA5Match
   SUBSTR caseIgnoreIA5SubstringsMatch
   SYNTAX 1.3.6.1.4.1.1466.115.121.1.26{256} )
@@ -597,6 +605,7 @@ objectclass ( 1.3.6.1.4.1.19414.2.2.9
         alias $
         cyrus-userquota $
         kolabHomeServer $
+        kolabImapServer $
         kolabFolderType $
         kolabDeleteflag ) )
 
@@ -623,6 +632,7 @@ objectclass ( 1.3.6.1.4.1.19414.3.2.2
   MAY ( c $
         alias $
         kolabHomeServer $
+        kolabImapServer $
         kolabHomeMTA $
         unrestrictedMailSize $
         kolabDelegate $

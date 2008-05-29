@@ -1,3 +1,8 @@
+2008-05-29  Gunnar Wrobel  <p@rdus.de>
+
+	* modules/service_openldap/files/kolab2.schema: Add the
+	destination IMAP host.
+
 2008-05-28  Gunnar Wrobel  <p@rdus.de>
 
 	* modules/service_postfix/templates/kolab_smtpdpolicy.conf: 

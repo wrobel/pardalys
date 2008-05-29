@@ -40,10 +40,19 @@ import 'os_gentoo'
 # @fact kolab_postfix_enable_virus_scan Enable the amavis scan
 # @fact kolab_postfix_allow_unauthenticated Allow unauthenticated
 #                                           receiving of mails
+# @fact kolab_cyrus_admin           Manager account for LMTP delivery
+# @fact kolab_bind_pw               Manager password
+# @fact kolabconfdir                Kolab configuration directory
 #
 # @fact postfix_enable_amavis_fallback  Exclude amavis if it is down
 # @fact postfix_log_kolabpolicy         If you need verbose information from
 #                                       the kolab policy script
+#
+# @fact kolab_kolabfilter_verify_from_header         Should the kolab filter verify the "From" headers
+# @fact kolab_kolabfilter_allow_sender_header        Should the kolab filter use "Sender" headers
+# @fact kolab_kolabfilter_reject_forged_from_header  Should the kolab filter reject forged from headers
+# @fact kolab_calendar_id       The calendar id for storing calendar events
+# @fact kolab_calendar_pw       The password for the calendar user
 #
 class service::postfix {
 
@@ -104,7 +113,7 @@ class service::postfix {
       }
       package { 'perl-kolab':
         category => 'dev-perl',
-        ensure   => 'latest',
+        ensure   => 'installed',
         require  =>  [ Gentoo_unmask['perl-kolab'],
                        Gentoo_keywords['perl-kolab'],
                        Gentoo_unmask['cyrus-imap-admin'],
@@ -143,7 +152,7 @@ class service::postfix {
       }
       package { 'horde-framework-kolab':
         category => 'dev-php',
-        ensure   => 'latest',
+        ensure   => 'installed',
         require  =>  [ Gentoo_use_flags['c-client'],
                        Gentoo_use_flags['php'],
                        Gentoo_keywords['php'],
@@ -175,12 +184,20 @@ class service::postfix {
   $bind_dn_nobody = get_var('kolab_bind_dn_restricted')
   $bind_pw_nobody = get_var('kolab_bind_pw_restricted')
 
+  $lmtp_user = get_var('kolab_cyrus_admin', 'manager')
+  $lmtp_pass = get_var('kolab_bind_pw')
+
   $bind_addr = get_var('kolab_bind_addr', '0.0.0.0')
   $local_addr = get_var('kolab_local_addr', '127.0.0.1')
   $bind_any = get_var('kolab_bind_any', true)
+  if $bind_any {
+    $cyrus_connect = $local_addr
+  } else {
+    $cyrus_connect = $bind_addr
+  }
 
   $mydomain = get_var('kolab_postfix_mydomain')
-  $mynetworks = get_var('kolab_postfix_mynetworks', '127.0.0.0/8')
+  $mynetworks = get_var('kolab_postfix_mynetworks')
   $mydestination = get_var('kolab_postfix_mydestination')
 
   $relayhost = get_var('kolab_postfix_relayhost', false)
@@ -192,6 +209,13 @@ class service::postfix {
   $enable_virus_scan = get_var('kolab_postfix_enable_virus_scan', true)
   $enable_amavis_fallback = get_var('postfix_enable_amavis_fallback', false)
   $log_kolabpolicy = get_var('postfix_log_kolabpolicy', false)
+
+  $kolabfilterconfig = "$kolab_confdir/kolabfilter.conf"
+  $verify_from_header = get_var('kolab_kolabfilter_verify_from_header', false)
+  $allow_sender_header = get_var('kolab_kolabfilter_allow_sender_header', false)
+  $reject_forged_from_header = get_var('kolab_kolabfilter_reject_forged_from_header', false)
+  $calendar_id = get_var('kolab_calendar_id', false)
+  $calendar_pw = get_var('kolab_calendar_pw', false)
 
   file { 
     "${postfix_confdir}/master.cf":
@@ -257,6 +281,9 @@ class service::postfix {
     "${kolab_confdir}/kolab_smtpdpolicy.conf":
     content => template("service_postfix/kolab_smtpdpolicy.conf"),
     require => Package['perl-kolab'];
+    "${kolabfilterconfig}":
+    content => template("service_postfix/kolabfilter.conf"),
+    require => Package['horde-framework-kolab'];
 #
 #    '/etc/monit.d/postfix':
 #    source  => 'puppet:///service_cron/monit_postfix';

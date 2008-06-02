@@ -17,7 +17,7 @@ Facter.add('kolab_bootstrapfile') do setcode do Facter.kolab_confdir + '/kolab.b
 if FileTest.file?(Facter.kolab_globalsfile)
   facts = {}
   File.open(Facter.kolab_globalsfile).each do |line|
-    var = $1 and value = $2 if line =~ /^([^#].+):(.+)$/
+    var = $1 and value = $2 if line =~ /^([^#][^:]+):(.+)$/
     if var != nil && value != nil
       facts[var.strip()] = value.strip()
       var = nil
@@ -41,7 +41,7 @@ end
 if FileTest.file?(Facter.kolab_configfile)
   facts = {}
   File.open(Facter.kolab_configfile).each do |line|
-    var = $1 and value = $2 if line =~ /^([^#].+):(.+)$/
+    var = $1 and value = $2 if line =~ /^([^#][^:]+):(.+)$/
     if var != nil && value != nil
       facts[var.strip()] = value.strip()
       var = nil
@@ -60,7 +60,7 @@ end
 if FileTest.file?(Facter.kolab_bootstrapfile)
   facts = {}
   File.open(Facter.kolab_bootstrapfile).each do |line|
-    var = $1 and value = $2 if line =~ /^([^#].+):(.+)$/
+    var = $1 and value = $2 if line =~ /^([^#][^:]+):(.+)$/
     if var != nil && value != nil
       facts[var.strip()] = value.strip()
       var = nil

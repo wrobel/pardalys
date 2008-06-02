@@ -1,5 +1,8 @@
 2008-06-02  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_kolab/plugins/facter/kolab.rb: Fix variable
+	parsing.
+
 	* modules/service_clamav/templates/freshclam.conf_0.93: Renamed
 	files, fixed variables.
 

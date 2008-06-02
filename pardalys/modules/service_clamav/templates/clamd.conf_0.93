@@ -11,10 +11,10 @@
 # LogFile must be writable for the user running daemon.
 # A full path is required.
 # Default: disabled
-<% if syslog != "yes" %>
-LogFile <%= clamd_logfile %>
-<% else %>
+<% if syslog %>
 #LogFile <%= clamd_logfile %>
+<% else %>
+LogFile <%= clamd_logfile %>
 <% end %>
 
 # By default the log file is locked for writing - the lock protects against
@@ -44,10 +44,10 @@ LogTime yes
 
 # Use system logger (can work together with LogFile).
 # Default: no
-<% if syslog != "yes" %>
-#LogSyslog yes
-<% else %>
+<% if syslog %>
 LogSyslog yes
+<% else %>
+#LogSyslog yes
 <% end %>
 
 # Specify the type of syslog messages - please refer to 'man syslog'

@@ -1,5 +1,7 @@
 2008-06-02  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/tool_emacs/*: Add the emacs installation.
+
 	* modules/service_postfix/templates/kolabfilter.conf: Fix failure
 	if some variables are no array.
 

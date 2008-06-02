@@ -1,5 +1,7 @@
 2008-06-02  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/meta_kolab_smtp/manifests/init.pp: Fix documentation.
+
 	* modules/tool_emacs/manifests/init.pp: Add a few more addon
 	packages.
 

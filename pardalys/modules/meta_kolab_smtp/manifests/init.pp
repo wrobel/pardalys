@@ -5,19 +5,12 @@ import 'service_sasl'
 import 'service_postfix'
 
 # Class meta::kolab::smtp
-#  Defines the SMTP server part of Kolab
 #
-# Required parameters 
+#  Defines the SMTP server part of a Kolab server
 #
-#  * :
-#
-# Optional parameters 
-#
-#  * :
-#
-# Templates
-#
-#  * :
+# @author Gunnar Wrobel <p@rdus.de>
+# @version 1.0
+# @package service_postfix
 #
 class meta::kolab::smtp {
 

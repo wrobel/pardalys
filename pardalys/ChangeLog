@@ -1,5 +1,8 @@
 2008-06-02  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_amavisd_new/manifests/init.pp: Update to the
+	newer structures.
+
 	* modules/root/plugins/puppet/parser/functions/get_var.rb: Convert
 	strings with boolean meaning to boolean values.
 

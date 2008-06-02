@@ -1,0 +1,4 @@
+Defines the installation of amavisd-new and provides the configuration
+for the package as required for the Kolab groupware server.
+
+Amavisd-new is one of the central components of a Kolab groupware server.

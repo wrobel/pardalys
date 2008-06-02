@@ -1,0 +1,4 @@
+Defines the installation of spamassassin and provides the configuration
+for the package as required for the Kolab groupware server.
+
+Spamassassin is one of the central components of a Kolab groupware server.

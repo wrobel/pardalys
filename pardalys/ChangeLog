@@ -1,5 +1,8 @@
 2008-06-02  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/tool_emacs/manifests/init.pp: Add a few more addon
+	packages.
+
 	* modules/tool_emacs/*: Add the emacs installation.
 
 	* modules/service_postfix/templates/kolabfilter.conf: Fix failure

@@ -19,6 +19,18 @@ class tool::emacs {
   case $operatingsystem {
     gentoo:
     {
+      gentoo_use_flags { global:
+        context => 'tool_emacs_global',
+        package => 'dev-util/global',
+        use     => 'doc emacs',
+        tag     => 'buildhost'
+      }
+      package { global:
+        category => 'dev-util',
+        ensure   => 'installed',
+        require  =>  Gentoo_use_flags['global'],
+        tag      => 'buildhost'
+      }
       gentoo_keywords { delicious:
         context  => 'tool_emacs_delicious',
         package  => '=app-emacs/delicious-0.3-r1',
@@ -29,6 +41,38 @@ class tool::emacs {
         category => 'app-emacs',
         ensure   => 'installed',
         require  =>  Gentoo_keywords['delicious'],
+        tag      => 'buildhost'
+      }
+      gentoo_keywords { ssh:
+        context  => 'tool_emacs_ssh',
+        package  => '=app-emacs/ssh-1.9',
+        keywords => "~$keyword",
+        tag      => 'buildhost'
+      }
+      package { ssh:
+        category => 'app-emacs',
+        ensure   => 'installed',
+        require  =>  Gentoo_keywords['ssh'],
+        tag      => 'buildhost'
+      }
+      package { gentoo-syntax:
+        category => 'app-emacs',
+        ensure   => 'installed',
+        tag      => 'buildhost'
+      }
+      package { nxml-mode:
+        category => 'app-emacs',
+        ensure   => 'installed',
+        tag      => 'buildhost'
+      }
+      package { po-mode:
+        category => 'app-emacs',
+        ensure   => 'installed',
+        tag      => 'buildhost'
+      }
+      package { python-mode:
+        category => 'app-emacs',
+        ensure   => 'installed',
         tag      => 'buildhost'
       }
       package { emacs:

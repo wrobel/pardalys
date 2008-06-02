@@ -1,5 +1,8 @@
 2008-06-02  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/tool_layman/plugins/puppet/type/overlay.rb: Ensure that
+	our overlay list is up to date.
+
 	* modules/service_spamassassin/templates/sa-update: Fix variable
 	testing.
 

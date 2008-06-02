@@ -19,7 +19,7 @@ module Puppet
 
       newvalue :missing
       newvalue :installed do
-        add = "/usr/bin/layman -a " + resource[:name]
+        add = "/usr/bin/layman -f -a " + resource[:name]
         system(add)
       end
     end

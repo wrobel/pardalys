@@ -1,5 +1,8 @@
 2008-06-02  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_clamav/manifests/init.pp: Update to the newer
+	structures.
+
 	* modules/service_amavisd_new/templates/amavisd.conf_2.5.2: Adapt
 	variable names.
 

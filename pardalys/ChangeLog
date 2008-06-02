@@ -1,5 +1,8 @@
 2008-06-02  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_spamassassin/manifests/init.pp: Update to the
+	newer structures.
+
 	* modules/service_kolab/plugins/facter/kolab.rb: Fix variable
 	parsing.
 

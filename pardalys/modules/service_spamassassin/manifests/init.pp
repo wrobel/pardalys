@@ -1,182 +1,152 @@
 import 'os_gentoo'
 
 # Class service::spamassassin
+#
 #  Defines the configuration for the spamassassin service
 #
 # Parameters 
 #
-#  * operatingsystem: Defines the underlying operating system and
-#    adapts the configuration accordingly.
+# @author Gunnar Wrobel <p@rdus.de>
+# @version 1.0
+# @package service_postfix
 #
-#  * service_spamassassin_use_bayes: Should the bayes db be used?
+# @module root           The root module is required to determine the installed
+#                        amavis version.
+# @module os             The os module is required to determine basic system
+#                        paths.
+# @module os_gentoo      The os_gentoo module is required for Gentoo specific
+#                        package installation.
+# @module service_kolab  Provides the kolab configuration.
 #
-#  * service_spamassassin_use_razor: Should razor be used?
+# @fact operatingsystem  Allows to choose the correct package name
+#                        depending on the operating system. In addition
+#                        required to set additional tasks depending on
+#                        the distribution.
 #
-#  * service_spamassassin_use_pyzor: Should pyzor be used?
-#
-#  * service_spamassassin_use_dcc: Should dcc be used?
-#
-#  * service_spamassassin_use_update: Should spamassassin
-#    automatically fetch rule updates?
-#
-#  * service_spamassassin_amavisd: Is spamassassin a subprocess of
-#    amavisd-new?
-#
-#  * service_spamassassin_amavisd_bayes: Location of the bayes db when
-#    using spamassassin as subprocess to amavisd-new
-#
-# Templates
-#
-#  * templates/bayes.cf: Basic configuration for the bayes features of
-#    spamassassin.
-#
-#  * templates/sa-update: Cron script for updating the spamassassin
-#    rules.
+# @fact version_spamassassin   The spamassassin version currently installed
 #
 class service::spamassassin {
-  # Package preparations
+
+  $use_bayes  = get_var('spamassassin_use_bayes', true)
+  $use_dcc    = get_var('spamassassin_use_dcc', true)
+  $use_pyzor  = get_var('spamassassin_use_pyzor', true)
+  $use_razor  = get_var('spamassassin_use_razor', true)
+  $use_update = get_var('spamassassin_use_update', true)
+
+  # Package installation
   case $operatingsystem {
     gentoo:
     {
+      if $use_dcc {
+        package { 'dcc':
+          category => 'mail-filter',
+          ensure   => 'installed'
+        }
+      }
+
+      if $use_pyzor {
+        package { 'pyzor':
+          category => 'dev-python',
+          ensure   => 'installed'
+        }
+      }
+
+      if $use_razor {
+        package { 'razor':
+          category => 'mail-filter',
+          ensure   => 'installed'
+        }
+      }
+
       gentoo_use_flags { spamassassin:
         context => 'service_spamassassin',
         package => 'mail-filter/spamassassin',
         use     => 'berkdb doc ssl'
       }
+      package { 'spamassassin':
+        category => 'mail-filter',
+        ensure   => 'installed',
+        require  => Gentoo_use_flags['spamassassin'],
+        tag      => 'buildhost'
+      }
+    }
+    default:
+    {
+      package { 'spamassassin':
+        ensure   => 'installed';
+      }
     }
   }
-  
-  # Package installation
-  package { spamasassin:
-    name     => 'spamassassin',
-    category => $operatingsystem ? {
-      gentoo  => 'mail-filter',
-      # Still undefined for all other OS
-      default => ''
-    },
-    ensure   => 'installed',
-    require  => $operatingsystem ? {
-      gentoo => Gentoo_use_flags['spamassassin']
-    }
-  }
+
+  $amavis_child      = get_var('amavis_child', true)
 
   # Possible configuration
   if $service_spamassassin_use_bayes {
     file { 'service_spamassassin_bayes':
       path    => '/etc/spamassassin/bayes.cf',
       content => template('service_spamassassin/bayes.cf'),
-      owner   => 'root',
-      group   => 'root',
-      mode    => 644,
       require => Package['spamassassin']
     }
   }
 
-  if $service_spamassassin_use_dcc {
-    package { dcc:
-      name     => 'dcc',
-      category => $operatingsystem ? {
-        gentoo  => 'mail-filter',
-        # Still undefined for all other OS
-        default => ''
-      },
-      ensure   => 'installed'
-    }
-
-    file { 'service_spamassassin_dcc':
-      path    => '/etc/spamassassin/dcc.cf',
+  if $use_dcc {
+    file { '/etc/spamassassin/dcc.cf':
       content => 'use_dcc 1',
-      owner   => 'root',
-      group   => 'root',
-      mode    => 644,
       require => [Package['spamassassin'], Package['dcc']]
     }
   }
 
-  if $service_spamassassin_use_pyzor {
-    package { pyzor:
-      name     => 'pyzor',
-      category => $operatingsystem ? {
-        gentoo  => 'dev-python',
-        # Still undefined for all other OS
-        default => ''
-      },
-      ensure   => 'installed'
-    }
-
-    file { 'service_spamassassin_pyzor':
-      path    => '/etc/spamassassin/pyzor.cf',
+  if $use_pyzor {
+    file { '/etc/spamassassin/pyzor.cf':
       content => 'use_pyzor 1',
-      owner   => 'root',
-      group   => 'root',
-      mode    => 644,
       require => [Package['spamassassin'], Package['pyzor']]
     }
-
-    if $service_spamassassin_amavisd {
-      exec { pyzor_discover:
-        path => "/usr/bin:/usr/sbin:/bin",
-        command => "su -s /bin/bash - amavis -c \"pyzor discover\"",
-        require => Package['amavisd-new'],
-        unless => "test -e /var/amavis/.pyzor/servers"
-      }
-    } else {
-      exec { pyzor_discover:
-        path => "/usr/bin:/usr/sbin:/bin",
-        command => "pyzor -homedir /etc/mail/spamassassin/.pyzor discover ",
-        require => Package['spamassassin'],
-        unless => "test -e /etc/mail/spamassassin/.pyzor/servers"
-      }
-    }
   }
 
-  if $service_spamassassin_use_razor {
-    package { razor:
-      name     => 'razor',
-      category => $operatingsystem ? {
-        gentoo  => 'mail-filter',
-        # Still undefined for all other OS
-        default => ''
-      },
-      ensure   => 'installed',
-    }
-
-    file { 'service_spamassassin_razor':
-      path    => '/etc/spamassassin/razor.cf',
+  if $use_razor {
+    file { '/etc/spamassassin/razor.cf':
       content => 'use_razor2 1',
-      owner   => 'root',
-      group   => 'root',
-      mode    => 644,
       require => [Package['spamassassin'], Package['razor']]
     }
+  }
 
-    if $service_spamassassin_amavisd {
-      exec { razor_register:
-        path => "/usr/bin:/usr/sbin:/bin",
-        command => "su -s /bin/bash - amavis -c \"razor-admin -create && su -s /bin/bash - amavis -c \"razor-admin -register -user $sysadmin_user\"",
-        require => Package['amavisd-new'],
-        unless => "test -e /var/amavis/.razor/identity"
-      }
-    } else {
-      exec { razor_register:
-        path => "/usr/bin:/usr/sbin:/bin",
-        command => "razor-admin -create -home=/etc/mail/spamassassin/.razor && razor-admin -register -home=/etc/mail/spamassassin/.razor -user $sysadmin_user",
-        require => Package['spamassassin'],
-        unless => "test -e /etc/mail/spamassassin/.razor/identity"
-      }
+  if $amavis_child {
+    exec { pyzor_discover:
+      path => "/usr/bin:/usr/sbin:/bin",
+      command => "su -s /bin/bash - amavis -c \"pyzor discover\"",
+      require => Package['amavisd-new'],
+      unless => "test -e /var/amavis/.pyzor/servers"
+    }
+  } else {
+    exec { pyzor_discover:
+      path => "/usr/bin:/usr/sbin:/bin",
+      command => "pyzor -homedir /etc/mail/spamassassin/.pyzor discover ",
+      require => Package['spamassassin'],
+      unless => "test -e /etc/mail/spamassassin/.pyzor/servers"
     }
   }
 
-  if $service_spamassassin_use_update {
+  if $amavis_child {
+    exec { razor_register:
+      path => "/usr/bin:/usr/sbin:/bin",
+      command => "su -s /bin/bash - amavis -c \"razor-admin -create && su -s /bin/bash - amavis -c \"razor-admin -register -user $sysadmin_user\"",
+      require => Package['amavisd-new'],
+      unless => "test -e /var/amavis/.razor/identity"
+    }
+  } else {
+    exec { razor_register:
+      path => "/usr/bin:/usr/sbin:/bin",
+      command => "razor-admin -create -home=/etc/mail/spamassassin/.razor && razor-admin -register -home=/etc/mail/spamassassin/.razor -user $sysadmin_user",
+      require => Package['spamassassin'],
+      unless => "test -e /etc/mail/spamassassin/.razor/identity"
+    }
+  }
 
-    file { 'service_spamassassin_update':
-      path    => '/etc/cron.daily/sa-update',
+  if $use_update {
+    file {'/etc/cron.daily/sa-update':
       content => template('service_spamassassin/sa-update'),
-      owner   => 'root',
-      group   => 'root',
       mode    => 755,
       require => [Package['spamassassin']]
     }
-
   }
 }

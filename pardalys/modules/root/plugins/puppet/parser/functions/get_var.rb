@@ -5,7 +5,14 @@ module Puppet::Parser::Functions
     var = args[0]
     global_var = lookupvar(var)
     if global_var != ""
-      return global_var
+      case global_var
+        when "true"
+        return true
+        when "false"
+        return false
+        else
+        return global_var
+      end
     end
     if args.length > 1
       return args[1]

@@ -1,3 +1,8 @@
+2008-06-02  Gunnar Wrobel  <p@rdus.de>
+
+	* modules/service_postfix/templates/kolabfilter.conf: Fix failure
+	if some variables are no array.
+
 2008-05-29  Gunnar Wrobel  <p@rdus.de>
 
 	* modules/service_postfix/manifests/init.pp: Add the required

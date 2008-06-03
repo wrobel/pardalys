@@ -71,7 +71,11 @@ $MYHOME = '<%= amavisd_new_datadir %>';   # (default is '/var/amavis'), -H
 $mydomain = '<%= postfixmydomain %>';      # (no useful default)
 
 # $myhostname = 'host.example.com';  # fqdn of this host, default by uname(3)
+<% if amavisd_new_hostname -%>
+$myhostname = '<%= amavisd_new_hostname %>';
+<% else -%>
 $myhostname = '<%= kolab_hostname %>';
+<% end -%>
 
 # Set the user and group to which the daemon will change if started as root
 # (otherwise just keeps the UID unchanged, and these settings have no effect):

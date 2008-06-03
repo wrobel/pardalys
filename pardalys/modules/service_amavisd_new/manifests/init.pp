@@ -33,7 +33,9 @@ import 'os_gentoo'
 # @fact amavisd_new_language        Which template language should be used?
 # @fact amavisd_new_quarantine      What quarantine method should be used?
 # @fact amavisd_new_sa_local        Should spamassassin run only local tests?
-
+# @fact amavisd_new_hostname        Alternative hostname if it should not
+#                                   be kolab_fqdnhostname
+#
 class service::amavisd_new {
 
   # Package installation
@@ -86,6 +88,8 @@ class service::amavisd_new {
   $amavisd_new_language       = get_var('amavisd_new_language', 'en_US')
   $amavisd_new_quarantine     = get_var('amavisd_new_quarantine', 'yes')
   $amavisd_new_sa_local       = get_var('amavisd_new_sa_local', true)
+
+  $amavisd_new_hostname       = get_var('amavisd_new_hostname', false)
 
   $kolab_hostname = get_var('kolab_fqdnhostname')
   $local_addr = get_var('kolab_local_addr', '127.0.0.1')

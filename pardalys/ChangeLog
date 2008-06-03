@@ -1,5 +1,8 @@
 2008-06-03  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_amavisd_new/templates/amavisd.conf_2.5.2: Allow
+	a different hostname.
+
 	* modules/service_kolab/plugins/facter/kolab.rb: Rewrote the
 	handling of facts.
 

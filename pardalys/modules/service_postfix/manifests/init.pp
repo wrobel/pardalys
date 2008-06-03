@@ -47,6 +47,8 @@ import 'os_gentoo'
 # @fact postfix_enable_amavis_fallback  Exclude amavis if it is down
 # @fact postfix_log_kolabpolicy         If you need verbose information from
 #                                       the kolab policy script
+# @fact postfix_remote_spambox_ip       IP of a remote spam filter
+# @fact postfix_remote_spambox_port     Port of the remote spam filter
 #
 # @fact kolab_kolabfilter_verify_from_header         Should the kolab filter verify the "From" headers
 # @fact kolab_kolabfilter_allow_sender_header        Should the kolab filter use "Sender" headers
@@ -216,6 +218,9 @@ class service::postfix {
   $reject_forged_from_header = get_var('kolab_kolabfilter_reject_forged_from_header', false)
   $calendar_id = get_var('kolab_calendar_id', false)
   $calendar_pw = get_var('kolab_calendar_pw', false)
+
+  $remote_spambox_ip   = get_var('postfix_remote_spambox_ip', false)
+  $remote_spambox_port = get_var('postfix_remote_spambox_port', '10024')
 
   file { 
     "${postfix_confdir}/master.cf":

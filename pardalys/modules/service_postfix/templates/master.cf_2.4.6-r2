@@ -160,7 +160,11 @@ smtp-amavis unix -	-	n	-	2       smtp
 # from kolabfilter
 <%= local_addr %>:10025 inet n	-	n	-	3  smtpd
 <% if enable_virus_scan -%>
+<% if remote_spambox_ip -%>
+    -o content_filter=smtp-amavis:[<%= remote_spambox_ip %>]:<%= remote_spambox_port %>
+<% else -%>
     -o content_filter=smtp-amavis:[<%= local_addr %>]:10024
+<% end -%>
 <% else -%>
     -o content_filter=
 <% end -%>

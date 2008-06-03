@@ -1,3 +1,8 @@
+2008-06-03  Gunnar Wrobel  <p@rdus.de>
+
+	* modules/service_kolab/plugins/facter/kolab.rb: Rewrote the
+	handling of facts.
+
 2008-06-02  Gunnar Wrobel  <p@rdus.de>
 
 	* modules/tool_layman/plugins/puppet/type/overlay.rb: Ensure that

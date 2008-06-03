@@ -13,9 +13,9 @@ Facter.add('kolab_configfile')    do setcode do Facter.kolab_confdir + '/kolab.c
 Facter.add('kolab_globalsfile')   do setcode do Facter.kolab_confdir + '/kolab.globals'   end end
 Facter.add('kolab_bootstrapfile') do setcode do Facter.kolab_confdir + '/kolab.bootstrap' end end
 
+facts = {}
 
 if FileTest.file?(Facter.kolab_globalsfile)
-  facts = {}
   File.open(Facter.kolab_globalsfile).each do |line|
     var = $1 and value = $2 if line =~ /^([^#][^:]+):(.+)$/
     if var != nil && value != nil
@@ -24,18 +24,6 @@ if FileTest.file?(Facter.kolab_globalsfile)
       value = nil
     end
   end
-  facts.each{|var,val|
-    Facter.add('kolab_' + var) do
-      if val == 'TRUE'
-        val = true
-      elsif val == 'FALSE'
-        val = false
-      end
-      setcode do
-        val
-      end
-    end
-  }
 end
 
 if FileTest.file?(Facter.kolab_configfile)
@@ -48,13 +36,6 @@ if FileTest.file?(Facter.kolab_configfile)
       value = nil
     end
   end
-  facts.each{|var,val|
-    Facter.add('kolab_' + var) do
-      setcode do
-        val
-      end
-    end
-  }
 end
 
 if FileTest.file?(Facter.kolab_bootstrapfile)
@@ -67,48 +48,21 @@ if FileTest.file?(Facter.kolab_bootstrapfile)
       value = nil
     end
   end
-  facts.each{|var,val|
-    Facter.add('kolab_' + var) do
-      setcode do
-        val
-      end
-    end
-  }
-  Facter.add('kolab_bootstrap') do
-    setcode do
-      true
-    end
-  end
+  facts['bootstrap'] = true
 else
-  Facter.add('kolab_bootstrap') do
-    setcode do
-      false
-    end
-  end
+  facts['bootstrap'] = false
 end
 
-if !Facter.method_defined? 'kolab_fqdnhostname'
-  Facter.add('kolab_fqdnhostname') do
-    setcode do
-      Facter.hostname
-    end
-  end
+if !facts.keys.include? 'fqdnhostname'
+  facts['fqdnhostname'] = Facter.hostname
 end
 
-if !Facter.method_defined? 'kolab_is_master'
-  Facter.add('kolab_is_master') do
-    setcode do
-      true
-    end
-  end
+if !facts.keys.include? 'is_master'
+  facts['is_master'] = true
 end
 
-if !Facter.method_defined? 'kolab_postfix_mydomain'
-  Facter.add('kolab_postfix_mydomain') do
-    setcode do
-      Facter.kolab_fqdnhostname
-    end
-  end
+if !facts.keys.include? 'postfix_mydomain'
+  facts['postfix_mydomain'] = facts['fqdnhostname']
 end
 
 def dnfromdomain(domain)
@@ -123,109 +77,56 @@ def dnfromdomain(domain)
   return base_dn
 end
 
-if !Facter.method_defined? 'kolab_base_dn'
-  Facter.add('kolab_base_dn') do
-    setcode do
-      dnfromdomain(Facter.kolab_postfix_mydomain)
-    end
-  end
+if !facts.keys.include? 'base_dn'
+  facts['base_dn'] = dnfromdomain(facts['postfix_mydomain'])
 end
 
-if !Facter.method_defined? 'kolab_bind_dn'
-  Facter.add('kolab_bind_dn') do
-    setcode do
-      'cn=manager,cn=internal,' + Facter.kolab_base_dn
-    end
-  end
+if !facts.keys.include? 'bind_dn'
+  facts['bind_dn'] = 'cn=manager,cn=internal,' + facts['base_dn']
 end
 
-if !Facter.method_defined? 'kolab_bind_pw'
-  Facter.add('kolab_bind_pw') do
-    setcode do
-      `#{bindir}/openssl rand -base64 12`
-    end
-  end
-  Facter.add('kolab_bind_pw_hash') do
-    setcode do
-      bind_pw_sq = Facter.kolab_bind_pw.gsub('/([\\"$]/','\\\1')
-      `#{sbindir}/slappasswd -s #{bind_pw_sq}`
-    end
-  end
+if !facts.keys.include? 'bind_pw'
+  facts['bind_pw'] = `#{bindir}/openssl rand -base64 12`
+  bind_pw_sq = facts['bind_pw'].gsub('/([\\"$]/','\\\1')
 end
 
-if !Facter.method_defined? 'kolab_bind_pw_hash'
-  Facter.add('kolab_bind_pw_hash') do
-    setcode do
-      bind_pw_sq = Facter.kolab_bind_pw.gsub('/([\\"$]/','\\\1')
-      `#{sbindir}/slappasswd -s #{bind_pw_sq}`
-    end
-  end
+if !facts.keys.include? 'bind_pw_hash'
+  bind_pw_sq = facts['bind_pw'].gsub('/([\\"$]/','\\\1')
+  facts['bind_pw_hash'] = `#{sbindir}/slappasswd -s #{bind_pw_sq}`
 end
 
-if !Facter.method_defined? 'kolab_ldap_uri'
-  Facter.add('kolab_ldap_uri') do
-    setcode do
-      'ldap://127.0.0.1:389'
-    end
-  end
+if !facts.keys.include? 'ldap_uri'
+  facts['ldap_uri'] = 'ldap://127.0.0.1:389'
 end
 
-if !Facter.method_defined? 'kolab_ldap_master_uri'
-  Facter.add('kolab_ldap_master_uri') do
-    setcode do
-      'ldap://127.0.0.1:389'
-    end
-  end
+if !facts.keys.include? 'ldap_master_uri'
+  facts['ldap_master_uri'] = 'ldap://127.0.0.1:389'
 end
 
 # Rewrite the older kolab_php_dn into the newer variable names
-if Facter.method_defined? 'kolab_php_dn'
-  Facter.add('kolab_bind_dn_restricted') do
-    setcode do
-      Facter.kolab_php_dn
-    end
-  end
+if facts.keys.include? 'php_dn'
+  facts['bind_dn_restricted'] = facts['php_dn']
 end
 
 # Rewrite the older kolab_php_pw into the newer variable names
-if Facter.method_defined? 'kolab_php_pw'
-  Facter.add('kolab_bind_pw_restricted') do
-    setcode do
-      Facter.kolab_php_pw
-    end
-  end
+if facts.keys.include? 'php_pw'
+  facts['bind_pw_restricted'] = facts['php_pw']
 end
 
-if !Facter.method_defined? 'kolab_bind_dn_restricted'
-  Facter.add('kolab_bind_dn_restricted') do
-    setcode do
-      'cn=nobody,cn=internal,' + Facter.kolab_base_dn
-    end
-  end
+if !facts.keys.include? 'bind_dn_restricted'
+  facts['bind_dn_restricted'] = 'cn=nobody,cn=internal,' + facts['base_dn']
 end
 
-if !Facter.method_defined? 'kolab_bind_pw_restricted'
-  Facter.add('kolab_bind_pw_restricted') do
-    setcode do
-      `#{bindir}/openssl rand -base64 30`
-    end
-  end
+if !facts.keys.include? 'bind_pw_restricted'
+  facts['bind_pw_restricted'] = `#{bindir}/openssl rand -base64 30`
 end
 
-if !Facter.method_defined? 'kolab_calendar_id'
-  Facter.add('kolab_calendar_id') do
-    setcode do
-      'calendar'
-    end
-  end
+if !facts.keys.include? 'calendar_id'
+  facts['calendar_id'] = 'calendar'
 end
 
-if !Facter.method_defined? 'kolab_calendar_pw'
-  Facter.add('kolab_calendar_pw') do
-    setcode do
-      `#{bindir}/openssl rand -base64 30`
-    end
-  end
+if !facts.keys.include? 'calendar_pw'
+  facts['calendar_pw'] = `#{bindir}/openssl rand -base64 30`
 end
 
 ldap_present = false
@@ -239,9 +140,9 @@ end
 
 if ldap_present
 
-  host = Facter.kolab_ldap_uri.split('://')[1]
+  host = facts['ldap_uri'].split('://')[1]
   (server, port) = host.split(':')
-  base_dn = Facter.kolab_base_dn
+  base_dn = facts['base_dn']
 
   kolab = nil
 
@@ -250,39 +151,40 @@ if ldap_present
     
     @connection.set_option(LDAP::LDAP_OPT_PROTOCOL_VERSION, 3)
     @connection.set_option(LDAP::LDAP_OPT_REFERRALS, LDAP::LDAP_OPT_ON)
-    @connection.simple_bind(Facter.kolab_bind_dn, Facter.kolab_bind_pw)
+    @connection.simple_bind(facts['bind_dn'], facts['bind_pw'])
     kolab_obj = @connection.search2(base_dn, LDAP::LDAP_SCOPE_ONELEVEL, '(&(objectclass=kolab)(k=kolab))')
   rescue Exception => e
-    if not Facter.kolab_bootstrap
-      Facter.add('kolab_ldap_error') do
-        setcode do
-          e.to_s
-        end
-      end
+    if not facts['bootstrap']
+      facts['ldap_error'] = e.to_s
     end
   end
 
   if kolab_obj
-    Facter.add('kolab_ldap_error') do
-      setcode do
-        false
-      end
-    end
+    facts['ldap_error'] = false
     kolab_obj.each do |entry|
       entry.each_pair do |key, val|
-        Facter.add('kolab_' + key.gsub(/-/, '_')) do
-          if val[0] == 'TRUE'
-            val = true
-          elsif val[0] == 'FALSE'
-            val = false
-          end
-          setcode do
-            val
-          end
+        akey = key.gsub(/-/, '_')
+        if val[0] == 'TRUE'
+          facts[akey] = true
+        elsif val[0] == 'FALSE'
+          facts[akey]  = false
+        else
+          facts[akey]  = val
         end
       end
     end
-
   end
-
 end
+
+facts.each{|var,val|
+  Facter.add('kolab_' + var) do
+    if val == 'TRUE'
+      val = true
+    elsif val == 'FALSE'
+      val = false
+    end
+    setcode do
+      val
+    end
+  end
+}

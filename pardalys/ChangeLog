@@ -2,6 +2,7 @@
 
 	* modules/service_postfix/templates/master.cf_2.4.6-r2: Add
 	support for a remote spam box.
+	Allow remote reinjection.
 
 	* modules/service_postfix/manifests/init.pp: Add support for a
 	remote spam box.

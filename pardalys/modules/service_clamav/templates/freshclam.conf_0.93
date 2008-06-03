@@ -15,9 +15,9 @@ DatabaseDirectory <%= datadir %>
 # Path to the log file (make sure it has proper permissions)
 # Default: disabled
 <% if syslog -%>
-UpdateLogFile <%= freshclam_logfile %>
-<% else -%>
 #UpdateLogFile <%= freshclam_logfile %>
+<% else -%>
+UpdateLogFile <%= freshclam_logfile %>
 <% end -%>
 
 # Maximum size of the log file.

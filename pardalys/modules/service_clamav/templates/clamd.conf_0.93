@@ -11,11 +11,11 @@
 # LogFile must be writable for the user running daemon.
 # A full path is required.
 # Default: disabled
-<% if syslog %>
+<% if syslog -%>
 #LogFile <%= clamd_logfile %>
-<% else %>
+<% else -%>
 LogFile <%= clamd_logfile %>
-<% end %>
+<% end -%>
 
 # By default the log file is locked for writing - the lock protects against
 # running clamd multiple times (if want to run another clamd, please
@@ -44,16 +44,16 @@ LogTime yes
 
 # Use system logger (can work together with LogFile).
 # Default: no
-<% if syslog %>
+<% if syslog -%>
 LogSyslog yes
-<% else %>
-#LogSyslog yes
-<% end %>
 
 # Specify the type of syslog messages - please refer to 'man syslog'
 # for facility names.
 # Default: LOG_LOCAL6
-#LogFacility LOG_MAIL
+LogFacility LOG_MAIL
+<% else -%>
+#LogSyslog yes
+<% end -%>
 
 # Enable verbose logging.
 # Default: no

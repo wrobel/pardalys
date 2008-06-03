@@ -1,5 +1,11 @@
 2008-06-03  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_clamav/templates/freshclam.conf_0.93: Correct
+	logging to syslog.
+
+	* modules/service_clamav/templates/clamd.conf_0.93: Correct
+	logging to syslog.
+
 	* modules/service_amavisd_new/templates/amavisd.conf_2.5.2: Allow
 	a different hostname.
 

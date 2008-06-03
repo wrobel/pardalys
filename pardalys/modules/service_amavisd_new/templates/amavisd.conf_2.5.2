@@ -1789,9 +1789,9 @@ $dspam  = 'dspam';
 # If set to 1, no SA tests that require internet access will be performed.
 #
 <% if amavisd_new_sa_local %>
-$sa_local_tests_only = 0;   # only tests which do not require internet access?
-<% else %>
 $sa_local_tests_only = 1;   # only tests which do not require internet access?
+<% else %>
+$sa_local_tests_only = 0;   # only tests which do not require internet access?
 <% end %>
 
 #$sa_auto_whitelist = 1;    # turn on AWL in SA 2.63 or older (irrelevant

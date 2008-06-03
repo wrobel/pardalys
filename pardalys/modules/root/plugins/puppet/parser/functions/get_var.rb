@@ -4,7 +4,7 @@ module Puppet::Parser::Functions
   newfunction(:get_var, :type => :rvalue) do |args|
     var = args[0]
     global_var = lookupvar(var)
-    if global_var != ""
+    if global_var != "" and global_var != nil
       case global_var
         when "true"
         return true

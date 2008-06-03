@@ -160,7 +160,11 @@ smtp-amavis unix -	-	n	-	2       smtp
 # from kolabfilter
 <%= local_addr %>:10025 inet n	-	n	-	3  smtpd
 <% if enable_virus_scan -%>
+<% if remote_spambox_ip -%>
+    -o content_filter=smtp-amavis:[<%= remote_spambox_ip %>]:<%= remote_spambox_port %>
+<% else -%>
     -o content_filter=smtp-amavis:[<%= local_addr %>]:10024
+<% end -%>
 <% else -%>
     -o content_filter=
 <% end -%>
@@ -181,7 +185,11 @@ smtp-amavis unix -	-	n	-	2       smtp
 
 # SMTP interface for injecting mail back into postfix
 # from amavis
+<% if remote_spambox_ip -%>
+<%= bind_addr %>:10026 inet n	-	n	-	3  smtpd
+<% else -%>
 <%= local_addr %>:10026 inet n	-	n	-	3  smtpd
+<% end -%>
     -o content_filter=
     -o cleanup_service_name=post-cleanup
     -o local_recipient_maps=
@@ -191,7 +199,11 @@ smtp-amavis unix -	-	n	-	2       smtp
     -o smtpd_helo_restrictions=
     -o smtpd_sender_restrictions=
     -o smtpd_recipient_restrictions=permit_mynetworks,reject
+<% if remote_spambox_ip -%>
+    -o mynetworks=<%= remote_spambox_ip %>/32
+<% else -%>
     -o mynetworks=127.0.0.0/8
+<% end -%>
     -o strict_rfc821_envelopes=yes
     -o smtpd_error_sleep_time=0
     -o smtpd_soft_error_limit=1001

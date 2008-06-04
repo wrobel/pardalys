@@ -200,7 +200,7 @@ smtp-amavis unix -	-	n	-	2       smtp
     -o smtpd_sender_restrictions=
     -o smtpd_recipient_restrictions=permit_mynetworks,reject
 <% if remote_spambox_ip -%>
-    -o mynetworks=<%= remote_spambox_ip %>/32
+    -o mynetworks=127.0.0.0/8,<%= remote_spambox_ip %>/32
 <% else -%>
     -o mynetworks=127.0.0.0/8
 <% end -%>

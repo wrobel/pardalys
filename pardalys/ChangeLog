@@ -1,3 +1,10 @@
+2008-06-23  Gunnar Wrobel  <p@rdus.de>
+
+	* bin/dev-pardalys (GIT): Catch non-existing git.
+
+	* modules/root/plugins/facter/package_versions.rb: Initialize the
+	eix cache if it does not exist.
+
 2008-06-03  Gunnar Wrobel  <p@rdus.de>
 
 	* modules/service_amavisd_new/templates/amavisd.conf_2.5.2:

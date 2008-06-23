@@ -20,6 +20,9 @@ if FileTest.exists?(packages)
       Facter.add('version_' + package) do
         setcode do
           if Facter.operatingsystem == 'Gentoo'
+            if !FileTest.exists?('/var/cache/eix')
+              `/usr/bin/update-eix`
+            end
             version = `/usr/bin/eix --nocolor --format "<installedversionsshort>" --pure-packages --exact --category-name #{pkgname}`.chomp
             version = $1 if version =~ /^(.*)\[\?\]/
             version

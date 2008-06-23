@@ -19,13 +19,63 @@ Prerequisites
   p@rdalys requires the following to work:
 
     - >=puppet-0.24.5 (http://reductivelabs.com/trac/puppet)
-
-  Puppet should also support LDAP (meaning ruby-ldap needs to be
-  installed).
+    - ruby-ldap (http://ruby-ldap.sourceforge.net/)
 
 
-Installing the software
------------------------
+Installing the software on Gentoo
+---------------------------------
+
+The primary focus of p@rdalys is Gentoo and installation is automated
+on this platform.
+
+  1) Install the kolab overlay
+
+     You can install the overlay by running:
+
+       layman -f -a kolab
+
+     Currently p@rdalys is still purely experimental and not
+     maintained within the main Gentoo portage tree. The package
+     definitions are only available via the Kolab overlay at the
+     moment.
+
+  2) Unmask the package
+
+     Tell portage to accept the experimental packages by running:
+
+       echo "app-admin/pardalys" >> /etc/portage/package.unmask
+       echo "app-admin/pardalys ~x86" >> /etc/portage/package.keywords
+       echo "app-admin/puppet ~x86" >> /etc/portage/package.keywords
+       echo "dev-ruby/facter ~x86" >> /etc/portage/package.keywords
+
+     As mentioned above the package is still experimental. As it is
+     still masked you need to unmask it and accept the unstable
+     keyword on the package.
+
+     p@rdalys depends on puppet and puppet in turn depends on
+     facter. Both packages are still marked unstable and need to be
+     accepted in that form.
+
+  3) Install the package
+
+     Now you can run emerge to install the package:
+
+       emerge pardalys
+
+     If you want to use p@rdalys in developers mode you should ensure
+     that you activated the "develop" USE flag for this package.
+
+  Optional:
+  ~~~~~~~~~
+
+   - Switching to developers mode
+
+     You can easily switch to p@rdalys developers mode. Refer to the
+     instructions in the HACKING file in this directory.
+
+
+Installing the software on other systems
+----------------------------------------
 
   Download the package, unpack it and include the unpacked "modules"
   directory in your puppet modules.
@@ -34,8 +84,49 @@ Installing the software
 Configuring the software
 ------------------------
 
-  Nothing yet.
+  1) Edit /etc/kolab/kolab.bootstrap
 
+
+  Optional:
+  ~~~~~~~~~
+
+   - Embedding a host in an already existing Kolab network
+
+     If you run a network of Kolab hosts you will have a central LDAP
+     master server. Your initial setup for a new host requires the
+     following steps:
+
+       mkdir /etc/pardalys
+
+     This creates an alternative p@rdalys configuration
+     directory. First we copy the default configuration:
+
+       cp /usr/share/pardalys/etc/puppet.conf /etc/pardalys/
+
+         or
+
+       cp /usr/share/pardalys/dev-pardalys/pardalys/etc/puppet.conf /etc/pardalys/
+
+     Now add the details for the LDAP master server to the copied
+     file. The followin assumes the master cares for the domain
+     example.com and is named smtp.example.com:
+
+       node_terminus = ldap
+       ldapserver = smtp.example.com
+       ldapbase = dc=example,dc=com
+       ldapstackedattrs = puppetvar
+       ldapuser = cn=nobody,cn=internal,dc=example,dc=com
+       ldappassword = xyz
+
+     Copy the parameters ldap_master_uri, ldap_uri, base_dn, bind_dn,
+     bind_pw, bind_pw_hash, bind_dn_restricted, bind_pw_restricted
+     from /etc/kolab/kolab.conf on your master server to
+     /etc/kolab/kolab.bootstrap on your slave host.
+     (FIXME: This should be easier!)
+
+     Now run p@rdalys to setup the new host:
+
+       pardalys
 
 Upgrading the software
 ----------------------

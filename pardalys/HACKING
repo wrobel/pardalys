@@ -32,7 +32,7 @@ to put your public SSH key on github.com for this to work).
 After that you can start modifying the sources and commit to your
 fork. Once you are pleased with the results you may send a pull requst
 to the main repository on github.com. If your changes have the
-required quality they might get integrated in the main repository.
+required quality they will get integrated in the main repository.
 
 
 Changes

@@ -1,5 +1,7 @@
 2008-06-23  Gunnar Wrobel  <p@rdus.de>
 
+	* INSTALL: Update the install instructions.
+
 	* modules/tool_pardalys/manifests/init.pp: Add p@rdalys
 	configuration files for slave servers.
 

@@ -26,6 +26,16 @@ usage() {
     echo
 }
 
+GIT=`which git`
+
+if [ ! $? ]; then
+    echo "You do not seem to have git installed. This is required to use"
+    echo "p@rdalys in developers mode!"
+    echo ""
+    usage
+    exit 1
+fi
+
 while getopts hsu:D: ARGS; do
     case $ARGS in
         h) # Display help
@@ -61,4 +71,4 @@ if [ -e "${DEST}"/dev-pardalys ]; then
     exit 1
 fi
 
-git clone "git${METHOD}github.com${SEP}${USER}/pardalys.git" "${DEST}"/dev-pardalys
+$GIT clone "git${METHOD}github.com${SEP}${USER}/pardalys.git" "${DEST}"/dev-pardalys

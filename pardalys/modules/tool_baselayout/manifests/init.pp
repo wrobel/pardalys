@@ -37,7 +37,7 @@ class tool::baselayout {
         'baselayout':
         category => 'sys-apps',
         ensure   => 'installed',
-        require  => Package['openrc'], Gentoo_keywords['baselayout'],
+        require  => [Package['openrc'], Gentoo_keywords['baselayout']],
         tag      => 'buildhost';
         'openrc':
         category => 'sys-apps',

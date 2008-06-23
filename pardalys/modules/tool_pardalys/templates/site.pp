@@ -1,3 +1,3 @@
-<% my_pardalys_modules.each |pm| do -%>
-import <%= pm %>
+<% my_pardalys_modules.each do |pm| -%>
+import '<%= pm %>'
 <% end -%>

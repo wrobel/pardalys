@@ -96,4 +96,30 @@ class tool::pardalys {
       }
     }
   }
+
+  $pardalys_type =  get_var('pardalys_type', 'plain')
+
+  case $pardalys_type {
+    slave: {
+
+      $pardalys_modules =  get_var('pardalys_modules', 'meta_kolab_complete')
+      $my_pardalys_modules =  split($pardalys_modules, ',')
+
+      $pardalys_ldapserver = get_var('pardalys_ldapserver')
+      $pardalys_ldapbase = get_var('pardalys_ldapbase')
+      $pardalys_ldapuser = get_var('pardalys_ldapuser')
+      $pardalys_ldappass = get_var('pardalys_ldappass')
+
+      file { 
+        '/etc/pardalys':
+        ensure  => 'directory';
+        '/etc/pardalys/site.pp':
+        content  => template('tool_pardalys/site.pp'),
+        require  => File['/etc/pardalys'];
+        '/etc/pardalys/puppet.conf':
+        content  => template('tool_pardalys/puppet.conf'),
+        require  => File['/etc/pardalys'];
+      }
+    }
+  }
 }

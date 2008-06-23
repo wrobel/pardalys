@@ -1,10 +1,176 @@
+2008-06-03  Gunnar Wrobel  <p@rdus.de>
+
+	* modules/service_amavisd_new/templates/amavisd.conf_2.5.2:
+	Inverse logic.
+
+	* modules/service_clamav/templates/freshclam.conf_0.93: Correct
+	logging to syslog.
+
+	* modules/service_clamav/templates/clamd.conf_0.93: Correct
+	logging to syslog.
+
+	* modules/service_amavisd_new/templates/amavisd.conf_2.5.2: Allow
+	a different hostname.
+
+	* modules/service_postfix/templates/master.cf_2.4.6-r2: Add
+	support for a remote spam box.
+	Allow remote reinjection.
+
+	* modules/service_postfix/manifests/init.pp: Add support for a
+	remote spam box.
+
+	* modules/root/plugins/puppet/parser/functions/get_var.rb: Catch
+	nil.
+
+	* modules/service_kolab/plugins/facter/kolab.rb: Rewrote the
+	handling of facts.
+
+2008-06-02  Gunnar Wrobel  <p@rdus.de>
+
+	* modules/tool_layman/plugins/puppet/type/overlay.rb: Ensure that
+	our overlay list is up to date.
+
+	* modules/service_spamassassin/templates/sa-update: Fix variable
+	testing.
+
+	* modules/service_spamassassin/manifests/init.pp: Update to the
+	newer structures.
+
+	* modules/service_kolab/plugins/facter/kolab.rb: Fix variable
+	parsing.
+
+	* modules/service_clamav/templates/freshclam.conf_0.93: Renamed
+	files, fixed variables.
+
+	* modules/service_clamav/templates/clamd.conf_0.93: Renamed files,
+	fixed variable testing.
+
+	* modules/service_clamav/manifests/init.pp: Update to the newer
+	structures.
+
+	* modules/service_amavisd_new/templates/amavisd.conf_2.5.2: Adapt
+	variable names.
+
+	* modules/service_amavisd_new/manifests/init.pp: Update to the
+	newer structures.
+
+	* modules/root/plugins/puppet/parser/functions/get_var.rb: Convert
+	strings with boolean meaning to boolean values.
+
+	* modules/meta_kolab_spam/manifests/init.pp: Adapt meta package to
+	newer structures.
+
+	* modules/meta_kolab_smtp/manifests/init.pp: Fix documentation.
+
+	* modules/tool_emacs/manifests/init.pp: Add a few more addon
+	packages.
+
+	* modules/tool_emacs/*: Add the emacs installation.
+
+	* modules/service_postfix/templates/kolabfilter.conf: Fix failure
+	if some variables are no array.
+
+2008-05-29  Gunnar Wrobel  <p@rdus.de>
+
+	* modules/service_postfix/manifests/init.pp: Add the required
+	kolab filter settings.
+
+	* modules/service_postfix/templates/master.cf_2.4.6-r2: Fix the
+	amavis fallback and add the kolabfilter configuration path.
+
+	* modules/service_postfix/templates/kolabfilter.conf: Add the
+	kolabfilter settings.
+
+	* modules/service_openldap/files/kolab2.schema: Add the
+	destination IMAP host.
+
+2008-05-28  Gunnar Wrobel  <p@rdus.de>
+
+	* modules/service_postfix/templates/kolab_smtpdpolicy.conf:
+	* modules/service_postfix/templates/master.cf_2.4.6-r2:
+	* modules/service_postfix/manifests/init.pp:
+	Allow logging the smtpdpolicy filter and provide a configuration
+	for the policy script.
+
+	* modules/service_kolab/templates/kolab.conf: Reorder parameters.
+
+	* modules/service_postfix/manifests/init.pp: Add perl-kolab to the
+	installed packages. Add horde-framework-kolab to the installed
+	packages.
+
+	* modules/service_sasl/manifests/init.pp: Add the saslauthd
+	configuration.
+
+	* modules/service_postfix/manifests/init.pp: Add the smtpd SASL
+	configuration.
+
+	* modules/service_postfix/files/smtpd.conf: Gentoo SASL
+	configuration file for the smtpd process.
+
+	* modules/service_sasl/files/saslauthd: Gentoo configuration file
+	for saslauthd.
+
+	* modules/service_postfix/manifests/init.pp: Require the saslauthd
+	service.
+
+	* modules/meta_kolab_smtp/manifests/init.pp: Include the sasl
+	module.
+
+	* modules/meta_kolab_complete/manifests/init.pp: Include the sasl
+	and postfix modules.
+
+	* modules/service_sasl/*: Added the SASL configuration module.
+
+	* modules/service_postfix/templates/*: Use kolab_hostname instead
+	of hostname.
+
+	* modules/service_postfix/manifests/init.pp: Finish the variable
+	cleanup.
+
+	* modules/service_kolab/templates/kolab.globals: Convert "-" to
+	"_"
+
+	* modules/service_kolab/templates/kolab.conf (php_*): Rename
+	php_*. These were also counter intuitive.
+
+	* modules/service_kolab/plugins/facter/kolab.rb: Convert
+	TRUE/FALSE, convert older variable names, prepend "kolab_" to LDAP
+	parameters.
+
 2008-05-27  Gunnar Wrobel  <p@rdus.de>
 
 	* etc/README: Add a README file.
 
+	* modules/service_postfix/README: Add a readme for the module.
+
+	* modules/service_postfix/templates/master.cf_2.4.6-r2: Allow
+	enabling/disabling the amavis fallback.
+
+	* modules/service_postfix/templates/main.cf_2.4.6-r2: Fix the
+	filenames for the postfix configuration files.
+
+	* modules/service_postfix/manifests/init.pp: Started cleaning
+	variables and updating the docs.
+
+	* modules/service_openldap/manifests/init.pp: Removed incorrect
+	docs.
+
+	* modules/service_kolab/templates/kolab.globals: Start documenting
+	variables with relevance to postfix.
+
+	* modules/service_postfix/manifests/init.pp: Fix a default value.
+
+	* modules/service_kolab/plugins/facter/kolab.rb: Fix reading of
+	the LDAP values into a fact.
+
+	* modules/service_kolab/manifests/init.pp: Print the error we
+	received while trying to connect the LDAP server.
+
 	* modules/*: Added new modules.
 
 	* facter/kolab.rb: Fix bindir and sbindir in the Kolab fact.
+
+	* bin/pardalys: Allow a custom puppet configuration directory.
 
 2008-05-26  Gunnar Wrobel  <p@rdus.de>
 
@@ -236,4 +402,3 @@
 	* README: Added.
 
 	* TODO: Added.
-

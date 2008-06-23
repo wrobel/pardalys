@@ -63,7 +63,7 @@ use strict;
 # $MYHOME serves as a quick default for some other configuration settings.
 # More refined control is available with each individual setting further down.
 # $MYHOME is not used directly by the program. No trailing slash!
-$MYHOME = '<%= service_amavisd_new_home %>';   # (default is '/var/amavis'), -H
+$MYHOME = '<%= amavisd_new_datadir %>';   # (default is '/var/amavis'), -H
 
 # $mydomain serves as a quick default for some other configuration settings.
 # More refined control is available with each individual setting further down.
@@ -71,12 +71,16 @@ $MYHOME = '<%= service_amavisd_new_home %>';   # (default is '/var/amavis'), -H
 $mydomain = '<%= postfixmydomain %>';      # (no useful default)
 
 # $myhostname = 'host.example.com';  # fqdn of this host, default by uname(3)
-$myhostname = '<%= fqdnhostname %>';
+<% if amavisd_new_hostname -%>
+$myhostname = '<%= amavisd_new_hostname %>';
+<% else -%>
+$myhostname = '<%= kolab_hostname %>';
+<% end -%>
 
 # Set the user and group to which the daemon will change if started as root
 # (otherwise just keeps the UID unchanged, and these settings have no effect):
-$daemon_user  = q(<%= service_amavisd_new_rusr %>);   # (no default;  customary: vscan or amavis), -u
-$daemon_group = q(<%= service_amavisd_new_group %>);   # (no default;  customary: vscan or amavis), -g
+$daemon_user  = q(<%= amavisd_new_rusr %>);   # (no default;  customary: vscan or amavis), -u
+$daemon_group = q(<%= amavisd_new_grp %>);   # (no default;  customary: vscan or amavis), -g
 
 # Runtime working directory (cwd), and a place where
 # temporary directories for unpacking mail are created.
@@ -109,7 +113,7 @@ $enable_global_cache = 1;    # enable use of libdb-based cache if $enable_db=1
 # POSTFIX, or SENDMAIL in dual-MTA setup, or EXIM V4
 # (set host and port number as required; host can be specified
 # as an IP address or a DNS name (A or CNAME, but MX is ignored)
-<% if service_amavisd_new_remote != "yes" %>
+<% if amavisd_new_remote %>
 $forward_method = 'smtp:<%= local_addr %>:10026';  # where to forward checked mail
 <% else %>
 $forward_method = 'smtp:*:10026';  # where to forward checked mail
@@ -237,16 +241,16 @@ $inet_socket_port = 10024;        # accept SMTP on this local TCP port
 # - do not allow free access to the amavisd SMTP port !!!
 #
 # when MTA is at the same host, use the following (one or the other or both):
-<% if service_amavisd_new_remote != "yes" %>
+<% if amavisd_new_remote %>
 $inet_socket_bind = '<%= local_addr %>'; # limit socket bind to loopback interface
 <% else %>
 $inet_socket_bind = undef; # limit socket bind to loopback interface
 <% end %>
                                   # (default is '127.0.0.1')
-<% if service_amavisd_new_remote != "yes" %>
+<% if amavisd_new_remote %>
 @inet_acl = qw( <%= local_addr %> );  # allow SMTP access only from localhost IP
 <% else %>
-@inet_acl = qw( <% service_amavisd_new_remote_servers.each do |server| %><%= server %> <% end %>);
+@inet_acl = qw( <% amavisd_new_remote_servers.each do |server| %><%= server %> <% end %>);
 <% end %>
                                   # (default is qw(127.0.0.1 [::1]) )
 
@@ -306,7 +310,7 @@ $inet_socket_bind = undef; # limit socket bind to loopback interface
 #
 
 # true (e.g. 1) => syslog;  false (e.g. 0) => logging to file
-<% if service_amavisd_new_syslog != "yes" %>
+<% if amavisd_new_syslog %>
 $DO_SYSLOG = 1;                   # (defaults to 0)
 <% else %>
 $DO_SYSLOG = 0;                   # (defaults to 0)
@@ -319,7 +323,7 @@ $syslog_priority = 'debug';   # Syslog base (minimal) priority as a string,
            # choose from: emerg, alert, crit, err, warning, notice, info, debug
 
 # Log file (if not using syslog)
-$LOGFILE = "<%= service_amavisd_new_logfile %>";  # (defaults to empty, no log)
+$LOGFILE = "<%= amavisd_new_logfile %>";  # (defaults to empty, no log)
 
 #NOTE: levels are not strictly observed and are somewhat arbitrary
 # 0: startup/exit/failure messages, viruses detected
@@ -437,10 +441,10 @@ $log_recip_templ = undef;  # undef disables by-recipient level-0 log entries
 #   template-virus-recipient.txt  content fills the $notify_virus_recips_templ
 #   template-spam-sender.txt      content fills the $notify_spam_sender_templ
 #   template-spam-admin.txt       content fills the $notify_spam_admin_templ
-<% if service_amavisd_new_language %>
-read_l10n_templates('<%= service_amavisd_new_templatedir %>/<%= service_amavisd_new_language %>');
+<% if amavisd_new_language %>
+read_l10n_templates('<%= amavisd_new_templatedir %>/<%= amavisd_new_language %>');
 <% else %>
-read_l10n_templates('<%= service_amavisd_new_templatedir %>/en_US');
+read_l10n_templates('<%= amavisd_new_templatedir %>/en_US');
 <% end %>
 
 # Here is an overall picture (sequence of events) of how pieces fit together
@@ -517,7 +521,7 @@ read_l10n_templates('<%= service_amavisd_new_templatedir %>/en_US');
 # default setting of an associative array %final_destiny_by_ccat which is
 # backwards compatible and contains references to these traditional variables:
 #
-<% if service_amavisd_new_quarantine != 'no' %>
+<% if amavisd_new_quarantine != 'no' %>
 $final_virus_destiny      = D_DISCARD; # (defaults to D_DISCARD)
 $final_banned_destiny     = D_DISCARD;  # (defaults to D_BOUNCE)
 <% else %>
@@ -737,7 +741,7 @@ $mailfrom_to_quarantine = '';   # override sender address with null return path
 #   or a directory (no trailing slash)
 #   (the default value is undef, meaning no quarantine)
 #
-$QUARANTINEDIR = "<%= service_amavisd_new_quarantine_location %>";
+$QUARANTINEDIR = "<%= amavisd_new_quarantine_location %>";
 
 #$quarantine_subdir_levels = 1;  # add level of subdirs to disperse quarantine
 
@@ -826,21 +830,21 @@ $QUARANTINEDIR = "<%= service_amavisd_new_quarantine_location %>";
 
 # (default values are: virus-quarantine, banned-quarantine, spam-quarantine)
 
-<% if service_amavisd_new_quarantine == 'yes' %>
+<% if amavisd_new_quarantine == 'yes' %>
 $virus_quarantine_to  = 'virus-quarantine';    # traditional local quarantine
 $banned_quarantine_to     = 'banned-quarantine';     # local quarantine
 $bad_header_quarantine_to = 'bad-header-quarantine'; # local quarantine
 $spam_quarantine_to       = 'spam-quarantine';       # local quarantine
-<% elsif service_amavisd_new_quarantine == 'no' %>
+<% elsif amavisd_new_quarantine == 'no' %>
 $virus_quarantine_to = undef;                 # no quarantine
 $banned_quarantine_to     = undef;     # local quarantine
 $bad_header_quarantine_to = undef; # local quarantine
 $spam_quarantine_to       = undef;       # local quarantine
 <% else %>
-$virus_quarantine_to = '<%= service_amavisd_new_quarantine %>';           # forward to MTA for delivery
-$banned_quarantine_to     = '<%= service_amavisd_new_quarantine %>';     # local quarantine
-$bad_header_quarantine_to = '<%= service_amavisd_new_quarantine %>'; # local quarantine
-$spam_quarantine_to       = '<%= service_amavisd_new_quarantine %>';       # local quarantine
+$virus_quarantine_to = '<%= amavisd_new_quarantine %>';           # forward to MTA for delivery
+$banned_quarantine_to     = '<%= amavisd_new_quarantine %>';     # local quarantine
+$bad_header_quarantine_to = '<%= amavisd_new_quarantine %>'; # local quarantine
+$spam_quarantine_to       = '<%= amavisd_new_quarantine %>';       # local quarantine
 <% end %>
 #$virus_quarantine_to = "virus-quarantine\@$mydomain";   # similar
 #$virus_quarantine_to = 'virus-quarantine@example.com';  # similar
@@ -1784,10 +1788,10 @@ $dspam  = 'dspam';
 # of the option local_tests_only. See Mail::SpamAssassin man page.
 # If set to 1, no SA tests that require internet access will be performed.
 #
-<% if service_amavisd_new_sa_local == 'yes' %>
-$sa_local_tests_only = 0;   # only tests which do not require internet access?
-<% else %>
+<% if amavisd_new_sa_local %>
 $sa_local_tests_only = 1;   # only tests which do not require internet access?
+<% else %>
+$sa_local_tests_only = 0;   # only tests which do not require internet access?
 <% end %>
 
 #$sa_auto_whitelist = 1;    # turn on AWL in SA 2.63 or older (irrelevant

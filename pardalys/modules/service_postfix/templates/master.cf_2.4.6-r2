@@ -152,13 +152,19 @@ smtp-amavis unix -	-	n	-	2       smtp
     -o smtp_data_done_timeout=1200
     -o smtp_send_xforward_command=yes
     -o disable_dns_lookups=yes
+<% if enable_amavis_fallback -%>
+    -o fallback_relay=[<%= local_addr %>]:10026
+<% end -%>
 
 # SMTP interface for injecting mail back into postfix
 # from kolabfilter
 <%= local_addr %>:10025 inet n	-	n	-	3  smtpd
 <% if enable_virus_scan -%>
+<% if remote_spambox_ip -%>
+    -o content_filter=smtp-amavis:[<%= remote_spambox_ip %>]:<%= remote_spambox_port %>
+<% else -%>
     -o content_filter=smtp-amavis:[<%= local_addr %>]:10024
-    -o smtp_fallback_relay=[<%= local_addr %>]:10026
+<% end -%>
 <% else -%>
     -o content_filter=
 <% end -%>
@@ -179,7 +185,11 @@ smtp-amavis unix -	-	n	-	2       smtp
 
 # SMTP interface for injecting mail back into postfix
 # from amavis
+<% if remote_spambox_ip -%>
+<%= bind_addr %>:10026 inet n	-	n	-	3  smtpd
+<% else -%>
 <%= local_addr %>:10026 inet n	-	n	-	3  smtpd
+<% end -%>
     -o content_filter=
     -o cleanup_service_name=post-cleanup
     -o local_recipient_maps=
@@ -189,24 +199,29 @@ smtp-amavis unix -	-	n	-	2       smtp
     -o smtpd_helo_restrictions=
     -o smtpd_sender_restrictions=
     -o smtpd_recipient_restrictions=permit_mynetworks,reject
+<% if remote_spambox_ip -%>
+    -o mynetworks=127.0.0.0/8,<%= remote_spambox_ip %>/32
+<% else -%>
     -o mynetworks=127.0.0.0/8
+<% end -%>
     -o strict_rfc821_envelopes=yes
     -o smtpd_error_sleep_time=0
     -o smtpd_soft_error_limit=1001
     -o smtpd_hard_error_limit=1000
 
 # The Kolab SMTP policy script
-kolabpolicy    unix  -       n       n       -       3       spawn user=kolab argv=/usr/bin/kolab_smtpdpolicy 
+kolabpolicy    unix  -       n       n       -       3       spawn user=kolab argv=/usr/bin/kolab_smtpdpolicy<% if log_kolabpolicy %> -v<% end %>
 
 # Filter In/Outgoing mail
 kolabfilter     unix  -       n       n       -       3       pipe user=kolab null_sender= argv=/usr/bin/php
     -c /etc/php/cli-php5/php.ini
     -f /usr/bin/kolabfilter
     --
-    -h <%= hostname %>
+    -h <%= kolab_hostname %>
     -s ${sender}
     -r ${recipient}
     -c ${client_address}
+    -C <%= kolabfilterconfig %>
     -u ${sasl_username}
 
 # Filter incoming mail for resource updates (iTip)
@@ -214,8 +229,9 @@ kolabmailboxfilter     unix  -       n       n       -       3       pipe user=k
     -c /etc/php/cli-php5/php.ini
     -f /usr/bin/kolabmailboxfilter
     --
-    -h <%= hostname %>
+    -h <%= kolab_hostname %>
     -s ${sender}
     -r ${recipient}
     -c ${client_address}
+    -C <%= kolabfilterconfig %>
 

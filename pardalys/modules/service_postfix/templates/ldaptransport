@@ -4,7 +4,7 @@
 
 server_host = <%= ldap_uri %>
 search_base = <%= base_dn %>
-query_filter = (&(mail=%s)(objectClass=kolabInetOrgPerson)(!(kolabHomeServer=<%= hostname %>)))
+query_filter = (&(mail=%s)(objectClass=kolabInetOrgPerson)(!(kolabHomeServer=<%= kolab_hostname %>)))
 result_attribute = kolabHomeServer
 result_filter = smtp:[%s]
 search_timeout = 15

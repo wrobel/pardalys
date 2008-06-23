@@ -1,44 +1,44 @@
 import 'os_gentoo'
 
 # Class service::amavisd_new
+#
 #  Defines the configuration for the amavisd_new mail filter
 #
-# Parameters 
+# @author Gunnar Wrobel <p@rdus.de>
+# @version 1.0
+# @package service_postfix
 #
-#  * operatingsystem: Defines the underlying operating system and
-#    adapts the configuration accordingly.
+# @module root           The root module is required to determine the installed
+#                        amavis version.
+# @module os             The os module is required to determine basic system
+#                        paths.
+# @module os_gentoo      The os_gentoo module is required for Gentoo specific
+#                        package installation.
+# @module service_kolab  Provides the kolab configuration.
 #
-#  * sbindir: Path of admin tools.
+# @fact operatingsystem  Allows to choose the correct package name
+#                        depending on the operating system. In addition
+#                        required to set additional tasks depending on
+#                        the distribution.
+# @fact version_amavis   The amavisd-new version currently installed
 #
-#  * bindir: Path of normal executables.
-#
-#  * service_amavisd_new_remote: Is the amavis process getting
-#    requests from other servers?
-#
-#  * service_amavisd_new_remote_servers: The remote machines that have
-#    access to this amavisd machine
-#
-#  * service_amavisd_new_syslog: Should amavisd_new report to syslog?
-#
-#  * service_amavisd_new_sa_local: Should amavisd_new only use the
-#    spamassassin local tests?
-#
-#  * service_amavisd_new_quarantine:
-#     yes - amavisd_new quarantines mail
-#     no  - amavisd_new passes mail defanged
-#     ADMIN@EXAMPLE.COM  - amavisd_new passes mail to the given address
-#
-#  * service_amavisd_new_language: Identifies the language directory
-#    for the templates under /etc/amavis/templates.
-#    FIXME: Ensure this directory exists and holds templates.
-#
-# Templates
-#
-#  * templates/amavisd.conf_*: Configuration for the amavis service.
+# @fact kolab_fqdnhostname          Our primary Kolab hostname
+# @fact kolab_local_addr            Our local IP (usually 127.0.0.1)
+# @fact kolab_postfix_mydomain      Our primary mail domain
+# @fact kolab_postfix_mynetworks    Networks that may relay through us
+# @fact kolab_postfix_mydestination Our mail domains
+# @fact amavisd_new_remote          Should we allow remote access to amavis?
+# @fact amavisd_new_syslog          Should amavis log to syslog?
+# @fact amavisd_new_remote_servers  Which remote servers may access amavis?
+# @fact amavisd_new_language        Which template language should be used?
+# @fact amavisd_new_quarantine      What quarantine method should be used?
+# @fact amavisd_new_sa_local        Should spamassassin run only local tests?
+# @fact amavisd_new_hostname        Alternative hostname if it should not
+#                                   be kolab_fqdnhostname
 #
 class service::amavisd_new {
 
-  # Package preparations
+  # Package installation
   case $operatingsystem {
     gentoo:
     {
@@ -47,98 +47,80 @@ class service::amavisd_new {
         package => 'mail-filter/amavisd-new',
         use     => 'mailwrapper nls'
       }
-    }
-  }
-  
-  # Package installation
-  package { amavisd_new:
-    name     => 'amavisd-new',
-    category => $operatingsystem ? {
-      gentoo  => 'mail-filter',
-      # Still undefined for all other OS
-      default => ''
-    },
-    ensure   => 'installed',
-    require  => $operatingsystem ? {
-      gentoo => Gentoo_use_flags['amavisd_new']
-    }
-  }
+      package { 'amavisd-new':
+        category => 'mail-filter',
+        ensure   => 'installed',
+        require  => Gentoo_use_flags['amavisd_new'],
+        tag      => 'buildhost';
+      }
 
-  package { amavisd_new_templates:
-    name     => 'amavisd-new-templates',
-    category => $operatingsystem ? {
-      gentoo  => 'mail-filter',
-      # Still undefined for all other OS
-      default => ''
-    },
-    ensure   => 'installed',
+      package { 'amavisd-new-templates':
+        category => 'mail-filter',
+        ensure   => 'installed',
+        tag      => 'buildhost';
+      }
+    }
+    default:
+    {
+      package { 'amavisd-new':
+        ensure   => 'installed';
+      }
+      package { 'amavisd-new-templates':
+        ensure   => 'installed';
+      }
+    }
   }
 
   # Initialize template variables
+  $template_amavisd_new = template_version($version_amavis, '2.5.2@:2.5.2,', '2.5.2')
 
-  # FIXME: This should be determined automatically
-  $service_amavisd_new_version = $operatingsystem ? {
-    gentoo  => '2.5.2',
-    default => '2.5.2'
-  }
+  $amavisd_new_rusr        = 'amavis'
+  $amavisd_new_grp         = 'amavis'
+  $amavisd_new_conf        = "${os::sysconfdir}/amavisd.conf"
+  $amavisd_new_datadir     = "${os::localstatedir}/amavis"
+  $amavisd_new_logfile     = "${amavisd_new_datadir}/amavis.log"
+  $amavisd_new_templatedir = "${amavisd_new_datadir}/templates"
+  $amavisd_new_quarantine_location = "${amavisd_new_datadir}/virusmails"
 
-  $service_amavisd_new_conf = $operatingsystem ? {
-    gentoo  => '/etc/amavisd.conf',
-    default => '/etc/amavisd.conf'
-  }
-  $service_amavisd_new_home = $operatingsystem ? {
-    gentoo  => '/var/amavis',
-    default => '/var/amavis'
-  }
-  $service_amavisd_new_rusr = $operatingsystem ? {
-    gentoo  => 'amavis',
-    default => 'amavis'
-  }
-  $service_amavisd_new_group = $operatingsystem ? {
-    gentoo  => 'amavis',
-    default => 'amavis'
-  }
-  $service_amavisd_new_logfile = $operatingsystem ? {
-    gentoo  => '/var/amavis/amavis.log',
-    default => '/var/amavis/amavis.log'
-  }
-  $service_amavisd_new_templatedir = $operatingsystem ? {
-    gentoo  => '/var/amavis/templates',
-    default => '/etc/amavis/templates'
-  }
-  $service_amavisd_new_quarantine_location = $operatingsystem ? {
-    gentoo  => '/var/amavis/virusmails',
-    default => '/var/amavis/virusmails'
-  }
+  $amavisd_new_remote         = get_var('amavisd_new_remote', false)
+  $amavisd_new_syslog         = get_var('amavisd_new_syslog', true)
+  $amavisd_new_remote_servers = split(get_var('amavisd_new_remote_servers'), ',')
+  $amavisd_new_language       = get_var('amavisd_new_language', 'en_US')
+  $amavisd_new_quarantine     = get_var('amavisd_new_quarantine', 'yes')
+  $amavisd_new_sa_local       = get_var('amavisd_new_sa_local', true)
 
-  # Rewrite the application version to the configuration version
-  $amavisd_new_template_version = $service_amavisd_new_version ? {
-    '2.5.2'  => '2.5.2'
-  }
+  $amavisd_new_hostname       = get_var('amavisd_new_hostname', false)
 
-  $postfixmydomain = get_var('postfix_mydomain')
-  $postfixmydestination = split(get_var('postfix_mydestination'), ',')
-  $postfixmynetworks = get_var('postfix_mynetworks', '127.0.0.0/8')
+  $kolab_hostname = get_var('kolab_fqdnhostname')
+  $local_addr = get_var('kolab_local_addr', '127.0.0.1')
+  $postfixmydomain = get_var('kolab_postfix_mydomain')
+  $postfixmydestination = get_var('kolab_postfix_mydestination')
+  $postfixmynetworks = get_var('kolab_postfix_mynetworks')
 
-  # Warn if we don't know the version
-  # FIXME: This will only be useful once we know how to determine
-  # package versions
+  $bindir  = "${os::bindir}"
+  $sbindir = "${os::sbindir}"
 
   # Configuration
-  file { 'service_amavisd_new_conf':
-    path    => "${service_amavisd_new_conf}",
-    content => template("service_amavisd_new/amavisd.conf_${amavisd_new_template_version}"),
-    owner   => 'root',
-    group   => 'root',
+  file { "${amavisd_new_conf}":
+    content => template("service_amavisd_new/amavisd.conf_${template_amavisd_new}"),
     mode    => 640,
-    require => Package['amavisd_new']
+    notify  => Service['amavisd'],
+    require => Package['amavisd-new']
   }
 
-  service { 'service_amavisd_new_amavis' :
-    name      => 'amavisd',
+  service { 'amavisd':
     ensure    => 'running',
-    enable    => true,
-    subscribe => File['service_clamav_freshclam_conf']
+    enable    => true;
+  }
+
+  case $operatingsystem {
+    gentoo: {
+      # Ensure that the service starts with the system
+      file { '/etc/runlevels/default/amavisd':
+        ensure => '/etc/init.d/amavisd',
+        require  => Package['amavisd-new']
+      }
+    }
   }
 
 }

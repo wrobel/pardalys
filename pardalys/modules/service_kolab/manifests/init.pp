@@ -41,7 +41,8 @@ class service::kolab {
       default: {
 
         fail("
-        
+        Error: $kolab_ldap_error
+
         Could not connect to the LDAP server! This is fatal. 
 
         If you did not bootstrap the server yet you need to create

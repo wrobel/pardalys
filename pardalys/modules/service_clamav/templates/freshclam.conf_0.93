@@ -14,11 +14,11 @@ DatabaseDirectory <%= datadir %>
 
 # Path to the log file (make sure it has proper permissions)
 # Default: disabled
-<% if syslog != "yes" %>
-UpdateLogFile <%= freshclam_logfile %>
-<% else %>
+<% if syslog -%>
 #UpdateLogFile <%= freshclam_logfile %>
-<% end %>
+<% else -%>
+UpdateLogFile <%= freshclam_logfile %>
+<% end -%>
 
 # Maximum size of the log file.
 # Value of 0 disables the limit.
@@ -38,12 +38,16 @@ UpdateLogFile <%= freshclam_logfile %>
 
 # Use system logger (can work together with UpdateLogFile).
 # Default: no
-#LogSyslog yes
+<% if syslog -%>
+LogSyslog yes
 
 # Specify the type of syslog messages - please refer to 'man syslog'
 # for facility names.
 # Default: LOG_LOCAL6
-#LogFacility LOG_MAIL
+LogFacility LOG_MAIL
+<% else -%>
+#LogSyslog yes
+<% end -%>
 
 # This option allows you to save the process identifier of the daemon
 # Default: disabled

@@ -87,8 +87,8 @@ message_size_limit = 20971520
 # virtual_alias_domains and virtual_alias_maps.
 
 virtual_alias_maps =  hash:/etc/postfix/virtual, 
-                      ldap:/etc/postfix/ldapdistlist.cf, 
-                      ldap:/etc/postfix/ldapvirtual.cf,
+                      ldap:/etc/postfix/ldapdistlist, 
+                      ldap:/etc/postfix/ldapvirtual,
                       pcre:/etc/postfix/kolabvirtual
 
 #######################################################################
@@ -191,7 +191,7 @@ relocated_maps = hash:/etc/postfix/relocated
 # transport_maps = hash:/etc/postfix/transport
 
 transport_maps = hash:/etc/postfix/transport, 
-                 ldap:/etc/postfix/ldaptransport.cf
+                 ldap:/etc/postfix/ldaptransport
 
 #######################################################################
 # MASQERADING
@@ -462,7 +462,7 @@ default_privs = nobody
 # from gethostname(). $myhostname is used as a default value for many
 # other configuration parameters.
 #
-myhostname = <%= hostname %>
+myhostname = <%= kolab_hostname %>
 #myhostname = virtual.domain.tld
 
 # The mydomain parameter specifies the local internet domain name.

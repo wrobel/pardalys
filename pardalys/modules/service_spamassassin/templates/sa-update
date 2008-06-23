@@ -1,6 +1,6 @@
 #!/bin/sh
 
 sa-update
-<% if service_spamassassin_amavisd != "NONE" %>
+<% if amavis_child %>
 /etc/init.d/amavisd restart
 <% end %>

@@ -1,5 +1,8 @@
 2008-06-23  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/tool_baselayout/manifests/init.pp: We need openrc for
+	baselayout-2.
+
 	* bin/dev-pardalys (GIT): Catch non-existing git.
 
 	* modules/root/plugins/facter/package_versions.rb: Initialize the

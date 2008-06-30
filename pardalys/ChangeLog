@@ -1,5 +1,8 @@
 2008-06-30  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/tool_portage/templates/make.conf_2.1.4.4: Fix cflags,
+	remove a few newlines.
+
 	* modules/tool_emacs/manifests/init.pp: Add some basic
 	configuration elements for emacs so that the git handling is
 	always available.

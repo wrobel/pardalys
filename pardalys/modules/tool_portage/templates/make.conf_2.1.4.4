@@ -104,7 +104,7 @@ CHOST="<%= chost %>"
 #CFLAGS="-mcpu=athlon-xp -O2 -pipe"
 #CFLAGS="-march=pentium3 -O2 -pipe"
 <% if cflags %>
-CFLAGS="<% cflags %>"
+CFLAGS="<%= cflags %>"
 <% end %>
 
 # If you set a CFLAGS above, then this line will set your default C++ flags to
@@ -491,10 +491,10 @@ EBEEP_IGNORE=yes
 CONFIG_PROTECT="<% config_protect.each do |protect| %><%= protect %> <% end %>"
 CONFIG_PROTECT_MASK="<% config_protect_mask.each do |mask| %><%= mask %> <% end %>"
 
-<% if layman_storage %>
+<% if layman_storage -%>
 source <%= layman_storage %>/make.conf
-<% end %>
+<% end -%>
 
-<% make_conf_add.each do |add| %>
+<% make_conf_add.each do |add| -%>
 <%= add %>
-<% end %>
+<% end -%>

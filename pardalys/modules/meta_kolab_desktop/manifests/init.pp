@@ -1,6 +1,7 @@
 import 'os'
 import 'service_kolab'
 import 'tool_pardalys'
+import 'tool_cups'
 
 # Class meta::kolab::desktop
 #
@@ -10,8 +11,9 @@ import 'tool_pardalys'
 # @version 1.0
 # @package meta_kolab_monitor
 #
-class meta::kolab::monitor {
+class meta::kolab::desktop {
   include os
   include service::kolab
   include tool::pardalys
+  include tool::cups
 }

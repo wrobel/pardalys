@@ -1,5 +1,7 @@
 2008-06-30  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/tool_cups/manifests/init.pp: Configure cups printing.
+
 	* modules/tool_portage/templates/make.conf_2.1.4.4: Fix cflags,
 	remove a few newlines.
 

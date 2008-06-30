@@ -1,5 +1,15 @@
 2008-06-30  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/tool_emacs/manifests/init.pp: Add some basic
+	configuration elements for emacs so that the git handling is
+	always available.
+ 
+	* modules/tool_emacs/templates/dot_emacs: A very basic .emacs
+	file.
+
+	* modules/tool_emacs/files/72git-gentoo.el: Always provide
+	"git-status".
+
 	* modules/meta_kolab_desktop/manifests/init.pp: Added a definition
 	for a desktop machine.
 

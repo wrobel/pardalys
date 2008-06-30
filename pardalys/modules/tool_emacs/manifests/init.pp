@@ -80,6 +80,17 @@ class tool::emacs {
         ensure   => 'installed',
         tag      => 'buildhost'
       }
+
+      file{'/usr/share/emacs/site-lisp/site-gentoo.d/72git-gentoo.el':
+        source => 'puppet:///tool_emacs/72git-gentoo.el';
+      }
+
+      $sysadmin_fullname = get_var('sysadmin_fullname', 'System Administrator')
+      $sysadmin_mail = get_var('sysadmin_mail', 'root@localhost')
+
+      file{'/root/.emacs':
+        content => template('tool_emacs/dot_emacs');
+      }
     }
     default:
     {

@@ -20,6 +20,8 @@ class meta::kolab::monitor {
 
 class meta::kolab::monitor::master {
 
+  include os
+  include service::kolab
   include service::lighttpd
   include service::logwatch
   include service::munin

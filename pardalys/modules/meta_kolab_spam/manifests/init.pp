@@ -11,7 +11,7 @@ import 'service_dspam'
 #
 # @author Gunnar Wrobel <p@rdus.de>
 # @version 1.0
-# @package service_postfix
+# @package meta_kolab_spam
 #
 class meta::kolab::spam {
 

@@ -1,3 +1,8 @@
+2008-06-30  Gunnar Wrobel  <p@rdus.de>
+
+	* modules/meta_kolab_monitor/manifests/init.pp: Added basic
+	elements.
+
 2008-06-23  Gunnar Wrobel  <p@rdus.de>
 
 	* INSTALL: Update the install instructions.

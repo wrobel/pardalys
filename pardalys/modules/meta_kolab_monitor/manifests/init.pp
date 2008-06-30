@@ -1,22 +1,17 @@
+import 'os'
+import 'service_kolab'
 import 'service_lighttpd'
 import 'service_logwatch'
 import 'service_munin'
 import 'service_nagios'
 
 # Class meta::kolab::monitor
+#
 #  Combines monitoring tools for the Kolab server
 #
-# Required parameters 
-#
-#  * :
-#
-# Optional parameters 
-#
-#  * :
-#
-# Templates
-#
-#  * :
+# @author Gunnar Wrobel <p@rdus.de>
+# @version 1.0
+# @package meta_kolab_monitor
 #
 class meta::kolab::monitor {
 

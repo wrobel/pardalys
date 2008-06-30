@@ -1,5 +1,8 @@
 2008-06-30  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/meta_kolab_desktop/manifests/init.pp: Added a definition
+	for a desktop machine.
+
 	* modules/tool_system/manifests/init.pp: Add the rxvt-unicde
 	terminal to the ncurses configuration.
 

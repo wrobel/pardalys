@@ -54,6 +54,19 @@ class tool::system {
         require  => Gentoo_use_flags['libpcre']
       }
 
+      gentoo_use_flags { ncurses:
+        context => 'tools_system_common_ncurses',
+        package => 'sys-libs/ncurses',
+        use     => 'doc unicode',
+        tag     => 'buildhost'
+      }
+      package { ncurses:
+        category => 'sys-libs',
+        ensure   => 'installed',
+        tag      => 'buildhost',
+        require  => Gentoo_use_flags['ncurses']
+      }
+
       package { unzip:
         category => 'app-arch',
         ensure   => 'installed',
@@ -116,6 +129,13 @@ class tool::system {
     mode    => 640,
     group   => 'nagios',
     require => Package['nagios-nsca'];
+  }
+
+  # Ensure the system knows how to handle the rxvt-unicode terminal
+  file {
+    '/usr/share/terminfo/r/rxvt-unicode':
+    source => 'puppet:///tool_system/rxvt-unicode',
+    require => Package['ncurses'];
   }
 
   file {

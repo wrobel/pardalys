@@ -1,3 +1,8 @@
+2008-07-17  Gunnar Wrobel  <p@rdus.de>
+
+	* modules/tool_portage/files/esync: Add the eix-update call after
+	syncing portage.
+
 2008-06-30  Gunnar Wrobel  <p@rdus.de>
 
 	* modules/tool_cups/manifests/init.pp: Configure cups printing.

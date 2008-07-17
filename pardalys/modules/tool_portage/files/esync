@@ -11,5 +11,7 @@ RESULT=$?
 
 rm -f /tmp/esearchdb.py.tmp
 
+eix-update
+
 ebegin "Finished esync"
 eend $RESULT

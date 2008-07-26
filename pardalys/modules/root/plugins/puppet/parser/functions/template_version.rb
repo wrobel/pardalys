@@ -1,6 +1,12 @@
 require 'puppet/util/autoload'
 
-# Return the matching template version
+# Return the matching template version. The format is
+#
+# 0.1.0@0.2.0:0.1.0,0.3.0@0.4.0:0.3.0
+#
+# The leading part specifies the package versions matching the
+# template version (the part following the colon).
+
 module Puppet::Parser::Functions
   newfunction(:template_version, :type => :rvalue) do |args|
     if not args or not args[0]

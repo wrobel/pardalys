@@ -1,5 +1,14 @@
 2008-07-26  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_postfix/templates/master.cf_2.4.6-r2: Fix the
+	user running the shell scripts.
+
+	* modules/root/plugins/puppet/parser/functions/template_version.rb:
+	Short comment about the format.
+
+	* modules/service_syslog/manifests/init.pp: Corrected use of the
+	package version.
+
 	* modules/service_openldap/manifests/init.pp: Added master/slave
 	replication.
 

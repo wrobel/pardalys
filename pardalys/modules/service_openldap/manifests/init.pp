@@ -93,6 +93,9 @@ class service::openldap::serve {
     membership => 'minimum';
   }
 
+  $openldap_master    = get_var('openldap_master', true)
+  $openldap_slave     = get_var('openldap_slave', '')
+
   $template_openldap = template_version($version_openldap, '2.4.7@:2.4.7,', '2.4.7')
 
   # Make the fact available within the template

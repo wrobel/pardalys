@@ -49,12 +49,6 @@ directory	<%= openldap_datadir %>
 rootdn          "<%= kolab_bind_dn %>"
 rootpw          "<%= kolab_bind_pw_hash %>"
 
-# FIXME: Replication still needs to be done
-#replica uri=ldap://@@@slurpd_addr@@@:@@@slurpd_port@@@
-#        binddn="cn=replicator"
-#        bindmethod=simple 
-#	credentials=secret
-
 #### Using overlays to improve data consistency
 # Ensure that we never get dangling member attributes
 # Checked on rename and delete
@@ -64,6 +58,26 @@ refint_attributes member
 # The mail and the uid attribute must be unique.
 overlay unique
 unique_attributes mail uid
+
+<% if openldap_master -%>
+# Overlay for syncrepl
+overlay syncprov
+syncprov-checkpoint 100 10
+syncprov-sessionlog 100
+index   entryUUID eq
+<% end -%>
+
+<% if openldap_slave -%>
+syncrepl rid=1
+	provider=<%= openldap_slave %>
+        tls_reqcert=allow
+	type=refreshAndPersist
+	interval=00:10:00:00
+	searchbase="<%= kolab_base_dn %>"
+	bindmethod=simple
+	binddn="<%= kolab_bind_dn %>"
+	credentials=<%= kolab_bind_pw %>
+<% end -%>
 
 index   objectClass     pres,eq
 index   uid             approx,sub,pres,eq

@@ -1,5 +1,11 @@
 2008-07-26  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_openldap/manifests/init.pp: Added master/slave
+	replication.
+
+	* modules/service_openldap/templates/slapd.conf_2.4.7: Added
+	master/slave replication.
+
 	* modules/tool_emacs/manifests/init.pp: Setting for a screen with
 	a dark background.
 

@@ -88,6 +88,8 @@ class tool::emacs {
       $sysadmin_fullname = get_var('sysadmin_fullname', 'System Administrator')
       $sysadmin_mail = get_var('sysadmin_mail', 'root@localhost')
 
+      $screen_dark = get_var('screen_dark', false)
+
       file{'/root/.emacs':
         content => template('tool_emacs/dot_emacs');
       }

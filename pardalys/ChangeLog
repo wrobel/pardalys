@@ -1,3 +1,11 @@
+2008-07-26  Gunnar Wrobel  <p@rdus.de>
+
+	* modules/tool_emacs/manifests/init.pp: Setting for a screen with
+	a dark background.
+
+	* modules/tool_emacs/templates/dot_emacs: Setting for a screen
+	with a dark background.
+
 2008-07-17  Gunnar Wrobel  <p@rdus.de>
 
 	* modules/tool_portage/templates/glsa-check: Display the

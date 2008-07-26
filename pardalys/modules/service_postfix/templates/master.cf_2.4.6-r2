@@ -210,10 +210,10 @@ smtp-amavis unix -	-	n	-	2       smtp
     -o smtpd_hard_error_limit=1000
 
 # The Kolab SMTP policy script
-kolabpolicy    unix  -       n       n       -       3       spawn user=kolab argv=/usr/bin/kolab_smtpdpolicy<% if log_kolabpolicy %> -v<% end %>
+kolabpolicy    unix  -       n       n       -       3       spawn user=<%= postfix_script_user %> argv=/usr/bin/kolab_smtpdpolicy<% if log_kolabpolicy %> -v<% end %>
 
 # Filter In/Outgoing mail
-kolabfilter     unix  -       n       n       -       3       pipe user=kolab null_sender= argv=/usr/bin/php
+kolabfilter     unix  -       n       n       -       3       pipe user=<%= postfix_script_user %> null_sender= argv=/usr/bin/php
     -c /etc/php/cli-php5/php.ini
     -f /usr/bin/kolabfilter
     --
@@ -225,7 +225,7 @@ kolabfilter     unix  -       n       n       -       3       pipe user=kolab nu
     -u ${sasl_username}
 
 # Filter incoming mail for resource updates (iTip)
-kolabmailboxfilter     unix  -       n       n       -       3       pipe user=kolab null_sender= argv=/usr/bin/php
+kolabmailboxfilter     unix  -       n       n       -       3       pipe user=<%= postfix_script_user %> null_sender= argv=/usr/bin/php
     -c /etc/php/cli-php5/php.ini
     -f /usr/bin/kolabmailboxfilter
     --

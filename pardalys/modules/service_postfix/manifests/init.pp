@@ -141,25 +141,25 @@ class service::postfix {
         use     => 'kolab imap ldap nls session xml',
         tag     => 'buildhost'
       }
-      gentoo_unmask { 'horde-framework-kolab':
-        context => 'service_postfix_hordeframeworkkolab',
-        package => '=dev-php/horde-framework-kolab-3.2_rc3*',
+      gentoo_unmask { 'Horde_Kolab_Filter':
+        context => 'service_postfix_Horde_Kolab_Filter',
+        package => 'dev-php/Horde_Kolab_Filter',
         tag     => 'buildhost'
       }
-      gentoo_keywords { 'horde-framework-kolab':
-        context => 'service_postfix_hordeframeworkkolab',
-        package => '=dev-php/horde-framework-kolab-3.2_rc3*',
+      gentoo_keywords { 'Horde_Kolab_Filter':
+        context => 'service_postfix_Horde_Kolab_Filter',
+        package => 'dev-php/Horde_Kolab_Filter',
         keywords => "~$keyword",
         tag      => 'buildhost'
       }
-      package { 'horde-framework-kolab':
+      package { 'Horde_Kolab_Filter':
         category => 'dev-php',
         ensure   => 'installed',
         require  =>  [ Gentoo_use_flags['c-client'],
                        Gentoo_use_flags['php'],
                        Gentoo_keywords['php'],
-                       Gentoo_keywords['horde-framework-kolab'],
-                       Gentoo_unmask['horde-framework-kolab'] ],
+                       Gentoo_keywords['Horde_Kolab_Filter'],
+                       Gentoo_unmask['Horde_Kolab_Filter'] ],
         tag      => 'buildhost'
       }
     }
@@ -290,7 +290,7 @@ class service::postfix {
     require => Package['perl-kolab'];
     "${kolabfilterconfig}":
     content => template("service_postfix/kolabfilter.conf"),
-    require => Package['horde-framework-kolab'];
+    require => Package['Horde_Kolab_Filter'];
 #
 #    '/etc/monit.d/postfix':
 #    source  => 'puppet:///service_cron/monit_postfix';

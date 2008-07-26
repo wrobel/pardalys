@@ -1,5 +1,8 @@
 2008-07-26  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_postfix/manifests/init.pp: Do not install the
+	whole Horde framework but only what we need.
+
 	* modules/service_postfix/templates/master.cf_2.4.6-r2: Fix the
 	user running the shell scripts.
 

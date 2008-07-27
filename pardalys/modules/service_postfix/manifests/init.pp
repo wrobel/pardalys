@@ -170,6 +170,18 @@ class service::postfix {
         keywords => "~$keyword",
         tag      => 'buildhost'
       }
+      gentoo_keywords { 'Horde_LDAP':
+        context => 'service_postfix_Horde_LDAP',
+        package => '=dev-php/Horde_LDAP-0.0.2',
+        keywords => "~$keyword",
+        tag      => 'buildhost'
+      }
+      gentoo_keywords { 'Horde_Kolab_Server':
+        context => 'service_postfix_Horde_Kolab_Server',
+        package => 'dev-php/Horde_Kolab_Server',
+        keywords => "~$keyword",
+        tag      => 'buildhost'
+      }
       package { 'Horde_Kolab_Filter':
         category => 'dev-php',
         ensure   => 'installed',
@@ -180,6 +192,8 @@ class service::postfix {
                        Gentoo_keywords['Horde_Framework'],
                        Gentoo_keywords['Horde_DOM'],
                        Gentoo_keywords['Horde_Util'],
+                       Gentoo_keywords['Horde_LDAP'],
+                       Gentoo_keywords['Horde_Kolab_Server'],
                        Gentoo_unmask['Horde_Kolab_Filter'] ],
         tag      => 'buildhost'
       }

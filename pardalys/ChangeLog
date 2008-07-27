@@ -1,3 +1,8 @@
+2008-07-27  Gunnar Wrobel  <p@rdus.de>
+
+	* modules/service_postfix/manifests/init.pp: Add required
+	dependencies for Horde_Kolab_Filter.
+
 2008-07-26  Gunnar Wrobel  <p@rdus.de>
 
 	* modules/service_postfix/manifests/init.pp: Do not install the

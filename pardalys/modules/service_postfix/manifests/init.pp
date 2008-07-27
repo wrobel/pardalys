@@ -152,6 +152,18 @@ class service::postfix {
         keywords => "~$keyword",
         tag      => 'buildhost'
       }
+      gentoo_keywords { 'Horde_Framework':
+        context => 'service_postfix_Horde_Framework',
+        package => '=dev-php/Horde_Framework-0.0.2',
+        keywords => "~$keyword",
+        tag      => 'buildhost'
+      }
+      gentoo_keywords { 'Horde_DOM':
+        context => 'service_postfix_Horde_DOM',
+        package => '=dev-php/Horde_DOM-0.1.0',
+        keywords => "~$keyword",
+        tag      => 'buildhost'
+      }
       package { 'Horde_Kolab_Filter':
         category => 'dev-php',
         ensure   => 'installed',
@@ -159,6 +171,8 @@ class service::postfix {
                        Gentoo_use_flags['php'],
                        Gentoo_keywords['php'],
                        Gentoo_keywords['Horde_Kolab_Filter'],
+                       Gentoo_keywords['Horde_Framework'],
+                       Gentoo_keywords['Horde_DOM'],
                        Gentoo_unmask['Horde_Kolab_Filter'] ],
         tag      => 'buildhost'
       }

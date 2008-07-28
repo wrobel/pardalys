@@ -170,6 +170,12 @@ class service::postfix {
         keywords => "~$keyword",
         tag      => 'buildhost'
       }
+      gentoo_keywords { 'Horde_MIME':
+        context => 'service_postfix_Horde_MIME',
+        package => '=dev-php/Horde_MIME-0.0.2',
+        keywords => "~$keyword",
+        tag      => 'buildhost'
+      }
       gentoo_keywords { 'Horde_iCalendar':
         context => 'service_postfix_Horde_iCalendar',
         package => '=dev-php/Horde_iCalendar-0.0.3',

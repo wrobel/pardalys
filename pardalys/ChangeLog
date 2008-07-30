@@ -1,3 +1,8 @@
+2008-07-30  Gunnar Wrobel  <p@rdus.de>
+
+	* modules/service_openldap/templates/slapd.conf_2.4.7: Correct
+	testing for the openldap_slave default value.
+
 2008-07-28  Gunnar Wrobel  <p@rdus.de>
 
 	* modules/service_postfix/manifests/init.pp: Add required

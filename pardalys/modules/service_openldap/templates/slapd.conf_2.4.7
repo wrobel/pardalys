@@ -67,7 +67,7 @@ syncprov-sessionlog 100
 index   entryUUID eq
 <% end -%>
 
-<% if openldap_slave -%>
+<% if openldap_slave != '' -%>
 syncrepl rid=1
 	provider=<%= openldap_slave %>
         tls_reqcert=allow

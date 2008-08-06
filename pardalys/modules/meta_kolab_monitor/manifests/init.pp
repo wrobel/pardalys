@@ -3,7 +3,6 @@ import 'service_kolab'
 import 'tool_pardalys'
 import 'service_lighttpd'
 import 'service_logwatch'
-import 'service_munin'
 import 'service_nagios'
 
 # Class meta::kolab::monitor
@@ -26,7 +25,5 @@ class meta::kolab::monitor::master {
   include tool::pardalys
   include service::lighttpd
   include service::logwatch
-  include service::munin
-  include service::munin::master
   include service::nagios
 }

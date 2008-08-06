@@ -1,5 +1,8 @@
 2008-08-06  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/meta_kolab_monitor/manifests/init.pp: Remove the munin
+	services for now.
+
 	* modules/service_syslog/manifests/init.pp: Disable the munin
 	config.
 

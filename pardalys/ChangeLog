@@ -1,5 +1,7 @@
 2008-08-06  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_clamav/manifests/init.pp: Fix dependencies.
+
 	* modules/meta_kolab_monitor/manifests/init.pp: Remove the munin
 	services for now.
 

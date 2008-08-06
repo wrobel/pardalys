@@ -69,6 +69,11 @@ class service::clamav {
     $ruser   = 'amavis'
     $datadir = '/var/amavis/clamav'
     $socket  = '/var/amavis/clamd.sock'
+    user {
+      "$ruser":
+      ensure     => 'present',
+      require => Package['amavisd-new'];
+    }
   } else {
     $ruser   = 'clamav'
     $datadir = "${os::statelibdir}/clamav"
@@ -91,11 +96,13 @@ class service::clamav {
     "$rundir":
     ensure => 'directory',
     owner   => $ruser,
-    group   => $ruser;
+    group   => $ruser,
+    require => Package['clamav'];
     "$datadir":
     ensure => 'directory',
     owner   => $ruser,
-    group   => $ruser;
+    group   => $ruser,
+    require => Package['clamav'];
     "$clamd_conf":
     content => template("service_clamav/clamd.conf_${template_clamav}"),
     owner   => 'root',

@@ -1,5 +1,8 @@
 2008-08-06  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_syslog/manifests/init.pp: Disable the munin
+	config.
+
 	* modules/meta_de_pardus_common/manifests/init.pp: Remove the
 	munin service for now.
 

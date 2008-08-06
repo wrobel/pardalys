@@ -1,3 +1,10 @@
+2008-08-06  Gunnar Wrobel  <p@rdus.de>
+
+	* modules/meta_de_pardus_common/manifests/init.pp: Remove the
+	munin service for now.
+
+	* modules/tool_system/manifests/init.pp: Add net-dns/host package.
+
 2008-07-30  Gunnar Wrobel  <p@rdus.de>
 
 	* modules/service_openldap/templates/slapd.conf_2.4.7: Correct

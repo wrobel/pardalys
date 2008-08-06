@@ -8,7 +8,6 @@ import 'client_puppet_local'
 import 'service_syslog'
 import 'service_cron'
 import 'service_openssh'
-import 'service_munin'
 import 'service_monit'
 
 # Class meta::pardus::common
@@ -23,7 +22,6 @@ class meta::de::pardus::common {
   include tool::portage
   include tool::system
   include client::puppet::local
-  include service::munin
   include service::monit
   include service::syslog
   include service::cron

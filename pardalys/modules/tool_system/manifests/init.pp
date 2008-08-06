@@ -67,6 +67,13 @@ class tool::system {
         require  => Gentoo_use_flags['ncurses']
       }
 
+      # for the hostx tool
+      package { host:
+        category => 'net-dns',
+        ensure   => 'installed',
+        tag      => 'buildhost'
+      }
+
       package { unzip:
         category => 'app-arch',
         ensure   => 'installed',

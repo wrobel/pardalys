@@ -129,7 +129,7 @@ class service::spamassassin {
   if $amavis_child {
     exec { razor_register:
       path => "/usr/bin:/usr/sbin:/bin",
-      command => "su -s /bin/bash - amavis -c \"razor-admin -create && su -s /bin/bash - amavis -c \"razor-admin -register -user $sysadmin_user\"",
+      command => "su -s /bin/bash - amavis -c \"razor-admin -create\" && su -s /bin/bash - amavis -c \"razor-admin -register -user $sysadmin_mail\"",
       require => [Package['amavisd-new'], Package['razor']],
       unless => "test -e /var/amavis/.razor/identity"
     }

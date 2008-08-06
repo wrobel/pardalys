@@ -1,6 +1,7 @@
 2008-08-06  Gunnar Wrobel  <p@rdus.de>
 
 	* modules/service_spamassassin/manifests/init.pp: Fix dependencies.
+	Fix the razor setup.
 
 	* modules/service_clamav/manifests/init.pp: Fix dependencies.
 

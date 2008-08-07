@@ -1,5 +1,13 @@
 2008-08-07  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/tool_portage/manifests/init.pp: Do not add
+	make.conf stuff from variable and use a virtual resource approach
+	instead.
+
+	* modules/tool_portage/templates/make.conf_2.1.4.4: Do not add
+	make.conf stuff from variable and use a virtual resource approach
+	instead.
+
 	* modules/root/manifests/init.pp: Add the resource definition for
 	adding lines to a file.
 

@@ -57,6 +57,9 @@ class tool::baselayout {
   $desktop = get_var('global_desktop', false)
 
   file { 
+    '/etc/hosts':
+    content  => template("tool_baselayout/hosts"),
+    require => Package['baselayout'];
     '/etc/conf.d/hostname':
     content  => template("tool_baselayout/hostname_${template_version}"),
     require => Package['openrc'];

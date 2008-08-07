@@ -1,5 +1,8 @@
 2008-08-07  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/tool_baselayout/templates/hosts: Provide correct host
+	settings for apache.
+
 	* modules/meta_kolab_www/*: Add a draft of the apache definition.
 
 	* modules/service_apache/*: Add a draft of the apache definition.

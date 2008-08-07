@@ -34,6 +34,18 @@ class service::apache {
   case $operatingsystem {
     gentoo:
     {
+      gentoo_use_flags { 'apr-util':
+        context => 'service_apache_apr-util',
+        package => 'dev-libs/apr-util',
+        use     => 'ldap ssl',
+        tag     => 'buildhost'
+      }
+      package { 'apr-util':
+        category => 'dev-libs',
+        ensure   => 'installed',
+        require  => Gentoo_use_flags['apr-util'],
+        tag      => 'buildhost';
+      }
       gentoo_use_flags { 'apache':
         context => 'service_apache_apache',
         package => 'www-servers/apache',
@@ -43,7 +55,7 @@ class service::apache {
       package { 'apache':
         category => 'www-servers',
         ensure   => 'installed',
-        require  => Gentoo_use_flags['apache'],
+        require  => [Gentoo_use_flags['apache'], Line['make_conf_puppet_apache']],
         tag      => 'buildhost';
       }
     }

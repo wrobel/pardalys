@@ -8,7 +8,7 @@ import 'os_gentoo'
 #
 # @author Gunnar Wrobel <p@rdus.de>
 # @version 1.0
-# @package service_postfix
+# @package service_spamassassin
 #
 # @module root           The root module is required to determine the installed
 #                        amavis version.

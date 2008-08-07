@@ -1,0 +1,4 @@
+Defines the installation of Apache and provides a configuration for
+the web server.
+
+Apache is one of the central components of a Kolab groupware server.

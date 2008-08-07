@@ -1,5 +1,9 @@
 2008-08-07  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/meta_kolab_www/*: Add a draft of the apache definition.
+
+	* modules/service_apache/*: Add a draft of the apache definition.
+
 	* modules/tool_portage/manifests/init.pp: Do not add
 	make.conf stuff from variable and use a virtual resource approach
 	instead.

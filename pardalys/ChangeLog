@@ -1,5 +1,8 @@
 2008-08-07  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_apache/manifests/init.pp: Missing sqlite support
+	in PHP.
+
 	* modules/meta_kolab_www/manifests/init.pp: Add the horde module.
 
 	* modules/service_horde/*: Add a draft for the horde installation.

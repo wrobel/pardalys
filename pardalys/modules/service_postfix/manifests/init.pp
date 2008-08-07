@@ -132,7 +132,7 @@ class service::postfix {
       gentoo_use_flags { 'php-postfix':
         context => 'service_postfix_php',
         package => 'dev-lang/php',
-        use     => 'kolab imap ldap nls session xml apache2 ctype ftp gd json',
+        use     => 'kolab imap ldap nls session xml apache2 ctype ftp gd json sqlite',
         tag     => 'buildhost'
       }
       gentoo_unmask { 'Horde_Kolab_Filter':

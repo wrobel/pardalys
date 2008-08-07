@@ -37,7 +37,7 @@ class service::apache {
       gentoo_use_flags { 'php-apache':
         context => 'service_apache_php',
         package => 'dev-lang/php',
-        use     => 'kolab imap ldap nls session xml apache2 ctype ftp gd json',
+        use     => 'kolab imap ldap nls session xml apache2 ctype ftp gd json sqlite',
         tag     => 'buildhost'
       }
       package { 'php':
@@ -99,7 +99,7 @@ class service::apache {
 
   case $operatingsystem {
     gentoo: {
-      # Configuration for the saslauthd
+      # Configuration for the apache
       file { 
         '/etc/conf.d/apache2':
         source => 'puppet:///service_apache/apache2',

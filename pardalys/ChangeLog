@@ -1,5 +1,8 @@
 2008-08-07  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_apache/manifests/init.pp: Modify the php
+	installation for Horde.
+
 	* modules/tool_baselayout/templates/hosts: Provide correct host
 	settings for apache.
 

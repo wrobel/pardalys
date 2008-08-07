@@ -34,6 +34,24 @@ class service::apache {
   case $operatingsystem {
     gentoo:
     {
+      gentoo_keywords { 'php-apache':
+        context => 'service_apache_php',
+        package => '=dev-lang/php-5.2.6',
+        keywords => "~$keyword",
+        tag     => 'buildhost'
+      }
+      gentoo_use_flags { 'php_apache':
+        context => 'service_apache_php',
+        package => 'dev-lang/php',
+        use     => 'kolab imap ldap nls session xml apache2 ctype ftp gd json',
+        tag     => 'buildhost'
+      }
+      package { 'php':
+        category => 'dev-lang',
+        ensure   => 'installed',
+        require  => [Gentoo_use_flags['php-apache'], Gentoo_keywords['php-apache']],
+        tag      => 'buildhost';
+      }
       gentoo_use_flags { 'apr-util':
         context => 'service_apache_apr-util',
         package => 'dev-libs/apr-util',
@@ -89,8 +107,8 @@ class service::apache {
     gentoo: {
       # Configuration for the saslauthd
       file { 
-        '/etc/conf.d/apache':
-        source => 'puppet:///service_apache/apache',
+        '/etc/conf.d/apache2':
+        source => 'puppet:///service_apache/apache2',
         require => Package['apache'],
         notify  => Service['apache2'];
       }

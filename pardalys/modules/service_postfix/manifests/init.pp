@@ -129,13 +129,7 @@ class service::postfix {
         use     => 'kolab',
         tag     => 'buildhost'
       }
-      gentoo_keywords { 'php-postfix':
-        context => 'service_postfix_php',
-        package => '=dev-lang/php-5.2.6',
-        keywords => "~$keyword",
-        tag     => 'buildhost'
-      }
-      gentoo_use_flags { 'php_postfix':
+      gentoo_use_flags { 'php-postfix':
         context => 'service_postfix_php',
         package => 'dev-lang/php',
         use     => 'kolab imap ldap nls session xml apache2 ctype ftp gd json',
@@ -199,7 +193,6 @@ class service::postfix {
         ensure   => 'installed',
         require  =>  [ Gentoo_use_flags['c-client'],
                        Gentoo_use_flags['php-postfix'],
-                       Gentoo_keywords['php-postfix'],
                        Gentoo_keywords['Horde_Kolab_Filter'],
                        Gentoo_keywords['Horde_Framework'],
                        Gentoo_keywords['Horde_DOM'],

@@ -1,5 +1,7 @@
 2008-08-07  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_apache/files/apache2: Activate PHP.
+
 	* modules/service_apache/manifests/init.pp: Modify the php
 	installation for Horde.
 

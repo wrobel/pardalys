@@ -1,5 +1,8 @@
 2008-08-07  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/root/manifests/init.pp: Add the resource definition for
+	adding lines to a file.
+
 	* bin/pardalys: Do not fail if the network is down.
 
 2008-08-06  Gunnar Wrobel  <p@rdus.de>

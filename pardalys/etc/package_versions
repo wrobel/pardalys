@@ -1,3 +1,4 @@
+apache:www-servers/apache@Gentoo
 baselayout:sys-apps/baselayout@Gentoo
 bash:app-shells/bash@Gentoo
 coreutils:sys-apps/coreutils@Gentoo

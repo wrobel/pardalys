@@ -1,3 +1,7 @@
+2008-08-07  Gunnar Wrobel  <p@rdus.de>
+
+	* bin/pardalys: Do not fail if the network is down.
+
 2008-08-06  Gunnar Wrobel  <p@rdus.de>
 
 	* modules/service_spamassassin/manifests/init.pp: Fix dependencies.

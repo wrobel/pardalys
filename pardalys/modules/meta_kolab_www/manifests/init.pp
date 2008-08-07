@@ -1,5 +1,6 @@
 import 'os'
 import 'service_apache'
+import 'service_horde'
 
 # Class meta::kolab::apache
 #
@@ -13,5 +14,6 @@ class meta::kolab::www {
 
   include os
   include service::apache
+  include service::horde
 
 }

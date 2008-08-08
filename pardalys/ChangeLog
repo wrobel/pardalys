@@ -1,3 +1,8 @@
+2008-08-08  Gunnar Wrobel  <p@rdus.de>
+
+	* modules/service_horde/*: The base configuration for horde has
+	been completed.
+
 2008-08-07  Gunnar Wrobel  <p@rdus.de>
 
 	* modules/service_apache/manifests/init.pp: Missing sqlite support

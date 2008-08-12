@@ -3,6 +3,48 @@
 	* modules/service_postfix/manifests/init.pp: Add the ssmtp
 	configuration.
 
+2008-08-08  Gunnar Wrobel  <p@rdus.de>
+
+	* modules/service_horde/*: Update to the kolabified horde-webmail
+	ebuild.
+
+	* modules/service_horde/*: The base configuration for horde has
+	been completed.
+
+2008-08-07  Gunnar Wrobel  <p@rdus.de>
+
+	* modules/service_apache/manifests/init.pp: Missing sqlite support
+	in PHP.
+
+	* modules/meta_kolab_www/manifests/init.pp: Add the horde module.
+
+	* modules/service_horde/*: Add a draft for the horde installation.
+
+	* modules/service_apache/files/apache2: Activate PHP.
+
+	* modules/service_apache/manifests/init.pp: Modify the php
+	installation for Horde.
+
+	* modules/tool_baselayout/templates/hosts: Provide correct host
+	settings for apache.
+
+	* modules/meta_kolab_www/*: Add a draft of the apache definition.
+
+	* modules/service_apache/*: Add a draft of the apache definition.
+
+	* modules/tool_portage/manifests/init.pp: Do not add
+	make.conf stuff from variable and use a virtual resource approach
+	instead.
+
+	* modules/tool_portage/templates/make.conf_2.1.4.4: Do not add
+	make.conf stuff from variable and use a virtual resource approach
+	instead.
+
+	* modules/root/manifests/init.pp: Add the resource definition for
+	adding lines to a file.
+
+	* bin/pardalys: Do not fail if the network is down.
+
 2008-08-06  Gunnar Wrobel  <p@rdus.de>
 
 	* modules/service_spamassassin/manifests/init.pp: Fix dependencies.

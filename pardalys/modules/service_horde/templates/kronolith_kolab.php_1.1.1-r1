@@ -1,0 +1,5 @@
+<?php
+$conf['storage']['default_domain'] = '<%= horde_maildomain %>';
+$conf['reminder']['server_name'] = '<%= imap_host %>';
+$conf['reminder']['from_addr'] = '<% sysadmin %>';
+?>

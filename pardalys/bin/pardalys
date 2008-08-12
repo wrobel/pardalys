@@ -48,8 +48,7 @@ if [ -d "/usr/share/pardalys/dev-pardalys/pardalys" ]; then
 
     cd /usr/share/pardalys/dev-pardalys && git pull origin master > /dev/null || ERROR="1"
     if [ -n "$ERROR" ]; then
-	echo "Updating repository failed! Check your connection."
-	exit $RESULT
+	echo "Updating the p@rdalys development repository failed! Check your connection."
     fi
 fi
 

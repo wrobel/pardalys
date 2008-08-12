@@ -1,5 +1,11 @@
 2008-08-12  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/tool_portage/manifests/init.pp: Adapt to new scheme for
+	adding make.conf lines.
+
+	* modules/tool_cups/manifests/init.pp: Adapt to new scheme for
+	adding make.conf lines.
+
 	* modules/meta_de_pardus_common/manifests/init.pp: 'os' is
 	required.
 

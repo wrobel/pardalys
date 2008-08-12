@@ -64,4 +64,14 @@ class tool::cups {
       }
     }
   }
+
+  $foozjs = get_var('foozjs', false)
+
+  if $foozjs {
+    @line {'make_conf_foo2zjs_devices':
+      file => '/etc/portage/make.conf.puppet',
+      line => "FOO2ZJS_DEVICES=\"$foozjs\"",
+      tag => 'buildhost'
+    }
+  }
 }

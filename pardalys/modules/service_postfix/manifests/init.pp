@@ -62,19 +62,6 @@ class service::postfix {
   case $operatingsystem {
     gentoo:
     {
-      # Keep the basic ssmtp mailer around
-      gentoo_use_flags { 'ssmtp':
-        context => 'service_postfix_ssmtp',
-        package => 'mail-mta/ssmtp',
-        use     => 'mailwrapper',
-        tag     => 'buildhost'
-      }
-      package { 'ssmtp':
-        category => 'mail-mta',
-        ensure   => 'installed',
-        require  => Gentoo_use_flags['ssmtp'],
-        tag      => 'buildhost';
-      }
       # The main postfix package
       gentoo_use_flags { 'postfix':
         context => 'service_postfix_postfix',
@@ -331,16 +318,6 @@ class service::postfix {
     "${kolabfilterconfig}":
     content => template("service_postfix/kolabfilter.conf"),
     require => Package['Horde_Kolab_Filter'];
-    # ssmtp helper configuration
-    "$postfix_aliasdir/mailer.conf":
-    source  => 'puppet:///service_postfix/mailer.conf',
-    require => Package['ssmtp'];
-    "${os::sysconfdir}/ssmtp.conf":
-    content => template("service_postfix/ssmtp.conf"),
-    require => Package['ssmtp'];
-    "${os::sysconfdir}/revaliases":
-    content => template("service_postfix/revaliases"),
-    require => Package['ssmtp'];
 #
 #    '/etc/monit.d/postfix':
 #    source  => 'puppet:///service_cron/monit_postfix';

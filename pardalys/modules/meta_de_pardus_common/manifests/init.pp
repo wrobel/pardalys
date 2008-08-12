@@ -9,6 +9,7 @@ import 'service_syslog'
 import 'service_cron'
 import 'service_openssh'
 import 'service_monit'
+import 'service_ssmtp'
 
 # Class meta::pardus::common
 #  A common set of configurations used on p@rdus servers
@@ -26,5 +27,6 @@ class meta::de::pardus::common {
   include service::syslog
   include service::cron
   include service::openssh
+  include service::ssmtp
 
 }

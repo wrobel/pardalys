@@ -99,31 +99,33 @@ class tool::system {
         require  => Gentoo_keywords['nagios-nsca']
       }
 
-      if $virtual {
-        gentoo_mask { glibc:
-          context => 'tools_system_common_glibc',
-          package => '>sys-libs/glibc-2.5-r4',
-          tag     => 'buildhost'
-        }
-        gentoo_use_flags { glibc:
-          context => 'tools_system_common_glibc',
-          package => 'sys-libs/glibc',
-          use     => '-nptl -nptlonly',
-          tag     => 'buildhost'
-        }
-        package { glibc:
-          category => 'sys-libs',
-          ensure   => 'installed',
-          tag      => 'buildhost',
-          require  => [Gentoo_mask['glibc'], Gentoo_use_flags['glibc']]
-        }
-        package { iproute2:
-          category => 'sys-apps',
-          ensure   => 'installed',
-          tag      => 'buildhost'
+      case $virtual {
+        openvz:
+        {
+          gentoo_mask { glibc:
+            context => 'tools_system_common_glibc',
+            package => '>sys-libs/glibc-2.5-r4',
+            tag     => 'buildhost'
+          }
+          gentoo_use_flags { glibc:
+            context => 'tools_system_common_glibc',
+            package => 'sys-libs/glibc',
+            use     => '-nptl -nptlonly',
+            tag     => 'buildhost'
+          }
+          package { glibc:
+            category => 'sys-libs',
+            ensure   => 'installed',
+            tag      => 'buildhost',
+            require  => [Gentoo_mask['glibc'], Gentoo_use_flags['glibc']]
+          }
+          package { iproute2:
+            category => 'sys-apps',
+            ensure   => 'installed',
+            tag      => 'buildhost'
+          }
         }
       }
-
     }
     default:
     {

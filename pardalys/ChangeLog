@@ -1,3 +1,8 @@
+2008-08-12  Gunnar Wrobel  <p@rdus.de>
+
+	* modules/service_postfix/manifests/init.pp: Add the ssmtp
+	configuration.
+
 2008-08-06  Gunnar Wrobel  <p@rdus.de>
 
 	* modules/service_spamassassin/manifests/init.pp: Fix dependencies.

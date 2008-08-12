@@ -1,3 +1,4 @@
+import 'os'
 import 'tool_layman'
 import 'tool_baselayout'
 import 'tool_bash'
@@ -16,6 +17,7 @@ import 'service_ssmtp'
 #
 class meta::de::pardus::common {
 
+  include os
   include tool::layman
   include tool::baselayout
   include tool::bash

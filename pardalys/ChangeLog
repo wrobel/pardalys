@@ -1,5 +1,7 @@
 2008-08-13  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_horde/manifests/init.pp: Add horde-hermes.
+
 	* modules/tool_system/files/rxvt-unicode: Updated to the newest
 	version.
 

@@ -36,6 +36,21 @@ class service::horde {
         use     => 'kolab ldap',
         tag     => 'buildhost'
       }
+      package { 'aspell':
+        category => 'app-text',
+        ensure   => 'installed',
+        tag      => 'buildhost';
+      }
+      package { 'aspell-de':
+        category => 'app-dicts',
+        ensure   => 'installed',
+        tag      => 'buildhost';
+      }
+      package { 'aspell-en':
+        category => 'app-dicts',
+        ensure   => 'installed',
+        tag      => 'buildhost';
+      }
       package { 'horde-webmail':
         category => 'www-apps',
         ensure   => 'installed',

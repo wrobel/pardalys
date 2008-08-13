@@ -1,3 +1,8 @@
+2008-08-13  Gunnar Wrobel  <p@rdus.de>
+
+	* modules/tool_emacs/manifests/init.pp: The php-mode should be
+	available on all machines.
+
 2008-08-12  Gunnar Wrobel  <p@rdus.de>
 
 	* modules/tool_system/manifests/init.pp: Fix the virtual decision.

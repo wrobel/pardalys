@@ -24,24 +24,24 @@ class service::horde {
   case $operatingsystem {
     gentoo:
     {
-      gentoo_keywords { 'horde-hermes':
-        context => 'service_horde_hermes',
-        package => '=www-apps/horde-hermes-1.0_rc1',
-        keywords => "~$keyword",
-        tag     => 'buildhost'
-      }
-      gentoo_use_flags { 'horde-hermes':
-        context => 'service_horde_hermes',
-        package => 'www-apps/horde-hermes',
-        use     => 'kolab',
-        tag     => 'buildhost'
-      }
-      package { 'horde-hermes':
-        category => 'www-apps',
-        ensure   => 'installed',
-        require  => [Gentoo_use_flags['horde-hermes'], Gentoo_keywords['horde-hermes']],
-        tag      => 'buildhost';
-      }
+#       gentoo_keywords { 'horde-hermes':
+#         context => 'service_horde_hermes',
+#         package => '=www-apps/horde-hermes-1.0_rc1',
+#         keywords => "~$keyword",
+#         tag     => 'buildhost'
+#       }
+#       gentoo_use_flags { 'horde-hermes':
+#         context => 'service_horde_hermes',
+#         package => 'www-apps/horde-hermes',
+#         use     => 'kolab',
+#         tag     => 'buildhost'
+#       }
+#       package { 'horde-hermes':
+#         category => 'www-apps',
+#         ensure   => 'installed',
+#         require  => [Gentoo_use_flags['horde-hermes'], Gentoo_keywords['horde-hermes']],
+#         tag      => 'buildhost';
+#       }
       gentoo_keywords { 'horde-webmail':
         context => 'service_horde_webmail',
         package => '=www-apps/horde-webmail-1.1.2',

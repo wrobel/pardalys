@@ -2,6 +2,7 @@
 
 	* modules/service_horde/manifests/init.pp: Allow setting horde
 	admins.
+	Allow for an external mail server.
 
 	* modules/service_horde/templates/horde_kolab.php_1.1.1-r1: Allow
 	setting horde admins.

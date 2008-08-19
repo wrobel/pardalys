@@ -97,6 +97,7 @@ class service::horde {
   $horde_maildomain = get_var('horde_maildomain', get_var('domainname'))
 
   $horde_admins = split(get_var('horde_admins', ''), ',')
+  $mailserver = get_var('mailserver', 'localhost')
 
   $ldap_host    = get_var('pardalys_ldapserver', 'localhost')
   $ldap_base_dn = get_var('base_dn')

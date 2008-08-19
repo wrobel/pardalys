@@ -1,5 +1,6 @@
 <?php
 $conf['auth']['admins'] = array(<% horde_admins.each do |admin| %>'<%= admin %>', <% end %>);
+$conf['mailer']['params']['host'] = '<%= mailserver %>';
 $conf['cookie']['domain'] = '<%= horde_vhost %>';
 $conf['cookie']['path'] = '<%= horde_vhost_path %>';
 $conf['problems']['email'] = '<%= sysadmin %>';

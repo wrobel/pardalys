@@ -1,3 +1,11 @@
+2008-08-19  Gunnar Wrobel  <p@rdus.de>
+
+	* modules/service_horde/manifests/init.pp: Allow setting horde
+	admins.
+
+	* modules/service_horde/templates/horde_kolab.php_1.1.1-r1: Allow
+	setting horde admins.
+
 2008-08-14  Gunnar Wrobel  <p@rdus.de>
 
 	* modules/service_horde/manifests/init.pp: Hermes does not work

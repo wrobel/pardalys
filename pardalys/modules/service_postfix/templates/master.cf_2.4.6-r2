@@ -219,7 +219,7 @@ kolabfilter     unix  -       n       n       -       3       pipe user=<%= post
     --
     -h <%= kolab_hostname %>
     -s ${sender}
-    -r ${recipient}
+    -r "${recipient}"
     -c ${client_address}
     -C <%= kolabfilterconfig %>
     -u ${sasl_username}
@@ -231,7 +231,7 @@ kolabmailboxfilter     unix  -       n       n       -       3       pipe user=<
     --
     -h <%= kolab_hostname %>
     -s ${sender}
-    -r ${recipient}
+    -r "${recipient}"
     -c ${client_address}
     -C <%= kolabfilterconfig %>
 

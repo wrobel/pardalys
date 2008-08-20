@@ -72,11 +72,11 @@ class service::syslog {
     '/usr/libexec/munin/plugins/syslog_ng':
     source  => 'puppet:///service_syslog/munin_plugin_syslog_ng',
     mode    => 755;
-        '/etc/munin/plugins/syslog_ng':
-    ensure  => '/usr/libexec/munin/plugins/syslog_ng',
-    require => File['/usr/libexec/munin/plugins/syslog_ng'];
-    '/etc/munin/plugin-conf.d/syslog_ng':
-    source  => 'puppet:///service_syslog/munin_plugin_syslog_ng.conf';
+#         '/etc/munin/plugins/syslog_ng':
+#     ensure  => '/usr/libexec/munin/plugins/syslog_ng',
+#     require => File['/usr/libexec/munin/plugins/syslog_ng'];
+#     '/etc/munin/plugin-conf.d/syslog_ng':
+#     source  => 'puppet:///service_syslog/munin_plugin_syslog_ng.conf';
   }
 
   if defined(Package['logwatch']) {

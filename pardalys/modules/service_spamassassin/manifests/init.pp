@@ -8,7 +8,7 @@ import 'os_gentoo'
 #
 # @author Gunnar Wrobel <p@rdus.de>
 # @version 1.0
-# @package service_postfix
+# @package service_spamassassin
 #
 # @module root           The root module is required to determine the installed
 #                        amavis version.
@@ -114,14 +114,14 @@ class service::spamassassin {
     exec { pyzor_discover:
       path => "/usr/bin:/usr/sbin:/bin",
       command => "su -s /bin/bash - amavis -c \"pyzor discover\"",
-      require => Package['amavisd-new'],
+      require => [Package['amavisd-new'], Package['pyzor']],
       unless => "test -e /var/amavis/.pyzor/servers"
     }
   } else {
     exec { pyzor_discover:
       path => "/usr/bin:/usr/sbin:/bin",
       command => "pyzor -homedir /etc/mail/spamassassin/.pyzor discover ",
-      require => Package['spamassassin'],
+      require => [Package['spamassassin'], Package['pyzor']],
       unless => "test -e /etc/mail/spamassassin/.pyzor/servers"
     }
   }
@@ -129,15 +129,15 @@ class service::spamassassin {
   if $amavis_child {
     exec { razor_register:
       path => "/usr/bin:/usr/sbin:/bin",
-      command => "su -s /bin/bash - amavis -c \"razor-admin -create && su -s /bin/bash - amavis -c \"razor-admin -register -user $sysadmin_user\"",
-      require => Package['amavisd-new'],
+      command => "su -s /bin/bash - amavis -c \"razor-admin -create\" && su -s /bin/bash - amavis -c \"razor-admin -register -user $sysadmin_mail\"",
+      require => [Package['amavisd-new'], Package['razor']],
       unless => "test -e /var/amavis/.razor/identity"
     }
   } else {
     exec { razor_register:
       path => "/usr/bin:/usr/sbin:/bin",
       command => "razor-admin -create -home=/etc/mail/spamassassin/.razor && razor-admin -register -home=/etc/mail/spamassassin/.razor -user $sysadmin_user",
-      require => Package['spamassassin'],
+      require => [Package['spamassassin'], Package['razor']],
       unless => "test -e /etc/mail/spamassassin/.razor/identity"
     }
   }

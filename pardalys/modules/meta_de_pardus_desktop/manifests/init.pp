@@ -11,7 +11,7 @@ import 'tool_cups'
 # @version 1.0
 # @package meta_kolab_monitor
 #
-class meta::kolab::desktop {
+class meta::de::pardus::desktop {
   include os
   include service::kolab
   include tool::pardalys

@@ -1,13 +1,10 @@
-<<<<<<< HEAD:pardalys/ChangeLog
 2008-08-20  Gunnar Wrobel  <p@rdus.de>
-=======
-2008-08-19  Gunnar Wrobel  <p@rdus.de>
->>>>>>> adbf3aa6f856eb7f068a7350de5790184962ebbe:pardalys/ChangeLog
 
-<<<<<<< HEAD:pardalys/ChangeLog
 	* modules/service_postfix/templates/master.cf_2.4.6-r2: Adapt the
 	kolabfilter call to hold the recipients in quotes.
-=======
+
+2008-08-19  Gunnar Wrobel  <p@rdus.de>
+
 	* modules/service_horde/manifests/init.pp: Allow setting horde
 	admins.
 	Allow for an external mail server.

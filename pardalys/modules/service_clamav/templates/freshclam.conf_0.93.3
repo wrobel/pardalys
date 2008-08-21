@@ -86,6 +86,12 @@ DatabaseMirror database.clamav.net
 # to keep it enabled.
 ScriptedUpdates yes
 
+# By default freshclam will keep the local databases (.cld) uncompressed to
+# make their handling faster. With this option you can enable the compression;
+# the change will take effect with the next database update.
+# Default: no
+#CompressLocalDatabase no
+
 # Number of database checks per day.
 # Default: 12 (every two hours)
 #Checks 24

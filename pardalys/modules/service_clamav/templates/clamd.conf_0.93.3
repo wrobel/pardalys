@@ -11,7 +11,9 @@
 # LogFile must be writable for the user running daemon.
 # A full path is required.
 # Default: disabled
-<% if not syslog -%>
+<% if syslog -%>
+#LogFile <%= clamd_logfile %>
+<% else -%>
 LogFile <%= clamd_logfile %>
 <% end -%>
 
@@ -230,10 +232,6 @@ AllowSupplementaryGroups yes
 # Default: no
 #MailFollowURLs no
 
-# Recursion level limit for the mail scanner.
-# Default: 64
-#MailMaxRecursion 128
-
 # With this option enabled ClamAV will try to detect phishing attempts by using
 # signatures.
 # Default: yes
@@ -242,12 +240,6 @@ AllowSupplementaryGroups yes
 # Scan URLs found in mails for phishing attempts using heuristics.
 # Default: yes
 #PhishingScanURLs yes
-
-# Use phishing detection only for domains listed in the .pdb database. It is
-# not recommended to have this option turned off, because scanning of all
-# domains may lead to many false positives!
-# Default: yes
-#PhishingRestrictedScan yes
 
 # Always block SSL mismatches in URLs, even if the URL isn't in the database.
 # This can lead to false positives.
@@ -279,32 +271,6 @@ AllowSupplementaryGroups yes
 # Default: yes
 #ScanArchive yes
 
-# The options below protect your system against Denial of Service attacks
-# using archive bombs.
-
-# Files in archives larger than this limit won't be scanned.
-# Value of 0 disables the limit.
-# Default: 10M
-#ArchiveMaxFileSize 15M
-
-# Nested archives are scanned recursively, e.g. if a Zip archive contains a RAR
-# file, all files within it will also be scanned. This options specifies how
-# deeply the process should be continued.
-# Value of 0 disables the limit.
-# Default: 8
-#ArchiveMaxRecursion 10
-
-# Number of files to be scanned within an archive.
-# Value of 0 disables the limit.
-# Default: 1000
-#ArchiveMaxFiles 1500
-
-# If a file in an archive is compressed more than ArchiveMaxCompressionRatio
-# times it will be marked as a virus (Oversized.ArchiveType, e.g. Oversized.Zip)
-# Value of 0 disables the limit.
-# Default: 250
-#ArchiveMaxCompressionRatio 300
-
 # Use slower but memory efficient decompression algorithm.
 # only affects the bzip2 decompressor.
 # Default: no
@@ -314,11 +280,48 @@ AllowSupplementaryGroups yes
 # Default: no
 #ArchiveBlockEncrypted no
 
-# Mark archives as viruses (e.g. RAR.ExceededFileSize, Zip.ExceededFilesLimit)
-# if ArchiveMaxFiles, ArchiveMaxFileSize, or ArchiveMaxRecursion limit is
-# reached.
-# Default: no
-#ArchiveBlockMax no
+
+##
+## Limits
+##
+
+# The options below protect your system against Denial of Service attacks
+# using archive bombs.
+
+# This option sets the maximum amount of data to be scanned for each input file.
+# Archives and other containers are recursively extracted and scanned up to this
+# value.
+# Value of 0 disables the limit
+# Note: disabling this limit or setting it too high may result in severe damage
+# to the system.
+# Default: 100M
+#MaxScanSize 150M
+
+# Files larger than this limit won't be scanned. Affects the input file itself
+# as well as files contained inside it (when the input file is an archive, a
+# document or some other kind of container).
+# Value of 0 disables the limit.
+# Note: disabling this limit or setting it too high may result in severe damage
+# to the system.
+# Default: 25M
+#MaxFileSize 30M
+
+# Nested archives are scanned recursively, e.g. if a Zip archive contains a RAR
+# file, all files within it will also be scanned. This options specifies how
+# deeply the process should be continued.
+# Note: disabling this limit or setting it too high may result in severe damage
+# to the system.
+# Value of 0 disables the limit.
+# Default: 16
+#MaxRecursion 10
+
+# Number of files to be scanned within an archive, a document, or any other
+# container file.
+# Value of 0 disables the limit.
+# Note: disabling this limit or setting it too high may result in severe damage
+# to the system.
+# Default: 10000
+#MaxFiles 15000
 
 
 ##

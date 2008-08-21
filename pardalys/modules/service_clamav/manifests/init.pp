@@ -91,6 +91,12 @@ class service::clamav {
     owner   => $ruser,
     group   => $ruser
   }
+
+  if $syslog {
+    file { '/etc/logrotate.d/clamav':
+      ensure  => 'absent',
+    }
+  }
   
   file {
     "$rundir":

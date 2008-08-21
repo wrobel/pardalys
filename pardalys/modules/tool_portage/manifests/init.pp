@@ -134,5 +134,25 @@ class tool::portage {
     tag => 'buildhost'
   }
 
+  $portage_gpg_dir = get_var('portage_gpg_dir', false)
+
+  if $portage_gpg_dir {
+    @line {'make_conf_portage_gpg_dir':
+      file => '/etc/portage/make.conf.puppet',
+      line => "PORTAGE_GPG_DIR=\"$portage_gpg_dir\"",
+      tag => 'buildhost'
+    }
+  }
+
+  $portage_gpg_key = get_var('portage_gpg_key', false)
+
+  if $portage_gpg_key {
+    @line {'make_conf_portage_gpg_key':
+      file => '/etc/portage/make.conf.puppet',
+      line => "PORTAGE_GPG_KEY=\"$portage_gpg_key\"",
+      tag => 'buildhost'
+    }
+  }
+
   Line <| file == '/etc/portage/make.conf.puppet' |>
 }

@@ -70,6 +70,11 @@ class tool::emacs {
         ensure   => 'installed',
         tag      => 'buildhost'
       }
+      package { php-mode:
+        category => 'app-emacs',
+        ensure   => 'installed',
+        tag      => 'buildhost'
+      }
       package { python-mode:
         category => 'app-emacs',
         ensure   => 'installed',

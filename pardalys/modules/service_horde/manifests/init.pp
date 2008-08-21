@@ -24,9 +24,27 @@ class service::horde {
   case $operatingsystem {
     gentoo:
     {
+#       gentoo_keywords { 'horde-hermes':
+#         context => 'service_horde_hermes',
+#         package => '=www-apps/horde-hermes-1.0_rc1',
+#         keywords => "~$keyword",
+#         tag     => 'buildhost'
+#       }
+#       gentoo_use_flags { 'horde-hermes':
+#         context => 'service_horde_hermes',
+#         package => 'www-apps/horde-hermes',
+#         use     => 'kolab',
+#         tag     => 'buildhost'
+#       }
+#       package { 'horde-hermes':
+#         category => 'www-apps',
+#         ensure   => 'installed',
+#         require  => [Gentoo_use_flags['horde-hermes'], Gentoo_keywords['horde-hermes']],
+#         tag      => 'buildhost';
+#       }
       gentoo_keywords { 'horde-webmail':
         context => 'service_horde_webmail',
-        package => '=www-apps/horde-webmail-1.1.1-r1',
+        package => '=www-apps/horde-webmail-1.1.2-r1',
         keywords => "~$keyword",
         tag     => 'buildhost'
       }
@@ -42,6 +60,21 @@ class service::horde {
         require  => [Gentoo_use_flags['horde-webmail'], Gentoo_keywords['horde-webmail']],
         tag      => 'buildhost';
       }
+      package { 'aspell':
+        category => 'app-text',
+        ensure   => 'installed',
+        tag      => 'buildhost';
+      }
+      package { 'aspell-de':
+        category => 'app-dicts',
+        ensure   => 'installed',
+        tag      => 'buildhost';
+      }
+      package { 'aspell-en':
+        category => 'app-dicts',
+        ensure   => 'installed',
+        tag      => 'buildhost';
+      }
     }
     default:
     {
@@ -51,7 +84,7 @@ class service::horde {
     }
   }
 
-  $template_horde_webmail = template_version($version_horde_webmail, '1.1.1(1.1.1)@1.1.1-r1(1.1.1-r1):1.1.1-r1,', '1.1.1-r1')
+  $template_horde_webmail = template_version($version_horde_webmail, '1.1.1(1.1.1)@1.1.2(1.1.2)@1.1.2-r1(1.1.2-r1)@1.1.1-r1(1.1.1-r1):1.1.1-r1,', '1.1.1-r1')
 
   $sysconfdir  = $os::sysconfdir
 
@@ -62,6 +95,9 @@ class service::horde {
 
   $sysadmin = get_var('sysadmin')
   $horde_maildomain = get_var('horde_maildomain', get_var('domainname'))
+
+  $horde_admins = split(get_var('horde_admins', ''), ',')
+  $mailserver = get_var('mailserver', 'localhost')
 
   $ldap_host    = get_var('pardalys_ldapserver', 'localhost')
   $ldap_base_dn = get_var('base_dn')

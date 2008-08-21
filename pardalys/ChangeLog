@@ -3,7 +3,52 @@
 	* modules/tool_portage/templates/glsa-check: Improve the output
 	for affected packages.
 
+2008-08-20  Gunnar Wrobel  <p@rdus.de>
+
+	* modules/service_postfix/templates/master.cf_2.4.6-r2: Adapt the
+	kolabfilter call to hold the recipients in quotes.
+
+2008-08-19  Gunnar Wrobel  <p@rdus.de>
+
+	* modules/service_horde/manifests/init.pp: Allow setting horde
+	admins.
+	Allow for an external mail server.
+
+	* modules/service_horde/templates/horde_kolab.php_1.1.1-r1: Allow
+	setting horde admins.
+
+2008-08-14  Gunnar Wrobel  <p@rdus.de>
+
+	* modules/service_horde/manifests/init.pp: Hermes does not work
+	based on a current release. So we'll wait here.
+
+2008-08-13  Gunnar Wrobel  <p@rdus.de>
+
+	* modules/service_horde/manifests/init.pp: Add horde-hermes.
+
+	* modules/tool_system/files/rxvt-unicode: Updated to the newest
+	version.
+
+	* modules/tool_subversion/manifests/init.pp: Added subversion
+	installation.
+
+	* modules/tool_gpg/manifests/init.pp: Added gnupg installation.
+
+	* modules/tool_emacs/manifests/init.pp: The php-mode should be
+	available on all machines.
+
 2008-08-12  Gunnar Wrobel  <p@rdus.de>
+
+	* modules/tool_system/manifests/init.pp: Fix the virtual decision.
+
+	* modules/tool_portage/manifests/init.pp: Adapt to new scheme for
+	adding make.conf lines.
+
+	* modules/tool_cups/manifests/init.pp: Adapt to new scheme for
+	adding make.conf lines.
+
+	* modules/meta_de_pardus_common/manifests/init.pp: 'os' is
+	required.
 
 	* modules/service_ssmtp/*: Extracted ssmtp config from
 	service_postfix.
@@ -70,6 +115,7 @@
 	munin service for now.
 
 	* modules/tool_system/manifests/init.pp: Add net-dns/host package.
+>>>>>>> adbf3aa6f856eb7f068a7350de5790184962ebbe:pardalys/ChangeLog
 
 2008-07-30  Gunnar Wrobel  <p@rdus.de>
 

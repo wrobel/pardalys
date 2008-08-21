@@ -44,7 +44,7 @@ class service::horde {
 #       }
       gentoo_keywords { 'horde-webmail':
         context => 'service_horde_webmail',
-        package => '=www-apps/horde-webmail-1.1.2',
+        package => '=www-apps/horde-webmail-1.1.2-r1',
         keywords => "~$keyword",
         tag     => 'buildhost'
       }
@@ -84,7 +84,7 @@ class service::horde {
     }
   }
 
-  $template_horde_webmail = template_version($version_horde_webmail, '1.1.1(1.1.1)@1.1.2(1.1.2)@1.1.1-r1(1.1.1-r1):1.1.1-r1,', '1.1.1-r1')
+  $template_horde_webmail = template_version($version_horde_webmail, '1.1.1(1.1.1)@1.1.2(1.1.2)@1.1.2-r1(1.1.2-r1)@1.1.1-r1(1.1.1-r1):1.1.1-r1,', '1.1.1-r1')
 
   $sysconfdir  = $os::sysconfdir
 

@@ -17,6 +17,6 @@ fi
 
 echo -e "`hostname -f`\tGLSA\t${OK}\t${MSG}" | /usr/lib/nagios/plugins/send_nsca -H <%= monitor %> -c /etc/nagios/send_nsca.cfg
 
-echo $A
+echo "${A}"
 ebegin "Finished glsa-check"
 eend $OK

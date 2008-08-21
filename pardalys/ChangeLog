@@ -1,3 +1,8 @@
+2008-08-21  Gunnar Wrobel  <p@rdus.de>
+
+	* modules/tool_portage/templates/glsa-check: Improve the output
+	for affected packages.
+
 2008-08-12  Gunnar Wrobel  <p@rdus.de>
 
 	* modules/service_ssmtp/*: Extracted ssmtp config from

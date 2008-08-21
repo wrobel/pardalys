@@ -1,6 +1,7 @@
 import 'os'
 import 'tool_gpg'
 import 'tool_layman'
+import 'tool_backup'
 import 'tool_baselayout'
 import 'tool_bash'
 import 'tool_emacs'
@@ -22,6 +23,7 @@ class meta::de::pardus::common {
   include os
   include tool::gpg
   include tool::layman
+  include tool::backup
   include tool::baselayout
   include tool::bash
   include tool::emacs

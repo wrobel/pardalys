@@ -1,5 +1,7 @@
 2008-08-21  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/tool_backup/*: Added a simple /etc backup routine.
+
 	* modules/service_clamav/templates/freshclam.conf_0.93.3: 
 	* modules/service_clamav/templates/clamd.conf_0.93.3:
 	Update to clamav-0.93.3.

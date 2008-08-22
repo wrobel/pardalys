@@ -24,7 +24,7 @@ argsfile	<%= openldap_argsfile %>
 TLSCertificateFile     <%= sysconfdir %>/kolab/cert.pem
 TLSCertificateKeyFile  <%= sysconfdir %>/kolab/key.pem
 <% if ca_cert %>
-TLSCACertificateFile   <%= ca_cert =>
+TLSCACertificateFile   <%= ca_cert %>
 TLSVerifyClient        never
 <% end %>
 

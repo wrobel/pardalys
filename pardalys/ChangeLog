@@ -1,5 +1,8 @@
 2008-08-22  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/tool_subversion/manifests/init.pp: Subversion should
+	provide apache support.
+
 	* modules/tool_system/manifests/init.pp: All systems should
 	provide slocate and sqlite.
 

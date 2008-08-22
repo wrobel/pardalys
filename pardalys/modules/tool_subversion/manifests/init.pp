@@ -22,7 +22,7 @@ class tool::subversion {
       gentoo_use_flags { subversion:
         context => 'tool_subversion_subversion',
         package => 'dev-util/subversion',
-        use     => 'emacs bash-completion',
+        use     => 'emacs bash-completion apache2',
         tag     => 'buildhost'
       }
       package { subversion:

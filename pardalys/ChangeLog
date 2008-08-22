@@ -1,3 +1,8 @@
+2008-08-22  Gunnar Wrobel  <p@rdus.de>
+
+	* modules/tool_system/manifests/init.pp: All systems should
+	provide slocate.
+
 2008-08-20  Gunnar Wrobel  <p@rdus.de>
 
 	* modules/service_postfix/templates/master.cf_2.4.6-r2: Adapt the

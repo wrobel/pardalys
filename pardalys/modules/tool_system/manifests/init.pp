@@ -81,6 +81,12 @@ class tool::system {
         require  => Gentoo_use_flags['libpcre']
       }
 
+      package { slocate:
+        category => 'sys-apps',
+        ensure   => 'installed',
+        tag      => 'buildhost'
+      }
+
       gentoo_unmask { nagios-nsca:
         context  => 'service_nagios_nagios_nsca',
         package  => '=net-analyzer/nagios-nsca-2.7.2-r100',

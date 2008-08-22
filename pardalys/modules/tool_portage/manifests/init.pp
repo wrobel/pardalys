@@ -44,7 +44,7 @@ class tool::portage {
     tag      => 'buildhost';
   }
 
-  $template_version = template_version($version_portage, '2.1.4.4@:2.1.4.4,')
+  $template_version = template_version($version_portage, '2.1.4.4@:2.1.4.4,','2.1.4.4')
 
   $profile              = get_var('portage_profile',             '/usr/portage/profiles/default-linux/x86/2007.0')
   $use                  = get_var('portage_use',                  false)

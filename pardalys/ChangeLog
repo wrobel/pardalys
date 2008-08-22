@@ -1,3 +1,8 @@
+2008-08-22  Gunnar Wrobel  <p@rdus.de>
+
+	* modules/tool_portage/manifests/init.pp: Set the portage default
+	version.
+
 2008-08-21  Gunnar Wrobel  <p@rdus.de>
 
 	* modules/tool_backup/*: Added a simple /etc backup routine.

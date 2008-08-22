@@ -1,7 +1,7 @@
 2008-08-22  Gunnar Wrobel  <p@rdus.de>
 
 	* modules/tool_system/manifests/init.pp: All systems should
-	provide slocate.
+	provide slocate and sqlite.
 
 	* modules/service_spamassassin/templates/sa-update: Trying to get
 	a stable restart of amavisd.

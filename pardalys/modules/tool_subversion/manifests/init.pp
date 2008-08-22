@@ -19,6 +19,8 @@ class tool::subversion {
   case $operatingsystem {
     gentoo:
     {
+      # FIXME: Remove the "apache2" USE flag once we serve no
+      # subversion anymore
       gentoo_use_flags { subversion:
         context => 'tool_subversion_subversion',
         package => 'dev-util/subversion',

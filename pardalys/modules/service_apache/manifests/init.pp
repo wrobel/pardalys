@@ -58,6 +58,13 @@ class service::apache {
         require  => Gentoo_use_flags['apr-util'],
         tag      => 'buildhost';
       }
+      # FIXME: Remove the "mod_python" python once we serve no python
+      # anymore
+      package { 'mod_python':
+        category => 'www-apache',
+        ensure   => 'installed',
+        tag      => 'buildhost';
+      }
       gentoo_use_flags { 'apache':
         context => 'service_apache_apache',
         package => 'www-servers/apache',

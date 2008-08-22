@@ -1,5 +1,8 @@
 2008-08-22  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_horde/manifests/init.pp: Move to
+	horde-webmail-1.1.2-r1.
+
 	* modules/service_openldap/templates/slapd.conf_2.4.7: Correct
 	handling CA certificates.
 

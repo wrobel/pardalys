@@ -84,7 +84,7 @@ class service::horde {
     }
   }
 
-  $template_horde_webmail = template_version($version_horde_webmail, '1.1.1(1.1.1)@1.1.2(1.1.2)@1.1.2-r1(1.1.2-r1)@1.1.1-r1(1.1.1-r1):1.1.1-r1,', '1.1.1-r1')
+  $template_horde_webmail = template_version($version_horde_webmail, '1.1.2-r1(1.1.2-r1)@:1.1.2-r1,', '1.1.2-r1')
 
   $sysconfdir  = $os::sysconfdir
 

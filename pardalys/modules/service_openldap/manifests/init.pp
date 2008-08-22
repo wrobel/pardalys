@@ -95,6 +95,7 @@ class service::openldap::serve {
 
   $openldap_master    = get_var('openldap_master', true)
   $openldap_slave     = get_var('openldap_slave', '')
+  $ca_cert            = get_var('ca_cert', false)
 
   $template_openldap = template_version($version_openldap, '2.4.7@:2.4.7,', '2.4.7')
 
@@ -106,7 +107,7 @@ class service::openldap::serve {
   # OpenLDAP configuration
   file { 
     "$openldap_confdir/ldap.conf":
-    source  => 'puppet:///service_openldap/ldap.conf',
+    content => template("service_openldap/ldap.conf"),
     owner   => "$openldap_usr",
     group   => "$openldap_grp",
     require => Package['openldap'];

@@ -1,5 +1,8 @@
 2008-08-22  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_spamassassin/templates/sa-update: Trying to get
+	a stable restart of amavisd.
+
 	* modules/tool_portage/files/esync: Remove eix output.
 
 	* modules/tool_portage/manifests/init.pp: Set the portage default

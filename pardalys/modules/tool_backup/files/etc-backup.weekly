@@ -1,0 +1,13 @@
+#! /bin/sh
+
+export EINFO_COLOR="no"
+source /etc/init.d/functions.sh
+
+einfo "Started /etc backup"
+
+flexbackup -set etc -differential > /dev/null
+
+RESULT=$?
+
+ebegin "Finished /etc backup"
+eend $RESULT

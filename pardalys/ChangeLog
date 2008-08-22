@@ -3,6 +3,35 @@
 	* modules/tool_system/manifests/init.pp: All systems should
 	provide slocate.
 
+	* modules/service_spamassassin/templates/sa-update: Trying to get
+	a stable restart of amavisd.
+
+	* modules/tool_portage/files/esync: Remove eix output.
+
+	* modules/tool_portage/manifests/init.pp: Set the portage default
+	version.
+
+2008-08-21  Gunnar Wrobel  <p@rdus.de>
+
+	* modules/tool_backup/*: Added a simple /etc backup routine.
+
+	* modules/service_clamav/templates/freshclam.conf_0.93.3: 
+	* modules/service_clamav/templates/clamd.conf_0.93.3:
+	Update to clamav-0.93.3.
+
+	* modules/service_clamav/templates/freshclam.conf_0.93: Remove the
+	log file entry when logging to syslog. Otherwise we get problem
+	with /etc/init.d/clamd on Gentoo.
+
+	* modules/service_clamav/templates/clamd.conf_0.93: Remove the log
+	file entry when logging to syslog. Otherwise we get problem with
+	/etc/init.d/clamd on Gentoo.
+
+	* modules/tool_portage/files/esync: Fix the update-eix call.
+
+	* modules/tool_portage/templates/glsa-check: Improve the output
+	for affected packages.
+
 2008-08-20  Gunnar Wrobel  <p@rdus.de>
 
 	* modules/service_postfix/templates/master.cf_2.4.6-r2: Adapt the

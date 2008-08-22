@@ -51,7 +51,7 @@ class service::clamav {
   }
 
   # Initialize template variables
-  $template_clamav = template_version($version_clamav, '0.93@:0.93,', '0.93')
+  $template_clamav = template_version($version_clamav, '0.93@:0.93,0.93.3@:0.93.3,', '0.93')
 
   $clamd_conf        = "${os::sysconfdir}/clamd.conf"
   $freshclam_conf    = "${os::sysconfdir}/freshclam.conf"
@@ -90,6 +90,12 @@ class service::clamav {
     },
     owner   => $ruser,
     group   => $ruser
+  }
+
+  if $syslog {
+    file { '/etc/logrotate.d/clamav':
+      ensure  => 'absent',
+    }
   }
   
   file {

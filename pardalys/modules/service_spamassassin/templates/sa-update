@@ -2,5 +2,7 @@
 
 sa-update
 <% if amavis_child %>
-/etc/init.d/amavisd restart
+/etc/init.d/amavisd stop
+sleep 5
+/etc/init.d/amavisd start
 <% end %>

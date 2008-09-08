@@ -1,3 +1,8 @@
+2008-09-08  Gunnar Wrobel  <p@rdus.de>
+
+	* modules/root/plugins/puppet/parser/functions/split.rb: Add
+	documentation.
+
 2008-08-22  Gunnar Wrobel  <p@rdus.de>
 
 	* modules/service_openldap/templates/slapd.conf_2.4.7: Correct

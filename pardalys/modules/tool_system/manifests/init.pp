@@ -93,6 +93,18 @@ class tool::system {
         tag      => 'buildhost'
       }
 
+      package { strace:
+        category => 'dev-util',
+        ensure   => 'installed',
+        tag      => 'buildhost'
+      }
+
+      package { ltrace:
+        category => 'dev-util',
+        ensure   => 'installed',
+        tag      => 'buildhost'
+      }
+
       package { netkit-telnetd:
         category => 'net-misc',
         ensure   => 'installed',

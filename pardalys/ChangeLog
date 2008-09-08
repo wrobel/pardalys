@@ -1,5 +1,8 @@
 2008-09-08  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_ssmtp/manifests/init.pp: Mask a broken ssmtp for
+	now.
+
 	* modules/tool_system/manifests/init.pp: Add a telnet client to
 	the systems.
 

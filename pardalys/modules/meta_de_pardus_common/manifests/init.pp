@@ -5,6 +5,7 @@ import 'tool_backup'
 import 'tool_baselayout'
 import 'tool_bash'
 import 'tool_emacs'
+import 'tool_logrotate'
 import 'tool_portage'
 import 'tool_subversion'
 import 'tool_system'
@@ -27,6 +28,7 @@ class meta::de::pardus::common {
   include tool::baselayout
   include tool::bash
   include tool::emacs
+  include tool::logrotate
   include tool::portage
   include tool::subversion
   include tool::system

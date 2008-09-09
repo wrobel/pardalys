@@ -1,0 +1,5 @@
+/var/log/emerge.log {
+    missingok
+    nocreate
+    delaycompress
+}

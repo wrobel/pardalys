@@ -126,6 +126,8 @@ class tool::portage {
     '/etc/cron.daily/glsa-check':
     content => template("tool_portage/glsa-check"),
     mode    => 755;
+    '/etc/logrotate.d/portage':
+    source  => 'puppet:///tool_portage/logrotate.portage';
   }
 
   @line {'make_conf_puppet_comment':

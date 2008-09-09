@@ -40,8 +40,5 @@ class tool::backup {
     source  => 'puppet:///tool_backup/etc-backup.monthly',
     mode    => 775,
     require => Package['flexbackup'];
-    '/var/backup/etc':
-    ensure  => 'directory',
-    require => Package['flexbackup'];
   }
 }

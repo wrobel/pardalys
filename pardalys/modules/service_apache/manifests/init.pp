@@ -92,6 +92,8 @@ class service::apache {
 
   $template_apache = template_version($version_apache, '2.2.9@:2.2.9,', '2.2.9')
 
+  $apache_start_opts = get_var('apache_start_opts', '')
+
   @line {'make_conf_puppet_apache':
     file => '/etc/portage/make.conf.puppet',
     line => 'APACHE2_MODULES="actions alias auth_basic authn_alias authn_anon authn_dbm authn_default authn_file authz_dbm authz_default authz_groupfile authz_host authz_owner authz_user autoindex cache dav dav_fs dav_lock deflate dir disk_cache env expires ext_filter file_cache filter headers include info log_config logio mem_cache mime mime_magic negotiation rewrite setenvif speling status unique_id userdir usertrack vhost_alias"',
@@ -109,7 +111,7 @@ class service::apache {
       # Configuration for the apache
       file { 
         '/etc/conf.d/apache2':
-        source => 'puppet:///service_apache/apache2',
+        content => template('service_apache/apache2'),
         require => Package['apache'],
         notify  => Service['apache2'];
       }

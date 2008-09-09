@@ -132,17 +132,24 @@ class tool::system {
       case $virtual {
         openvz:
         {
-          gentoo_mask { glibc:
-            context => 'tools_system_common_glibc',
-            package => '>sys-libs/glibc-2.5-r4',
-            tag     => 'buildhost'
+#           gentoo_mask { glibc:
+#             context => 'tools_system_common_glibc',
+#             package => '>sys-libs/glibc-2.5-r4',
+#             tag     => 'buildhost'
+#           }
+#           gentoo_use_flags { glibc:
+#             context => 'tools_system_common_glibc',
+#             package => 'sys-libs/glibc',
+#             use     => '-nptl -nptlonly',
+#             tag     => 'buildhost'
+#           }
+          file { 
+            '/etc/portage/package.mask/tools_system_common_glibc':
+            ensure => 'deleted';
+            '/etc/portage/package.use/tools_system_common_glibc':
+            ensure => 'deleted';
           }
-          gentoo_use_flags { glibc:
-            context => 'tools_system_common_glibc',
-            package => 'sys-libs/glibc',
-            use     => '-nptl -nptlonly',
-            tag     => 'buildhost'
-          }
+
           package { glibc:
             category => 'sys-libs',
             ensure   => 'installed',

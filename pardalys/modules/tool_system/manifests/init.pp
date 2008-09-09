@@ -145,9 +145,9 @@ class tool::system {
 #           }
           file { 
             '/etc/portage/package.mask/tools_system_common_glibc':
-            ensure => 'deleted';
+            ensure => 'absent';
             '/etc/portage/package.use/tools_system_common_glibc':
-            ensure => 'deleted';
+            ensure => 'absent';
           }
 
           package { glibc:

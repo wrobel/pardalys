@@ -128,6 +128,8 @@ class tool::portage {
     mode    => 755;
     '/etc/logrotate.d/portage':
     source  => 'puppet:///tool_portage/logrotate.portage';
+    '/usr/portage/distfiles':
+    ensure  => 'directory';
   }
 
   @line {'make_conf_puppet_comment':

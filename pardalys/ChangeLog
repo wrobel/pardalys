@@ -1,5 +1,10 @@
 2008-09-09  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/tool_portage/manifests/init.pp: Ensure
+	/usr/portage/disfiles exists.
+
+	* modules/service_cron/templates/crontab: Add initial crontab.
+
 	* modules/tool_system/manifests/init.pp: Add my scripts package to
 	the set of installed packages.
 	Add files security check.

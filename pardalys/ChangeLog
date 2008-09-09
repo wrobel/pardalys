@@ -2,6 +2,7 @@
 
 	* modules/service_monit/templates/monitrc_4.10.1: Alert the system
 	administrator.
+	Fixed the sender.
 
 	* modules/service_monit/manifests/init.pp: Update and fix the
 	monit configuration.

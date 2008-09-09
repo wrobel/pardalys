@@ -28,6 +28,11 @@ class service::ssmtp {
         use     => 'mailwrapper',
         tag     => 'buildhost'
       }
+      gentoo_mask { 'ssmtp':
+        context => 'service_ssmtp_ssmtp',
+        package => '=mail-mta/ssmtp-2.62-r1',
+        tag     => 'buildhost'
+      }
       package { 'ssmtp':
         category => 'mail-mta',
         ensure   => 'installed',

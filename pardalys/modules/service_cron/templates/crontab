@@ -1,0 +1,6 @@
+!mailto(<%= sysadmin %>)
+0  *  * * *      rm -f /var/spool/cron/lastrun/cron.hourly
+1  3  * * *      rm -f /var/spool/cron/lastrun/cron.daily
+15 4  * * 6      rm -f /var/spool/cron/lastrun/cron.weekly
+30 5  1 * *      rm -f /var/spool/cron/lastrun/cron.monthly
+&nice(15) */10  *  * * *      /usr/bin/test -x /usr/sbin/run-crons && /usr/sbin/run-crons

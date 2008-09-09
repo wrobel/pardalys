@@ -93,6 +93,24 @@ class tool::system {
         tag      => 'buildhost'
       }
 
+      package { strace:
+        category => 'dev-util',
+        ensure   => 'installed',
+        tag      => 'buildhost'
+      }
+
+      package { ltrace:
+        category => 'dev-util',
+        ensure   => 'installed',
+        tag      => 'buildhost'
+      }
+
+      package { netkit-telnetd:
+        category => 'net-misc',
+        ensure   => 'installed',
+        tag      => 'buildhost'
+      }
+
       gentoo_unmask { nagios-nsca:
         context  => 'service_nagios_nagios_nsca',
         package  => '=net-analyzer/nagios-nsca-2.7.2-r100',
@@ -111,25 +129,44 @@ class tool::system {
         require  => Gentoo_keywords['nagios-nsca']
       }
 
+      gentoo_keywords { scripts-gw:
+        context  => 'tool_system_scripts-gw',
+        package  => '=app-misc/scripts-gw-1.3.2',
+        keywords => "~$arch",
+        tag      => 'buildhost'
+      }
+      package { scripts-gw:
+        category => 'app-misc',
+        ensure   => 'installed',
+        tag      => 'buildhost',
+        require  => Gentoo_keywords['scripts-gw']
+      }
+
       case $virtual {
         openvz:
         {
-          gentoo_mask { glibc:
-            context => 'tools_system_common_glibc',
-            package => '>sys-libs/glibc-2.5-r4',
-            tag     => 'buildhost'
+#           gentoo_mask { glibc:
+#             context => 'tools_system_common_glibc',
+#             package => '>sys-libs/glibc-2.5-r4',
+#             tag     => 'buildhost'
+#           }
+#           gentoo_use_flags { glibc:
+#             context => 'tools_system_common_glibc',
+#             package => 'sys-libs/glibc',
+#             use     => '-nptl -nptlonly',
+#             tag     => 'buildhost'
+#           }
+          file { 
+            '/etc/portage/package.mask/tools_system_common_glibc':
+            ensure => 'absent';
+            '/etc/portage/package.use/tools_system_common_glibc':
+            ensure => 'absent';
           }
-          gentoo_use_flags { glibc:
-            context => 'tools_system_common_glibc',
-            package => 'sys-libs/glibc',
-            use     => '-nptl -nptlonly',
-            tag     => 'buildhost'
-          }
+
           package { glibc:
             category => 'sys-libs',
             ensure   => 'installed',
-            tag      => 'buildhost',
-            require  => [Gentoo_mask['glibc'], Gentoo_use_flags['glibc']]
+            tag      => 'buildhost'
           }
           package { iproute2:
             category => 'sys-apps',
@@ -150,6 +187,9 @@ class tool::system {
     mode    => 640,
     group   => 'nagios',
     require => Package['nagios-nsca'];
+    '/etc/cron.daily/check_security':
+    source => 'puppet:///tool_system/check_security',
+    mode    => 755;
   }
 
   # Ensure the system knows how to handle the rxvt-unicode terminal
@@ -157,13 +197,6 @@ class tool::system {
     '/usr/share/terminfo/r/rxvt-unicode':
     source => 'puppet:///tool_system/rxvt-unicode',
     require => Package['ncurses'];
-  }
-
-  file {
-    '/var/backup':
-    ensure => 'directory';
-    '/var/backup/data':
-    ensure => 'directory';
   }
 
 }

@@ -8,6 +8,7 @@ horde-webmail:www-apps/horde-webmail@Gentoo
 layman:app-portage/layman@Gentoo
 lighttpd:www-servers/lighttpd@Gentoo
 logwatch:sys-apps/logwatch@Gentoo
+logrotate:app-admin/logrotate@Gentoo
 monit:app-admin/monin@Gentoo
 munin:net-analyzer/munin@Gentoo
 nagios:net-analyzer/nagios@Gentoo

@@ -1,3 +1,39 @@
+2008-09-09  Gunnar Wrobel  <p@rdus.de>
+
+	* modules/tool_portage/manifests/init.pp: Ensure
+	/usr/portage/disfiles exists.
+
+	* modules/service_cron/templates/crontab: Add initial crontab.
+
+	* modules/tool_system/manifests/init.pp: Add my scripts package to
+	the set of installed packages.
+	Add files security check.
+
+	* modules/tool_logrotate/*: Add log rotation.
+
+	* modules/tool_system/manifests/init.pp: No need for the
+	/var/backup directories.
+
+	* modules/service_apache/manifests/init.pp: Fix link to startup
+	script.
+
+	* modules/tool_system/manifests/init.pp: Allow a higher glibc on
+	virtual servers.
+
+2008-09-08  Gunnar Wrobel  <p@rdus.de>
+
+	* modules/tool_system/manifests/init.pp: Add strace and ltrace as
+	basic tools.
+
+	* modules/service_ssmtp/manifests/init.pp: Mask a broken ssmtp for
+	now.
+
+	* modules/tool_system/manifests/init.pp: Add a telnet client to
+	the systems.
+
+	* modules/root/plugins/puppet/parser/functions/split.rb: Add
+	documentation.
+
 2008-08-22  Gunnar Wrobel  <p@rdus.de>
 
 	* modules/service_horde/manifests/init.pp: Move to

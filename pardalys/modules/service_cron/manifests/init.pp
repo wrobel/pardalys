@@ -44,6 +44,15 @@ class service::cron {
     notify  => Service['fcron'];
     '/etc/monit.d/fcron':
     source  => 'puppet:///service_cron/monit_fcron';
+    '/etc/crontab':
+    content => template("service_cron/crontab");
+  }
+
+  exec { root_crontab:
+    path => "/usr/bin:/usr/sbin:/bin",
+    command => "crontab /etc/crontab",
+    require => File['/etc/crontab'],
+    unless => "test -e /var/spool/fcron/root"
   }
 
   service { 'fcron':

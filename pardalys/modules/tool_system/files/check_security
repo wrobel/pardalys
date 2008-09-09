@@ -1,0 +1,12 @@
+#! /bin/sh
+
+export EINFO_COLOR="no"
+source /etc/init.d/functions.sh
+
+einfo "Started checking file security"
+
+check-files -S -W
+
+RESULT=$?
+ebegin "Finished checking file security"
+eend $RESULT

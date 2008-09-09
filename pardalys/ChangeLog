@@ -1,5 +1,8 @@
 2008-09-09  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_syslog/manifests/init.pp: Remove the munin
+	config for syslog-ng.
+
 	* modules/service_apache/templates/apache2: Allow additional
 	apache startup options.
 

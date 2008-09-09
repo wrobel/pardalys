@@ -115,8 +115,8 @@ class service::apache {
       }
 
       # Ensure that the service starts with the system
-      file { '/etc/runlevels/default/apache':
-        ensure => '/etc/init.d/apache',
+      file { '/etc/runlevels/default/apache2':
+        ensure => '/etc/init.d/apache2',
         require  => Package['apache']
       }
     }

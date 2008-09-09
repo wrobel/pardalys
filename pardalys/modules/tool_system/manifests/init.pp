@@ -153,8 +153,7 @@ class tool::system {
           package { glibc:
             category => 'sys-libs',
             ensure   => 'installed',
-            tag      => 'buildhost',
-            require  => [Gentoo_mask['glibc'], Gentoo_use_flags['glibc']]
+            tag      => 'buildhost'
           }
           package { iproute2:
             category => 'sys-apps',

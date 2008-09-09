@@ -183,11 +183,4 @@ class tool::system {
     require => Package['ncurses'];
   }
 
-  file {
-    '/var/backup':
-    ensure => 'directory';
-    '/var/backup/data':
-    ensure => 'directory';
-  }
-
 }

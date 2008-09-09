@@ -1,5 +1,8 @@
 2008-09-09  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/tool_system/manifests/init.pp: No need for the
+	/var/backup directories.
+
 	* modules/service_apache/manifests/init.pp: Fix link to startup
 	script.
 

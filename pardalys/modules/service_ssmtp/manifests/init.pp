@@ -57,7 +57,7 @@ class service::ssmtp {
     "$sysconfdir/mail/mailer.conf":
     source  => 'puppet:///service_ssmtp/mailer.conf',
     require => Package['ssmtp'];
-    "$sysconfdir/ssmtp.conf":
+    "$sysconfdir/ssmtp/ssmtp.conf":
     content => template("service_ssmtp/ssmtp.conf"),
     require => Package['ssmtp'];
     "$sysconfdir/revaliases":

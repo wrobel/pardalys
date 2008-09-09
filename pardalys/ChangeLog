@@ -1,5 +1,8 @@
 2008-09-09  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_ssmtp/manifests/init.pp: Corrected location for
+	the ssmtp.conf file.
+
 	* modules/service_syslog/manifests/init.pp: Remove the munin
 	config for syslog-ng.
 

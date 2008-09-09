@@ -2,6 +2,7 @@
 
 	* modules/tool_system/manifests/init.pp: Add my scripts package to
 	the set of installed packages.
+	Add files security check.
 
 	* modules/tool_logrotate/*: Add log rotation.
 

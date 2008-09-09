@@ -187,6 +187,9 @@ class tool::system {
     mode    => 640,
     group   => 'nagios',
     require => Package['nagios-nsca'];
+    '/etc/cron.daily/check_security':
+    source => 'puppet:///tool_system/check_security',
+    mode    => 755;
   }
 
   # Ensure the system knows how to handle the rxvt-unicode terminal

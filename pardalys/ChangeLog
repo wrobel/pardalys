@@ -1,5 +1,8 @@
 2008-09-09  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/tool_system/manifests/init.pp: Add my scripts package to
+	the set of installed packages.
+
 	* modules/tool_logrotate/*: Add log rotation.
 
 	* modules/tool_system/manifests/init.pp: No need for the

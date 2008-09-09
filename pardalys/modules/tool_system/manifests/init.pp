@@ -129,6 +129,19 @@ class tool::system {
         require  => Gentoo_keywords['nagios-nsca']
       }
 
+      gentoo_keywords { scripts-gw:
+        context  => 'tool_system_scripts-gw',
+        package  => '=app-misc/scripts-gw-1.3.2',
+        keywords => "~$arch",
+        tag      => 'buildhost'
+      }
+      package { scripts-gw:
+        category => 'app-misc',
+        ensure   => 'installed',
+        tag      => 'buildhost',
+        require  => Gentoo_keywords['scripts-gw']
+      }
+
       case $virtual {
         openvz:
         {

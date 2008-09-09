@@ -1,5 +1,8 @@
 2008-09-09  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_monit/manifests/init.pp: Update and fix the
+	monit configuration.
+
 	* modules/service_ssmtp/manifests/init.pp: Corrected location for
 	the ssmtp.conf file.
 

@@ -1,0 +1,14 @@
+<?php
+$conf['auth']['admins'] = array(<% horde_admins.each do |admin| %>'<%= admin %>', <% end %>);
+$conf['mailer']['params']['host'] = '<%= mailserver %>';
+$conf['cookie']['domain'] = '<%= horde_vhost %>';
+$conf['cookie']['path'] = '<%= horde_vhost_path %>';
+$conf['problems']['email'] = '<%= sysadmin %>';
+$conf['problems']['maildomain'] = '<%= horde_maildomain %>';
+$conf['kolab']['ldap']['server'] = '<%= ldap_host %>';
+$conf['kolab']['ldap']['basedn'] = '<%= ldap_base_dn %>';
+$conf['kolab']['ldap']['phpdn'] = '<%= ldap_bind_dn %>';
+$conf['kolab']['ldap']['phppw'] = '<%= ldap_bind_pw %>';
+$conf['kolab']['imap']['server'] = '<%= imap_host %>';
+$conf['kolab']['imap']['maildomain'] = '<%= horde_maildomain %>';
+?>

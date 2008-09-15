@@ -89,7 +89,7 @@ class service::horde {
   $sysconfdir  = $os::sysconfdir
 
   $horde_vhost = get_var('horde_vhost', 'localhost')
-  $horde_vhost_path = get_var('horde_vhost_path', '/')
+  $horde_vhost_path = get_var('horde_vhost_path', '/horde')
 
   $horde_webroot = "/var/www/${horde_vhost}/htdocs${horde_vhost_path}"
 

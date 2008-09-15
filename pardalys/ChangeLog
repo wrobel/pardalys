@@ -1,5 +1,8 @@
 2008-09-15  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_freebusy/manifests/init.pp: Correct filenames
+	for unmasking and add the iCalendar library in the newer version.
+
 	* modules/service_apache/manifests/init.pp: Add some php use
 	flags.
 

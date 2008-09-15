@@ -1,3 +1,11 @@
+2008-09-15  Gunnar Wrobel  <p@rdus.de>
+
+	* modules/service_apache/manifests/init.pp: Add some php use
+	flags.
+
+	* modules/service_freebusy/*: Added definition for Kolab
+	free/busy.
+
 2008-09-09  Gunnar Wrobel  <p@rdus.de>
 
 	* modules/service_monit/templates/monitrc_4.10.1: Alert the system

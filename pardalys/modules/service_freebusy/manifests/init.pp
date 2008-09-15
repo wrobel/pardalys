@@ -33,7 +33,7 @@ class service::freebusy {
       package { 'Kolab_Server':
         category => 'dev-php',
         ensure   => 'installed',
-        require  => Gentoo_use_flags['Kolab_Server'],
+        require  => Gentoo_keywords['Kolab_Server'],
         tag      => 'buildhost';
       }
 
@@ -46,7 +46,7 @@ class service::freebusy {
       package { 'Horde_Serialize':
         category => 'dev-php',
         ensure   => 'installed',
-        require  => Gentoo_use_flags['Horde_Serialize'],
+        require  => Gentoo_keywords['Horde_Serialize'],
         tag      => 'buildhost';
       }
 
@@ -59,7 +59,7 @@ class service::freebusy {
       package { 'Horde_Date':
         category => 'dev-php',
         ensure   => 'installed',
-        require  => Gentoo_use_flags['Horde_Date'],
+        require  => Gentoo_keywords['Horde_Date'],
         tag      => 'buildhost';
       }
 
@@ -72,7 +72,7 @@ class service::freebusy {
       package { 'Horde_Browser':
         category => 'dev-php',
         ensure   => 'installed',
-        require  => Gentoo_use_flags['Horde_Browser'],
+        require  => Gentoo_keywords['Horde_Browser'],
         tag      => 'buildhost';
       }
 
@@ -85,7 +85,7 @@ class service::freebusy {
       package { 'Horde_Cipher':
         category => 'dev-php',
         ensure   => 'installed',
-        require  => Gentoo_use_flags['Horde_Cipher'],
+        require  => Gentoo_keywords['Horde_Cipher'],
         tag      => 'buildhost';
       }
 
@@ -98,7 +98,7 @@ class service::freebusy {
       package { 'Horde_Cache':
         category => 'dev-php',
         ensure   => 'installed',
-        require  => Gentoo_use_flags['Horde_Cache'],
+        require  => Gentoo_keywords['Horde_Cache'],
         tag      => 'buildhost';
       }
 
@@ -111,7 +111,7 @@ class service::freebusy {
       package { 'Horde_History':
         category => 'dev-php',
         ensure   => 'installed',
-        require  => Gentoo_use_flags['Horde_History'],
+        require  => Gentoo_keywords['Horde_History'],
         tag      => 'buildhost';
       }
 
@@ -124,7 +124,7 @@ class service::freebusy {
       package { 'Horde_NLS':
         category => 'dev-php',
         ensure   => 'installed',
-        require  => Gentoo_use_flags['Horde_NLS'],
+        require  => Gentoo_keywords['Horde_NLS'],
         tag      => 'buildhost';
       }
 
@@ -137,7 +137,7 @@ class service::freebusy {
       package { 'Horde_Secret':
         category => 'dev-php',
         ensure   => 'installed',
-        require  => Gentoo_use_flags['Horde_Secret'],
+        require  => Gentoo_keywords['Horde_Secret'],
         tag      => 'buildhost';
       }
 
@@ -150,7 +150,7 @@ class service::freebusy {
       package { 'Horde_DataTree':
         category => 'dev-php',
         ensure   => 'installed',
-        require  => Gentoo_use_flags['Horde_DataTree'],
+        require  => Gentoo_keywords['Horde_DataTree'],
         tag      => 'buildhost';
       }
 
@@ -163,7 +163,7 @@ class service::freebusy {
       package { 'Horde_SessionObjects':
         category => 'dev-php',
         ensure   => 'installed',
-        require  => Gentoo_use_flags['Horde_SessionObjects'],
+        require  => Gentoo_keywords['Horde_SessionObjects'],
         tag      => 'buildhost';
       }
 
@@ -176,7 +176,7 @@ class service::freebusy {
       package { 'Kolab_Format':
         category => 'dev-php',
         ensure   => 'installed',
-        require  => Gentoo_use_flags['Kolab_Format'],
+        require  => Gentoo_keywords['Kolab_Format'],
         tag      => 'buildhost';
       }
 
@@ -189,7 +189,7 @@ class service::freebusy {
       package { 'Horde_Auth':
         category => 'dev-php',
         ensure   => 'installed',
-        require  => Gentoo_use_flags['Horde_Auth'],
+        require  => Gentoo_keywords['Horde_Auth'],
         tag      => 'buildhost';
       }
 
@@ -202,7 +202,7 @@ class service::freebusy {
       package { 'Horde_Group':
         category => 'dev-php',
         ensure   => 'installed',
-        require  => Gentoo_use_flags['Horde_Group'],
+        require  => Gentoo_keywords['Horde_Group'],
         tag      => 'buildhost';
       }
 
@@ -215,7 +215,7 @@ class service::freebusy {
       package { 'Horde_Perms':
         category => 'dev-php',
         ensure   => 'installed',
-        require  => Gentoo_use_flags['Horde_Perms'],
+        require  => Gentoo_keywords['Horde_Perms'],
         tag      => 'buildhost';
       }
 
@@ -228,20 +228,20 @@ class service::freebusy {
       package { 'Kolab_Storage':
         category => 'dev-php',
         ensure   => 'installed',
-        require  => Gentoo_use_flags['Kolab_Storage'],
+        require  => Gentoo_keywords['Kolab_Storage'],
         tag      => 'buildhost';
       }
 
       gentoo_keywords { 'Kolab_FreeBusy':
         context => 'service_Kolab_FreeBusy',
-        package => '=dev-php/Kolab_FreeBusy-0.0.2',
+        package => '=dev-php/Kolab_FreeBusy-0.0.3',
         keywords => "~$keyword",
         tag     => 'buildhost'
       }
       package { 'Kolab_FreeBusy':
         category => 'dev-php',
         ensure   => 'installed',
-        require  => Gentoo_use_flags['Kolab_FreeBusy'],
+        require  => Gentoo_keywords['Kolab_FreeBusy'],
         tag      => 'buildhost';
       }
 
@@ -254,7 +254,7 @@ class service::freebusy {
     }
   }
 
-  $template_freebusy = template_version($version_freebusy, '0.0.2@:0.0.2,', '0.0.2')
+  $template_freebusy = template_version($version_freebusy, '0.0.2@0.0.3@:0.0.2,', '0.0.2')
 
   $freebusy_vhost = get_var('freebusy_vhost', 'localhost')
   $freebusy_vhost_path = get_var('freebusy_vhost_path', '/freebusy')
@@ -268,13 +268,15 @@ class service::freebusy {
 
   $imap_host    = get_var('imap_host', 'localhost')
 
+  $maildomain = get_var('freebusy_maildomain', get_var('domainname'))
+
   $apache_usr = 'apache'
   $apache_grp = 'apache'
 
   exec { freebusy_webapp:
     path => "/usr/bin:/usr/sbin:/bin",
     command => "webapp-config -I -h $freebusy_vhost -d $freebusy_vhost_path Kolab_FreeBusy $template_freebusy",
-    unless => "test -e ${freebusy_webroot}/index.php",
+    unless => "test -e ${freebusy_webroot}/freebusy.php",
     require => Package['Kolab_FreeBusy'];
   }
 

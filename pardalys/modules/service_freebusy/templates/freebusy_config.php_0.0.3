@@ -1,0 +1,111 @@
+<?php
+/**
+ * This file provides configuration settings for both the freebusy.php
+ * and the pfb.php scripts.
+ *
+ * $Horde: framework/Kolab_FreeBusy/www/Horde/Kolab/FreeBusy/config.php,v 1.1 2008/08/19 09:30:35 wrobel Exp $
+ *
+ * Copyright 2008 The Horde Project (http://www.horde.org/)
+ *
+ * @author  Steffen Hansen <steffen@klaralvdalens-datakonsult.se>
+ * @author  Gunnar Wrobel <p@rdus.de>
+ * @author  Thomas Arendsen Hein <thomas@intevation.de>
+ * @package Kolab_FreeBusy
+ */
+
+$conf = array();
+
+/* Horde::Log configuration */
+$conf['log']['enabled']          = true;
+$conf['log']['priority']         = PEAR_LOG_DEBUG; // Leave this on DEBUG for now. We just restructured the package...
+$conf['log']['type']             = 'syslog';
+$conf['log']['name']             = LOG_USER;
+$conf['log']['ident']            = 'kolabfreebusy';
+$conf['log']['params']['append'] = array();
+
+/* PHP error logging */
+ini_set('error_log', '/var/log/apache2/freebusy_php-error.log');
+
+/* Horde::Kolab::LDAP configuration */
+$conf['kolab']['ldap']['server'] = '<%= ldap_host %>';
+$conf['kolab']['ldap']['basedn'] = '<%= ldap_base_dn %>';
+$conf['kolab']['ldap']['phpdn']  = '<%= ldap_bind_dn %>';
+$conf['kolab']['ldap']['phppw']  = '<%= ldap_bind_pw %>';
+
+/* Horde::Kolab::IMAP configuration */
+$conf['kolab']['imap']['server']   = '<%= imap_host %>';
+$conf['kolab']['imap']['port']     = 143;
+$conf['kolab']['imap']['protocol'] = 'notls/readonly';
+
+/* Horde::Auth configuration */
+$conf['auth']['params']['login_block'] = 0;
+$conf['auth']['checkbrowser']          = false;
+$conf['auth']['checkip']               = false;
+
+/* Kolab::Freebusy configuration */
+
+/* Should we redirect using a Location header, if the user is not local? If this
+ * is false we silently download the file ourselves and output it so that it
+ * looks as though the free/busy information is coming from us.
+ */
+$conf['fb']['redirect']     = false;
+
+/* What is the address of the current server where the calendar data is stored?
+ * This is also used as the LDAP server address where user objects reside.
+ */
+$conf['fb']['server']       = '<%= freebusy_vhost %>';
+
+/* What is our default mail domain? This is used if any users do not have
+ * '@domain' specified after their username as part of their email address.
+ */
+$conf['fb']['email_domain'] = '<%= maildomain %>';
+
+/* Location of the cache files */
+$conf['fb']['cache_dir']    = '/var/cache/kolab-freebusy';
+
+/* What db type to use for the freebusy caches */
+$conf['fb']['dbformat']     = 'db4';
+
+/* Should we send a Content-Type header, indicating what the mime type of the
+ * resulting VFB file is?
+ */
+$conf['fb']['send_content_type'] = false;
+
+/* Should we send a Content-Length header, indicating how large the resulting
+ * VFB file is?
+ */
+$conf['fb']['send_content_length'] = false;
+
+/* Should we send a Content-Disposition header, indicating what the name of the
+ * resulting VFB file should be?
+ */
+$conf['fb']['send_content_disposition'] = false;
+
+/* Are there remote servers on which users have additional (shared)
+ * folders? In that case free/busy information should also be fetched
+ * from these servers.
+ *
+ * Add them like this:
+ *
+ * array('remote1.example.com', 'remote2.example.com')
+ */
+$conf['fb']['remote_servers'] = array();
+
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//
+// If you modify this file, please do not forget to also modify the
+// template in kolabd!
+//
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+// DEBUGGING
+// =========
+//
+// Activate this to see the log messages on the screen
+// $conf['log']['type'] = 'display';
+//
+// Activate this to see the php messages on the screen
+// ini_set('display_errors', 1);
+//
+// Both settings will disrupt header delivery (which should not cause a
+// problem).

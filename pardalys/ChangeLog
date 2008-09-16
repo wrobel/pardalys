@@ -3,8 +3,27 @@
 	* modules/service_apache/templates/apache2: Added -D STATUS for
 	apache monitoring.
 
+	* modules/service_horde/manifests/init.pp: Update to
+	horde-webmail-1.2_rc1.
+
 	* modules/service_apache/manifests/init.pp: Added apache
 	monitoring.
+
+	* modules/service_freebusy/*: Completed free/busy support.
+
+	* modules/service_apache/templates/apache2: Activate the default
+	ssl vhost.
+
+2008-09-15  Gunnar Wrobel  <p@rdus.de>
+
+	* modules/service_freebusy/manifests/init.pp: Correct filenames
+	for unmasking and add the iCalendar library in the newer version.
+
+	* modules/service_apache/manifests/init.pp: Add some php use
+	flags.
+
+	* modules/service_freebusy/*: Added definition for Kolab
+	free/busy.
 
 2008-09-09  Gunnar Wrobel  <p@rdus.de>
 

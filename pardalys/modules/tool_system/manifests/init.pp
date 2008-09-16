@@ -190,6 +190,8 @@ class tool::system {
     '/etc/cron.daily/check_security':
     source => 'puppet:///tool_system/check_security',
     mode    => 755;
+    '/root/.log':
+    ensure => 'directory';
   }
 
   # Ensure the system knows how to handle the rxvt-unicode terminal

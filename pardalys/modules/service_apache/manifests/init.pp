@@ -37,7 +37,7 @@ class service::apache {
       gentoo_use_flags { 'php-apache':
         context => 'service_apache_php',
         package => 'dev-lang/php',
-        use     => 'kolab imap ldap nls session xml apache2 ctype ftp gd json sqlite',
+        use     => 'kolab imap ldap nls session xml apache2 ctype ftp gd json sqlite tokenizer spl pcre reflection',
         tag     => 'buildhost'
       }
       package { 'php':

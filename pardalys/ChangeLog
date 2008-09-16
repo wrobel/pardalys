@@ -1,3 +1,8 @@
+2008-09-16  Gunnar Wrobel  <p@rdus.de>
+
+	* modules/service_apache/templates/apache2: Activate the default
+	ssl vhost.
+
 2008-09-15  Gunnar Wrobel  <p@rdus.de>
 
 	* modules/service_freebusy/manifests/init.pp: Correct filenames

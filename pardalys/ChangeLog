@@ -1,5 +1,8 @@
 2008-09-16  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_apache/templates/apache2: Added -D STATUS for
+	apache monitoring.
+
 	* modules/service_apache/manifests/init.pp: Added apache
 	monitoring.
 

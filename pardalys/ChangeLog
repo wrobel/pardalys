@@ -1,5 +1,7 @@
 2008-09-16  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_freebusy/*: Completed free/busy support.
+
 	* modules/service_apache/templates/apache2: Activate the default
 	ssl vhost.
 

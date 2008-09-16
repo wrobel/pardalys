@@ -26,7 +26,7 @@ class service::freebusy {
     {
       gentoo_keywords { 'Kolab_Server':
         context => 'service_freebusy_Kolab_Server',
-        package => '=dev-php/Kolab_Server-0.1.1',
+        package => '=dev-php/Kolab_Server-0.1.1.20080915',
         keywords => "~$keyword",
         tag     => 'buildhost'
       }
@@ -206,7 +206,20 @@ class service::freebusy {
         tag      => 'buildhost';
       }
 
-      gentoo_keywords { 'Horde_iCalendar':
+      gentoo_keywords { 'Horde_Util_freebusy':
+        context => 'service_freebusy_Horde_Util',
+        package => '=dev-php/Horde_Util-0.0.2.20080915',
+        keywords => "~$keyword",
+        tag     => 'buildhost'
+      }
+      package { 'Horde_Util':
+        category => 'dev-php',
+        ensure   => 'installed',
+        require  => Gentoo_keywords['Horde_Util_freebusy'],
+        tag      => 'buildhost';
+      }
+
+      gentoo_keywords { 'Horde_iCalendar_freebusy':
         context => 'service_freebusy_Horde_iCalendar',
         package => '=dev-php/Horde_iCalendar-0.0.3.20080915',
         keywords => "~$keyword",
@@ -215,7 +228,7 @@ class service::freebusy {
       package { 'Horde_iCalendar':
         category => 'dev-php',
         ensure   => 'installed',
-        require  => Gentoo_keywords['Horde_iCalendar'],
+        require  => Gentoo_keywords['Horde_iCalendar_freebusy'],
         tag      => 'buildhost';
       }
 
@@ -267,12 +280,16 @@ class service::freebusy {
     }
   }
 
-  $template_freebusy = template_version($version_freebusy, '0.0.2@0.0.3@:0.0.2,', '0.0.2')
+  $template_freebusy = template_version($version_freebusy, '0.0.3@:0.0.3,', '0.0.3')
+
+  $sysconfdir  = $os::sysconfdir
 
   $freebusy_vhost = get_var('freebusy_vhost', 'localhost')
   $freebusy_vhost_path = get_var('freebusy_vhost_path', '/freebusy')
 
   $freebusy_webroot = "/var/www/${freebusy_vhost}/htdocs${freebusy_vhost_path}"
+
+  $apache_allow_unauthenticated_fb = get_var('freebusy_allow_unauthenticated', false)
 
   $ldap_host    = get_var('pardalys_ldapserver', 'localhost')
   $ldap_base_dn = get_var('base_dn')
@@ -288,7 +305,7 @@ class service::freebusy {
 
   exec { freebusy_webapp:
     path => "/usr/bin:/usr/sbin:/bin",
-    command => "webapp-config -I -h $freebusy_vhost -d $freebusy_vhost_path Kolab_FreeBusy $template_freebusy",
+    command => "webapp-config -I -h $freebusy_vhost -d $freebusy_vhost_path Kolab_FreeBusy $version_freebusy",
     unless => "test -e ${freebusy_webroot}/freebusy.php",
     require => Package['Kolab_FreeBusy'];
   }
@@ -296,6 +313,9 @@ class service::freebusy {
   file {
     "${freebusy_webroot}/config.php":
     content => template("service_freebusy/freebusy_config.php_$template_freebusy"),
+    require => Exec['freebusy_webapp'];
+    "${sysconfdir}/apache2/vhosts.d/${freebusy_vhost}.conf":
+    content => template('service_freebusy/freebusy_vhost.conf'),
     require => Exec['freebusy_webapp'];
   }
 

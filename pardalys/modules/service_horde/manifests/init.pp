@@ -44,7 +44,7 @@ class service::horde {
 #       }
       gentoo_keywords { 'horde-webmail':
         context => 'service_horde_webmail',
-        package => '=www-apps/horde-webmail-1.1.2-r1',
+        package => '=www-apps/horde-webmail-1.2_rc1',
         keywords => "~$keyword",
         tag     => 'buildhost'
       }
@@ -84,7 +84,14 @@ class service::horde {
     }
   }
 
-  $template_horde_webmail = template_version($version_horde_webmail, '1.1.2-r1(1.1.2-r1)@:1.1.2-r1,', '1.1.2-r1')
+  $template_horde_webmail = template_version($version_horde_webmail, '1.1.2-r1(1.1.2-r1)@1.2_rc1(1.2_rc1):1.1.2-r1,', '1.1.2-r1')
+
+  case $version_horde_webmail {
+    '1.2_rc1(1.2_rc1)':
+    {
+      $version_hw = '1.2_rc1(1.2_rc1)'
+    }
+  }
 
   $sysconfdir  = $os::sysconfdir
 
@@ -111,7 +118,7 @@ class service::horde {
 
   exec { horde_webapp:
     path => "/usr/bin:/usr/sbin:/bin",
-    command => "webapp-config -I -h $horde_vhost -d $horde_vhost_path horde-webmail $template_horde_webmail",
+    command => "webapp-config -I -h $horde_vhost -d $horde_vhost_path horde-webmail $version_hw",
     unless => "test -e ${horde_webroot}/index.php",
     require => Package['horde-webmail'];
   }

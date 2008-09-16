@@ -106,6 +106,11 @@ class service::apache {
     require => Package['apache'];
   }
 
+  file { 
+    '/etc/monit.d/apache2':
+    source => 'puppet:///service_apache/monit_apache';
+  }
+
   case $operatingsystem {
     gentoo: {
       # Configuration for the apache

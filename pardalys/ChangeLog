@@ -1,3 +1,8 @@
+2008-09-16  Gunnar Wrobel  <p@rdus.de>
+
+	* modules/service_apache/manifests/init.pp: Added apache
+	monitoring.
+
 2008-09-09  Gunnar Wrobel  <p@rdus.de>
 
 	* modules/service_monit/templates/monitrc_4.10.1: Alert the system

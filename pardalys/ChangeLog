@@ -1,5 +1,8 @@
 2008-09-18  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_horde/templates/horde_vhost.conf: Use the
+	unified SSL setup and allow redirection vhosts.
+
 	* modules/service_freebusy/templates/freebusy_vhost.conf: Use the
 	unified SSL setup.
 

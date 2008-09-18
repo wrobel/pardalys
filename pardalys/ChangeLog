@@ -1,3 +1,8 @@
+2008-09-18  Gunnar Wrobel  <p@rdus.de>
+
+	* modules/service_horde/manifests/init.pp: Accept all 1.2 versions
+	of horde.
+
 2008-09-16  Gunnar Wrobel  <p@rdus.de>
 
 	* modules/service_horde/manifests/init.pp: Update to

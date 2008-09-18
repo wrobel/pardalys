@@ -1,5 +1,8 @@
 2008-09-18  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_freebusy/templates/freebusy_vhost.conf: Use the
+	unified SSL setup.
+
 	* modules/service_freebusy/manifests/init.pp: Added missing
 	required packages.
 

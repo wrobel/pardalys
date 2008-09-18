@@ -1,5 +1,8 @@
 2008-09-18  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_freebusy/manifests/init.pp: Added missing
+	required packages.
+
 	* modules/service_apache/files/00_default_ssl_vhost.conf: New SSL
 	default host configuration that activates name based SSL vhosting.
 

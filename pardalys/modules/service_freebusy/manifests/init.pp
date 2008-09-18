@@ -24,6 +24,58 @@ class service::freebusy {
   case $operatingsystem {
     gentoo:
     {
+      gentoo_keywords { 'Horde_Framework':
+        context => 'service_freebusy_Horde_Framework',
+        package => '=dev-php/Horde_Framework-0.0.2',
+        keywords => "~$keyword",
+        tag     => 'buildhost'
+      }
+      package { 'Horde_Framework':
+        category => 'dev-php',
+        ensure   => 'installed',
+        require  => Gentoo_keywords['Horde_Framework'],
+        tag      => 'buildhost';
+      }
+
+      gentoo_keywords { 'Horde_LDAP':
+        context => 'service_freebusy_Horde_LDAP',
+        package => '=dev-php/Horde_LDAP-0.0.2',
+        keywords => "~$keyword",
+        tag     => 'buildhost'
+      }
+      package { 'Horde_LDAP':
+        category => 'dev-php',
+        ensure   => 'installed',
+        require  => Gentoo_keywords['Horde_LDAP'],
+        tag      => 'buildhost';
+      }
+
+      gentoo_keywords { 'Horde_MIME':
+        context => 'service_freebusy_Horde_MIME',
+        package => '=dev-php/Horde_MIME-0.0.2',
+        keywords => "~$keyword",
+        tag     => 'buildhost'
+      }
+      package { 'Horde_MIME':
+        category => 'dev-php',
+        ensure   => 'installed',
+        require  => Gentoo_keywords['Horde_MIME'],
+        tag      => 'buildhost';
+      }
+
+      gentoo_keywords { 'Horde_DOM':
+        context => 'service_freebusy_Horde_DOM',
+        package => '=dev-php/Horde_DOM-0.1.0',
+        keywords => "~$keyword",
+        tag     => 'buildhost'
+      }
+      package { 'Horde_DOM':
+        category => 'dev-php',
+        ensure   => 'installed',
+        require  => Gentoo_keywords['Horde_DOM'],
+        tag      => 'buildhost';
+      }
+
       gentoo_keywords { 'Kolab_Server':
         context => 'service_freebusy_Kolab_Server',
         package => '=dev-php/Kolab_Server-0.1.1.20080915',
@@ -280,7 +332,7 @@ class service::freebusy {
     }
   }
 
-  $template_freebusy = template_version($version_freebusy, '0.0.3@:0.0.3,', '0.0.3')
+  $template_freebusy = template_version($version_kolab_freebusy, '0.0.3@:0.0.3,', '0.0.3')
 
   $sysconfdir  = $os::sysconfdir
 
@@ -305,7 +357,7 @@ class service::freebusy {
 
   exec { freebusy_webapp:
     path => "/usr/bin:/usr/sbin:/bin",
-    command => "webapp-config -I -h $freebusy_vhost -d $freebusy_vhost_path Kolab_FreeBusy $version_freebusy",
+    command => "webapp-config -I -h $freebusy_vhost -d $freebusy_vhost_path Kolab_FreeBusy $version_kolab_freebusy",
     unless => "test -e ${freebusy_webroot}/freebusy.php",
     require => Package['Kolab_FreeBusy'];
   }

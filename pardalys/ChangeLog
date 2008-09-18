@@ -1,5 +1,8 @@
 2008-09-18  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_monit/templates/monitrc_4.10.1: Use the unified
+	SSL setup.
+
 	* modules/service_horde/manifests/init.pp: Added the vhost
 	configuration and allowed redirection targets.
 

@@ -1,3 +1,8 @@
+2008-09-18  Gunnar Wrobel  <p@rdus.de>
+
+	* etc/package_versions (Kolab_FreeBusy): Added the Kolab free/busy
+	package.
+
 2008-09-16  Gunnar Wrobel  <p@rdus.de>
 
 	* modules/service_apache/templates/apache2: Added -D STATUS for

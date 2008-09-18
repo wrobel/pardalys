@@ -1,4 +1,5 @@
 import 'os'
+import 'tool_openssl'
 import 'service_apache'
 import 'service_horde'
 import 'service_freebusy'
@@ -14,6 +15,7 @@ import 'service_freebusy'
 class meta::kolab::www {
 
   include os
+  include tool::openssl
   include service::apache
   include service::horde
   include service::freebusy

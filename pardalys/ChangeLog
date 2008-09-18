@@ -1,5 +1,8 @@
 2008-09-18  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/tool_openssl/manifests/init.pp: Added too_openssl for a
+	unified SSL setup.
+
 	* etc/package_versions (Kolab_FreeBusy): Added the Kolab free/busy
 	package.
 

@@ -1,5 +1,8 @@
 2008-09-18  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_horde/manifests/init.pp: Added the vhost
+	configuration and allowed redirection targets.
+
 	* modules/service_horde/templates/horde_vhost.conf: Use the
 	unified SSL setup and allow redirection vhosts.
 

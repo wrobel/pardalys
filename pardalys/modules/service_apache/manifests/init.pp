@@ -111,6 +111,11 @@ class service::apache {
     source => 'puppet:///service_apache/monit_apache';
   }
 
+  file { 
+    '/etc/apache2/vhosts.d/00_default_ssl_vhost.conf':
+    source => 'puppet:///service_apache/00_default_ssl_vhost.conf';
+  }
+
   case $operatingsystem {
     gentoo: {
       # Configuration for the apache

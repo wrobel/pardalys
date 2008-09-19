@@ -1,5 +1,9 @@
 2008-09-19  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_syslog/*: Started reorganizing the logwatch scripts.
+
+	* modules/service_logwatch/*: Started reorganizing the logwatch scripts.
+
 	* modules/meta_kolab_monitor/manifests/init.pp: Include the SSL
 	configuration for the monitoring host.
 

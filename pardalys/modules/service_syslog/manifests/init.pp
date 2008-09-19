@@ -71,17 +71,6 @@ class service::syslog {
     content => template("service_syslog/monit_syslog_ng");
   }
 
-  if defined(Package['logwatch']) {
-    file { 
-      '/etc/logwatch/scripts/services/syslog-ng':
-      source  => 'puppet:///service_syslog/logwatch_plugin_syslog_ng',
-      require => Package['syslog-ng'];
-      '/etc/logwatch/conf/services/syslog-ng.conf':
-      source  => 'puppet:///service_syslog/logwatch_plugin_syslog_ng.conf',
-      require => Package['syslog-ng'];
-    }
-  }
-
   service { 'syslog-ng':
     ensure    => 'running',
     enable    => true,

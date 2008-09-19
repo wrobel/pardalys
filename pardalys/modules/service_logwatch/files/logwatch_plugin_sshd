@@ -1,0 +1,632 @@
+##########################################################################
+# $Id: sshd,v 1.64 2006/11/12 20:59:31 bjorn Exp $
+##########################################################################
+# $Log: sshd,v $
+# Revision 1.64  2006/11/12 20:59:31  bjorn
+# Additional 'illegal user' processing, by Ivana Varekova.
+#
+# Revision 1.63  2006/09/15 15:40:58  bjorn
+# Additional filtering by Ivana Varekova.
+#
+# Revision 1.62  2006/07/28 17:44:04  bjorn
+# Filtering postponed with publickey, by Markus Lude.
+#
+# Revision 1.61  2006/03/20 20:42:57  bjorn
+# Additional filtering, by Ivana Varekova.
+#
+# Revision 1.60  2006/03/08 04:29:34  bjorn
+# Filter pam_krb5 message, by Markus Lude.
+#
+# Revision 1.59  2006/01/20 22:31:04  bjorn
+# Handle new pam_unix format, by Ivana Varekova.
+#
+# Revision 1.58  2005/12/01 04:13:47  bjorn
+# Removed extraneous 'these' sprinkled in output.
+#
+# Revision 1.57  2005/11/24 16:47:09  bjorn
+# Count unknowns, by David Baldwin.
+#
+# Revision 1.56  2005/11/22 18:38:30  bjorn
+# Filtering additional pam messages, by Ivana Varekova.
+#
+# Revision 1.55  2005/11/16 19:56:51  bjorn
+# Filtering forced-command-only string.
+#
+# Revision 1.54  2005/10/19 05:48:39  bjorn
+# Added name/IP mismatch detection, and filtering redundant entries, by
+# Gilles Detillieux
+#
+# Revision 1.53  2005/10/01 18:59:48  bjorn
+# Corrected patch from rev. 1.51
+#
+# Revision 1.52  2005/10/01 18:28:12  bjorn
+# Modified to 'use strict', and added more filtering, by David Baldwin
+#
+# Revision 1.51  2005/09/29 15:06:55  bjorn
+# Filtering failed bind on 0.0.0.0, by Ivana Varekova.
+#
+# Revision 1.50  2005/09/28 18:49:19  mike
+# Ignore channel_lookup and server_input_channel_req from David Baldwin -mgt
+#
+# Revision 1.49  2005/09/28 18:28:52  mike
+# Patch for no route read error -mgt
+#
+# Revision 1.48  2005/09/27 21:03:20  bjorn
+# Allow filtering by host/network address
+#
+# Revision 1.47  2005/09/13 18:52:37  mike
+# Patch from David Baldwin, ldap and key ignores, improved reset and timeout regex -mgt
+#
+# Revision 1.46  2005/08/31 23:19:38  bjorn
+# LookupIP needs to be done after sorting by IP address, not before
+#
+# Revision 1.45  2005/07/21 05:56:59  bjorn
+# Allow non-space chars for username
+#
+# Revision 1.44  2005/05/21 22:47:48  bjorn
+# Provide summary per IP address, cleaned up "illegal" vs. "invalid"
+# usage, removed duplicate code, all submitted by Gilles Detillieux
+#
+# Revision 1.43  2005/04/20 17:19:32  bjorn
+# Remove pam_unix, for Debian
+#
+# Revision 1.42  2005/04/17 23:29:23  bjorn
+# Reporting changes and pam filtering from Paweł Gołaszewski and Willi Mann
+#
+# Revision 1.41  2005/02/24 17:08:05  kirk
+# Applying consolidated patches from Mike Tremaine
+#
+# Revision 1.9  2005/02/13 22:50:46  mgt
+# patches from Pawel -mgt
+#
+# Revision 1.8  2005/02/13 21:26:13  mgt
+# patches from Michael Weiser -mgt
+#
+# Revision 1.7  2005/02/13 21:03:40  mgt
+# Patch from Jeffery ? -mgt
+#
+# Revision 1.6  2004/10/06 21:40:44  mgt
+# Patches from Kenneth -mgt
+#
+# Revision 1.5  2004/07/29 19:33:29  mgt
+# Chmod and removed perl call -mgt
+#
+# Revision 1.4  2004/07/27 00:23:07  mgt
+# Suse 9.1 fix -mgt
+#
+# Revision 1.3  2004/07/10 01:54:36  mgt
+# sync with kirk -mgt
+#
+# Revision 1.38  2004/06/23 15:01:17  kirk
+# - Added more patches from blues@ds.pg.gda.pl
+#
+# Revision 1.37  2004/02/03 19:13:14  kirk
+# More Solaris patches from Sean Boran <sean@boran.com>
+#
+# Revision 1.36  2004/02/03 18:39:34  kirk
+# Patches from [ISO-8859-2] Pawe? Go?aszewski" <blues@ds.pg.gda.pl>
+#
+# Revision 1.35  2004/02/03 03:52:20  kirk
+# Added mailscanner filter and more Solaris support from Mike Tremaine <mgt@stellarcore.net>
+#
+# Revision 1.34  2004/02/03 02:45:26  kirk
+# Tons of patches, and new 'oidentd' and 'shaperd' filters from
+# Pawe? Go?aszewski" <blues@ds.pg.gda.pl>
+#
+##########################################################################
+
+########################################################
+# This was written and is maintained by:
+#    Kirk Bauer <kirk@kaybee.org>
+#
+# Please send all comments, suggestions, bug reports,
+#    etc, to logwatch-devel@logwatch.org
+########################################################
+
+use strict;
+use Logwatch ':all';
+
+my $Debug = $ENV{'LOGWATCH_DEBUG'} || 0;
+my $Detail = $ENV{'LOGWATCH_DETAIL_LEVEL'} || 0;
+my $IgnoreHost = $ENV{'sshd_ignore_host'} || "";
+my $DebugCounter = 0;
+
+# No sense in running if 'sshd' doesn't even exist on this system...
+#unless (( -f "/usr/sbin/sshd" ) or ( -f "/usr/local/sbin/sshd") or ( -f "/usr/lib/ssh/sshd")) {
+#	exit (0);
+#}
+
+my %Users = ();
+my %IllegalUsers = ();
+my %TooManyFailures = ();
+my %NoIdent = ();
+my %BindFailed = ();
+my %BadLogins = ();
+my %NoRevMap = ();
+my %RefusedConnections = ();
+my %RefusedAuthentication = ();
+my %DisconnectReceived = ();
+my %RootLogin = ();
+my %PamReleaseFail = ();
+my %PamError = ();
+my %ShadowInfo = ();
+my %TTYModesFail = ();
+my %LoginLock = ();
+my %PostPonedAuth = ();
+my %LockedAccount = ();
+my %AllowUsers = ();
+my %NoShellUsers = ();
+my %DeprecatedOption = ();
+my %MisMatch = ();
+my %KrbAutFail = ();
+my %KrbAutErr = ();
+my %KrbErr = ();
+my @BadRSA = ();
+my @Scanned = ();
+my %OtherList = ();
+
+my $sftpRequests = 0;
+my $NetworkErrors = 0;
+my $Kills = 0;
+my $Starts = 0;
+my $NetworkErrors = 0;
+
+if ( $Debug >= 5 ) {
+	print STDERR "\n\nDEBUG: Inside SSHD Filter \n\n";
+	$DebugCounter = 1;
+}
+
+while (defined(my $ThisLine = <STDIN>)) {
+   if ( $Debug >= 5 ) {
+      print STDERR "DEBUG($DebugCounter): $ThisLine";
+      $DebugCounter++;
+   }
+   chomp($ThisLine);
+   if (
+       ($ThisLine =~ /^pam_succeed_if: requirement "uid < 100" (not|was) met by user /) or
+       ($ThisLine =~ m/^(log: )?$/ ) or
+       ($ThisLine =~ m/^(log: )?\^\[\[60G/ ) or
+       ($ThisLine =~ m/^(log: )? succeeded$/ ) or
+       ($ThisLine =~ m/^(log: )?Closing connection to/) or
+       ($ThisLine =~ m/^(log: )?Starting sshd:/ ) or
+       ($ThisLine =~ m/^(log: )?sshd \-TERM succeeded/ ) or
+       ($ThisLine =~ m/^Bad protocol version identification .*:? [\d.]+/ ) or
+       ($ThisLine =~ m/^Bad protocol version identification.*Big-Brother-Monitor/ ) or
+       ($ThisLine =~ m/^Connection closed by/) or
+       ($ThisLine =~ m/^Disconnecting: Command terminated on signal \d+/) or
+       ($ThisLine =~ m/^Disconnecting: server_input_channel_req: unknown channel -?\d+/) or
+       ($ThisLine =~ m/^connect from \d+\.\d+\.\d+\.\d+/) or
+       ($ThisLine =~ m/^fatal: Timeout before authentication/ ) or
+       ($ThisLine =~ m/Connection from .* port /) or
+       ($ThisLine =~ m/Postponed (keyboard-interactive|publickey) for [^ ]+ from [^ ]+/) or
+       ($ThisLine =~ m/Read from socket failed/) or
+       ($ThisLine =~ m/sshd startup\s+succeeded/) or
+       ($ThisLine =~ m/sshd shutdown\s+succeeded/) or
+       ($ThisLine =~ m/^Invalid user \S+ from [^ ]+/) or 
+       ($ThisLine =~ m/^Found matching [DR]SA key: /) or
+       ($ThisLine =~ m/^error: key_read: type mismatch: encoding error/) or
+       ($ThisLine =~ m/^channel_lookup: -?\d+: bad id/) or
+       # Result of setting PermitRootLogin to forced-commands-only
+       ($ThisLine =~ m/^Root login accepted for forced command.$/) or
+       # usually followed by a session opened for user
+       ($ThisLine =~ m/^pam_krb5\[\d+\]: authentication succeeds for /) or
+       ($ThisLine =~ m/^nss_ldap: reconnect/) or
+       ($ThisLine =~ m/^pam_ldap: error trying to bind as user "[^"]+" \(Invalid credentials\)/) or
+       ($ThisLine =~ m/^pam_ldap: ldap_starttls_s: Can't contact LDAP server/) or
+       ($ThisLine =~ m/^\(pam_unix\) .*/) or
+       ($ThisLine =~ m/^pam_unix\(.*:.*\)/) or
+       # We won't count the following two because they're always followed by a
+       # failed login entry...
+       ($ThisLine =~ /^input_userauth_request: (illegal|invalid) user (.*)$/ ) or
+       ($ThisLine =~ m/^(Illegal|Invalid) user (.*) from ([^ ]+)/ ) or
+       ($ThisLine =~ /pam_krb5: authentication succeeds for `([^ ]*)'/) or
+       ( $ThisLine =~ /pam_succeed_if\(.*:.*\): error retrieving information about user [a-zA-Z]*/ )           
+   ) {
+      # Ignore these
+   } elsif ( my ($Method,$User,$Host,$Port) = ($ThisLine =~ /^Accepted (\S+) for (\S+) from ([\d\.:a-f]+) port (\d+)/) ) {
+      if ($Debug >= 5) {
+         print STDERR "DEBUG: Found -$User logged in from $Host using $Method\n";
+      }
+      if ($Detail >= 20) {
+         $Users{$User}{$Host}{$Method}++;
+      } else {
+         if ( $Host !~ /$IgnoreHost/ ) {
+            $Users{$User}{$Host}{"(all)"}++;
+         }
+      }
+   } elsif ( my ($Method, undef,$User,$Host,$Port) = ($ThisLine =~ m/^Failed (\S+) for (illegal|invalid) user (.*) from ([^ ]+) port (\d+)/ ) ) { #openssh
+      $IllegalUsers{$Host}{"$User/$Method"}++;
+   } elsif ( my ($User) = ( $ThisLine =~ /Disconnecting: Too many authentication failures for ([^ ]+)/)) {
+      $TooManyFailures{$User}++;
+   } elsif ( $ThisLine =~ m/^(fatal: )?Did not receive ident(ification)? string from (.+)/ ) { # ssh/openssh
+      my $name = LookupIP($3);
+      $NoIdent{$name}++;
+   } elsif ( my ($Host) = ($ThisLine =~ /Could not write ident string to ([^ ]+)$/ )) {
+      my $name = LookupIP($Host);
+      $NoIdent{$name}++;
+   } elsif (
+      ($ThisLine =~ m/^fatal: Connection closed by remote host\./ ) or
+      ($ThisLine =~ m/^(|fatal: )Read error from remote host(| [^ ]+): Connection reset by peer/ ) or
+      ($ThisLine =~ m/^Read error from remote host [^ ]+: (Connection timed out|No route to host)/ ) or
+      ($ThisLine =~ m/^fatal: Read from socket failed: No route to host/) or
+      ($ThisLine =~ m/^fatal: Write failed: Network is unreachable/ ) or
+      ($ThisLine =~ m/^fatal: Write failed: Broken pipe/) or
+      ($ThisLine =~ m/^channel \d+: open failed: (?:connect failed: Channel open failed\.|administratively prohibited: open failed)/) or
+      ($ThisLine =~ m/^session_input_channel_req: no session \d+ req window-change/) or
+      ($ThisLine =~ m/^error: chan_shutdown_read failed for .+/)
+   ) {
+      $NetworkErrors++;
+   } elsif ( $ThisLine =~ m/^(log: )?Received (signal 15|SIG...); (terminating|restarting)\./) { #ssh/openssh
+      $Kills++;
+      if ( $Debug >= 5 ) {
+         print STDERR "DEBUG: Found -Signal 15 Terminating- line\n";
+      }
+   } elsif ( $ThisLine =~ m/^(log: )?Server listening on( [^ ]+)? port \d+/ ) { #ssh/openssh
+      $Starts++;
+      if ( $Debug >= 5 ) {
+         print STDERR "DEBUG: Found -Listening on port 22- line\n";
+      }
+   } elsif ( my ($Port,$Address,$Reason) = ($ThisLine =~ /^error: Bind to port ([^ ]+) on ([^ ]+) failed: (.+).$/ )) {
+      my $Temp = "$Address port $Port ($Reason)";
+      # Failed to bind on 0.0.0.0 likely due to configured "ListenAddress"
+      # on both IPv4 and IPv6 
+      unless ($Address =~ /^0.0.0.0$/) {
+         $BindFailed{$Temp}++;
+      }
+   } elsif ( $ThisLine =~ m/^(log: )?Generating .* \w+ key\./ ) { # ssh/openssh
+      # Don't care about this...
+      if ( $Debug >= 5 ) {
+         print STDERR "DEBUG: Found -Generating RSA key- line\n";
+      }
+   } elsif ( $ThisLine =~ m/^packet_set_maxsize: /) {
+      if ( $Debug >= 5 ) {
+         print STDERR "DEBUG: Found -packet_set_maxsize- line\n";
+      }
+   } elsif ( $ThisLine =~ m/^(log: )?\w+ key generation complete\./ ) { # ssh/openssh
+      # Don't care about this...
+      if ( $Debug >= 5 ) {
+         print STDERR "DEBUG: Found -Keygen complete- line\n";
+      }
+   } elsif ( my ($Method,$User,$Host,undef) = ( $ThisLine =~ m/^Failed (\S+) for (\S+) from ([^ ]+) port (\d+)/ ) ) { #openssh
+      # depending on log mode, openssh may not report these in connection context.
+      if ( $Debug >= 5 ) {
+         print STDERR "DEBUG: Found -Failed login- line\n";
+      }
+      $BadLogins{$Host}{"$User/$Method"}++;
+   } elsif ($ThisLine =~ s/^(log: )?Could not reverse map address ([^ ]*).*$/$2/) {
+      $NoRevMap{$ThisLine}++;
+   } elsif ( my ($Address) = ($ThisLine =~ /^reverse mapping checking getaddrinfo for ([^ ]*) failed - POSSIBLE BREAKIN ATTEMPT!/)) {
+      $NoRevMap{$Address}++;
+   } elsif ( my ($IP,$Address) = ($ThisLine =~ /^Address ([^ ]*) maps to ([^ ]*), but this does not map back to the address - POSSIBLE BREAKIN ATTEMPT!/)) {
+      $NoRevMap{"$Address($IP)"}++;
+   } elsif ( my (undef,$Address) = ($ThisLine =~ /^warning: ([^ ]*), line \d+: can't verify hostname: getaddrinfo\(([^ ]*), AF_INET\) failed$/)) {
+      $NoRevMap{$Address}++;
+   } elsif ( (undef, my $Addresses) = ($ThisLine =~ /^warning: ([^ ]*), line \d+: host [^ ]* mismatch: (.*)$/)) {
+      $MisMatch{$Addresses}++;
+   } elsif ( $ThisLine =~ m/subsystem request for sftp/ ) {
+      $sftpRequests++;
+   } elsif ( $ThisLine =~ m/refused connect from (.*)$/ ) {
+      $RefusedConnections{$1}++;
+   } elsif ( my ($Reason) = ($ThisLine =~ /^Authentication refused: (.*)$/ ) ) {
+      $RefusedAuthentication{$Reason}++;
+   } elsif ( my ($Host,$Reason) = ($ThisLine =~ /^Received disconnect from ([^ ]*): (.*)$/)) {
+      $DisconnectReceived{$Reason}{$Host}++;
+   } elsif ( my ($Host) = ($ThisLine =~ /^ROOT LOGIN REFUSED FROM ([^ ]*)$/)) {
+      $RootLogin{$Host}++;
+   } elsif ( my ($Error) = ($ThisLine =~ /^Cannot release PAM authentication\[\d\]: (.*)$/)) {
+      $PamReleaseFail{$Error}++;
+   } elsif ( my ($Error) = ( $ThisLine =~ m/^error: PAM: (.*)$/)) {
+      $PamError{$Error}++;
+   } elsif ( my ($Error) = ( $ThisLine =~ m/^error: Could not get shadow information for (.*)$/)) {
+      $ShadowInfo{$Error}++;
+   } elsif ( my ($Reason) = ($ThisLine =~ /^Setting tty modes failed: (.*)$/)) {
+      $TTYModesFail{$Reason}++;
+   } elsif ( my ($User,undef) = ($ThisLine =~ /^User ([^ ]*) not allowed because ([^ ]*) exists$/)) {
+      $LoginLock{$User}++;
+   } elsif ( my ($Method,$InvaUser,$IlegUser,$EmptyUser,$User,$Host) = ($ThisLine =~ /^Postponed ([^ ]*) for ((invalid user) [^ ]*|(illegal user) [^ ]*|([^ ]*)) from ([^ ]*) port \d+ ssh/)) {
+      $PostPonedAuth{"$User/$Method"}{$Host}++;
+      if ($IlegUser =~ /illegal user/) {$IllegalUsers{$Host}{"$User/$Method"}++;}
+   } elsif ( my ($User) = ($ThisLine =~ /^User ([^ ]*) not allowed because account is locked/)) {
+      $LockedAccount{$User}++;
+   } elsif ( my ($User) = ($ThisLine =~ /^User ([^ ]*) not allowed because not listed in AllowUsers/)) {
+      $AllowUsers{$User}++;
+   } elsif ( ($User) = ($ThisLine =~ /^User ([^ ]*) not allowed because shell (\S+) does not exist/)) {
+      $NoShellUsers{$User}++;
+   } elsif ( my ($IP) = ($ThisLine =~ /^scanned from ([^ ]*)/) ) {
+      push @Scanned, $IP;
+   } elsif ( my ($Line,$Option) = ($ThisLine =~ /^rexec line (\d+): Deprecated option (.*)$/)) {
+      $DeprecatedOption{"$Option - line $Line"}++;
+   } elsif ( my ($Pom1,$Pom2,$User) = ($ThisLine =~ /pam_krb5(\[\d*\])?: authentication fails for (`|')([^ ]*)'/)) {
+      $KrbAutFail{$User}++;	 
+   } elsif ( my ($Error) = ($ThisLine =~ /pam_krb5: authenticate error: (.*)$/)) {
+      $KrbAutErr{$Error}++;
+   } elsif ( ($ThisLine =~ /pam_krb5: unable to determine uid\/gid for user$/)) {
+      $KrbAutErr{"unable to determine uid/gid for user"}++;
+   } elsif ( my ($Error) = ($ThisLine =~ /pam_krb5: error removing file (.*)$/)) {
+      $KrbErr{"error removing file " . $Error}++;     
+   } elsif ( my ($Pom,$Error) = ($ThisLine =~ /pam_krb5(\[\d*\]): error resolving user name '[^ ]*' to uid\/gid pai/)) {
+      $KrbErr{"error resolving user name '$Error' to uid\/gid pai"}++;
+   } else {
+      # Report any unmatched entries...
+      unless ($ThisLine =~ /fwd X11 connect/) {
+         $OtherList{$ThisLine} += 1;
+      }
+   }
+}
+
+###########################################################
+
+if ($NetworkErrors) {
+   print "\nNetwork Read Write Errors: " . $NetworkErrors . "\n";
+}
+if ($Kills) {
+   print "\nSSHD Killed: " . $Kills . " Time(s)\n";
+}
+if ($Starts) {
+   print "\nSSHD Started: " . $Starts . " Time(s)\n";
+}
+
+if (keys %DeprecatedOption) {
+   print "\nDeprecated options in SSH config:\n";
+   foreach my $Option (sort {$a cmp $b} keys %DeprecatedOption) {
+      print "   $Option\n";
+   }
+}
+
+if (keys %RootLogin) {
+   print "\n\nWARNING!!!\n";
+   print "Refused ROOT login attempt from:\n";
+   foreach my $Host (sort {$a cmp $b} keys %RootLogin) {
+      print "   $Host : $RootLogin{$Host} Time(s)\n";
+   }
+}
+
+if (keys %BindFailed) {
+   print "\nFailed to bind:\n";
+   foreach my $ThisOne (sort {$a cmp $b} keys %BindFailed) {
+	   print "   $ThisOne : $BindFailed{$ThisOne} Time(s)\n";
+   }
+}
+
+if ($Detail >= 10) {
+   if (keys %NoRevMap) {
+      print "\nCouldn't resolve these IPs:\n";
+      foreach my $ThisOne (sort {$a cmp $b} keys %NoRevMap) {
+         print "   $ThisOne: $NoRevMap{$ThisOne} Time(s)\n";
+      }
+   }
+   if (keys %NoIdent) {
+      print "\nDidn't receive an ident from these IPs:\n";
+      foreach my $ThisOne (sort {$a cmp $b} keys %NoIdent) {
+         print "   $ThisOne: $NoIdent{$ThisOne} Time(s)\n";
+      }
+   }
+   if (keys %MisMatch) {
+      print "\nMismatched host names and/or IPs:\n";
+      foreach my $ThisOne (sort keys %MisMatch) {
+         print "   $ThisOne: $MisMatch{$ThisOne} Time(s)\n";
+      }
+   }
+}
+
+if ($#BadRSA >= 0) {
+   print "\nReceived a bad response to RSA challenge from:\n";
+   foreach my $ThisOne (@BadRSA) {
+      print "   $ThisOne\n";
+   }
+}
+
+if (keys %TooManyFailures) {
+   print "\nDisconnecting after too many authentication failures for user:\n";
+   foreach my $User (sort {$a cmp $b} keys %TooManyFailures) {
+      print "   $User : $TooManyFailures{$User} Time(s)\n";
+   }
+}
+
+if (keys %BadLogins) {
+   print "\nFailed logins from:\n";
+   foreach my $ip (sort SortIP keys %BadLogins) {
+      my $name = LookupIP($ip);
+      my $totcount = 0;
+      foreach my $user (keys %{$BadLogins{$ip}}) {
+         $totcount += $BadLogins{$ip}{$user};
+      }
+      my $plural = ($totcount > 1) ? "s" : "";
+      print "   $name: $totcount time$plural\n";
+      if ($Detail >= 5) {
+         my $sort = CountOrder(%{$BadLogins{$ip}});
+         foreach my $user (sort $sort keys %{$BadLogins{$ip}}) {
+            my $val = $BadLogins{$ip}{$user};
+            my $plural = ($val > 1) ? "s" : "";
+            print "      $user: $val time$plural\n";
+         }
+      }
+   }
+}
+
+if (keys %IllegalUsers) {
+   print "\nIllegal users from:\n";
+   foreach my $ip (sort SortIP keys %IllegalUsers) {
+      my $name = LookupIP($ip);
+      my $totcount = 0;
+      foreach my $user (keys %{$IllegalUsers{$ip}}) {
+         $totcount += $IllegalUsers{$ip}{$user};
+      }
+      my $plural = ($totcount > 1) ? "s" : "";
+      print "   $name: $totcount time$plural\n";
+      if ($Detail >= 5) {
+         my $sort = CountOrder(%{$IllegalUsers{$ip}});
+         foreach my $user (sort $sort keys %{$IllegalUsers{$ip}}) {
+            my $val = $IllegalUsers{$ip}{$user};
+            my $plural = ($val > 1) ? "s" : "";
+            print "      $user: $val time$plural\n";
+         }
+      }
+   }
+}
+
+if (keys %LockedAccount) {
+   print "\nLocked account login attempts:\n";
+   foreach my $User (sort {$a cmp $b} keys %LockedAccount) {
+      print "   $User : $LockedAccount{$User} Time(s)\n";
+   }
+}
+
+if (keys %AllowUsers) {
+   print "\nLogin attempted when not in AllowUsers list:\n";
+   foreach my $User (sort {$a cmp $b} keys %AllowUsers) {
+      print "   $User : $AllowUsers{$User} Time(s)\n";
+   }
+}
+
+if (keys %NoShellUsers) {
+   print "\nLogin attempted when shell does not exist:\n";
+   foreach my $User (sort {$a cmp $b} keys %NoShellUsers) {
+      print "   $User : $NoShellUsers{$User} Time(s)\n";
+   }
+}
+
+if ((keys %LoginLock) and ($Detail >= 5)) {
+   print "\nUser login attempt when nologin was set:\n";
+   foreach my $User (sort {$a cmp $b} keys %LoginLock) {
+      print "   $User : $LoginLock{$User} Time(s)\n";
+   }
+}
+
+if (keys %PostPonedAuth) {
+   print "\nPostponed authentication:\n";
+   foreach my $User (sort {$a cmp $b} keys %PostPonedAuth) {
+      print "   $User:\n";
+      foreach my $Host (sort {$a cmp $b} keys %{$PostPonedAuth{$User}}) {
+         print "      $Host: $PostPonedAuth{$User}{$Host} Time(s)\n";
+      }
+   }
+}
+
+if (keys %Users) {
+   print "\nUsers logging in through sshd:\n";
+   foreach my $user (sort {$a cmp $b} keys %Users) {
+      print "   $user:\n";
+      my $totalSort = TotalCountOrder(%{$Users{$user}}, \&SortIP);
+      foreach my $ip (sort $totalSort keys %{$Users{$user}}) {
+         my $name = LookupIP($ip);
+         if ($Detail >= 20) {
+            print "      $name:\n";
+            my $sort = CountOrder(%{$Users{$user}{$ip}});
+            foreach my $method (sort $sort keys %{$Users{$user}{$ip}}) {
+               my $val = $Users{$user}{$ip}{$method};
+               my $plural = ($val > 1) ? "s" : "";
+               print "         $method: $val time$plural\n";
+            }
+         } else {
+            my $val = (values %{$Users{$user}{$ip}})[0];
+            my $plural = ($val > 1) ? "s" : "";
+            print "      $name: $val time$plural\n";
+         }
+      }
+   }
+}
+
+if (keys %RefusedAuthentication) {
+   print "\n\nAuthentication refused:\n";
+   foreach my $Reason (sort {$a cmp $b} keys %RefusedAuthentication) {
+      print "   $Reason : $RefusedAuthentication{$Reason} Time(s)\n";
+   }
+}
+
+if (keys %KrbAutFail) {
+   print "\n\Failed pam_krb5 authentication:\n";
+   foreach my $User (sort keys %KrbAutFail) {
+      print "   $User: " .  $KrbAutFail{$User} . " Time(s)\n";
+   }
+}
+	       
+if (keys %KrbAutErr) {
+   print "\n\pam_krb5 authentication errors:\n";
+   foreach my $Error (sort keys %KrbAutErr) {
+      print "   $Error: " .  $KrbAutErr{$Error} . " Time(s)\n";
+   }
+}
+	       
+
+if (keys %KrbErr) {
+   print "\n pam_krb5 errors:\n";
+   foreach my $Error (sort keys %KrbErr) {
+      print "   $Error: " . $KrbErr{$Error} . " Time(s)\n";
+   }
+}
+
+
+if (keys %DisconnectReceived) {
+   print "\n\nReceived disconnect:\n";
+   foreach my $Reason (sort {$a cmp $b} keys %DisconnectReceived) {
+      my $Total = 0;
+      print "   $Reason";
+      foreach my $Host (sort {$a cmp $b} keys %{$DisconnectReceived{$Reason}}) {
+         $Total += $DisconnectReceived{$Reason}{$Host};
+        if( $Detail > 0 ) {
+            print "\n      $Host : $DisconnectReceived{$Reason}{$Host} Time(s)";
+        }
+      }
+      if( $Detail > 0 ) {
+         print "\n";
+      } else {
+         print " : $Total Time(s)\n";
+      }
+   }
+}
+
+if ($#Scanned >= 0) {
+   print "\nScanned from:\n";
+   foreach my $ThisOne (sort SortIP @Scanned) {
+      print "   " . LookupIP($ThisOne) . "\n";
+   }
+}
+
+if (keys %RefusedConnections) {
+   print "\nRefused incoming connections:\n";
+   foreach my $badguy (sort {$a cmp $b} keys %RefusedConnections ) {
+      print "      $badguy: " . $RefusedConnections{$badguy} . " Time(s)\n";
+   }
+}
+
+if (keys %PamReleaseFail) {
+   print "\nCannot release PAM authentication:\n";
+   foreach my $Error (sort {$a cmp $b} keys %PamReleaseFail) {
+      print "   $Error : $PamReleaseFail{$Error} Time(s)\n";
+   }
+}
+
+if (keys %ShadowInfo) {
+   print "\nCould not get shadow information for:\n";
+   foreach my $Error (sort {$a cmp $b} keys %ShadowInfo) {
+      print "   $Error : $ShadowInfo{$Error} Time(s)\n";
+   }
+}
+
+if (keys %PamError) {
+   print "\nError in PAM authentication:\n";
+   foreach my $Error (sort {$a cmp $b} keys %PamError) {
+      print "   $Error : $PamError{$Error} Time(s)\n";
+   }
+}
+
+if (keys %TTYModesFail) {
+   print "\nSetting tty modes failed:\n";
+   foreach my $Reason (sort {$a cmp $b} keys %TTYModesFail) {
+      print "   $Reason : $TTYModesFail{$Reason} Time(s)\n";
+   }
+}
+
+if ($sftpRequests > 0) {
+   print "\nSFTP subsystem requests: $sftpRequests Time(s)\n";
+}
+
+if (keys %OtherList) {
+   print "\n**Unmatched Entries**\n";
+   print "$_ : $OtherList{$_} time(s)\n" foreach keys %OtherList;
+}
+
+exit(0);
+
+# vi: shiftwidth=3 tabstop=3 syntax=perl et

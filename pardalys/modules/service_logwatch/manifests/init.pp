@@ -54,20 +54,22 @@ class service::logwatch {
     ensure  => 'directory',
     require => File['/etc/logwatch/scripts'];
     '/etc/logwatch/conf/logwatch.conf':
-    mode    => 644,
     content => template("service_logwatch/logwatch.conf_${template_version}"),
     require => Package['logwatch'],
     require => File['/etc/logwatch/conf'];
     '/etc/logwatch/conf/logfiles/messages.conf':
     source  => 'puppet:///service_logwatch/messages.conf',
-    owner   => 'root',
-    group   => 'root',
-    mode    => 644,
     require => File['/etc/logwatch/conf/logfiles'];
+    '/etc/logwatch/scripts/services/syslog-ng':
+    source  => 'puppet:///service_logwatch/logwatch_plugin_syslog_ng';
+    '/etc/logwatch/conf/services/syslog-ng.conf':
+    source  => 'puppet:///service_logwatch/logwatch_plugin_syslog_ng.conf';
+    '/etc/logwatch/scripts/services/sshd':
+    source  => 'puppet:///service_logwatch/logwatch_plugin_sshd';
+    '/etc/logwatch/conf/services/sshd.conf':
+    source  => 'puppet:///service_logwatch/logwatch_plugin_sshd.conf';
     '/usr/sbin/logwatch.pl':
     source  => 'puppet:///service_logwatch/logwatch.pl',
-    owner   => 'root',
-    group   => 'root',
     mode    => 755,
     require => Package['logwatch'];
     '/usr/share/logwatch/default.conf/logwatch.conf':
@@ -75,8 +77,6 @@ class service::logwatch {
     require => Package['logwatch'];
     '/etc/cron.daily/00-logwatch':
     source  => 'puppet:///service_logwatch/00-logwatch',
-    owner   => 'root',
-    group   => 'root',
     mode    => 755,
     require => Package['logwatch'];
   }

@@ -4,6 +4,7 @@ bash:app-shells/bash@Gentoo
 coreutils:sys-apps/coreutils@Gentoo
 cyrus-sasl:dev-libs/cyrus-sasl@Gentoo
 fcron:sys-process/fcron@Gentoo
+hermes:www-apps/hermes@Gentoo
 horde-webmail:www-apps/horde-webmail@Gentoo
 Kolab_FreeBusy:dev-php/Kolab_FreeBusy@Gentoo
 layman:app-portage/layman@Gentoo

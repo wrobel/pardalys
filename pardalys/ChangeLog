@@ -1,5 +1,8 @@
 2008-09-19  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_horde/manifests/init.pp: Prepare the hermes
+	installation.
+
 	* modules/service_freebusy/manifests/init.pp: Accept
 	Horde_Date-0.1.0.
 

@@ -24,24 +24,24 @@ class service::horde {
   case $operatingsystem {
     gentoo:
     {
-#       gentoo_keywords { 'horde-hermes':
-#         context => 'service_horde_hermes',
-#         package => '=www-apps/horde-hermes-1.0_rc1',
-#         keywords => "~$keyword",
-#         tag     => 'buildhost'
-#       }
-#       gentoo_use_flags { 'horde-hermes':
-#         context => 'service_horde_hermes',
-#         package => 'www-apps/horde-hermes',
-#         use     => 'kolab',
-#         tag     => 'buildhost'
-#       }
-#       package { 'horde-hermes':
-#         category => 'www-apps',
-#         ensure   => 'installed',
-#         require  => [Gentoo_use_flags['horde-hermes'], Gentoo_keywords['horde-hermes']],
-#         tag      => 'buildhost';
-#       }
+       gentoo_keywords { 'horde-hermes':
+       context => 'service_horde_hermes',
+       package => '=www-apps/horde-hermes-1.0_rc2',
+        keywords => "~$keyword",
+        tag     => 'buildhost'
+      }
+      gentoo_use_flags { 'horde-hermes':
+        context => 'service_horde_hermes',
+        package => 'www-apps/horde-hermes',
+        use     => 'kolab',
+        tag     => 'buildhost'
+      }
+      package { 'horde-hermes':
+        category => 'www-apps',
+        ensure   => 'installed',
+        require  => [Gentoo_use_flags['horde-hermes'], Gentoo_keywords['horde-hermes']],
+        tag      => 'buildhost';
+      }
       gentoo_keywords { 'horde-webmail':
         context => 'service_horde_webmail',
         package => 'www-apps/horde-webmail',
@@ -89,7 +89,14 @@ class service::horde {
   case $version_horde_webmail {
     '1.2_rc1(1.2_rc1)':
     {
-      $version_hw = '1.2_rc1(1.2_rc1)'
+      $version_hw = '1.2_rc1'
+    }
+  }
+
+  case $version_hermes {
+    '1.0_rc2(1.0_rc2)':
+    {
+      $webapp_version_hermes = '1.0_rc2'
     }
   }
 
@@ -124,6 +131,13 @@ class service::horde {
     command => "webapp-config -I -h $horde_vhost -d $horde_vhost_path horde-webmail $version_hw",
     unless => "test -e ${horde_webroot}/index.php",
     require => Package['horde-webmail'];
+  }
+
+  exec { hermes_webapp:
+    path => "/usr/bin:/usr/sbin:/bin",
+    command => "webapp-config -I -h $horde_vhost -d $horde_vhost_path/hermes hermes $webapp_version_hermes",
+    unless => "test -e ${horde_webroot}/hermes/index.php",
+    require => Package['horde-hermes'];
   }
 
   file {

@@ -1,5 +1,8 @@
 2008-09-19  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_horde/manifests/init.pp: Accept all
+	horde-webmail versions as unstable at the moment.
+
 	* modules/tool_openssl/manifests/init.pp: Ensure the SSL
 	certificate directory exists.
 

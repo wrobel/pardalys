@@ -44,7 +44,7 @@ class service::horde {
 #       }
       gentoo_keywords { 'horde-webmail':
         context => 'service_horde_webmail',
-        package => '=www-apps/horde-webmail-1.2*',
+        package => 'www-apps/horde-webmail',
         keywords => "~$keyword",
         tag     => 'buildhost'
       }

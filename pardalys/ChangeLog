@@ -1,5 +1,8 @@
 2008-09-19  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/tool_openssl/manifests/init.pp: Ensure the SSL
+	certificate directory exists.
+
 	* modules/service_horde/manifests/init.pp: Avoid clash with
 	service_freebusy.
 

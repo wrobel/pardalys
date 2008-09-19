@@ -46,6 +46,11 @@ class tool::openssl {
   $ssl_cert    = get_var('ssl_cert', '')
   $ssl_key    = get_var('ssl_key', '')
 
+  file { 
+    "$ssl_confdir/system":
+    ensure => 'directory';
+  }
+
   if $ssl_cert {
     file { 
       "$ssl_confdir/system/server.crt":

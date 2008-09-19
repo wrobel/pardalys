@@ -93,7 +93,7 @@ class service::horde {
     }
   }
 
-  case $version_hermes {
+  case $version_horde_hermes {
     '1.0_rc2(1.0_rc2)':
     {
       $webapp_version_hermes = '1.0_rc2'
@@ -135,7 +135,7 @@ class service::horde {
 
   exec { hermes_webapp:
     path => "/usr/bin:/usr/sbin:/bin",
-    command => "webapp-config -I -h $horde_vhost -d $horde_vhost_path/hermes hermes $webapp_version_hermes",
+    command => "webapp-config -I -h $horde_vhost -d $horde_vhost_path/hermes horde-hermes $webapp_version_hermes",
     unless => "test -e ${horde_webroot}/hermes/index.php",
     require => Package['horde-hermes'];
   }

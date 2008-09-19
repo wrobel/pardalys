@@ -1,6 +1,5 @@
 import 'root'
 import 'os'
-import 'tool_pardalys'
 import 'service_kolab'
 import 'service_openldap'
 import 'service_sasl'
@@ -17,7 +16,6 @@ import 'service_postfix'
 class meta::kolab::complete {
 
   include os
-  include tool::pardalys
   include service::kolab
   include service::openldap
   include service::openldap::serve

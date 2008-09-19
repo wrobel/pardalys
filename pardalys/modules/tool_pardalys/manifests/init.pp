@@ -105,10 +105,10 @@ class tool::pardalys {
       $pardalys_modules =  get_var('pardalys_modules', 'meta_kolab_complete')
       $my_pardalys_modules =  split($pardalys_modules, ',')
 
-      $pardalys_ldapserver = get_var('pardalys_ldapserver')
-      $pardalys_ldapbase = get_var('pardalys_ldapbase')
-      $pardalys_ldapuser = get_var('pardalys_ldapuser')
-      $pardalys_ldappass = get_var('pardalys_ldappass')
+      $pardalys_ldapserver = get_var('ldap_host')
+      $pardalys_ldapbase = get_var('base_dn')
+      $pardalys_ldapuser = get_var('bind_dn_nobody')
+      $pardalys_ldappass = get_var('bind_pw_nobody')
 
       file { 
         '/etc/pardalys':

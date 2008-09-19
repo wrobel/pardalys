@@ -1,6 +1,5 @@
 import 'os'
 import 'service_kolab'
-import 'tool_pardalys'
 import 'service_amavisd_new'
 import 'service_clamav'
 import 'service_spamassassin'
@@ -18,7 +17,6 @@ class meta::kolab::spam {
 
   include os
   include service::kolab
-  include tool::pardalys
   include service::amavisd_new
   include service::clamav
   include service::spamassassin

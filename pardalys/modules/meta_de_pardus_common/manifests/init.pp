@@ -6,6 +6,7 @@ import 'tool_baselayout'
 import 'tool_bash'
 import 'tool_emacs'
 import 'tool_logrotate'
+import 'tool_pardalys'
 import 'tool_portage'
 import 'tool_subversion'
 import 'tool_system'
@@ -29,6 +30,7 @@ class meta::de::pardus::common {
   include tool::bash
   include tool::emacs
   include tool::logrotate
+  include tool::pardalys
   include tool::portage
   include tool::subversion
   include tool::system

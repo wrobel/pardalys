@@ -1,5 +1,8 @@
 2008-09-19  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/tool_pardalys/manifests/init.pp: Fixed the way we handle
+	the pardalys configuration.
+
 	* etc/package_versions: Replace hyphens with underscores.
 
 	* modules/service_horde/manifests/init.pp: Prepare the hermes

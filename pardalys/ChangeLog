@@ -1,5 +1,11 @@
 2008-09-19  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_horde/manifests/init.pp: Fixed the variable we
+	use for specifiying the LDAP host.
+
+	* modules/service_freebusy/manifests/init.pp: Fixed the variable
+	we use for specifiying the LDAP host.
+
 	* modules/tool_pardalys/manifests/init.pp: Fixed the way we handle
 	the pardalys configuration.
 

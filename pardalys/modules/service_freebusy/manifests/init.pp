@@ -211,7 +211,7 @@ class service::freebusy {
 
   $apache_allow_unauthenticated_fb = get_var('freebusy_allow_unauthenticated', false)
 
-  $ldap_host    = get_var('pardalys_ldapserver', 'localhost')
+  $ldap_host    = get_var('ldap_host', 'localhost')
   $ldap_base_dn = get_var('base_dn')
   $ldap_bind_dn = get_var('bind_dn_nobody')
   $ldap_bind_pw = get_var('bind_pw_nobody')

@@ -116,7 +116,7 @@ class service::horde {
   $horde_vhost_redirectors = split(get_var('horde_vhost_redirectors', ''), ',')
   $dimp_vhost_redirectors = split(get_var('dimp_vhost_redirectors', ''), ',')
 
-  $ldap_host    = get_var('pardalys_ldapserver', 'localhost')
+  $ldap_host    = get_var('ldap_host', 'localhost')
   $ldap_base_dn = get_var('base_dn')
   $ldap_bind_dn = get_var('bind_dn_nobody')
   $ldap_bind_pw = get_var('bind_pw_nobody')

@@ -133,7 +133,7 @@ class service::horde {
     "${horde_webroot}/kronolith/config/kolab.php":
     content => template("service_horde/kronolith_kolab.php_$template_horde_webmail"),
     require => Exec['horde_webapp'];
-    "${sysconfdir}/apache2/vhosts.d/${horde_vhost}.conf":
+    "${sysconfdir}/apache2/vhosts.d/${horde_vhost}_horde.conf":
     content => template('service_horde/horde_vhost.conf'),
     require => Exec['horde_webapp'];
   }

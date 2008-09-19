@@ -234,7 +234,7 @@ class service::freebusy {
     "${freebusy_webroot}/config.php":
     content => template("service_freebusy/freebusy_config.php_$template_freebusy"),
     require => Exec['freebusy_webapp'];
-    "${sysconfdir}/apache2/vhosts.d/${freebusy_vhost}.conf":
+    "${sysconfdir}/apache2/vhosts.d/${freebusy_vhost}_freebusy.conf":
     content => template('service_freebusy/freebusy_vhost.conf'),
     require => Exec['freebusy_webapp'];
   }

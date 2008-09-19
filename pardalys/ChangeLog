@@ -1,5 +1,8 @@
 2008-09-19  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_freebusy/manifests/init.pp: Avoid clash with
+	service_horde.
+
 	* modules/service_postfix/manifests/init.pp: Fixed definition
 	clashes with service_freebusy.
 

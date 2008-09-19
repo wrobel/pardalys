@@ -133,19 +133,19 @@ class service::postfix {
         keywords => "~$keyword",
         tag      => 'buildhost'
       }
-      gentoo_keywords { 'Horde_Framework':
+      gentoo_keywords { 'Horde_Framework_postfix':
         context => 'service_postfix_Horde_Framework',
         package => '=dev-php/Horde_Framework-0.0.2',
         keywords => "~$keyword",
         tag      => 'buildhost'
       }
-      gentoo_keywords { 'Horde_DOM':
+      gentoo_keywords { 'Horde_DOM_postfix':
         context => 'service_postfix_Horde_DOM',
         package => '=dev-php/Horde_DOM-0.1.0',
         keywords => "~$keyword",
         tag      => 'buildhost'
       }
-      gentoo_keywords { 'Horde_Util':
+      gentoo_keywords { 'Horde_Util_postfix':
         context => 'service_postfix_Horde_Util',
         package => '=dev-php/Horde_Util-0.0.2',
         keywords => "~$keyword",
@@ -163,13 +163,13 @@ class service::postfix {
         keywords => "~$keyword",
         tag      => 'buildhost'
       }
-      gentoo_keywords { 'Horde_LDAP':
+      gentoo_keywords { 'Horde_LDAP_postfix':
         context => 'service_postfix_Horde_LDAP',
         package => '=dev-php/Horde_LDAP-0.0.2',
         keywords => "~$keyword",
         tag      => 'buildhost'
       }
-      gentoo_keywords { 'Horde_Kolab_Server':
+      gentoo_keywords { 'Horde_Kolab_Server_postfix':
         context => 'service_postfix_Horde_Kolab_Server',
         package => 'dev-php/Horde_Kolab_Server',
         keywords => "~$keyword",
@@ -181,11 +181,11 @@ class service::postfix {
         require  =>  [ Gentoo_use_flags['c-client'],
                        Gentoo_use_flags['php-postfix'],
                        Gentoo_keywords['Horde_Kolab_Filter'],
-                       Gentoo_keywords['Horde_Framework'],
-                       Gentoo_keywords['Horde_DOM'],
-                       Gentoo_keywords['Horde_Util'],
-                       Gentoo_keywords['Horde_LDAP'],
-                       Gentoo_keywords['Horde_Kolab_Server'],
+                       Gentoo_keywords['Horde_Framework_postfix'],
+                       Gentoo_keywords['Horde_DOM_postfix'],
+                       Gentoo_keywords['Horde_Util_postfix'],
+                       Gentoo_keywords['Horde_LDAP_postfix'],
+                       Gentoo_keywords['Horde_Kolab_Server_postfix'],
                        Gentoo_unmask['Horde_Kolab_Filter'] ],
         tag      => 'buildhost'
       }

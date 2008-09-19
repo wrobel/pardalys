@@ -1,5 +1,8 @@
 2008-09-19  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_postfix/manifests/init.pp: Fixed definition
+	clashes with service_freebusy.
+
 	* modules/service_freebusy/manifests/init.pp: It is not necessary
 	to require installation of dependencies. Fixed definition clashes
 	with service_postfix.

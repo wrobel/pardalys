@@ -1,4 +1,5 @@
 import 'os'
+import 'tool_openssl'
 import 'service_kolab'
 import 'service_openldap'
 import 'service_sasl'
@@ -16,6 +17,7 @@ class meta::kolab::smtp {
 
   include os
   include service::kolab
+  include tool::openssl
   include service::openldap
   include service::openldap::serve
   include service::sasl

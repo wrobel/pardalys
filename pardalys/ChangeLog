@@ -1,5 +1,8 @@
 2008-09-19  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/meta_kolab_smtp/manifests/init.pp: Added the SSL
+	configuration.
+
 	* modules/service_freebusy/manifests/init.pp: Avoid clash with
 	service_horde.
 

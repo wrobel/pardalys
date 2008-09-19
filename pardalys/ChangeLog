@@ -1,3 +1,8 @@
+2008-09-19  Gunnar Wrobel  <p@rdus.de>
+
+	* modules/meta_kolab_monitor/manifests/init.pp: Include the SSL
+	configuration for the monitoring host.
+
 2008-09-18  Gunnar Wrobel  <p@rdus.de>
 
 	* modules/service_monit/templates/monitrc_4.10.1: Use the unified

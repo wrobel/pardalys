@@ -1,7 +1,10 @@
 2008-09-19  Gunnar Wrobel  <p@rdus.de>
 
+	* etc/package_versions: Replace hyphens with underscores.
+
 	* modules/service_horde/manifests/init.pp: Prepare the hermes
 	installation.
+	Fix the hermes installation.
 
 	* modules/service_freebusy/manifests/init.pp: Accept
 	Horde_Date-0.1.0.

@@ -2,10 +2,10 @@ apache:www-servers/apache@Gentoo
 baselayout:sys-apps/baselayout@Gentoo
 bash:app-shells/bash@Gentoo
 coreutils:sys-apps/coreutils@Gentoo
-cyrus-sasl:dev-libs/cyrus-sasl@Gentoo
+cyrus_sasl:dev-libs/cyrus-sasl@Gentoo
 fcron:sys-process/fcron@Gentoo
-hermes:www-apps/hermes@Gentoo
-horde-webmail:www-apps/horde-webmail@Gentoo
+horde_hermes:www-apps/horde-hermes@Gentoo
+horde_webmail:www-apps/horde-webmail@Gentoo
 Kolab_FreeBusy:dev-php/Kolab_FreeBusy@Gentoo
 layman:app-portage/layman@Gentoo
 lighttpd:www-servers/lighttpd@Gentoo

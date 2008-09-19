@@ -62,7 +62,7 @@ class service::freebusy {
       }
       gentoo_keywords { 'Horde_Date_freebusy':
         context => 'service_freebusy_Horde_Date',
-        package => '=dev-php/Horde_Date-0.0.2.20080912',
+        package => '=dev-php/Horde_Date-0.1.0',
         keywords => "~$keyword",
         tag     => 'buildhost'
       }

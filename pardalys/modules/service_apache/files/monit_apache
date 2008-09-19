@@ -1,0 +1,7 @@
+check process apache with pidfile /var/run/apache2.pid
+  start "/etc/init.d/apache2 start"
+  stop  "/etc/init.d/apache2 stop"
+  if failed host 127.0.0.1 port 80
+    protocol apache-status loglimit > 60% 
+  then restart
+  if 5 restarts within 5 cycles then timeout

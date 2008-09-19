@@ -106,6 +106,9 @@ class service::horde {
   $horde_admins = split(get_var('horde_admins', ''), ',')
   $mailserver = get_var('mailserver', 'localhost')
 
+  $horde_vhost_redirectors = split(get_var('horde_vhost_redirectors', ''), ',')
+  $dimp_vhost_redirectors = split(get_var('dimp_vhost_redirectors', ''), ',')
+
   $ldap_host    = get_var('pardalys_ldapserver', 'localhost')
   $ldap_base_dn = get_var('base_dn')
   $ldap_bind_dn = get_var('bind_dn_nobody')
@@ -129,6 +132,9 @@ class service::horde {
     require => Exec['horde_webapp'];
     "${horde_webroot}/kronolith/config/kolab.php":
     content => template("service_horde/kronolith_kolab.php_$template_horde_webmail"),
+    require => Exec['horde_webapp'];
+    "${sysconfdir}/apache2/vhosts.d/${horde_vhost}.conf":
+    content => template('service_horde/horde_vhost.conf'),
     require => Exec['horde_webapp'];
   }
 

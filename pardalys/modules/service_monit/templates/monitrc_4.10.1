@@ -213,7 +213,7 @@ set alert <%= sysadmin %>                        # receive all alerts
 #
 set httpd port 2812
     ssl enable
-    pemfile <%= ssl_cert_path %>/server_root.pem
+    pemfile <%= ssl_cert_path %>/server.pem
     allow <%= monit_user %>:<%= monit_pass %>      # require user 'admin' with password 'monit'
 
 ###############################################################################

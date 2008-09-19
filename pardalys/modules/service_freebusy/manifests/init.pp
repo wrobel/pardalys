@@ -24,292 +24,138 @@ class service::freebusy {
   case $operatingsystem {
     gentoo:
     {
-      gentoo_keywords { 'Horde_Framework':
+      gentoo_keywords { 'Horde_Framework_freebusy':
         context => 'service_freebusy_Horde_Framework',
         package => '=dev-php/Horde_Framework-0.0.2',
         keywords => "~$keyword",
         tag     => 'buildhost'
       }
-      package { 'Horde_Framework':
-        category => 'dev-php',
-        ensure   => 'installed',
-        require  => Gentoo_keywords['Horde_Framework'],
-        tag      => 'buildhost';
-      }
-
-      gentoo_keywords { 'Horde_LDAP':
+      gentoo_keywords { 'Horde_LDAP_freebusy':
         context => 'service_freebusy_Horde_LDAP',
         package => '=dev-php/Horde_LDAP-0.0.2',
         keywords => "~$keyword",
         tag     => 'buildhost'
       }
-      package { 'Horde_LDAP':
-        category => 'dev-php',
-        ensure   => 'installed',
-        require  => Gentoo_keywords['Horde_LDAP'],
-        tag      => 'buildhost';
-      }
-
-      gentoo_keywords { 'Horde_MIME':
+      gentoo_keywords { 'Horde_MIME_freebusy':
         context => 'service_freebusy_Horde_MIME',
         package => '=dev-php/Horde_MIME-0.0.2',
         keywords => "~$keyword",
         tag     => 'buildhost'
       }
-      package { 'Horde_MIME':
-        category => 'dev-php',
-        ensure   => 'installed',
-        require  => Gentoo_keywords['Horde_MIME'],
-        tag      => 'buildhost';
-      }
-
-      gentoo_keywords { 'Horde_DOM':
+      gentoo_keywords { 'Horde_DOM_freebusy':
         context => 'service_freebusy_Horde_DOM',
         package => '=dev-php/Horde_DOM-0.1.0',
         keywords => "~$keyword",
         tag     => 'buildhost'
       }
-      package { 'Horde_DOM':
-        category => 'dev-php',
-        ensure   => 'installed',
-        require  => Gentoo_keywords['Horde_DOM'],
-        tag      => 'buildhost';
-      }
-
-      gentoo_keywords { 'Kolab_Server':
+      gentoo_keywords { 'Kolab_Server_freebusy':
         context => 'service_freebusy_Kolab_Server',
         package => '=dev-php/Kolab_Server-0.1.1.20080915',
         keywords => "~$keyword",
         tag     => 'buildhost'
       }
-      package { 'Kolab_Server':
-        category => 'dev-php',
-        ensure   => 'installed',
-        require  => Gentoo_keywords['Kolab_Server'],
-        tag      => 'buildhost';
-      }
-
-      gentoo_keywords { 'Horde_Serialize':
+      gentoo_keywords { 'Horde_Serialize_freebusy':
         context => 'service_freebusy_Horde_Serialize',
         package => '=dev-php/Horde_Serialize-0.0.2',
         keywords => "~$keyword",
         tag     => 'buildhost'
       }
-      package { 'Horde_Serialize':
-        category => 'dev-php',
-        ensure   => 'installed',
-        require  => Gentoo_keywords['Horde_Serialize'],
-        tag      => 'buildhost';
-      }
-
-      gentoo_keywords { 'Horde_Date':
+      gentoo_keywords { 'Horde_Date_freebusy':
         context => 'service_freebusy_Horde_Date',
         package => '=dev-php/Horde_Date-0.0.2.20080912',
         keywords => "~$keyword",
         tag     => 'buildhost'
       }
-      package { 'Horde_Date':
-        category => 'dev-php',
-        ensure   => 'installed',
-        require  => Gentoo_keywords['Horde_Date'],
-        tag      => 'buildhost';
-      }
-
-      gentoo_keywords { 'Horde_Browser':
+      gentoo_keywords { 'Horde_Browser_freebusy':
         context => 'service_freebusy_Horde_Browser',
         package => '=dev-php/Horde_Browser-0.0.2',
         keywords => "~$keyword",
         tag     => 'buildhost'
       }
-      package { 'Horde_Browser':
-        category => 'dev-php',
-        ensure   => 'installed',
-        require  => Gentoo_keywords['Horde_Browser'],
-        tag      => 'buildhost';
-      }
-
-      gentoo_keywords { 'Horde_Cipher':
+      gentoo_keywords { 'Horde_Cipher_freebusy':
         context => 'service_freebusy_Horde_Cipher',
         package => '=dev-php/Horde_Cipher-0.0.2',
         keywords => "~$keyword",
         tag     => 'buildhost'
       }
-      package { 'Horde_Cipher':
-        category => 'dev-php',
-        ensure   => 'installed',
-        require  => Gentoo_keywords['Horde_Cipher'],
-        tag      => 'buildhost';
-      }
-
-      gentoo_keywords { 'Horde_Cache':
+      gentoo_keywords { 'Horde_Cache_freebusy':
         context => 'service_freebusy_Horde_Cache',
         package => '=dev-php/Horde_Cache-0.0.2',
         keywords => "~$keyword",
         tag     => 'buildhost'
       }
-      package { 'Horde_Cache':
-        category => 'dev-php',
-        ensure   => 'installed',
-        require  => Gentoo_keywords['Horde_Cache'],
-        tag      => 'buildhost';
-      }
-
-      gentoo_keywords { 'Horde_History':
+      gentoo_keywords { 'Horde_History_freebusy':
         context => 'service_freebusy_Horde_History',
         package => '=dev-php/Horde_History-0.0.2',
         keywords => "~$keyword",
         tag     => 'buildhost'
       }
-      package { 'Horde_History':
-        category => 'dev-php',
-        ensure   => 'installed',
-        require  => Gentoo_keywords['Horde_History'],
-        tag      => 'buildhost';
-      }
-
-      gentoo_keywords { 'Horde_NLS':
+      gentoo_keywords { 'Horde_NLS_freebusy':
         context => 'service_freebusy_Horde_NLS',
         package => '=dev-php/Horde_NLS-0.0.2',
         keywords => "~$keyword",
         tag     => 'buildhost'
       }
-      package { 'Horde_NLS':
-        category => 'dev-php',
-        ensure   => 'installed',
-        require  => Gentoo_keywords['Horde_NLS'],
-        tag      => 'buildhost';
-      }
-
-      gentoo_keywords { 'Horde_Secret':
+      gentoo_keywords { 'Horde_Secret_freebusy':
         context => 'service_freebusy_Horde_Secret',
         package => '=dev-php/Horde_Secret-0.0.2',
         keywords => "~$keyword",
         tag     => 'buildhost'
       }
-      package { 'Horde_Secret':
-        category => 'dev-php',
-        ensure   => 'installed',
-        require  => Gentoo_keywords['Horde_Secret'],
-        tag      => 'buildhost';
-      }
-
-      gentoo_keywords { 'Horde_DataTree':
+      gentoo_keywords { 'Horde_DataTree_freebusy':
         context => 'service_freebusy_Horde_DataTree',
         package => '=dev-php/Horde_DataTree-0.0.3',
         keywords => "~$keyword",
         tag     => 'buildhost'
       }
-      package { 'Horde_DataTree':
-        category => 'dev-php',
-        ensure   => 'installed',
-        require  => Gentoo_keywords['Horde_DataTree'],
-        tag      => 'buildhost';
-      }
-
-      gentoo_keywords { 'Horde_SessionObjects':
+      gentoo_keywords { 'Horde_SessionObjects_freebusy':
         context => 'service_freebusy_Horde_SessionObjects',
         package => '=dev-php/Horde_SessionObjects-0.0.2',
         keywords => "~$keyword",
         tag     => 'buildhost'
       }
-      package { 'Horde_SessionObjects':
-        category => 'dev-php',
-        ensure   => 'installed',
-        require  => Gentoo_keywords['Horde_SessionObjects'],
-        tag      => 'buildhost';
-      }
-
-      gentoo_keywords { 'Kolab_Format':
+      gentoo_keywords { 'Kolab_Format_freebusy':
         context => 'service_freebusy_Kolab_Format',
         package => '=dev-php/Kolab_Format-0.1.2.20080912',
         keywords => "~$keyword",
         tag     => 'buildhost'
       }
-      package { 'Kolab_Format':
-        category => 'dev-php',
-        ensure   => 'installed',
-        require  => Gentoo_keywords['Kolab_Format'],
-        tag      => 'buildhost';
-      }
-
-      gentoo_keywords { 'Horde_Auth':
+      gentoo_keywords { 'Horde_Auth_freebusy':
         context => 'service_freebusy_Horde_Auth',
-        package => '=dev-php/Horde_Auth-0.0.3.20080912',
+        package => '=dev-php/Horde_Auth-0.1.0',
         keywords => "~$keyword",
         tag     => 'buildhost'
       }
-      package { 'Horde_Auth':
-        category => 'dev-php',
-        ensure   => 'installed',
-        require  => Gentoo_keywords['Horde_Auth'],
-        tag      => 'buildhost';
-      }
-
-      gentoo_keywords { 'Horde_Group':
+      gentoo_keywords { 'Horde_Group_freebusy':
         context => 'service_freebusy_Horde_Group',
-        package => '=dev-php/Horde_Group-0.0.2.20080912',
+        package => '=dev-php/Horde_Group-0.1.0',
         keywords => "~$keyword",
         tag     => 'buildhost'
       }
-      package { 'Horde_Group':
-        category => 'dev-php',
-        ensure   => 'installed',
-        require  => Gentoo_keywords['Horde_Group'],
-        tag      => 'buildhost';
-      }
-
       gentoo_keywords { 'Horde_Util_freebusy':
         context => 'service_freebusy_Horde_Util',
         package => '=dev-php/Horde_Util-0.0.2.20080915',
         keywords => "~$keyword",
         tag     => 'buildhost'
       }
-      package { 'Horde_Util':
-        category => 'dev-php',
-        ensure   => 'installed',
-        require  => Gentoo_keywords['Horde_Util_freebusy'],
-        tag      => 'buildhost';
-      }
-
       gentoo_keywords { 'Horde_iCalendar_freebusy':
         context => 'service_freebusy_Horde_iCalendar',
         package => '=dev-php/Horde_iCalendar-0.0.3.20080915',
         keywords => "~$keyword",
         tag     => 'buildhost'
       }
-      package { 'Horde_iCalendar':
-        category => 'dev-php',
-        ensure   => 'installed',
-        require  => Gentoo_keywords['Horde_iCalendar_freebusy'],
-        tag      => 'buildhost';
-      }
-
-      gentoo_keywords { 'Horde_Perms':
+      gentoo_keywords { 'Horde_Perms_freebusy':
         context => 'service_freebusy_Horde_Perms',
         package => '=dev-php/Horde_Perms-0.1.0',
         keywords => "~$keyword",
         tag     => 'buildhost'
       }
-      package { 'Horde_Perms':
-        category => 'dev-php',
-        ensure   => 'installed',
-        require  => Gentoo_keywords['Horde_Perms'],
-        tag      => 'buildhost';
-      }
-
-      gentoo_keywords { 'Kolab_Storage':
+      gentoo_keywords { 'Kolab_Storage_freebusy':
         context => 'service_freebusy_Kolab_Storage',
         package => '=dev-php/Kolab_Storage-0.1.0',
         keywords => "~$keyword",
         tag     => 'buildhost'
       }
-      package { 'Kolab_Storage':
-        category => 'dev-php',
-        ensure   => 'installed',
-        require  => Gentoo_keywords['Kolab_Storage'],
-        tag      => 'buildhost';
-      }
-
       gentoo_keywords { 'Kolab_FreeBusy':
         context => 'service_freebusy_Kolab_FreeBusy',
         package => '=dev-php/Kolab_FreeBusy-0.0.3',
@@ -319,7 +165,29 @@ class service::freebusy {
       package { 'Kolab_FreeBusy':
         category => 'dev-php',
         ensure   => 'installed',
-        require  => Gentoo_keywords['Kolab_FreeBusy'],
+        require  => [ Gentoo_keywords['Kolab_FreeBusy'],
+                      Gentoo_keywords['Kolab_Storage_freebusy'],
+                      Gentoo_keywords['Horde_Perms_freebusy'],
+                      Gentoo_keywords['Horde_iCalendar_freebusy'],
+                      Gentoo_keywords['Horde_Util_freebusy'],
+                      Gentoo_keywords['Horde_Group_freebusy'],
+                      Gentoo_keywords['Horde_Auth_freebusy'],
+                      Gentoo_keywords['Kolab_Format_freebusy'],
+                      Gentoo_keywords['Horde_SessionObjects_freebusy'],
+                      Gentoo_keywords['Horde_DataTree_freebusy'],
+                      Gentoo_keywords['Horde_Secret_freebusy'],
+                      Gentoo_keywords['Horde_NLS_freebusy'],
+                      Gentoo_keywords['Horde_History_freebusy'],
+                      Gentoo_keywords['Horde_Cache_freebusy'],
+                      Gentoo_keywords['Horde_Cipher_freebusy'],
+                      Gentoo_keywords['Horde_Browser_freebusy'],
+                      Gentoo_keywords['Horde_Date_freebusy'],
+                      Gentoo_keywords['Horde_Serialize_freebusy'],
+                      Gentoo_keywords['Kolab_Server_freebusy'],
+                      Gentoo_keywords['Horde_DOM_freebusy'],
+                      Gentoo_keywords['Horde_MIME_freebusy'],
+                      Gentoo_keywords['Horde_LDAP_freebusy'],
+                      Gentoo_keywords['Horde_Framework_freebusy']],
         tag      => 'buildhost';
       }
 

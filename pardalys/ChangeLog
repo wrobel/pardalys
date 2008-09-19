@@ -1,5 +1,9 @@
 2008-09-19  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_freebusy/manifests/init.pp: It is not necessary
+	to require installation of dependencies. Fixed definition clashes
+	with service_postfix.
+
 	* modules/service_syslog/*: Started reorganizing the logwatch scripts.
 
 	* modules/service_logwatch/*: Started reorganizing the logwatch scripts.

@@ -1,5 +1,8 @@
 2008-09-29  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/tool_emacs/manifests/init.pp: Provide the buildhost with
+	editing facilities for pardalys.
+
 	* modules/service_freebusy/manifests/init.pp: Complete the PEAR
 	package renaming.
 

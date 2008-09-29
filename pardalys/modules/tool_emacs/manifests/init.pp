@@ -87,7 +87,8 @@ class tool::emacs {
       }
 
       file{'/usr/share/emacs/site-lisp/site-gentoo.d/72git-gentoo.el':
-        source => 'puppet:///tool_emacs/72git-gentoo.el';
+        source => 'puppet:///tool_emacs/72git-gentoo.el',
+        tag      => 'buildhost';
       }
 
       $admin_fullname = get_var('admin_fullname', 'System Administrator')

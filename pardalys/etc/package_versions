@@ -6,7 +6,7 @@ cyrus_sasl:dev-libs/cyrus-sasl@Gentoo
 fcron:sys-process/fcron@Gentoo
 horde_hermes:www-apps/horde-hermes@Gentoo
 horde_webmail:www-apps/horde-webmail@Gentoo
-Kolab_FreeBusy:dev-php/Kolab_FreeBusy@Gentoo
+horde_kolab_freebusy:dev-php/Horde_Kolab_FreeBusy@Gentoo
 layman:app-portage/layman@Gentoo
 lighttpd:www-servers/lighttpd@Gentoo
 logwatch:sys-apps/logwatch@Gentoo

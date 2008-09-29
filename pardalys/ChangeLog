@@ -1,5 +1,8 @@
 2008-09-29  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_postfix/manifests/init.pp: Adapt to updates of
+	Horde PEAR packages.
+
 	* modules/service_freebusy/manifests/init.pp: Adapt to updates of
 	Horde PEAR packages.
 

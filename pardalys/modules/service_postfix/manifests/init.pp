@@ -147,7 +147,7 @@ class service::postfix {
       }
       gentoo_keywords { 'Horde_Util_postfix':
         context => 'service_postfix_Horde_Util',
-        package => '=dev-php/Horde_Util-0.0.2',
+        package => '=dev-php/Horde_Util-0.1.0',
         keywords => "~$keyword",
         tag      => 'buildhost'
       }
@@ -159,7 +159,7 @@ class service::postfix {
       }
       gentoo_keywords { 'Horde_iCalendar':
         context => 'service_postfix_Horde_iCalendar',
-        package => '=dev-php/Horde_iCalendar-0.0.3',
+        package => '=dev-php/Horde_iCalendar-0.1.0',
         keywords => "~$keyword",
         tag      => 'buildhost'
       }

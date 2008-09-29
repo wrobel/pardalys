@@ -1,3 +1,8 @@
+2008-09-29  Gunnar Wrobel  <p@rdus.de>
+
+	* modules/service_nagios/manifests/init.pp: Fixed the way we
+	determine the nagios version number.
+
 2008-09-19  Gunnar Wrobel  <p@rdus.de>
 
 	* modules/service_horde/manifests/init.pp: Fixed the variable we

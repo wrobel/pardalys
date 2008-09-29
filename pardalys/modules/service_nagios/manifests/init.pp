@@ -187,105 +187,85 @@ class service::nagios {
     }
   }
 
+  $template_nagios = template_version($version_nagios, '3.0.1@:3.0.1,', '3.0.1')
 
-  # Convert to template version
-  case $version_nagios {
-    default: {
-      crit("Unkown nagios version (Value: ${version_nagios})!")
-      $template_nagios = 'UNKNOWN'
-    }
-    '3.0.1': {
-      $template_nagios = '3.0.1'
-     }
-    '3.0.1[?]' : {
-      $template_nagios = '3.0.1'
-    }
+  # Nagios configuration
+  file { 
+    '/etc/nagios/nagios.cfg':
+    content => template("service_nagios/nagios.cfg_${template_nagios}"),
+    mode    => 640,
+    group   => 'nagios',
+    require => Package['nagios'],
+    notify  => Service["nagios"];
+    '/etc/nagios/cgi.cfg':
+    content => template("service_nagios/cgi.cfg_${template_nagios}"),
+    mode    => 640,
+    group   => 'nagios',
+    require => Package['nagios'],
+    notify  => Service["nagios"];
+    '/etc/nagios/nsca.cfg':
+    content => template("service_nagios/nsca.cfg_${template_nagios}"),
+    mode    => 640,
+    group   => 'nagios',
+    require => Package['nagios-nsca'],
+    notify  => Service["nsca"];
+    '/etc/nagios/objects/commands.cfg':
+    content => template("service_nagios/commands.cfg_${template_nagios}"),
+    mode    => 640,
+    group   => 'nagios',
+    require => Package['nagios'],
+    notify  => Service["nagios"];
+    '/etc/nagios/objects/localhost.cfg':
+    content => template("service_nagios/localhost.cfg_${template_nagios}"),
+    mode    => 640,
+    group   => 'nagios',
+    require => Package['nagios'],
+    notify  => Service["nagios"];
+    '/etc/nagios/objects/templates.cfg':
+    content => template("service_nagios/templates.cfg_${template_nagios}"),
+    mode    => 640,
+    group   => 'nagios',
+    require => Package['nagios'],
+    notify  => Service["nagios"];
+    [ '/etc/nagios/hosts',
+      '/etc/nagios/services' ]:
+    ensure  => 'directory';
+    '/etc/lighttpd/nagios.conf':
+    content => template("service_nagios/lighttpd_nagios.conf"),
+    require => Package['nagios'],
+    notify  => Service['lighttpd'];
   }
 
-  case $template_nagios {
-    'UNKNOWN': {
-      crit("Cannot configure package without a valid version number!")
-    }
-    default : {
-      # Nagios configuration
-      file { 
-        '/etc/nagios/nagios.cfg':
-          content => template("service_nagios/nagios.cfg_${template_nagios}"),
-          mode    => 640,
-          group   => 'nagios',
-          require => Package['nagios'],
-          notify  => Service["nagios"];
-        '/etc/nagios/cgi.cfg':
-          content => template("service_nagios/cgi.cfg_${template_nagios}"),
-          mode    => 640,
-          group   => 'nagios',
-          require => Package['nagios'],
-          notify  => Service["nagios"];
-        '/etc/nagios/nsca.cfg':
-          content => template("service_nagios/nsca.cfg_${template_nagios}"),
-          mode    => 640,
-          group   => 'nagios',
-          require => Package['nagios-nsca'],
-          notify  => Service["nsca"];
-        '/etc/nagios/objects/commands.cfg':
-          content => template("service_nagios/commands.cfg_${template_nagios}"),
-          mode    => 640,
-          group   => 'nagios',
-          require => Package['nagios'],
-          notify  => Service["nagios"];
-        '/etc/nagios/objects/localhost.cfg':
-          content => template("service_nagios/localhost.cfg_${template_nagios}"),
-          mode    => 640,
-          group   => 'nagios',
-          require => Package['nagios'],
-          notify  => Service["nagios"];
-        '/etc/nagios/objects/templates.cfg':
-          content => template("service_nagios/templates.cfg_${template_nagios}"),
-          mode    => 640,
-          group   => 'nagios',
-          require => Package['nagios'],
-          notify  => Service["nagios"];
-        [ '/etc/nagios/hosts',
-          '/etc/nagios/services' ]:
-          ensure  => 'directory';
-        '/etc/lighttpd/nagios.conf':
-          content => template("service_nagios/lighttpd_nagios.conf"),
-          require => Package['nagios'],
-          notify  => Service['lighttpd'];
-      }
+  $hosts = split($nagios_hosts, ',')
+  service::nagios::nagios_host { $hosts: }
 
-      $hosts = split($nagios_hosts, ',')
-      service::nagios::nagios_host { $hosts: }
+  $services = split($nagios_services, ',')
+  service::nagios::nagios_service { $services: }
+
+  $default_services = split($nagios_default, ',')
+  service::nagios::nagios_default { $default_services: }
+
+  $ldap_services = split($nagios_ldap, ':')
+  service::nagios::nagios_ldap { $ldap_services: }
       
-      $services = split($nagios_services, ',')
-      service::nagios::nagios_service { $services: }
+  service { 'nagios':
+    ensure => running,
+    enable => true,
+    require => Package['nagios']
+  }
 
-      $default_services = split($nagios_default, ',')
-      service::nagios::nagios_default { $default_services: }
+  service { 'nsca':
+    ensure => running,
+    enable => true,
+    require => Package['nagios-nsca']
+  }
 
-      $ldap_services = split($nagios_ldap, ':')
-      service::nagios::nagios_ldap { $ldap_services: }
-      
-      service { 'nagios':
-        ensure => running,
-        enable => true,
-        require => Package['nagios']
-      }
-
-      service { 'nsca':
-        ensure => running,
-        enable => true,
-        require => Package['nagios-nsca']
-      }
-
-      case $operatingsystem {
-        gentoo: {
-          # Ensure that the service starts with the system
-          file { '/etc/runlevels/default/nagios':
-            ensure => '/etc/init.d/nagios',
-            require  => Package['nagios']
-          }
-        }
+  case $operatingsystem {
+    gentoo: {
+      # Ensure that the service starts with the system
+      file { '/etc/runlevels/default/nagios':
+        ensure => '/etc/init.d/nagios',
+        require  => Package['nagios']
       }
     }
   }

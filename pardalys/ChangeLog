@@ -1,5 +1,14 @@
 2008-09-29  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/tool_emacs/templates/dot_emacs: The admin credentials
+	used here may not be the same as for the sysadmin.
+
+	* modules/tool_emacs/manifests/init.pp: The admin credentials used
+	here may not be the same as for the sysadmin.
+
+	* modules/service_spamassassin/manifests/init.pp: Use the correct
+	sysadmin variable.
+
 	* modules/service_nagios/manifests/init.pp: Fixed the way we
 	determine the nagios version number.
 

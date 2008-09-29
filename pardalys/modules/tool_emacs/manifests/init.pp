@@ -90,8 +90,8 @@ class tool::emacs {
         source => 'puppet:///tool_emacs/72git-gentoo.el';
       }
 
-      $sysadmin_fullname = get_var('sysadmin_fullname', 'System Administrator')
-      $sysadmin_mail = get_var('sysadmin_mail', 'root@localhost')
+      $admin_fullname = get_var('admin_fullname', 'System Administrator')
+      $admin_mail = get_var('admin_mail', 'root@localhost')
 
       $screen_dark = get_var('screen_dark', false)
 

@@ -50,7 +50,7 @@ class service::freebusy {
       }
       gentoo_keywords { 'Kolab_Server_freebusy':
         context => 'service_freebusy_Kolab_Server',
-        package => '=dev-php/Kolab_Server-0.1.1.20080915',
+        package => '=dev-php/Horde_Kolab_Server-0.1.1.20080915',
         keywords => "~$keyword",
         tag     => 'buildhost'
       }
@@ -116,7 +116,7 @@ class service::freebusy {
       }
       gentoo_keywords { 'Kolab_Format_freebusy':
         context => 'service_freebusy_Kolab_Format',
-        package => '=dev-php/Kolab_Format-0.1.2.20080912',
+        package => '=dev-php/Horde_Kolab_Format-0.1.2.20080912',
         keywords => "~$keyword",
         tag     => 'buildhost'
       }
@@ -134,13 +134,13 @@ class service::freebusy {
       }
       gentoo_keywords { 'Horde_Util_freebusy':
         context => 'service_freebusy_Horde_Util',
-        package => '=dev-php/Horde_Util-0.0.2.20080915',
+        package => '=dev-php/Horde_Util-0.1.0',
         keywords => "~$keyword",
         tag     => 'buildhost'
       }
       gentoo_keywords { 'Horde_iCalendar_freebusy':
         context => 'service_freebusy_Horde_iCalendar',
-        package => '=dev-php/Horde_iCalendar-0.0.3.20080915',
+        package => '=dev-php/Horde_iCalendar-0.1.0',
         keywords => "~$keyword",
         tag     => 'buildhost'
       }
@@ -152,13 +152,13 @@ class service::freebusy {
       }
       gentoo_keywords { 'Kolab_Storage_freebusy':
         context => 'service_freebusy_Kolab_Storage',
-        package => '=dev-php/Kolab_Storage-0.1.0',
+        package => '=dev-php/Kolab_Storage-0.1.0.20080925',
         keywords => "~$keyword",
         tag     => 'buildhost'
       }
       gentoo_keywords { 'Kolab_FreeBusy':
         context => 'service_freebusy_Kolab_FreeBusy',
-        package => '=dev-php/Kolab_FreeBusy-0.0.3',
+        package => '=dev-php/Kolab_FreeBusy-0.0.4.20080925',
         keywords => "~$keyword",
         tag     => 'buildhost'
       }
@@ -200,7 +200,7 @@ class service::freebusy {
     }
   }
 
-  $template_freebusy = template_version($version_kolab_freebusy, '0.0.3@:0.0.3,', '0.0.3')
+  $template_freebusy = template_version($version_kolab_freebusy, '0.0.3@:0.0.3,0.0.4.20080925@:0.0.4.20080925', '0.0.4.20080925')
 
   $sysconfdir  = $os::sysconfdir
 

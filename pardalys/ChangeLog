@@ -1,3 +1,8 @@
+2008-10-01  Gunnar Wrobel  <p@rdus.de>
+
+	* modules/service_freebusy/manifests/init.pp: Update to the latest
+	packages.
+
 2008-09-29  Gunnar Wrobel  <p@rdus.de>
 
 	* modules/tool_emacs/manifests/init.pp: Provide the buildhost with

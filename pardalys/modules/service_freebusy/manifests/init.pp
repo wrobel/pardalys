@@ -140,7 +140,7 @@ class service::freebusy {
       }
       gentoo_keywords { 'Kolab_Server_freebusy':
         context => 'service_freebusy_Kolab_Server',
-        package => '=dev-php/Horde_Kolab_Server-0.1.1.20080915',
+        package => '=dev-php/Horde_Kolab_Server-0.1.1.20081001',
         keywords => "~$keyword",
         tag     => 'buildhost'
       }
@@ -152,13 +152,13 @@ class service::freebusy {
       }
       gentoo_keywords { 'Kolab_Storage_freebusy':
         context => 'service_freebusy_Kolab_Storage',
-        package => '=dev-php/Horde_Kolab_Storage-0.1.0.20080925',
+        package => '=dev-php/Horde_Kolab_Storage-0.1.0.20081001',
         keywords => "~$keyword",
         tag     => 'buildhost'
       }
       gentoo_keywords { 'Kolab_FreeBusy':
         context => 'service_freebusy_Kolab_FreeBusy',
-        package => '=dev-php/Horde_Kolab_FreeBusy-0.0.4.20080925',
+        package => '=dev-php/Horde_Kolab_FreeBusy-0.0.4.20081001',
         keywords => "~$keyword",
         tag     => 'buildhost'
       }

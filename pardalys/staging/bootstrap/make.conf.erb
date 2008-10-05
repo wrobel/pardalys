@@ -1,0 +1,12 @@
+CFLAGS="-march=<%= ec2_instance_cpu %> -O2 -pipe<%= ' -mno-tls-direct-seg-refs' if hardwaremodel == 'i686' %>"
+CHOST="<%= hardwaremodel %>-pc-linux-gnu"
+CXXFLAGS="${CFLAGS}"
+FEATURES="<%= portage_features %>"
+GENTOO_MIRRORS="<%= distfile_mirrors %>"
+MAKEOPTS="-j<%= processorcount.to_i + 1 %>"
+PORTDIR_OVERLAY="/usr/local/portage"
+PORTAGE_RSYNC_EXTRA_OPTS="--exclude-from=/etc/portage/exclude"
+SYNC="<%= rsync_mirror %>"
+USE="glibc-omitfp mmx mmxext sse sse2 sse3<%= ' 3dnow 3dnowext' if ec2_instance_cpu == 'opteron' or ec2_instance_cpu == 'athlon-xp' %>"
+<% if binhost %>PORTAGE_BINHOST="<%= binhost %>"<% end %>
+EMERGE_DEFAULT_OPTS="<%= '--usepkg --getbinpkg' if binhost %><%= ' --getbinpkgonly' if binhost_only %>"

@@ -1,0 +1,75 @@
+GEC2: Gentoo EC2, Puppet and Portage Tools
+
+Copyright (c) 2008 Tim Dysinger
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+This project is a hybrid EC2, Puppet & Portage management tool for
+Gentoo Linux images.  With it you can build a Gentoo EC2 image from
+scratch, bundle it up and send it to Amazon, start it, stop it and
+terminate it.  All software management from the image stage to the
+running instance (ongoing) is managed by Puppet.  Additionally there
+is a portage overlay for packages helpful to running servers at ec2.
+
+* - Fire up a pre-existing 2.6.18-compatible image - these are ok:
+     m1.small, c1.medium            -> ami-d8a347b1 w/ aki-9b00e5f2
+     m1.large, m1.xlarge, c1.xlarge -> ami-c8ac48a1 w/ aki-9800e5f1
+
+* - Setup up ruby, rubygems, puppet & git on the server instance.
+
+yum update -y
+yum install ruby-devel rubygems git-core -y
+rm -f ~/.gemrc
+gem sources -a http://gems.github.com
+gem update --system
+gem update
+gem install rake aws-s3 hpricot facter --no-rdoc --no-ri
+gem clean
+
+* - Clone this project to your server
+
+git clone git://github.com/dysinger/gec2.git
+cd gec2
+
+* - Create your own env.yml file to house all your Amazon settings.
+Mine looks like so:
+
+---
+:owner_id: 7777889599999
+:access_key_id: AF4616CSG78CGSBQF122
+:secret_access_key: x8hA/tc63Y2gyvoanIHxicBKpeHWNW921y7Uhrdm
+:cert: |
+  -----BEGIN CERTIFICATE-----
+  ...snip...
+  -----END CERTIFICATE-----
+
+:key: |
+  -----BEGIN PRIVATE KEY-----
+  ...snip...
+  -----END PRIVATE KEY-----
+
+* - Fire away! - This may take a couple hours as 100% of the OS is
+compiled for the CPU and Architecture of the image type:
+
+nohup rake -t image &
+tail -f nohup.out
+
+* - If all goes well you should have a nice fresh image for yourself
+in a bucket all registered and ready to launch.

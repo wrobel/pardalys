@@ -1,0 +1,69 @@
+--- 
+:mnt_dir: /mnt/gentoo
+:download_dir: /tmp
+:stage_prefix: stage3
+:stage_suffix: 2008.0.tar.bz2
+:download_url: http://gentoo.osuosl.org/releases/
+:rsync_mirror: rsync://rsync21.us.gentoo.org/gentoo-portage
+:portage_features: parallel-fetch buildpkg
+:distfile_mirrors: http://gentoo.chem.wisc.edu/gentoo
+:puppet_unstable: yes
+
+:excludes:
+  - "*accessibility*/"
+  - "*cdr*/"
+  - "*dialup*/"
+  - "*embedded*/"
+  - "*emulation*/"
+  - "*fonts*/"
+  - "*freebsd*/"
+  - "*games*/"
+  - "*gnome*/"
+  - "*gnustep*/"
+  - "*kde*/"
+  - "*laptop*/"
+  - "*mobilephone*/"
+  - "*office*/"
+  - "*pda*/"
+  - "*plugins*/"
+  - "*print*/"
+  - "*radio*/"
+  - "*rox*/"
+  - "*scheme*/"
+  - "*sci*/"
+  - "*sound*/"
+  - "*tinyos*/"
+  - "*tv*/"
+  - "*video*/"
+  - "*voip*/"
+  - "*wireless*/"
+  - "*x11*/"
+  - "*xemacs*/"
+  - "*xfce*/"
+  - "*zope*/"
+
+
+#----------
+# Optional
+#----------
+
+
+# If bootstrapping should use a binary package host you need to set
+# this parameter to the URL of the precompiled packages.
+
+#:binhost: 
+
+
+# Set this to "yes" if bootstrapping should only use binary
+# packages.
+
+#:binhost_only:
+
+
+# Specifying a target machine will be required if you do not wish to
+# run the bootstrapping on an AWS instance
+
+#:target
+#  :processorcount: 1
+#  :ec2_instance_cpu: 
+#  :hardwaremodel: i686

@@ -232,7 +232,7 @@
 
 	* modules/tool_backup/*: Added a simple /etc backup routine.
 
-	* modules/service_clamav/templates/freshclam.conf_0.93.3: 
+	* modules/service_clamav/templates/freshclam.conf_0.93.3:
 	* modules/service_clamav/templates/clamd.conf_0.93.3:
 	Update to clamav-0.93.3.
 
@@ -361,7 +361,6 @@
 	munin service for now.
 
 	* modules/tool_system/manifests/init.pp: Add net-dns/host package.
->>>>>>> adbf3aa6f856eb7f068a7350de5790184962ebbe:pardalys/ChangeLog
 
 2008-07-30  Gunnar Wrobel  <p@rdus.de>
 
@@ -422,7 +421,7 @@
 	* modules/tool_emacs/manifests/init.pp: Add some basic
 	configuration elements for emacs so that the git handling is
 	always available.
- 
+
 	* modules/tool_emacs/templates/dot_emacs: A very basic .emacs
 	file.
 

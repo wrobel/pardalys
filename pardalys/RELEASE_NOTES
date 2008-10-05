@@ -1,18 +1,19 @@
-Version 0.0.4 - Released 2008/05/17
+Version 0.0.6 - Released 2008/10/05
 ===================================
 
 FULL CHANGES
 ------------
 
- - Implemented a draft of the Kolab bootstrap
+ - Added Horde configuration.
 
- - Added a Makefile to install the package
-
+ - Improved general configuration settings.
 
 SHORT CHANGES
 -------------
 
-p@rdalys-0.0.5 implements a rough draft of the Kolab bootstrap.
+p@rdalys-0.0.6 is an intermediate release that provides many fixes and
+improvements but does not yet deliver the complete Kolab server
+configuration.
 
 
 FRESHMEAT

@@ -1,5 +1,8 @@
 2008-10-07  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_openssh/manifests/init.pp: Complete
+	documentation and minor cleanups.
+
 	* bin/pardalys: puppet-0.24.5 seems to ignore the clientbucketdir
 	setting from puppet.conf. Set it in the pardalys script.
 

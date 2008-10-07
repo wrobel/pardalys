@@ -1,0 +1,19 @@
+Provides a configuration for the ssh daemon
+
+@author Gunnar Wrobel <p@rdus.de>
+@version 1.0
+@package service_openssh
+
+@module os_gentoo     The os_gentoo module is required for Gentoo support.
+
+@fact operatingsystem Allows to choose the correct actions depending
+                      on the operating system
+
+@param allow_root     Allow root login via SSH.
+                      (Default: true)
+@param allow_root     Allow password based login via SSH.
+                      (Default: false)
+@param allow_x11      Allow X11 forwarding via SSH.
+                      (Default: false)
+@param run_services   Determines if the cron service should be started.
+                      (Default: true)

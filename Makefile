@@ -1,7 +1,7 @@
 VERSION=0.0.6
 
 pardalys-$(VERSION).tar.bz2:
-	tar cvjf pardalys-$(VERSION).tar.bz2 pardalys --exclude=".git" --exclude=".svn"
+	tar cvjf pardalys-$(VERSION).tar.bz2 pardalys --exclude=".git" --exclude=".svn" --exclude="config.yml"
 
 .PHONY:dist
 dist: pardalys-$(VERSION).tar.bz2

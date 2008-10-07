@@ -1,5 +1,9 @@
 2008-10-07  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/tool_portage/templates/make.conf_2.1.4.4: Always set
+	ACCEPT_KEYWORDS, remove PORTAGE_RSYNC_EXTRA_OPTS, activate mail
+	and summary logs, cleaned variable names.
+
 	* modules/tool_portage/templates/glsa-check: Remove the nagios
 	notification.
 

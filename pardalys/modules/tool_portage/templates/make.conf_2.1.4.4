@@ -132,9 +132,7 @@ CFLAGS="<%= cflags %>"
 # IF YOU ARE UNSURE OF YOUR ARCH, OR THE IMPLICATIONS, DO NOT MODIFY THIS.
 #
 #ACCEPT_KEYWORDS="~x86"
-<% if accept_keywords %>
-ACCEPT_KEYWORDS="<% accept_keywords %>"
-<% end %>
+ACCEPT_KEYWORDS="<%= keyword %>"
 
 # Portage Directories
 # ===================
@@ -287,9 +285,6 @@ SYNC="<%= rsync_mirror %>"
 #     which are set by PORTAGE_RSYNC_OPTS (don't change those unless you know 
 #     exactly what you're doing).
 #PORTAGE_RSYNC_EXTRA_OPTS=""
-<% if rsync_exclude %>
-PORTAGE_RSYNC_EXTRA_OPTS="--exclude-from=<%= rsync_exclude %> --delete-excluded --stats"
-<% end %>
 #
 # Advanced Features
 # =================
@@ -440,7 +435,7 @@ PORTAGE_ELOG_CLASSES="warn error log"
 #                      separated list of loglevels to override PORTAGE_ELOG_CLASSES
 #                      for this module (e.g.
 #                        PORTAGE_ELOG_SYSTEM="mail:warn,error syslog:* save")
-#PORTAGE_ELOG_SYSTEM="save mail"
+PORTAGE_ELOG_SYSTEM="save_summary mail_summary"
 
 # PORTAGE_ELOG_COMMAND: only used with the "custom" logging module. Specifies a command
 #                      to process log messages. Two variables are expanded:
@@ -467,13 +462,13 @@ PORTAGE_ELOG_CLASSES="warn error log"
 #PORTAGE_ELOG_MAILURI="root@localhost localhost" (this is also the default setting)
 #PORTAGE_ELOG_MAILURI="user@some.domain mail.some.domain" (sends mails to user@some.domain using the mailserver mail.some.domain)
 #PORTAGE_ELOG_MAILURI="user@some.domain user:secret@mail.some.domain:100465" (this is left uncommented as a reader exercise ;)
-PORTAGE_ELOG_MAILURI="<%= sysadmin %> <%= mailserver %>"
+PORTAGE_ELOG_MAILURI="<%= portage_sysadmin %> <%= portage_mailserver %>"
 
 # PORTAGE_ELOG_MAILFROM: you can set the from-address of logmails with this variable,
 #                        if unset mails are sent by "portage" (this default may fail
 #                        in some environments).
 #PORTAGE_ELOG_MAILFROM="portage@some.domain"
-PORTAGE_ELOG_MAILFROM="<%= hostname %>@<%= domainname %>"
+PORTAGE_ELOG_MAILFROM="<%= portage_hostname %>@<%= portage_domainname %>"
 
 # PORTAGE_ELOG_MAILSUBJECT: template string to be used as subject for logmails. The following
 #                           variables are expanded:

@@ -8,10 +8,7 @@ import 'os_gentoo'
 #
 # @author Gunnar Wrobel <p@rdus.de>
 # @version 1.0
-# @package service_apache
-#
-# @module root           The root module is required to determine the installed
-#                        portage version and it provides the "line" resource.
+# @package tool_portage
 #
 class tool::portage {
 
@@ -56,10 +53,8 @@ class tool::portage {
   $overlays             = split(get_var('portage_overlays'), ',')
   $fetch_command        = get_var('portage_fetch_command',        false)
   $mirrors              = split(get_var('portage_mirrors'), ',')
-  $rsync_mirror         = get_var('portage_rsync_mirror',         ',')
+  $rsync_mirror         = get_var('portage_rsync_mirror')
   $binhost              = get_var('portage_binhost',              false)
-  $rsync_includes       = split(get_var('portage_rsync_includes'), ',')
-  $rsync_exclude        = get_var('portage_rsync_exclude',        false)
   $emerge_opts          = get_var('portage_emerge_opts',          false)
   $make_opts            = get_var('portage_make_opts',            false)
   $features             = split(get_var('portage_features'), ',')
@@ -68,8 +63,11 @@ class tool::portage {
   $config_protect       = split(get_var('portage_config_protect'), ',')
   $config_protect_mask  = split(get_var('portage_config_protect_mask'), ',')
   $linguas              = split(get_var('portage_linguas'), ',')
-  $make_conf_add        = split(get_var('portage_make_conf_add'), ',')
-  $monitor              = get_var('monitorhost',                  'localhost')
+
+  $portage_sysadmin     = get_var('sysadmin',   'root@localhost')
+  $portage_mailserver   = get_var('mailserver', 'localhost')
+  $portage_hostname     = get_var('hostname',   'localhost')
+  $portage_domainname   = get_var('domainname', 'localdomain')
 
   if defined(Package['layman']) {
     $layman_storage = get_var('portage_layman_storage', false)
@@ -92,13 +90,6 @@ class tool::portage {
       path   => $dispatch_conf_logdir,
       ensure => 'directory',
       tag    => 'buildhost'
-    }
-  }
-
-  if $rsync_exclude {
-    file { $rsync_exclude:
-      content => template("tool_portage/rsync_excludes_${template_version}"),
-      require => Package['portage']
     }
   }
 

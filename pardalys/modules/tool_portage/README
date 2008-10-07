@@ -1,0 +1,56 @@
+ Provides the core portage configuration and some common portage
+ tools.
+
+@author Gunnar Wrobel <p@rdus.de>
+@version 1.0
+@package tool_portage
+
+@module os_gentoo     The os_gentoo module is required for Gentoo support.
+@fact keyword         The base keyword for the system.
+
+@param portage_mirrors              Comma separated list of distfile mirrors to use.
+@param portage_rsync_mirror         The rsync mirror to use.
+
+@param portage_profile              The path to the portage profile (Default:
+                                    '/usr/portage/profiles/default-linux/x86/2007.0')
+@param portage_use                  Default use flags if set (Default: false)
+@param portage_chost                CHOST setting (Default: 'i686-pc-linux-gnu')
+@param portage_cflags               CFLAGS setting (Default: false)
+@param portage_accept_keywords      ACCEPT_KEYWORDS setting (Default: false)
+@param portage_logdir               Non-standard log dir setting (Default: false)
+@param portage_dispatch_conf_logdir Non-standard log dir for dispatch-conf
+                                    (Default: false)
+@param portage_overlays             Comma separated list of overlays to add to
+                                    PORTAGE_OVERLAYS (Default: false)
+@param portage_fetch_command        Non-standard fetch command
+                                    (Default: false)
+@param portage_binhost              An optional binary package host. (Default: false)
+@param portage_emerge_opts          Default portage options. (Default: false)
+@param portage_make_opts            Portage make options. (Default: false)
+@param portage_features             Comma separated list of additional portage
+                                    features to set. (Default: '')
+@param portage_input_devices        Comma separated list of additional input
+                                    devices to set. (Default: '')
+@param portage_video_devices        Comma separated list of additional video
+                                    devices to set. (Default: '')
+@param portage_config_protect       Comma separated list of config protected
+                                    directories. (Default: '')
+@param portage_config_protect_mask  Comma separated list of config unproteced
+                                    directories. (Default: '')
+@param portage_linguas              Comma separated list of supported languages.
+                                    (Default: '')
+@param portage_gpg_dir              Path to the GPG dir when signing ebuilds
+                                    (Default: false)
+@param portage_gpg_key              ID of the GPG key when signing ebuilds
+                                    (Default: false)
+@param portage_layman_storage       The path to layman overlays (Default:
+                                    '/usr/local/portage/layman')
+@param sysadmin       Portage reports will be sent to this address.
+                      (Default: 'root@localhost')
+@param mailserver     The mailserver portage will use for sending mails.
+                      (Default: 'localhost')
+@param domainname     Portage will use this as sender domain.
+                      (Default: 'localdomain')
+@param hostname       Portage will use this as the user part in the sender mail
+                      address when mailing reports.
+                      (Default: 'localhost')

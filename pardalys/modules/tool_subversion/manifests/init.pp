@@ -8,11 +8,6 @@ import 'os_gentoo'
 # @version 1.0
 # @package tool_subversion
 #
-# @fact operatingsystem Allows to choose the correct package name
-#                       depending on the operating system
-# @fact keyword         The keyword for the system which is used to
-#                       select unstable packages
-#
 class tool::subversion {
 
   # Package installation

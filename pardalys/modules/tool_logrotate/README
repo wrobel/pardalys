@@ -1,0 +1,7 @@
+Provides a setup for log rotation.
+
+@author Gunnar Wrobel <p@rdus.de>
+@version 1.0
+@package tool_logrotate
+
+@module tool_backupdir   A basic backup directory is required.

@@ -1,5 +1,8 @@
 2008-10-07  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/tool_logrotate/manifests/init.pp: Complete documentation
+	and require the backup directory.
+
 	* modules/tool_backup/manifests/init.pp: Complete documentation
 	and require the backup directory.
 

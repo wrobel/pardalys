@@ -1,0 +1,29 @@
+Provides monit as a basic system monitor.
+
+@author Gunnar Wrobel <p@rdus.de>
+@version 1.0
+@package service_monit
+
+@module os_gentoo     The os_gentoo module is required for Gentoo support.
+@module tool_openssl  The tool_openssl module is required SSL support.
+
+@fact operatingsystem Allows to choose the correct actions depending
+                      on the operating system
+@fact keyword         The keyword for the system which is used to
+                      select unstable packages
+
+@param monit_user     The user allowed to log in to the monit web frontend.
+                      (Default: 'monit')
+@param monit_pass     The password for the above user. If left undefined the
+                      monit web frontend will not be activated
+                      (Default: '')
+@param mailserver     The mailserver used for monit alert messages
+                      (Default: 'localhost')
+@param hostname       The hostname used in the alert subject.
+                      (Default: 'localhost')
+@param domainname     The domainname used in the alert subject.
+                      (Default: 'localdomain')
+@param sysadmin       Alerts are being sent to this person - if set.
+                      (Default: '')
+@param run_services   Determines if the monit service should be started.
+                      (Default: true)

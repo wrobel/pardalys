@@ -31,7 +31,7 @@ set logfile syslog facility log_daemon
 ## specified using comma separator. By default monit uses port 25 - this
 ## is possible to override with the PORT option.
 #
-set mailserver <%= mailserver %>             # primary mailserver
+set mailserver <%= monit_mailserver %>             # primary mailserver
 #
 #
 ## By default monit will drop alert events if no mail servers are available. 
@@ -67,14 +67,16 @@ set eventqueue
 ## or sender using the MAIL-FORMAT statement. Macros such as $DATE, etc.
 ## are expanded at runtime. For example, to override the sender:
 #
-set mail-format { from: <%= hostname %>@<%= domainname %> }
+set mail-format { from: <%= monit_hostname %>@<%= monit_domainname %> }
 #
 #
 ## You can set alert recipients here whom will receive alerts if/when a 
 ## service defined in this file has errors. Alerts may be restricted on 
 ## events by using a filter as in the second example below. 
 #
-set alert <%= sysadmin %>                        # receive all alerts
+<% if monit_sysadmin != '' -%>
+set alert <%= monit_sysadmin %>                        # receive all alerts
+<% end -%>
 # set alert manager@foo.bar only on { timeout }  # receive just service-
 #                                                # timeout alert
 #
@@ -83,11 +85,14 @@ set alert <%= sysadmin %>                        # receive all alerts
 ## services monitored, the current configuration, actual services parameters
 ## and manage services from a web interface.
 #
-# set httpd port 2812 and
-#     use address localhost  # only accept connection from localhost
-#     allow localhost        # allow localhost to connect to the server and
-#     allow admin:monit      # require user 'admin' with password 'monit'
-#
+<% if monit_pass != '' -%>
+set httpd port 2812
+<% if monit_cert_path != '' -%>
+    ssl enable
+    pemfile <%= monit_cert_path %>
+<% end -%>
+    allow <%= monit_user %>:<%= monit_pass %>      # require user 'admin' with password 'monit'
+<% end -%>
 #
 ###############################################################################
 ## Services
@@ -203,19 +208,6 @@ set alert <%= sysadmin %>                        # receive all alerts
 #       then alert
 #
 #
-###############################################################################
-## Web access
-###############################################################################
-##
-## Monit has an embedded webserver, which can be used to view the 
-## configuration, actual services parameters or manage the services using the 
-## web interface.
-#
-set httpd port 2812
-    ssl enable
-    pemfile <%= ssl_cert_path %>/server.pem
-    allow <%= monit_user %>:<%= monit_pass %>      # require user 'admin' with password 'monit'
-
 ###############################################################################
 ## Includes
 ###############################################################################

@@ -1,5 +1,8 @@
 2008-10-07  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/client_puppet_local/*: Removed in favor of
+	tool_pardalys.
+
 	* modules/tool_system/manifests/init.pp: Complete documentation
 	and some cleanup.
 

@@ -1,3 +1,0 @@
-A profile defining a local puppet setup. Local means that
-the configuration is not fetched from a puppetmaster and
-local files within /etc/puppet are being used.

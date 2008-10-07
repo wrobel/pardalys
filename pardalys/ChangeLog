@@ -1,5 +1,8 @@
 2008-10-07  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/tool_ec2_kernel/manifests/init.pp: We require the kernel
+	package to be installed first.
+
 	* staging/Rakefile: Removed the configure step.
 
 	* staging/bootstrap/site.pp.erb: Add the hardwaremodel parameter.

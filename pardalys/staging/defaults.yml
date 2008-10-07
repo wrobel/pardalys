@@ -8,40 +8,8 @@
 :portage_features: parallel-fetch buildpkg
 :distfile_mirrors: http://gentoo.chem.wisc.edu/gentoo
 :puppet_unstable: yes
-
-:excludes:
-  - "*accessibility*/"
-  - "*cdr*/"
-  - "*dialup*/"
-  - "*embedded*/"
-  - "*emulation*/"
-  - "*fonts*/"
-  - "*freebsd*/"
-  - "*games*/"
-  - "*gnome*/"
-  - "*gnustep*/"
-  - "*kde*/"
-  - "*laptop*/"
-  - "*mobilephone*/"
-  - "*office*/"
-  - "*pda*/"
-  - "*plugins*/"
-  - "*print*/"
-  - "*radio*/"
-  - "*rox*/"
-  - "*scheme*/"
-  - "*sci*/"
-  - "*sound*/"
-  - "*tinyos*/"
-  - "*tv*/"
-  - "*video*/"
-  - "*voip*/"
-  - "*wireless*/"
-  - "*x11*/"
-  - "*xemacs*/"
-  - "*xfce*/"
-  - "*zope*/"
-
+:admin_fullname: System Administrator
+:admin_mail: root@localhost
 
 #----------
 # Optional

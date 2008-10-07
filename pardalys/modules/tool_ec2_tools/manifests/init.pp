@@ -3,7 +3,7 @@ import 'os_gentoo'
 
 # Class tool::ec2::tools
 #
-#  Provides tools for Amazons EC2
+#  Provides tools for Amazons EC2.
 #
 # @author Gunnar Wrobel <p@rdus.de>
 # @version 1.0
@@ -113,5 +113,11 @@ class tool::ec2::tools {
     '/usr/bin/ec2-import-sshkeys.sh':
     source => 'puppet:///tool_ec2_tools/ec2-import-sshkeys.sh',
     mode   => 755;
+  }
+
+  @line {'local_start_ec2_access':
+    file => '/etc/conf.d/local.start',
+    line => '/usr/bin/ec-init.sh',
+    tag => 'buildhost'
   }
 }

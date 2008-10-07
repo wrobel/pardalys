@@ -2,6 +2,7 @@
 
 	* modules/tool_ec2_tools/manifests/init.pp: Add some ec2 bootup
 	helper scripts.
+	Add a line to local.start to init the instance.
 
 	* modules/tool_ec2_tools/files/*: Add some ec2 bootup helper
 	scripts.

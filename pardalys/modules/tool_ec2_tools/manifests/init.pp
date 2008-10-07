@@ -61,11 +61,10 @@ class tool::ec2::tools {
       package { 'hpricot':
         category => 'dev-ruby',
         ensure   => 'installed',
-        tag      => 'buildhost',
-        require  => Gentoo_Keywords['hpricot'];
+        tag      => 'buildhost';
       }
       gentoo_keywords { 'aws-s3':
-        context  => 'tools_ec2_tools_amazon_ec2',
+        context  => 'tools_ec2_tools_aws_s3',
         package  => 'dev-ruby/aws-s3',
         keywords => "~$keyword",
         tag      => 'buildhost'
@@ -83,7 +82,7 @@ class tool::ec2::tools {
         tag      => 'buildhost'
       }
       gentoo_keywords { 'aws-sdb':
-        context  => 'tools_ec2_tools_amazon_ec2',
+        context  => 'tools_ec2_tools_aws_sdb',
         package  => 'dev-ruby/aws-sdb',
         keywords => "~$keyword",
         tag      => 'buildhost'

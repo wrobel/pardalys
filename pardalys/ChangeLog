@@ -1,5 +1,8 @@
 2008-10-07  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/tool_system/manifests/init.pp: Complete documentation
+	and some cleanup.
+
 	* modules/tool_pardalys/templates/puppet.conf: Allow different
 	pardalys bootstrap types.
 

@@ -1,0 +1,12 @@
+Provides some system tools and basic configurations
+
+@author Gunnar Wrobel <p@rdus.de>
+@version 1.0
+@package tool_system
+
+@module os_gentoo     The os_gentoo module is required for Gentoo support.
+
+@fact operatingsystem Allows to choose the correct actions depending
+                      on the operating system
+@fact keyword         The keyword for the system which is used to
+                      select unstable packages

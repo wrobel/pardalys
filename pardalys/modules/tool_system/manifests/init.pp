@@ -2,25 +2,12 @@ import 'os'
 import 'os_gentoo'
 
 # Class tool::system
+#
 #  Provides some common system tools
 #
-# Required parameters 
-#
-#  * sysadmin :
-#
-#  * mailserver :
-#
-#  * hostname :
-#
-#  * domainname :
-#
-# Optional parameters 
-#
-#  * :
-#
-# Templates
-#
-#  * :
+# @author Gunnar Wrobel <p@rdus.de>
+# @version 1.0
+# @package tool_system
 #
 class tool::system {
 
@@ -111,28 +98,10 @@ class tool::system {
         tag      => 'buildhost'
       }
 
-      gentoo_unmask { nagios-nsca:
-        context  => 'service_nagios_nagios_nsca',
-        package  => '=net-analyzer/nagios-nsca-2.7.2-r100',
-        tag      => 'buildhost'
-      }
-      gentoo_keywords { nagios-nsca:
-        context  => 'service_nagios_nagios_nsca',
-        package  => '=net-analyzer/nagios-nsca-2.7.2-r100',
-        keywords => "~$arch",
-        tag      => 'buildhost'
-      }
-      package { nagios-nsca:
-        category => 'net-analyzer',
-        ensure   => 'installed',
-        tag      => 'buildhost',
-        require  => Gentoo_keywords['nagios-nsca']
-      }
-
       gentoo_keywords { scripts-gw:
         context  => 'tool_system_scripts-gw',
         package  => '=app-misc/scripts-gw-1.3.2',
-        keywords => "~$arch",
+        keywords => "~$keyword",
         tag      => 'buildhost'
       }
       package { scripts-gw:
@@ -142,38 +111,10 @@ class tool::system {
         require  => Gentoo_keywords['scripts-gw']
       }
 
-      case $virtual {
-        openvz:
-        {
-#           gentoo_mask { glibc:
-#             context => 'tools_system_common_glibc',
-#             package => '>sys-libs/glibc-2.5-r4',
-#             tag     => 'buildhost'
-#           }
-#           gentoo_use_flags { glibc:
-#             context => 'tools_system_common_glibc',
-#             package => 'sys-libs/glibc',
-#             use     => '-nptl -nptlonly',
-#             tag     => 'buildhost'
-#           }
-          file { 
-            '/etc/portage/package.mask/tools_system_common_glibc':
-            ensure => 'absent';
-            '/etc/portage/package.use/tools_system_common_glibc':
-            ensure => 'absent';
-          }
-
-          package { glibc:
-            category => 'sys-libs',
-            ensure   => 'installed',
-            tag      => 'buildhost'
-          }
-          package { iproute2:
-            category => 'sys-apps',
-            ensure   => 'installed',
-            tag      => 'buildhost'
-          }
-        }
+      package { iproute2:
+        category => 'sys-apps',
+        ensure   => 'installed',
+        tag      => 'buildhost'
       }
     }
     default:
@@ -182,11 +123,6 @@ class tool::system {
   }
 
   file {
-    '/etc/nagios/send_nsca.cfg':
-    content => template("tool_system/send_nsca.cfg_3.0.1"),
-    mode    => 640,
-    group   => 'nagios',
-    require => Package['nagios-nsca'];
     '/etc/cron.daily/check_security':
     source => 'puppet:///tool_system/check_security',
     mode    => 755;

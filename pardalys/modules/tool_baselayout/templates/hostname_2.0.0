@@ -1,2 +1,2 @@
 # Set to the hostname of this machine
-hostname="<%= hostname %>"
+hostname="<%= system_hostname %>"

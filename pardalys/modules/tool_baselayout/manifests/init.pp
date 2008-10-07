@@ -1,19 +1,12 @@
 import 'os_gentoo'
 
 # Class tool::baselayout
-#  Provides the baselayout configuration
 #
-# Required parameters 
+#  Provides the baselayout configuration.
 #
-#  * :
-#
-# Optional parameters 
-#
-#  * :
-#
-# Templates
-#
-#  * : 
+# @author Gunnar Wrobel <p@rdus.de>
+# @version 1.0
+# @package tool_baselayout
 #
 class tool::baselayout {
 
@@ -24,25 +17,29 @@ class tool::baselayout {
       gentoo_keywords { baselayout:
         context  => 'tool_baselayout_baselayout',
         package  => '=sys-apps/baselayout-2.0.0',
-        keywords => "~$arch",
+        keywords => "~$keyword",
         tag      => 'buildhost'
       }
       gentoo_keywords { openrc:
         context  => 'tool_baselayout_openrc',
         package  => '=sys-apps/openrc-0.2.2',
-        keywords => "~$arch",
+        keywords => "~$keyword",
         tag      => 'buildhost'
       }
       package { 
+        'udev':
+        category => 'sys-fs',
+        ensure   => 'latest',
+        tag      => 'buildhost';
         'baselayout':
         category => 'sys-apps',
-        ensure   => 'installed',
+        ensure   => 'latest',
         require  => [Package['openrc'], Gentoo_keywords['baselayout']],
         tag      => 'buildhost';
         'openrc':
         category => 'sys-apps',
-        ensure   => 'installed',
-        require  => Gentoo_keywords['openrc'],
+        ensure   => 'latest',
+        require  => [Package['udev'], Gentoo_keywords['openrc']],
         tag      => 'buildhost';
         'sysvinit':
         category => 'sys-apps',
@@ -55,6 +52,15 @@ class tool::baselayout {
   $template_version = template_version($version_baselayout, '2.0.0@:2.0.0,', '2.0.0')
 
   $desktop = get_var('global_desktop', false)
+  $override_virtual = get_var('override_virtual', false)
+  $system_hostname     = get_var('hostname',   'localhost')
+  $system_domainname   = get_var('domainname', 'localdomain')
+
+  if $override_virtual {
+    $build_virtual = $override_virtual
+  } else {
+    $build_virtual = $virtual
+  }
 
   file { 
     '/etc/hosts':
@@ -67,7 +73,8 @@ class tool::baselayout {
     content  => template("tool_baselayout/inittab"),
     require => Package['sysvinit'];
   }
-  case $virtual {
+
+  case $build_virtual {
     'openvz':
     {
       file { 
@@ -77,6 +84,14 @@ class tool::baselayout {
       }
     }
   }
+
+  @line {'local_start_puppet_comment':
+    file => '/etc/conf.d/local.start',
+    line => '#This file gets automatically modified by puppet',
+    tag => 'buildhost'
+  }
+
+  Line <| file == '/etc/conf.d/local.start' |>
 
   case $operatingsystem {
     gentoo: {
@@ -100,7 +115,7 @@ class tool::baselayout {
         ensure => '/etc/init.d/net.lo',
         require  => Package['openrc'];
       }
-      case $virtual {
+      case $build_virtual {
         'physical':
         {
           file { 

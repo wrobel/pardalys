@@ -28,7 +28,7 @@ l6:6:wait:/sbin/rc reboot
 #z6:6:respawn:/sbin/sulogin
 
 # TERMINALS
-<% if virtual=="physical" -%>
+<% if build_virtual=="physical" -%>
 c1:12345:respawn:/sbin/agetty 38400 tty1 linux
 c2:2345:respawn:/sbin/agetty 38400 tty2 linux
 c3:2345:respawn:/sbin/agetty 38400 tty3 linux

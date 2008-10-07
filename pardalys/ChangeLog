@@ -1,5 +1,9 @@
 2008-10-07  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/tool_baselayout/*: Complete documentation, fixed
+	variable names, allowed overriding the build type for images, some
+	cleanup.
+
 	* modules/tool_portage/manifests/init.pp: Complete documentation,
 	variable cleanup and removed rsync excludes.
 

@@ -1,5 +1,7 @@
 2008-10-07  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/tool_ec2_kernel/*: Add a new module for the ec2 kernel.
+
 	* staging/Rakefile: Complete the basic image setup.
 
 	* modules/service_cron/manifests/init.pp: Ensure some additional

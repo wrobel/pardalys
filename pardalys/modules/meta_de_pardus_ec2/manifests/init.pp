@@ -1,4 +1,5 @@
 import 'tool_ec2_kernel'
+import 'tool_ec2_tools'
 
 # Class meta::de::pardus::ec2
 #

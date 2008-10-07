@@ -203,12 +203,12 @@ class service::nagios {
     group   => 'nagios',
     require => Package['nagios'],
     notify  => Service["nagios"];
-    '/etc/nagios/nsca.cfg':
-    content => template("service_nagios/nsca.cfg_${template_nagios}"),
-    mode    => 640,
-    group   => 'nagios',
-    require => Package['nagios-nsca'],
-    notify  => Service["nsca"];
+#     '/etc/nagios/nsca.cfg':
+#     content => template("service_nagios/nsca.cfg_${template_nagios}"),
+#     mode    => 640,
+#     group   => 'nagios',
+#     require => Package['nagios-nsca'],
+#     notify  => Service["nsca"];
     '/etc/nagios/objects/commands.cfg':
     content => template("service_nagios/commands.cfg_${template_nagios}"),
     mode    => 640,
@@ -254,11 +254,11 @@ class service::nagios {
     require => Package['nagios']
   }
 
-  service { 'nsca':
-    ensure => running,
-    enable => true,
-    require => Package['nagios-nsca']
-  }
+#   service { 'nsca':
+#     ensure => running,
+#     enable => true,
+#     require => Package['nagios-nsca']
+#   }
 
   case $operatingsystem {
     gentoo: {

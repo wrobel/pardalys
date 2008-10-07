@@ -1,5 +1,8 @@
 2008-10-07  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/tool_baselayout/manifests/init.pp: Update to
+	openrc-0.3.0.
+
 	* modules/meta_de_pardus_ec2/manifests/init.pp: Started the ec2
 	profile.
 

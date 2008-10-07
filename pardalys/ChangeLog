@@ -1,5 +1,8 @@
 2008-10-07  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/meta_de_pardus_ec2/manifests/init.pp: Started the ec2
+	profile.
+
 	* modules/tool_ec2_kernel/*: Add a new module for the ec2 kernel.
 
 	* staging/Rakefile: Complete the basic image setup.

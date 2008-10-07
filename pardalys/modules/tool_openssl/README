@@ -1,0 +1,18 @@
+Provides SSL certificates for the system.
+
+@author Gunnar Wrobel <p@rdus.de>
+@version 1.0
+@package tool_openssl
+
+@module os             The os module is required to determine basic system
+                       paths.
+@module os_gentoo      The os_gentoo module is required for Gentoo specific
+                       package installation.
+
+@fact operatingsystem  Allows to choose the correct package name
+                       depending on the operating system. In addition
+                       required to set additional tasks depending on
+                       the distribution.
+
+@param ssl_cert        The SSL certificate to use on this host. (Default: '')
+@param ssl_key         The SSL key to use on this host. (Default: '')

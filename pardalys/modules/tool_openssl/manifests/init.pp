@@ -9,18 +9,6 @@ import 'os_gentoo'
 # @version 1.0
 # @package tool_openssl
 #
-# @module root           The root module is required to determine the installed
-#                        SSL version.
-# @module os             The os module is required to determine basic system
-#                        paths.
-# @module os_gentoo      The os_gentoo module is required for Gentoo specific
-#                        package installation.
-#
-# @fact operatingsystem  Allows to choose the correct package name
-#                        depending on the operating system. In addition
-#                        required to set additional tasks depending on
-#                        the distribution.
-#
 class tool::openssl {
 
   # Package installation
@@ -46,6 +34,10 @@ class tool::openssl {
   $ssl_cert    = get_var('ssl_cert', '')
   $ssl_key    = get_var('ssl_key', '')
 
+  $ssl_cert_path = ''
+  $ssl_key_path = ''
+  $ssl_combined_path = ''
+
   file { 
     "$ssl_confdir/system":
     ensure => 'directory';
@@ -56,6 +48,7 @@ class tool::openssl {
       "$ssl_confdir/system/server.crt":
       content => $ssl_cert;
     }
+    $ssl_cert_path = "$ssl_confdir/system/server.crt"
   }
   if $ssl_key {
     file { 
@@ -63,12 +56,14 @@ class tool::openssl {
       content => $ssl_key,
       mode => '600';
     }
+    $ssl_key_path = "$ssl_confdir/system/server.key"
     if $ssl_cert {
       file { 
         "$ssl_confdir/system/server.pem":
         content => "$ssl_cert\n$ssl_key",
         mode => '600';
       }
+      $ssl_combined_path = "$ssl_confdir/system/server.pem"
     }
   }
 }

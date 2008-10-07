@@ -1,5 +1,9 @@
 2008-10-07  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/tool_emacs/manifests/init.pp: Complete documentation,
+	refresh site dir after 72git-gentoo.el update, install basic
+	.emacs file into /etc/skel.
+
 	* modules/service_syslog/manifests/init.pp: Complete documentation
 	and minor cleanups.
 

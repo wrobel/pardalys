@@ -6,12 +6,7 @@ import 'os_gentoo'
 #
 # @author Gunnar Wrobel <p@rdus.de>
 # @version 1.0
-# @package tool_pardalys
-#
-# @fact operatingsystem Allows to choose the correct package name
-#                       depending on the operating system
-# @fact keyword         The keyword for the system which is used to
-#                       select unstable packages
+# @package tool_emacs
 #
 class tool::emacs {
 
@@ -91,12 +86,19 @@ class tool::emacs {
         tag      => 'buildhost';
       }
 
+      exec {'refresh_site_dir':
+        path => '/usr/bin:/usr/sbin:/bin',
+        command => 'source /etc/init.d/functions.sh; source /usr/portage/eclass/elisp-common.eclass; elisp-site-regen',
+        subscribe   => File['/usr/share/emacs/site-lisp/site-gentoo.d/72git-gentoo.el'],
+        refreshonly => true;
+      }
+
       $admin_fullname = get_var('admin_fullname', 'System Administrator')
       $admin_mail = get_var('admin_mail', 'root@localhost')
 
       $screen_dark = get_var('screen_dark', false)
 
-      file{'/root/.emacs':
+      file{'/etc/skel/.emacs':
         content => template('tool_emacs/dot_emacs');
       }
     }

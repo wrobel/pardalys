@@ -1,0 +1,18 @@
+This package installs laymans and any required overlays.
+
+@author Gunnar Wrobel <p@rdus.de>
+@version 1.0
+@package tool_layman
+
+@module os_gentoo     The os_gentoo module is required for Gentoo support.
+
+@fact operatingsystem Allows to choose the correct actions depending
+                      on the operating system
+
+@param portage_layman_storage       The path to layman overlays (Default:
+                                    '/usr/local/portage/layman')
+@param portage_layman_remote_lists  A comma separated list of paths to any
+                                    additional overlay lists that you want to
+                                    make accessible to layman. (Default: '')
+@param portage_layman_overlays      A comma separated list of overlays you want
+                                    to install in the system.

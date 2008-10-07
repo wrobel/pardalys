@@ -1,5 +1,8 @@
 2008-10-07  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/tool_layman/manifests/init.pp: Complete documentation
+	and some cleanup.
+
 	* modules/tool_gpg/*: Complete documentation.
 
 	* modules/tool_bash/*: Complete documentation.

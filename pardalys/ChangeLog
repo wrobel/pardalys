@@ -1,5 +1,12 @@
 2008-10-07  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/tool_pardalys/templates/puppet.conf: Allow different
+	pardalys bootstrap types.
+
+	* modules/tool_pardalys/manifests/init.pp: Complete documentation,
+	allow different pardalys bootstrap types, include settings from
+	the old client_puppet_local module.
+
 	* modules/os/manifests/init.pp: Complete documentation.
 
 	* modules/tool_openssl/manifests/init.pp: Complete documentation

@@ -2,3 +2,32 @@ Defines the installation of p@rdalys.
 
 p@rdalys provides the configuration for a complete Kolab server
 installation.
+
+@author Gunnar Wrobel <p@rdus.de>
+@version 1.0
+@package tool_pardalys
+
+@module os_gentoo       The os_gentoo module is required for Gentoo support.
+@module service_openldap The openldap libraries are required for ruby-ldap.
+
+@fact operatingsystem Allows to choose the correct actions depending
+                      on the operating system
+@fact keyword         The keyword for the system which is used to
+                      select unstable packages
+
+@param pardalys_type  The type of pardalys setup. This can be 'plain'
+                      (configure pardalys yourself), 'local' (do not
+                      control /etc/pardalys/site.pp), and 'slave'
+                      (Control the pardalys configuration and connect
+                      to LDAP for configuration data).
+
+@param ldap_host        The LDAP server to connect to (Only with
+                        pardalys_type = slave).
+@param base_dn          The base DN of the LDAP server (Only with
+                        pardalys_type = slave).
+@param bind_dn_nobody   The bind DN for the LDAP server (Only with
+                        pardalys_type = slave).
+@param bind_pw_nobody   The bind password for the LDAP server (Only with
+                        pardalys_type = slave).
+@param pardalys_modules The modules to load in site.pp (Only with
+                        pardalys_type = slave).

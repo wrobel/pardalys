@@ -8,17 +8,36 @@ import 'os_gentoo'
 # @version 1.0
 # @package tool_pardalys
 #
-# @fact operatingsystem Allows to choose the correct package name
-#                       depending on the operating system
-# @fact keyword         The keyword for the system which is used to
-#                       select unstable packages
-#
 class tool::pardalys {
 
   # Package installation
   case $operatingsystem {
     gentoo:
     {
+      gentoo_use_flags { ruby:
+        context => 'tool_pardalys_ruby',
+        package => 'dev-lang/ruby',
+        use     => 'cgi gdbm berkdb ipv6 doc ssl examples emacs threads'
+      }
+      package { ruby:
+        category => 'dev-lang',
+        ensure   => 'installed',
+        require  => Gentoo_use_flags['ruby'],
+        tag      => 'buildhost'
+      }
+      gentoo_use_flags { ruby_ldap:
+        context => 'tool_pardalys_ruby_ldap',
+        package => 'dev-ruby/ruby-ldap',
+        use     => 'ssl',
+        require  => Package['openldap'],
+      }
+      package { ruby_ldap:
+	name    => 'ruby-ldap',
+        category => 'dev-ruby',
+        ensure   => 'installed',
+        require  => Gentoo_use_flags['ruby_ldap'],
+        tag      => 'buildhost'
+      }
       gentoo_use_flags { rake:
         context => 'tool_pardalys_rake',
         package => 'dev-ruby/rake',
@@ -62,6 +81,23 @@ class tool::pardalys {
                        Gentoo_use_flags['mocha'] ],
         tag      => 'buildhost'
       }
+      gentoo_keywords { puppet:
+        context  => 'tools_puppet_common_puppet',
+        package  => '<=app-admin/puppet-0.24.4-r1',
+        keywords => "~$arch",
+        tag      => 'buildhost'
+      }
+      gentoo_use_flags { puppet:
+        context => 'tool_pardalys_puppet',
+        package => 'app-admin/puppet',
+        use     => 'emacs sqlite doc'
+      }
+      package { puppet:
+        category => 'app-admin',
+        ensure   => 'installed',
+        tag      => 'buildhost',
+        require => [ Gentoo_use_flags['puppet'], Gentoo_keywords['puppet'] ]
+      }
       gentoo_use_flags { git:
         context => 'tool_pardalys_git',
         package => 'dev-util/git',
@@ -82,10 +118,17 @@ class tool::pardalys {
         keywords => "~$keyword",
         tag      => 'buildhost'
       }
+      gentoo_use_flags { pardalys:
+        context => 'tool_pardalys_pardalys',
+        package => 'app-admin/pardalys',
+        use     => 'develop',
+        tag     => 'buildhost'
+      }
       package { pardalys:
         category => 'app-admin',
         ensure   => 'installed',
-        require  =>  Gentoo_keywords['pardalys'],
+        require  =>  [Gentoo_keywords['pardalys'],
+                      Gentoo_use_flags['pardalys']],
         tag      => 'buildhost'
       }
     }
@@ -95,6 +138,11 @@ class tool::pardalys {
         ensure   => 'installed',
       }
     }
+  }
+
+  file { 
+    '/etc/pardalys':
+    ensure  => 'directory';
   }
 
   $pardalys_type =  get_var('pardalys_type', 'plain')
@@ -111,15 +159,23 @@ class tool::pardalys {
       $pardalys_ldappass = get_var('bind_pw_nobody')
 
       file { 
-        '/etc/pardalys':
-        ensure  => 'directory';
         '/etc/pardalys/site.pp':
         content  => template('tool_pardalys/site.pp'),
         require  => File['/etc/pardalys'];
-        '/etc/pardalys/puppet.conf':
-        content  => template('tool_pardalys/puppet.conf'),
-        require  => File['/etc/pardalys'];
       }
     }
+    local: {
+      $pardalys_ldapserver = ''
+      $pardalys_ldapbase = ''
+      $pardalys_ldapuser = ''
+      $pardalys_ldappass = ''
+    }
   }
+
+  file { 
+    '/etc/pardalys/puppet.conf':
+    content  => template('tool_pardalys/puppet.conf'),
+    require  => File['/etc/pardalys'];
+  }
+
 }

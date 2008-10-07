@@ -164,28 +164,8 @@ file_create('.bootstrap' => '.mnt') do
   touch('.bootstrap')
 end
 
-task(:configure => '.configure')
-file_create('.configure' => '.bootstrap') do
-  unless File.exists?('/mnt/gentoo/tmp/ge2c')
-    cp_r(Dir.pwd, "/mnt/gentoo/tmp/")
-    cp("modules/puppet/files/fileserver.conf",
-       "/mnt/gentoo/tmp/gec2/")
-  end
-  unless File.exists?('/mnt/gentoo/tmp/gec2/run/puppetmasterd.pid')
-    chroot('puppetmasterd -vd --confdir /tmp/gec2 --vardir /tmp/gec2 \
-            --autosign true')
-  end
-  chroot('puppetd --confdir /tmp/gec2 --vardir /tmp/gec2 \
-          --server `hostname -f` --no-daemonize --test -d \
-          --pluginsync true --factpath /tmp/gec2/lib/facter')
-  if File.exists?('/mnt/gentoo/tmp/gec2/run/puppetmasterd.pid')
-    sh('kill `cat /mnt/gentoo/tmp/gec2/run/puppetmasterd.pid`')
-  end
-  touch('.configure')
-end
-
 task(:bundle => '.bundle')
-file_create('.bundle' => '.configure') do
+file_create('.bundle' => '.bootstrap') do
   File.open("#{@env.mnt_dir}/tmp/key.pem", 'w') do |f|
     f.write(@env.key.strip)
   end

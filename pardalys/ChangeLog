@@ -1,5 +1,8 @@
 2008-10-07  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/meta_de_pardus_common/manifests/init.pp: Adapt to the
+	cleaned modules.
+
 	* modules/tool_emacs/manifests/init.pp: Complete documentation,
 	refresh site dir after 72git-gentoo.el update, install basic
 	.emacs file into /etc/skel.

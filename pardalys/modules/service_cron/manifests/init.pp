@@ -21,6 +21,11 @@ class service::cron {
   $cron_sysadmin = get_var('sysadmin', 'root@localhost')
   $cron_run_service = get_var('run_services', true)
 
+  group {'fcron':
+    ensure => 'present',
+    require => Package['fcron']
+  }
+
   file { 
     '/etc/fcron/fcron.conf':
     content => template("service_cron/fcron.conf_${template_fcron}"),
@@ -37,7 +42,7 @@ class service::cron {
   exec { root_crontab:
     path => "/usr/bin:/usr/sbin:/bin",
     command => "crontab /etc/crontab",
-    require => File['/etc/crontab'],
+    require => [File['/etc/crontab'], Package['fcron']],
     unless => "test -e /var/spool/fcron/root -o -e /var/spool/fcron/new.root"
   }
 

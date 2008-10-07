@@ -1,5 +1,8 @@
 2008-10-07  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_cron/manifests/init.pp: Ensure some additional
+	prerequisites are met.
+
 	* modules/tool_portage/manifests/init.pp: Ensure
 	/etc/portage/make.conf.puppet exists.
 

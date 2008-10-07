@@ -5,4 +5,6 @@
 # Example: root:your_login@your.domain:mailhub.your.domain[:port]
 # where [:port] is an optional port number that defaults to 25.
 
-root:<%= hostname %>@<%= domainname %>:<%= mailserver %>
+<% if ssmtp_mailserver != 'localhost' -%>
+root:<%= ssmtp_hostname %>@<%= ssmtp_domainname %>:<%= ssmtp_mailserver %>
+<% end -%>

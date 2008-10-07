@@ -1,5 +1,8 @@
 2008-10-07  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_ssmtp/*: Complete documentation and minor
+	cleanups.
+
 	* modules/service_monit/*: Complete documentation and minor
 	cleanups.
 

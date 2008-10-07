@@ -8,13 +8,6 @@ import 'os_gentoo'
 # @version 1.0
 # @package service_ssmtp
 #
-# @module root           The root module is required to determine the installed
-#                        postfix version.
-# @module os             The os module is required to determine basic system
-#                        paths.
-# @module os_gentoo      The os_gentoo module is required for Gentoo specific
-#                        package installation.
-#
 class service::ssmtp {
 
   # Package installation
@@ -50,8 +43,9 @@ class service::ssmtp {
 
   $sysconfdir         = $os::sysconfdir
 
-  $mailserver = get_var('mailserver')
-  $domainname = get_var('domainname')
+  $ssmtp_mailserver = get_var('mailserver', 'localhost')
+  $ssmtp_hostname = get_var('hostname', 'localhost')
+  $ssmtp_domainname = get_var('domainname', 'localdomain')
 
   file { 
     "$sysconfdir/mail/mailer.conf":

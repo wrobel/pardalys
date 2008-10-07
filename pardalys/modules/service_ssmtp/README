@@ -1,1 +1,20 @@
 Defines the installation of the ssmtp MTA helper.
+
+@author Gunnar Wrobel <p@rdus.de>
+@version 1.0
+@package service_ssmtp
+
+@module os            The os module is required for some system paths.
+@module os_gentoo     The os_gentoo module is required for Gentoo support.
+
+@fact operatingsystem Allows to choose the correct actions depending
+                      on the operating system
+
+@param mailserver     The mailserver we ssmtp will use for sending mails.
+                      (Default: 'localhost')
+@param domainname     ssmtp will use this as our mail domain.
+                      (Default: 'localdomain')
+@param hostname       ssmtp will pretend that 'root' on this machine has the
+                      mail address "hostname"@"domainname" if hostname is set
+		      to something other than 'localhost'.
+                      (Default: 'localhost')

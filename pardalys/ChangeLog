@@ -1,5 +1,7 @@
 2008-10-07  Gunnar Wrobel  <p@rdus.de>
 
+	* staging/bootstrap/site.pp.erb: Add the hardwaremodel parameter.
+
 	* modules/tool_ec2_tools/manifests/init.pp: Add some ec2 bootup
 	helper scripts.
 	Add a line to local.start to init the instance.

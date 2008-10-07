@@ -1,5 +1,6 @@
 import 'os'
 import 'meta_de_pardus_common'
+import 'meta_de_pardus_ec2'
 
 node default {
 
@@ -20,6 +21,8 @@ node default {
   $portage_binhost = '<%= binhost %>'
   $portage_make_opts = "-j<%= processorcount.to_i + 1 %>"
   $portage_linguas = 'de'
+  $hardwaremodel = '<%= hardwaremodel %>'
 
   include meta::de::pardus::common
+  include meta::de::pardus::ec2
 }

@@ -1,0 +1,17 @@
+Provides a configuration for the cron system.
+
+@author Gunnar Wrobel <p@rdus.de>
+@version 1.0
+@package service_cron
+
+@module os_gentoo     The os_gentoo module is required for Gentoo support.
+
+@fact operatingsystem Allows to choose the correct actions depending
+                      on the operating system
+
+@param global_editor  Sets the default editor for cron.
+                      (Default: '/usr/bin/emacs')
+@param sysadmin       Reports are being sent to this person.
+                      (Default: 'root@localhost')
+@param run_services   Determines if the cron service should be started.
+                      (Default: true)

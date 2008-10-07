@@ -1,27 +1,12 @@
 import 'os_gentoo'
 
 # Class service::cron
-#  Provides a configuration for the cron system
 #
-# Required parameters 
+#  Provides a configuration for the cron system.
 #
-#  *  : 
-#
-# Optional parameters 
-#
-#  *  : 
-#
-# Templates
-#
-#  * templates/ : 
-#
-# Files
-#
-#  * files/ : 
-#
-# Plugins
-#
-#  * plugins/ : 
+# @author Gunnar Wrobel <p@rdus.de>
+# @version 1.0
+# @package service_cron
 #
 class service::cron {
 
@@ -33,6 +18,8 @@ class service::cron {
   $template_fcron = template_version($version_fcron, '3.0.3@:3.0.3,', '3.0.3')
 
   $editor = get_var('global_editor', '/usr/bin/emacs')
+  $cron_sysadmin = get_var('sysadmin', 'root@localhost')
+  $cron_run_service = get_var('run_services', true)
 
   file { 
     '/etc/fcron/fcron.conf':
@@ -40,8 +27,7 @@ class service::cron {
     owner   => 'root',
     group   => 'fcron',
     mode    => 640,
-    require => Package['fcron'],
-    notify  => Service['fcron'];
+    require => Package['fcron'];
     '/etc/monit.d/fcron':
     source  => 'puppet:///service_cron/monit_fcron';
     '/etc/crontab':
@@ -52,20 +38,22 @@ class service::cron {
     path => "/usr/bin:/usr/sbin:/bin",
     command => "crontab /etc/crontab",
     require => File['/etc/crontab'],
-    unless => "test -e /var/spool/fcron/root"
+    unless => "test -e /var/spool/fcron/root -o -e /var/spool/fcron/new.root"
   }
 
-  service { 'fcron':
-    ensure    => 'running',
-    enable    => true,
-    require => Package['fcron']
+  if $cron_run_service {
+    service { 'fcron':
+      ensure    => 'running',
+      enable    => true,
+      require => Package['fcron'],
+      subscribe => File['/etc/fcron/fcron.conf'];
+    }
   }
 
   if defined(Package['logwatch']) {
     file {
     '/etc/logwatch/conf/services/cron.conf':
-    source  => 'puppet:///service_cron/logwatch_plugin_cron.conf',
-    require => Package['fcron'];
+    source  => 'puppet:///service_cron/logwatch_plugin_cron.conf';
     }
   }
 

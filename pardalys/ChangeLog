@@ -1,5 +1,8 @@
 2008-10-07  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_cron/*: Complete documentation and minor
+	cleanups.
+
 	* modules/client_puppet_local/*: Removed in favor of
 	tool_pardalys.
 

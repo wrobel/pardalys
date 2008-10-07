@@ -156,10 +156,11 @@ file_create('.bootstrap' => '.mnt') do
          'emerge -Du layman subversion',
          'python-updater -i',
          'echo source /usr/portage/local/layman/make.conf >> /etc/make.conf',
-         'USE="develop" emerge rubygems pardalys')
-#         'update-eix',
-#         'pardalys'
-
+         'USE="develop" emerge rubygems pardalys',
+         'update-eix',
+         'dev-pardalys',
+         'cp /usr/share/pardalys/dev-pardalys/pardalys/bin/pardalys /usr/sbin/pardalys',
+         'pardalys')
   touch('.bootstrap')
 end
 

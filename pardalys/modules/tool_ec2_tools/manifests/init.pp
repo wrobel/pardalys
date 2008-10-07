@@ -63,6 +63,12 @@ class tool::ec2::tools {
         ensure   => 'installed',
         tag      => 'buildhost';
       }
+      gentoo_keywords { 'mime-types':
+        context  => 'tools_ec2_tools_mime_types',
+        package  => 'dev-ruby/mime-types',
+        keywords => "~$keyword",
+        tag      => 'buildhost'
+      }
       gentoo_keywords { 'aws-s3':
         context  => 'tools_ec2_tools_aws_s3',
         package  => 'dev-ruby/aws-s3',
@@ -73,7 +79,8 @@ class tool::ec2::tools {
         category => 'dev-ruby',
         ensure   => 'installed',
         tag      => 'buildhost',
-        require  => Gentoo_Keywords['aws-s3'];
+        require  => [Gentoo_Keywords['aws-s3'],
+                     Gentoo_Keywords['mime-types']];
       }
       gentoo_keywords { 'uuidtools':
         context  => 'tools_ec2_tools_uuidtools',

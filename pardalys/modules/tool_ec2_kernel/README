@@ -1,0 +1,16 @@
+Provides the kernel for a Xen instance on Amazons EC2.
+
+@author Gunnar Wrobel <p@rdus.de>
+@version 1.0
+@package tool_ec2_kernel
+
+@module os_gentoo      The os_gentoo module is required for Gentoo specific
+                       package installation.
+
+@fact operatingsystem  Allows to choose the correct package name
+                       depending on the operating system. In addition
+                       required to set additional tasks depending on
+                       the distribution.
+
+@param hardwaremodel   Used to determine the kernel modules that should
+                       be downloaded.

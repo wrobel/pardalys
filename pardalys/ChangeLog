@@ -1,5 +1,7 @@
 2008-10-07  Gunnar Wrobel  <p@rdus.de>
 
+	* staging/bootstrap/site.pp.erb: Fixed typo.
+
 	* staging/defaults.yml: Removed excludes, added admin info.
 
 	* staging/bootstrap/site.pp.erb: Completed the pardalys bootstrap

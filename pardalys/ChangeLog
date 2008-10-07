@@ -1,5 +1,11 @@
 2008-10-07  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/tool_ec2_tools/manifests/init.pp: Add some ec2 bootup
+	helper scripts.
+
+	* modules/tool_ec2_tools/files/*: Add some ec2 bootup helper
+	scripts.
+
 	* modules/tool_ec2_tools/manifests/init.pp: Unmask additional
 	dependencies.
 

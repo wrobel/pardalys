@@ -102,5 +102,16 @@ class tool::ec2::tools {
                      Gentoo_Keywords['uuidtools']];
       }
     }
+    file {
+      '/usr/bin/ec2-init.sh':
+      source => 'puppet:///tool_ec2_tools/ec2-init.sh',
+      mode   => '755';
+      '/usr/bin/ec2-get-metadate.sh':
+      source => 'puppet:///tool_ec2_tools/ec2-get-metadata.sh',
+      mode   => '755';
+      '/usr/bin/ec2-import-sshkeys.sh':
+      source => 'puppet:///tool_ec2_tools/ec2-import-sshkeys.sh',
+      mode   => '755';
+    }
   }
 }

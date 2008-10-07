@@ -39,6 +39,8 @@ ENVIRONMENT="--environment=production"
 FACTS="--factpath=/usr/share/pardalys/facter"
 MODULES="--modulepath=/usr/share/pardalys/modules"
 
+BUCKETDIR="/var/lib/puppet/clientbucket"
+
 if [ -d "/usr/share/pardalys/dev-pardalys/pardalys" ]; then
     CONFDIR="/usr/share/pardalys/dev-pardalys/pardalys/etc"
     MANIFEST="/usr/share/pardalys/dev-pardalys/pardalys/manifests/kolab.pp"
@@ -70,4 +72,4 @@ if [ ! -f "${MANIFEST}" ]; then
     exit 1
 fi
 
-puppet --confdir="${CONFDIR}" ${ENVIRONMENT} ${FACTS} ${MODULES} --verbose ${MANIFEST} $*
+puppet --confdir="${CONFDIR}" --clientbucketdir="${BUCKETDIR}" ${ENVIRONMENT} ${FACTS} ${MODULES} --verbose ${MANIFEST} $*

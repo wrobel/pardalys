@@ -1,5 +1,8 @@
 2008-10-07  Gunnar Wrobel  <p@rdus.de>
 
+	* bin/pardalys: puppet-0.24.5 seems to ignore the clientbucketdir
+	setting from puppet.conf. Set it in the pardalys script.
+
 	* modules/tool_baselayout/*: Complete documentation, fixed
 	variable names, allowed overriding the build type for images, some
 	cleanup.

@@ -1,19 +1,12 @@
 import 'os_gentoo'
 
 # Class tool::bash
-#  Bash configuration
 #
-# Required parameters 
+#  Bash configuration.
 #
-#  * :
-#
-# Optional parameters 
-#
-#  * :
-#
-# Templates
-#
-#  * : 
+# @author Gunnar Wrobel <p@rdus.de>
+# @version 1.0
+# @package tool_bash
 #
 class tool::bash {
 

@@ -11,5 +11,6 @@ import 'tool_ec2_kernel'
 class meta::de::pardus::ec2 {
 
   include tool::ec2::kernel
+  include tool::ec2::tools
 
 }

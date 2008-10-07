@@ -1,3 +1,8 @@
+2008-10-07  Gunnar Wrobel  <p@rdus.de>
+
+	* modules/tool_backupdir/*: Added a separate tool_backupdir module
+	as prerequisite for tool_backup and tool_logrotate.
+
 2008-10-05  Gunnar Wrobel  <p@rdus.de>
 
 	* staging/*: Added a staging area derived from

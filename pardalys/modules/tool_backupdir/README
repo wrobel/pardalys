@@ -1,0 +1,9 @@
+Creates a basic backup directory.
+
+@author Gunnar Wrobel <p@rdus.de>
+@version 1.0
+@package tool_backupdir
+
+@module os   Required for the path to the local state direcotry.
+
+

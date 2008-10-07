@@ -1,5 +1,8 @@
 2008-10-07  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/tool_ec2_tools/manifests/init.pp: Unmask additional
+	dependencies.
+
 	* modules/meta_de_pardus_ec2/manifests/init.pp: Add the ec2 tools
 	module.
 

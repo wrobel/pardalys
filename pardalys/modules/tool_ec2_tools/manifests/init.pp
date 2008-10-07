@@ -39,6 +39,12 @@ class tool::ec2::tools {
         tag      => 'buildhost',
         require  => Gentoo_Keywords['ec2-api-tools'];
       }
+      gentoo_keywords { 'xml-simple':
+        context  => 'tools_ec2_tools_xml_simple',
+        package  => 'dev-ruby/xml-simple',
+        keywords => "~$keyword",
+        tag      => 'buildhost'
+      }
       gentoo_keywords { 'amazon-ec2':
         context  => 'tools_ec2_tools_amazon_ec2',
         package  => 'dev-ruby/amazon-ec2',
@@ -49,7 +55,8 @@ class tool::ec2::tools {
         category => 'dev-ruby',
         ensure   => 'installed',
         tag      => 'buildhost',
-        require  => Gentoo_Keywords['amazon-ec2'];
+        require  => [Gentoo_Keywords['amazon-ec2'],
+                     Gentoo_Keywords['xml-simple']];
       }
       package { 'hpricot':
         category => 'dev-ruby',
@@ -69,6 +76,12 @@ class tool::ec2::tools {
         tag      => 'buildhost',
         require  => Gentoo_Keywords['aws-s3'];
       }
+      gentoo_keywords { 'uuidtools':
+        context  => 'tools_ec2_tools_uuidtools',
+        package  => 'dev-ruby/uuidtools',
+        keywords => "~$keyword",
+        tag      => 'buildhost'
+      }
       gentoo_keywords { 'aws-sdb':
         context  => 'tools_ec2_tools_amazon_ec2',
         package  => 'dev-ruby/aws-sdb',
@@ -79,7 +92,8 @@ class tool::ec2::tools {
         category => 'dev-ruby',
         ensure   => 'installed',
         tag      => 'buildhost',
-        require  => Gentoo_Keywords['aws-sdb'];
+        require  => [Gentoo_Keywords['aws-sdb'],
+                     Gentoo_Keywords['uuidtools']];
       }
     }
   }

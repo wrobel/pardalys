@@ -1,5 +1,7 @@
 2008-10-07  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/os/manifests/init.pp: Complete documentation.
+
 	* modules/tool_openssl/manifests/init.pp: Complete documentation
 	and provide additional paths to the ssl information within the
 	module.

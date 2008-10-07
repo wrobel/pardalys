@@ -12,9 +12,6 @@ import 'os_gentoo'
 # @version 1.0
 # @package os
 #
-# @fact operatingsystem Allows to choose the correct classes depending
-#                       on the operating system
-#
 class os {
 
   $sysconfdir    = '/etc'

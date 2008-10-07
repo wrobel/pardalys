@@ -1,6 +1,11 @@
-This package provides a subclass to the 'os' class and handles Gentoo
-specific parameters.
+This package provides a generic wrapper for different os types and
+provides some system path variables.
 
 @author Gunnar Wrobel <p@rdus.de>
 @version 1.0
-@package os_gentoo
+@package os
+
+@module os_gentoo     The os_gentoo module is required for Gentoo support.
+
+@fact operatingsystem Allows to choose the correct classes depending
+                      on the operating system

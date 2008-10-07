@@ -33,7 +33,9 @@ def chroot(chroot_dir, *a)
   File.open("#{chroot_dir}/tmp/rake.sh", 'w')  { |f| f.write script }
   sh("chroot #{chroot_dir} /bin/bash /tmp/rake.sh")
 ensure
-  rm("#{chroot_dir}/tmp/rake.sh")
+  if File.exists?("#{chroot_dir}/tmp/rake.sh")
+    rm("#{chroot_dir}/tmp/rake.sh")
+  end
 end
 
 task(:env) do

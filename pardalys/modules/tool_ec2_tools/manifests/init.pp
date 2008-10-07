@@ -80,7 +80,8 @@ class tool::ec2::tools {
         ensure   => 'installed',
         tag      => 'buildhost',
         require  => [Gentoo_Keywords['aws-s3'],
-                     Gentoo_Keywords['mime-types']];
+                     Gentoo_Keywords['mime-types'],
+                     Gentoo_Keywords['xml-simple']];
       }
       gentoo_keywords { 'uuidtools':
         context  => 'tools_ec2_tools_uuidtools',

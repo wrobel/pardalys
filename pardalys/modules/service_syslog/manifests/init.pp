@@ -1,7 +1,12 @@
 import 'os_gentoo'
 
 # Class service::syslog
-#  Provides a configuration for the syslog-ng system
+#
+#  Provides a configuration for the syslog-ng system.
+#
+# @author Gunnar Wrobel <p@rdus.de>
+# @version 1.0
+# @package service_syslog
 #
 # Required parameters 
 #
@@ -56,14 +61,14 @@ class service::syslog {
   $remote_ip = get_var('service_syslog_remote_ip', false)
   $remote_port = get_var('service_syslog_remote_port', '514')
   $accept_remote = get_var('service_syslog_accept_remote', false)
+  $syslog_run_service = get_var('run_services', true)
 
   file { 
     '/var/log/syslog.d':
     ensure  => 'directory';
     '/etc/syslog-ng/syslog-ng.conf':
     content => template("service_syslog/syslog-ng.conf_${template_syslog_ng}"),
-    require => Package['syslog-ng'],
-    notify => Service['syslog-ng'];
+    require => Package['syslog-ng'];
     '/etc/logrotate.d/syslog-ng':
     content => template("service_syslog/logrotate.d_syslog_${template_syslog_ng}"),
     require => Package['syslog-ng'];
@@ -71,10 +76,13 @@ class service::syslog {
     content => template("service_syslog/monit_syslog_ng");
   }
 
-  service { 'syslog-ng':
-    ensure    => 'running',
-    enable    => true,
-    require => Package['syslog-ng']
+  if $syslog_run_service {
+    service { 'syslog-ng':
+      ensure    => 'running',
+      enable    => true,
+      require   => Package['syslog-ng'],
+      subscribe => File['/etc/syslog-ng/syslog-ng.conf'];
+    }
   }
 
   case $operatingsystem {

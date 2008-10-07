@@ -1,0 +1,22 @@
+Provides a configuration for the syslog-ng system.
+
+@author Gunnar Wrobel <p@rdus.de>
+@version 1.0
+@package service_syslog
+
+@module os_gentoo     The os_gentoo module is required for Gentoo support.
+
+@fact operatingsystem Allows to choose the correct actions depending
+                      on the operating system
+
+@param service_syslog_remote_ip     If the syslog entries should be sent to a
+                                    remote IP this should hold the IP address
+                                    (Default: false)
+@param service_syslog_remote_port   If the syslog entries should be sent to a
+                                    remote IP this should hold the remote port
+                                    (Default: 514)
+@param service_syslog_accept_remote If the daemon should accept remote syslog
+                                    entries this should be set to true.
+                                    (Default: false)
+@param run_services                 Determines if the syslog service should be
+                                    started. (Default: true)

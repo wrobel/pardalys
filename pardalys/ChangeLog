@@ -1,5 +1,8 @@
 2008-10-07  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_syslog/manifests/init.pp: Complete documentation
+	and minor cleanups.
+
 	* modules/service_openssh/manifests/init.pp: Complete
 	documentation and minor cleanups.
 

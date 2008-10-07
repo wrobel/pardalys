@@ -1,5 +1,8 @@
 2008-10-07  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/tool_portage/manifests/init.pp: Ensure
+	/etc/portage/make.conf.puppet exists.
+
 	* staging/bootstrap/site.pp.erb: Fixed typo.
 
 	* staging/defaults.yml: Removed excludes, added admin info.

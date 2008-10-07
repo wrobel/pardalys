@@ -99,6 +99,10 @@ class tool::portage {
     ensure  => $profile;
     '/etc/make.conf':
     content => template("tool_portage/make.conf_${template_version}"),
+    require => [File['/etc/portage/make.conf.puppet'], Package['portage']],
+    tag     => 'buildhost';
+    '/etc/portage/make.conf.puppet':
+    ensure => 'present',
     require => Package['portage'],
     tag     => 'buildhost';
     '/etc/dispatch-conf.conf':

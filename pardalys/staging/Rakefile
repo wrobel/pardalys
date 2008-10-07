@@ -66,7 +66,7 @@ file_create('.download_dir' => :facts) do
 end
 
 file_create('.stage_file' => '.download_dir') do
-  sh("wget -O #{@env.download_dir}/#{@env.stage_prefix}-#{@env.stage_suffix} " <<
+  sh("wget -q -O #{@env.download_dir}/#{@env.stage_prefix}-#{@env.stage_suffix} " <<
      "#{@env.download_url}/" <<
      "#{@env.architecture =~ /i386/ ? 'x86' : 'amd64'}/current/stages/" <<
      "#{@env.stage_prefix}-#{@env.architecture =~ /i386/ ? 'i686' : 'amd64'}-#{@env.stage_suffix}")
@@ -74,27 +74,23 @@ file_create('.stage_file' => '.download_dir') do
 end
 
 file_create('.mnt_dir' => '.stage_file') do
-  mkdir_p("#{@env.mnt_dir}")
+  mkdir_p("#{@env.mnt_dir}/etc")
   sh("tar -xjf #{@env.download_dir}/#{@env.stage_prefix}-#{@env.stage_suffix} " <<
      "-C #{@env.mnt_dir}")
   cp('/etc/mtab', "#{@env.mnt_dir}/etc")
   cp('/etc/resolv.conf', "#{@env.mnt_dir}/etc")
+  mkdir("#{@env.mnt_dir}/etc/portage")
+  mkdir("#{@env.mnt_dir}/etc/pardalys")
+  File.open("#{@env.mnt_dir}/etc/pardalys/site.pp", 'w') do |f|
+    f.write(ERB.new(IO.read('bootstrap/site.pp.erb')).
+            result(@env.binding))
+  end
   File.open("#{@env.mnt_dir}/etc/make.conf", 'w') do |f|
     f.write(ERB.new(IO.read('bootstrap/make.conf.erb')).
             result(@env.binding))
   end
-  mkdir("#{@env.mnt_dir}/etc/portage")
-  mkdir("#{@env.mnt_dir}/etc/pardalys")
-  File.open("#{@env.mnt_dir}/etc/pardalys/site.pp", 'w') do |f|
-    f.write(ERB.new(IO.read('bootstrap/site.pp')).
-            result(@env.binding))
-  end
   mkdir("#{@env.mnt_dir}/usr/portage")
   mkdir("#{@env.mnt_dir}/usr/local/portage")
-  File.open("#{@env.mnt_dir}/etc/portage/exclude", 'w') do |f|
-    f.write(ERB.new(IO.read('bootstrap/exclude.erb')).
-            result(@env.binding))
-  end
   arch = @env.architecture =~ /i386/ ? 'x86' : 'amd64'
   File.open("#{@env.mnt_dir}/etc/portage/package.keywords", 'w') do |f|
     f.write("=net-nds/openldap-2.4.7 ~#{arch}\n")
@@ -160,9 +156,10 @@ file_create('.bootstrap' => '.mnt') do
          'emerge -Du layman subversion',
          'python-updater -i',
          'echo source /usr/portage/local/layman/make.conf >> /etc/make.conf',
-         'emerge rubygems pardalys',
-         'update-eix',
-         'pardalys')
+         'USE="develop" emerge rubygems pardalys')
+#         'update-eix',
+#         'pardalys'
+
   touch('.bootstrap')
 end
 

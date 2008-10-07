@@ -1,5 +1,8 @@
 2008-10-07  Gunnar Wrobel  <p@rdus.de>
 
+	* staging/bootstrap/site.pp.erb: Completed the pardalys bootstrap
+	definition.
+
 	* modules/meta_de_pardus_common/manifests/init.pp: Adapt to the
 	cleaned modules.
 

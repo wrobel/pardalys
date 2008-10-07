@@ -1,5 +1,8 @@
 2008-10-07  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/tool_backup/manifests/init.pp: Complete documentation
+	and require the backup directory.
+
 	* modules/tool_backupdir/*: Added a separate tool_backupdir module
 	as prerequisite for tool_backup and tool_logrotate.
 

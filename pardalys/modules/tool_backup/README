@@ -1,0 +1,9 @@
+Configuration for a basic /etc backup.
+
+@author Gunnar Wrobel <p@rdus.de>
+@version 1.0
+@package tool_backup
+
+@module tool_backupdir   A basic backup directory is required.
+
+

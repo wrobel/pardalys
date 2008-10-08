@@ -71,7 +71,7 @@ class tool::ec2::kernel {
     notify => Exec["ec2-modules-depmod"]
   }
   exec { "ec2-modules-depmod":
-    command => "/sbin/depmod $template_ec2kernel",
+    command => "/sbin/depmod $template_ec2kernel-xenU",
     refreshonly => true
   }
 }

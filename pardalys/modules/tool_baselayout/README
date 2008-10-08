@@ -19,3 +19,6 @@ Provides the baselayout configuration.
                         (Default: 'localdomain')
 @param hostname         Set this as the system hostname.
                         (Default: 'localhost')
+@param fstab            If set the contents of this parameter will be written
+                        into /etc/fstab.
+                        (Default: false)

@@ -34,12 +34,12 @@ class tool::baselayout {
         'baselayout':
         category => 'sys-apps',
         ensure   => 'latest',
-        require  => [Package['openrc'], Gentoo_keywords['baselayout']],
+        require  => [Gentoo_keywords['baselayout'],  Gentoo_keywords['openrc']],
         tag      => 'buildhost';
         'openrc':
         category => 'sys-apps',
         ensure   => 'latest',
-        require  => [Package['udev'], Gentoo_keywords['openrc']],
+        require  => [Package['udev'], Package['baselayout'], Gentoo_keywords['openrc']],
         tag      => 'buildhost';
         'sysvinit':
         category => 'sys-apps',
@@ -55,6 +55,7 @@ class tool::baselayout {
   $override_virtual = get_var('override_virtual', false)
   $system_hostname     = get_var('hostname',   'localhost')
   $system_domainname   = get_var('domainname', 'localdomain')
+  $baselayout_fstab   = get_var('fstab', false)
 
   if $override_virtual {
     $build_virtual = $override_virtual
@@ -72,6 +73,14 @@ class tool::baselayout {
     '/etc/inittab':
     content  => template("tool_baselayout/inittab"),
     require => Package['sysvinit'];
+  }
+
+  if $baselayout_fstab {
+    file { 
+      '/etc/fstab':
+      content  => template("tool_baselayout/fstab"),
+      require => Package['baselayout'];
+    }
   }
 
   case $build_virtual {

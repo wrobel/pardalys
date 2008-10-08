@@ -16,12 +16,10 @@ promptFunc()
     
     if [ "$EUID" = 0 ] || [ `/usr/bin/whoami` = 'root' ]
         then
-        PS1="${COLOR_SERVER}*** `hostname | awk '{print toupper($1)}'` *** ${COLOR_NONE}${COLOR_GREEN}History #\! - \j jobs - Level `echo $SHLVL` - \T${COLOR_NONE}\n"
-        PS1="${PS1}\h${COLOR_YELLOW}:\w${COLOR_NONE}\n"
+        PS1="${COLOR_SERVER}*** `hostname | awk '{print toupper($1)}'` ***${COLOR_NONE} ${COLOR_YELLOW}| PWD: \w |${COLOR_NONE} ${COLOR_GREEN}\T | \j jobs | Level `echo $SHLVL`${COLOR_NONE}\n"
         PS1="${PS1}${COLOR_GREEN}root${COLOR_NONE}${COLOR_PROMPT}#${COLOR_NONE} "
     else
-        PS1="${COLOR_SERVER}*** `hostname | awk '{print toupper($1)}'` *** ${COLOR_NONE}${COLOR_RED}History #\! - \j jobs - Level `echo $SHLVL` - \T${COLOR_NONE}\n"
-        PS1="${PS1}${COLOR_YELLOW}\u${COLOR_NONE}@\h${COLOR_YELLOW}:\w${COLOR_NONE}\n"
+        PS1="${COLOR_SERVER}*** `hostname | awk '{print toupper($1)}'` ***${COLOR_NONE} ${COLOR_YELLOW}| PWD: \w |${COLOR_NONE} ${COLOR_RED}\T | \j jobs | Level `echo $SHLVL`${COLOR_NONE}\n"
         PS1="${PS1}${COLOR_PROMPT}>${COLOR_NONE} "
     fi
 

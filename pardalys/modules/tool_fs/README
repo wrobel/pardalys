@@ -1,0 +1,13 @@
+Provides tools for a variety of file systems.
+
+@author Gunnar Wrobel <p@rdus.de>
+@version 1.0
+@package tool_fs
+
+@module os_gentoo      The os_gentoo module is required for Gentoo specific
+                       package installation.
+
+@fact operatingsystem  Allows to choose the correct package name
+                       depending on the operating system. In addition
+                       required to set additional tasks depending on
+                       the distribution.

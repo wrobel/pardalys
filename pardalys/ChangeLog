@@ -1,5 +1,8 @@
 2008-10-08  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/meta_de_pardus_ec2/manifests/init.pp: Add new module for
+	net filesystem support.
+
 	* modules/tool_baselayout/manifests/init.pp: Add support for the
 	net configuration.
 	Activate numlock only on physical machines.

@@ -74,4 +74,12 @@ class tool::ec2::kernel {
     command => "/sbin/depmod $template_ec2kernel-xenU-ec2-v1.0",
     refreshonly => true
   }
+
+  @line {'kernel26_puppet_comment':
+    file => '/etc/modules.d/kernel-2.6',
+    line => '#This file gets automatically modified by puppet',
+    tag => 'buildhost'
+  }
+
+  Line <| file == '/etc/modules.d/kernel-2.6' |>
 }

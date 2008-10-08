@@ -1,5 +1,8 @@
 2008-10-08  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/tool_ec2_kernel/manifests/init.pp: Add kernel module
+	loading.
+
 	* modules/meta_de_pardus_ec2/manifests/init.pp: Add new module for
 	net filesystem support.
 

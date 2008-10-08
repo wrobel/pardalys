@@ -136,6 +136,12 @@ task(:clean => :facts) do
   if File.exists?('.mnt_dir')
     rm('.mnt_dir')
   end
+  if File.exists?('site.pp.new')
+    rm('site.pp.new')
+  end
+  if File.exists?('site.pp.diff')
+    rm('site.pp.diff')
+  end
 end
 
 task(:clean_all => :clean) do
@@ -181,7 +187,7 @@ file_create('.bundle' => '.bootstrap') do
     f.write(@env.cert.strip)
   end
   chroot(@env.mnt_dir,
-         "ec2-bundle-vol -b -u #{@env.owner_id} -s 2048 " <<
+         "ec2-bundle-vol -b -u #{@env.owner_id} " <<
          "-k /tmp/key.pem -c /tmp/cert.pem " <<
          "-a -e /root,/dev,/proc,/sys,/tmp,/var/tmp,/mnt,/usr/portage " <<
          "--no-inherit -r #{@env.architecture} " <<
@@ -208,11 +214,46 @@ end
 
 task(:reinit => 'site.pp.diff')
 file_create('site.pp.diff' => :facts) do
+  if File.exists?('instance.yml')
+    @env.merge!(YAML.load(IO.read("instance.yml")))
+  end
   File.open("site.pp.new", 'w') do |f|
     f.write(ERB.new(IO.read('bootstrap/site.pp.erb')).
             result(@env.binding))
   end
   sh('diff -Nau /etc/pardalys/site.pp site.pp.new > site.pp.diff || echo Created suggested diff.')
+end
+
+task(:rebundle => '.reupload')
+file_create('.rebundle') do
+  File.open("/tmp/key.pem", 'w') do |f|
+    f.write(@env.key.strip)
+  end
+  File.open("/tmp/cert.pem", 'w') do |f|
+    f.write(@env.cert.strip)
+  end
+  sh("ec2-bundle-vol -b -u #{@env.owner_id} " <<
+     "-k /tmp/key.pem -c /tmp/cert.pem " <<
+     "-a -e /root,/dev,/proc,/sys,/tmp,/var/tmp,/mnt,/usr/portage " <<
+     "--no-inherit -r #{@env.architecture} " <<
+     "--fstab /etc/fstab --kernel #{@env.ec2_kernel_id} -d /tmp")
+  touch('.rebundle')
+end
+
+task(:update => '.update')
+file_create('.update' => '.rebundle') do
+  bname = "#{@env.image_name}-#{@env.ec2_instance_type}-#{@env.ec2_instance_cpu}"<<
+    "-#{Time.now.to_f}"
+  AWS::S3::Base.establish_connection!(:access_key_id =>
+                                      @env.access_key_id,
+                                      :secret_access_key =>
+                                      @env.secret_access_key)
+  AWS::S3::Bucket.create(bname)
+  sh("ec2-upload-bundle -b #{bname} -a #{@env.access_key_id} " <<
+     "-s #{@env.secret_access_key} -m /tmp/image.manifest.xml ",
+     "ec2-register -K /tmp/key.pem -C /tmp/cert.pem " <<
+     "#{bname}/image.manifest.xml")
+  touch('.update')
 end
 
 ######################################################################

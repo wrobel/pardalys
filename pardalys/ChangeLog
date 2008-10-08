@@ -1,5 +1,8 @@
 2008-10-08  Gunnar Wrobel  <p@rdus.de>
 
+	* staging/Rakefile: Additional cleanup, a rebundle function and
+	fixes to bundling.
+
 	* modules/tool_baselayout/templates/net_real: Add the net
 	template.
 

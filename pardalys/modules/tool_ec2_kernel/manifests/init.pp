@@ -15,6 +15,10 @@ class tool::ec2::kernel {
   case $operatingsystem {
     gentoo:
     {
+      package { 'unifdef':
+        ensure   => 'installed',
+        tag      => 'buildhost';
+      }
       gentoo_use_flags { 'ec2-sources':
         context => 'tools_ec2_kernel_ec2_sources',
         package => 'sys-kernel/ec2-sources',
@@ -25,11 +29,14 @@ class tool::ec2::kernel {
         context  => 'tools_ec2_kernel_ec2_sources',
         package  => 'sys-kernel/ec2-sources',
         keywords => "~$keyword",
-        tag      => 'buildhost'
+        tag      => 'buildhost';
       }
       package { 'ec2-sources':
         ensure   => 'installed',
-        tag      => 'buildhost';
+        tag      => 'buildhost',
+        require => [Package['unifdef'],
+                    Gentoo_use_flags['ec2-sources'],
+                    Gentoo_keywords['ec2-sources']];
       }
     }
   }

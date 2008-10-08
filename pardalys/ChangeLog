@@ -1,5 +1,7 @@
 2008-10-08  Gunnar Wrobel  <p@rdus.de>
 
+	* staging/Rakefile: Fix the rebundle and update task.
+
 	* modules/tool_bash/files/bash-prompt: Fix bash prompt again.
 
 	* staging/Rakefile: Fix typo and include the facts.

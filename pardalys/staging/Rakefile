@@ -232,7 +232,7 @@ file_create('.rebundle' => :facts) do
   File.open("/tmp/cert.pem", 'w') do |f|
     f.write(@env.cert.strip)
   end
-  sh("ec2-bundle-vol -b -u #{@env.owner_id} " <<
+  sh("source /etc/profile && ec2-bundle-vol -b -u #{@env.owner_id} " <<
      "-k /tmp/key.pem -c /tmp/cert.pem " <<
      "-a -e /root,/dev,/proc,/sys,/tmp,/var/tmp,/mnt,/usr/portage " <<
      "--no-inherit -r #{@env.architecture} " <<
@@ -249,8 +249,8 @@ file_create('.update' => '.rebundle') do
                                       :secret_access_key =>
                                       @env.secret_access_key)
   AWS::S3::Bucket.create(bname)
-  sh("ec2-upload-bundle -b #{bname} -a #{@env.access_key_id} " <<
-     "-s #{@env.secret_access_key} -m /tmp/image.manifest.xml ",
+  sh("source /etc/profile && ec2-upload-bundle -b #{bname} -a #{@env.access_key_id} " <<
+     "-s #{@env.secret_access_key} -m /tmp/image.manifest.xml && " <<
      "ec2-register -K /tmp/key.pem -C /tmp/cert.pem " <<
      "#{bname}/image.manifest.xml")
   touch('.update')

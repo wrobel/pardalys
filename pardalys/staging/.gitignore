@@ -1,5 +1,6 @@
 *~
 config.yml
+instance.yml
 .mnt
 .mnt_dir
 .stage_file

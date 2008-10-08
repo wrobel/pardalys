@@ -84,13 +84,13 @@ class tool::pardalys {
       gentoo_keywords { facter:
         context  => 'tools_pardalys_facter',
         package  => '<=dev-ruby/facter-1.5.2',
-        keywords => "~$arch",
+        keywords => "~$keyword",
         tag      => 'buildhost'
       }
       gentoo_keywords { puppet:
         context  => 'tools_puppet_common_puppet',
         package  => '<=app-admin/puppet-0.24.4-r1',
-        keywords => "~$arch",
+        keywords => "~$keyword",
         tag      => 'buildhost'
       }
       gentoo_use_flags { puppet:

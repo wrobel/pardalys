@@ -1,5 +1,7 @@
 2008-10-08  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/tool_pardalys/manifests/init.pp: Fix keyword.
+
 	* staging/defaults.yml: Cleanup default settings.
 
 	* staging/bootstrap/site.pp.erb: Reorganize to indicate the

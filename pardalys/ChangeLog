@@ -1,5 +1,7 @@
 2008-10-08  Gunnar Wrobel  <p@rdus.de>
 
+	* staging/bootstrap/make.conf.erb: Remove the exclude option.
+
 	* staging/Rakefile: Only mount portage if we are bootstrapping on
 	Gentoo, do not link /tmp into /var/tmp and slightly modify
 	bundling.

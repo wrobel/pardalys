@@ -224,8 +224,8 @@ file_create('site.pp.diff' => :facts) do
   sh('diff -Nau /etc/pardalys/site.pp site.pp.new > site.pp.diff || echo Created suggested diff.')
 end
 
-task(:rebundle => '.reupload')
-file_create('.rebundle') do
+task(:rebundle => '.rebundle')
+file_create('.rebundle' => :facts) do
   File.open("/tmp/key.pem", 'w') do |f|
     f.write(@env.key.strip)
   end

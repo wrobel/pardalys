@@ -160,9 +160,6 @@ class tool::baselayout {
             '/etc/runlevels/boot/modules':
             ensure => '/etc/init.d/modules',
             require  => Package['openrc'];
-            '/etc/runlevels/boot/numlock':
-            ensure => '/etc/init.d/numlock',
-            require  => Package['openrc'];
             '/etc/runlevels/boot/procfs':
             ensure => '/etc/init.d/procfs',
             require  => Package['openrc'];
@@ -181,6 +178,16 @@ class tool::baselayout {
             '/etc/runlevels/boot/urandom':
             ensure => '/etc/init.d/urandom',
             require  => Package['openrc'];
+          }
+          case $build_virtual {
+            'physical':
+            {
+              file { 
+                '/etc/runlevels/boot/numlock':
+                ensure => '/etc/init.d/numlock',
+                require  => Package['openrc'];
+              }
+            }
           }
         }
         'openvz':

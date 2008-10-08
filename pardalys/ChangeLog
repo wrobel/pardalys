@@ -2,6 +2,7 @@
 
 	* modules/tool_baselayout/manifests/init.pp: Add support for the
 	net configuration.
+	Activate numlock only on physical machines.
 
 	* modules/tool_system/manifests/init.pp: Add basic dhcpcd package.
 

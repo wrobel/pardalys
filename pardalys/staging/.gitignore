@@ -4,3 +4,5 @@ config.yml
 .mnt_dir
 .stage_file
 .download_dir
+.bootstrap
+.bundle

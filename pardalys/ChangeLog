@@ -1,5 +1,8 @@
 2008-10-08  Gunnar Wrobel  <p@rdus.de>
 
+	* staging/bootstrap/site.pp.erb: Reorganize to indicate the
+	optional parts .
+
 	* staging/Rakefile: Additional cleanup, a rebundle function and
 	fixes to bundling.
 

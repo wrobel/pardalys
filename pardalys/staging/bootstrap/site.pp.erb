@@ -6,12 +6,8 @@ node default {
 
   $portage_layman_overlays = "wrobel,kolab,sunrise"
   $portage_layman_storage = '/usr/portage/local/layman'
-  $pardalys_type = 'local'
-  $run_services = false
-  $bash_hostcolor = 'CYAN'
-  $screen_dark = true
-  $admin_fullname = '<%= admin_fullname %>'
-  $admin_mail     = '<%= admin_mail %>'
+  $pardalys_type = '<%= pardalys_type %>'
+  $run_services = <%= run_services %>
   $portage_mirrors = '<%= distfile_mirrors.split(' ').join(',') %>'
   $portage_use = 'glibc-omitfp mmx mmxext sse sse2 sse3<%= ' 3dnow 3dnowext' if ec2_instance_cpu == 'opteron' or ec2_instance_cpu == 'athlon-xp' %>'
   $portage_features = '<%= portage_features %>'
@@ -21,7 +17,6 @@ node default {
   $portage_cflags = '-march=<%= ec2_instance_cpu %> -O2 -pipe<%= ' -mno-tls-direct-seg-refs' if hardwaremodel == 'i686' %>'
   $portage_binhost = '<%= binhost %>'
   $portage_make_opts = "-j<%= processorcount.to_i + 1 %>"
-  $portage_linguas = 'de'
   $architecture = '<%= architecture %>'
   $hardwaremodel = '<%= hardwaremodel %>'
   $fstab = '/dev/sda1 /        ext3  user_xattr,noatime  0 1
@@ -32,6 +27,25 @@ node default {
 dhcp_eth0="nodns"
 dns_domain_eth0="localdomain"
 dns_servers_eth0=( "172.16.0.23" )'
+
+  ##########
+  # OPTIONAL
+
+<% if admin_fullname %>
+  $admin_fullname = '<%= admin_fullname %>'
+<% end %>
+<% if admin_mail %>
+  $admin_mail     = '<%= admin_mail %>'
+<% end %>
+<% if linguas %>
+  $portage_linguas = '<%= linguas %>'
+<% end %>
+<% if hostcolor %>
+  $bash_hostcolor = '<%= hostcolor %>'
+<% end %>
+<% if dark %>
+  $screen_dark = true
+<% end %>
 
   include meta::de::pardus::common
   include meta::de::pardus::ec2

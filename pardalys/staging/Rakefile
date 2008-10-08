@@ -111,7 +111,9 @@ end
 file_create('.mnt' => '.mnt_dir') do
   sh("mount -t proc none #{@env.mnt_dir}/proc")
   sh("mount -o bind /dev #{@env.mnt_dir}/dev")
-  sh("mount -o bind /usr/portage #{@env.mnt_dir}/usr/portage")
+  if File.exists?('/etc/gentoo-release')
+    sh("mount -o bind /usr/portage #{@env.mnt_dir}/usr/portage")
+  end
   touch('.mnt')
 end
 
@@ -150,13 +152,17 @@ end
 
 task(:bootstrap => '.bootstrap')
 file_create('.bootstrap' => '.mnt') do
+  if not File.exists?('/etc/gentoo-release')
+    chroot(@env.mnt_dir,
+           'emerge --sync')
+  end
   chroot(@env.mnt_dir,
-         'rm -rf /tmp && ln -sf /var/tmp /tmp',
          'groupmems -p -g users',
          "usermod -p `dd if=/dev/urandom count=50 2>/dev/null" <<
          " | md5sum | cut -d ' ' -f1-1` root",
          'emerge -Du layman subversion',
          'python-updater -i',
+         'layman -a kolab',
          'echo source /usr/portage/local/layman/make.conf >> /etc/make.conf',
          'USE="develop" emerge rubygems pardalys',
          'update-eix',
@@ -174,9 +180,10 @@ file_create('.bundle' => '.bootstrap') do
   File.open("#{@env.mnt_dir}/tmp/cert.pem", 'w') do |f|
     f.write(@env.cert.strip)
   end
-  chroot("ec2-bundle-vol -b -u #{@env.owner_id} " <<
+  chroot(@env.mnt_dir,
+         "ec2-bundle-vol -b -u #{@env.owner_id} -s 2048 " <<
          "-k /tmp/key.pem -c /tmp/cert.pem " <<
-         "-a -e /root,/dev,/proc,/sys,/tmp,/var/tmp,/mnt " <<
+         "-a -e /root,/dev,/proc,/sys,/tmp,/var/tmp,/mnt,/usr/portage " <<
          "--no-inherit -r #{@env.architecture} " <<
          "--fstab /etc/fstab --kernel #{@env.ec2_kernel_id} -d /tmp")
   touch('.bundle')
@@ -191,7 +198,8 @@ file_create('.upload' => '.bundle') do
                                       :secret_access_key =>
                                       @env.secret_access_key)
   AWS::S3::Bucket.create(bname)
-  chroot("ec2-upload-bundle -b #{bname} -a #{@env.access_key_id} " <<
+  chroot(@env.mnt_dir,
+         "ec2-upload-bundle -b #{bname} -a #{@env.access_key_id} " <<
          "-s #{@env.secret_access_key} -m /tmp/image.manifest.xml ",
          "ec2-register -K /tmp/key.pem -C /tmp/cert.pem " <<
          "#{bname}/image.manifest.xml")

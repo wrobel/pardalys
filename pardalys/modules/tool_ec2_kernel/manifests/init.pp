@@ -35,11 +35,12 @@ class tool::ec2::kernel {
   }
   $template_ec2kernel = template_version($version_ec2kernel, '2.6.18@:2.6.18','2.6.18')
 
-  $ec2_hardwaremodel = get_var('hardwaremodel', 'i386')
+  $ec2_hardwaremodel = get_var('hardwaremodel', 'i686')
+  $ec2_architecture  = get_var('architecture',  'i386')
 
   file {
     '/usr/src/linux/.config':
-    source  => "puppet:///tool_ec2_kernel/dot_config_$ec2_hardwaremodel",
+    source  => "puppet:///tool_ec2_kernel/dot_config_$ec2_architecture",
     require => Package['ec2-sources'];
   }
 

@@ -14,3 +14,4 @@ Provides the kernel for a Xen instance on Amazons EC2.
 
 @param hardwaremodel   Used to determine the kernel modules that should
                        be downloaded.
+@param architecture    Used to determine the kernel configuration.

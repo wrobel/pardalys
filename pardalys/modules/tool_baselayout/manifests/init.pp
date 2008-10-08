@@ -93,8 +93,7 @@ class tool::baselayout {
         require => Package['openrc'];
       }
     }
-    'physical':
-    'xenu':
+    'physical', 'xenu':
     {
       if $baselayout_net {
         file { 
@@ -137,8 +136,7 @@ class tool::baselayout {
         require  => Package['openrc'];
       }
       case $build_virtual {
-        'physical':
-        'xenu':
+        'physical', 'xenu':
         {
           file { 
             '/etc/runlevels/boot/consolefont':

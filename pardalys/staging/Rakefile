@@ -49,7 +49,7 @@ end
 
 task(:facts => :env) do
   if not @env.target
-    Facter.search('../modules/tools_ec2_tools/plugins/facter')
+    Facter.search('../modules/tool_ec2_tools/plugins/facter')
     Facter.loadfacts
     Facter.collection.each { |k, v| @env.send("#{k}=", v) }
   else 

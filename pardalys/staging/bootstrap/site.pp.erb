@@ -13,23 +13,21 @@ node default {
   $admin_fullname = '<%= admin_fullname %>'
   $admin_mail     = '<%= admin_mail %>'
   $portage_mirrors = '<%= distfile_mirrors.split(' ').join(',') %>'
-  $portage_use = "glibc-omitfp mmx mmxext sse sse2 sse3<%= ' 3dnow 3dnowext' if ec2_instance_cpu == 'opteron' or ec2_instance_cpu == 'athlon-xp' %>"
+  $portage_use = 'glibc-omitfp mmx mmxext sse sse2 sse3<%= ' 3dnow 3dnowext' if ec2_instance_cpu == 'opteron' or ec2_instance_cpu == 'athlon-xp' %>'
+  $portage_features = '<%= portage_features %>'
   $portage_rsync_mirror = '<%= rsync_mirror %>'
   $portage_profile = '/usr/portage/profiles/default-linux/<%= architecture =~ /i386/ ? 'x86' : 'amd64' %>/2007.0'
   $portage_chost = '<%= hardwaremodel %>-pc-linux-gnu'
-  $portage_cflags = "-march=<%= ec2_instance_cpu %> -O2 -pipe<%= ' -mno-tls-direct-seg-refs' if hardwaremodel == 'i686' %>"
+  $portage_cflags = '-march=<%= ec2_instance_cpu %> -O2 -pipe<%= ' -mno-tls-direct-seg-refs' if hardwaremodel == 'i686' %>'
   $portage_binhost = '<%= binhost %>'
   $portage_make_opts = "-j<%= processorcount.to_i + 1 %>"
   $portage_linguas = 'de'
   $architecture = '<%= architecture %>'
   $hardwaremodel = '<%= hardwaremodel %>'
   $fstab = '/dev/sda1 /        ext3  user_xattr,noatime  0 1
-<% if ec2_instance_type =~ /large/ -%>
-/dev/sdb  /mnt     ext3  user_xattr,noatime  0 2
-<% else -%>
-/dev/sda2 /mnt     ext3  user_xattr,noatime  0 2
-/dev/sda3 swap     swap  sw                  0 0
-<% end -%>'
+<% if ec2_instance_type =~ /large/ %>/dev/sdb  /mnt     ext3  user_xattr,noatime  0 2
+<% else %>/dev/sda2 /mnt     ext3  user_xattr,noatime  0 2
+/dev/sda3 swap     swap  sw                  0 0<% end %>'
   $net = 'config_eth0=( "dhcp" )
 dhcp_eth0="nodns"
 dns_domain_eth0="localdomain"

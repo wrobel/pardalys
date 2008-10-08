@@ -1,5 +1,7 @@
 2008-10-08  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/tool_pardalys/manifests/init.pp: Use unstable facter.
+
 	* modules/tool_ec2_kernel/manifests/init.pp: Add kernel module
 	loading.
 

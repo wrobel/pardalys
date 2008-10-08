@@ -81,6 +81,12 @@ class tool::pardalys {
                        Gentoo_use_flags['mocha'] ],
         tag      => 'buildhost'
       }
+      gentoo_keywords { facter:
+        context  => 'tools_pardalys_facter',
+        package  => '<=dev-ruby/facter-1.5.2',
+        keywords => "~$arch",
+        tag      => 'buildhost'
+      }
       gentoo_keywords { puppet:
         context  => 'tools_puppet_common_puppet',
         package  => '<=app-admin/puppet-0.24.4-r1',
@@ -96,7 +102,9 @@ class tool::pardalys {
         category => 'app-admin',
         ensure   => 'installed',
         tag      => 'buildhost',
-        require => [ Gentoo_use_flags['puppet'], Gentoo_keywords['puppet'] ]
+        require => [ Gentoo_use_flags['puppet'],
+                     Gentoo_keywords['puppet'],
+                     Gentoo_keywords['facter']]
       }
       gentoo_use_flags { git:
         context => 'tool_pardalys_git',

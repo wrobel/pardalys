@@ -1,5 +1,7 @@
 2008-10-08  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/tool_baselayout/templates/fstab: Added fstab template.
+
 	* staging/bootstrap/site.pp.erb: Add fstab information.
 
 	* staging/bootstrap/make.conf.erb: Remove the exclude option.

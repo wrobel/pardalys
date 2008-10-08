@@ -9,6 +9,7 @@
 :distfile_mirrors: http://gentoo.chem.wisc.edu/gentoo
 :admin_fullname: System Administrator
 :admin_mail: root@localhost
+:image_name: gentoo
 
 #----------
 # Optional

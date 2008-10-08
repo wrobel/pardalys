@@ -191,7 +191,7 @@ end
 
 task(:upload => '.upload')
 file_create('.upload' => '.bundle') do
-  bname = "gentoo-#{@env.ec2_instance_type}-#{@env.ec2_instance_cpu}"<<
+  bname = "#{@env.image_name}-#{@env.ec2_instance_type}-#{@env.ec2_instance_cpu}"<<
     "-#{Time.now.to_f}"
   AWS::S3::Base.establish_connection!(:access_key_id =>
                                       @env.access_key_id,

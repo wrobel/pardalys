@@ -1,5 +1,7 @@
 2008-10-08  Gunnar Wrobel  <p@rdus.de>
 
+	* staging/Rakefile (chroot): Allow to customize the image name.
+
 	* modules/tool_ec2_kernel/manifests/init.pp: Fix the depmod call.
 
 	* modules/tool_baselayout/templates/fstab: Added fstab template.

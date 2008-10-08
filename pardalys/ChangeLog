@@ -1,5 +1,8 @@
 2008-10-08  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/tool_ec2_kernel/manifests/init.pp: Fix path for the ec2
+	kernel modules.
+
 	* modules/tool_ec2_tools/plugins/facter/metadata.rb: Added the
 	module to fetch ec2 metadata.
 

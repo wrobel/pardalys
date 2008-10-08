@@ -65,13 +65,13 @@ class tool::ec2::kernel {
   }
   exec { "ec2-modules-install":
     command => "/usr/bin/wget -q -O - \
-      http://s3.amazonaws.com/ec2-downloads/ec2-modules-$template_ec2kernel-xenU-$ec2_hardwaremodel.tgz \
+      http://s3.amazonaws.com/ec2-downloads/ec2-modules-$template_ec2kernel-xenU-ec2-v1.0-$ec2_hardwaremodel.tgz \
       | tar xzoC /",
     creates => "/lib/modules/$template_ec2kernel-xenU",
     notify => Exec["ec2-modules-depmod"]
   }
   exec { "ec2-modules-depmod":
-    command => "/sbin/depmod $template_ec2kernel-xenU",
+    command => "/sbin/depmod $template_ec2kernel-xenU-ec2-v1.0",
     refreshonly => true
   }
 }

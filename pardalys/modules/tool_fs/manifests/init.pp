@@ -44,6 +44,12 @@ class tool::fs {
         line => 'fuse',
         tag => 'buildhost'
       }
+
+      @line {'kernel26_loop':
+        file => '/etc/modules.d/kernel-2.6',
+        line => 'loop',
+        tag => 'buildhost'
+      }
     }
   }
 

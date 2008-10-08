@@ -1,5 +1,7 @@
 2008-10-08  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/tool_fs/manifests/init.pp: Add the loop module.
+
 	* modules/tool_pardalys/manifests/init.pp: Fix keyword.
 
 	* staging/defaults.yml: Cleanup default settings.

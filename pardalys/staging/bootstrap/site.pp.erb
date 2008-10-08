@@ -23,6 +23,13 @@ node default {
   $portage_linguas = 'de'
   $architecture = '<%= architecture %>'
   $hardwaremodel = '<%= hardwaremodel %>'
+  $fstab = '/dev/sda1 /        ext3  user_xattr,noatime  0 1
+<% if ec2_instance_type =~ /large/ -%>
+/dev/sdb  /mnt     ext3  user_xattr,noatime  0 2
+<% else -%>
+/dev/sda2 /mnt     ext3  user_xattr,noatime  0 2
+/dev/sda3 swap     swap  sw                  0 0
+<% end -%>'
 
   include meta::de::pardus::common
   include meta::de::pardus::ec2

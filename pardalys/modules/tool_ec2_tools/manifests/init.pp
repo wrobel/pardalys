@@ -118,7 +118,7 @@ class tool::ec2::tools {
 
   @line {'local_start_ec2_access':
     file => '/etc/conf.d/local.start',
-    line => '/usr/bin/ec-init.sh',
+    line => '/usr/bin/ec2-init.sh',
     tag => 'buildhost'
   }
 }

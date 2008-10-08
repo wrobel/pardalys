@@ -7,7 +7,6 @@
 :rsync_mirror: rsync://rsync21.us.gentoo.org/gentoo-portage
 :portage_features: parallel-fetch buildpkg
 :distfile_mirrors: http://gentoo.chem.wisc.edu/gentoo
-:puppet_unstable: yes
 :admin_fullname: System Administrator
 :admin_mail: root@localhost
 

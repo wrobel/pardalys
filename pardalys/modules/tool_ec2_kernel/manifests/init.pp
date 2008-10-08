@@ -39,7 +39,7 @@ class tool::ec2::kernel {
 
   file {
     '/usr/src/linux/.config':
-    source  => 'puppet:///tool_ec2_kernel/dot_config',
+    source  => "puppet:///tool_ec2_kernel/dot_config_$ec2_hardwaremodel",
     require => Package['ec2-sources'];
   }
 

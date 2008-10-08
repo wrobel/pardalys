@@ -1,3 +1,8 @@
+2008-10-08  Gunnar Wrobel  <p@rdus.de>
+
+	* modules/tool_ec2_kernel/*: Adapt the kernel configuration to the
+	hardwaremodel used.
+
 2008-10-07  Gunnar Wrobel  <p@rdus.de>
 
 	* staging/Rakefile (chroot): Make removal of the script file

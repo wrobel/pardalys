@@ -67,7 +67,7 @@ class tool::ec2::kernel {
     command => "/usr/bin/wget -q -O - \
       http://s3.amazonaws.com/ec2-downloads/ec2-modules-$template_ec2kernel-xenU-$ec2_hardwaremodel.tgz \
       | tar xzoC /",
-    creates => "/lib/modules/$template_ec2kernel",
+    creates => "/lib/modules/$template_ec2kernel-xenU",
     notify => Exec["ec2-modules-depmod"]
   }
   exec { "ec2-modules-depmod":

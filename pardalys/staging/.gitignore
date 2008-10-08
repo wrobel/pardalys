@@ -7,4 +7,6 @@ instance.yml
 .download_dir
 .bootstrap
 .bundle
+.rebundle
+.update
 site.pp.*

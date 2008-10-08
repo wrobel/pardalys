@@ -55,6 +55,7 @@ class tool::portage {
   $mirrors              = split(get_var('portage_mirrors'), ',')
   $rsync_mirror         = get_var('portage_rsync_mirror')
   $binhost              = get_var('portage_binhost',              false)
+  $binhost_only         = get_var('portage_binhost_only',         false)
   $emerge_opts          = get_var('portage_emerge_opts',          false)
   $make_opts            = get_var('portage_make_opts',            false)
   $features             = split(get_var('portage_features'), ',')

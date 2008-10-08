@@ -25,6 +25,8 @@
 @param portage_fetch_command        Non-standard fetch command
                                     (Default: false)
 @param portage_binhost              An optional binary package host. (Default: false)
+@param portage_binhost_only         Allow only binary packages for installation.
+                                    (Default: false)
 @param portage_emerge_opts          Default portage options. (Default: false)
 @param portage_make_opts            Portage make options. (Default: false)
 @param portage_features             Comma separated list of additional portage

@@ -206,6 +206,15 @@ file_create('.upload' => '.bundle') do
   touch('.upload')
 end
 
+task(:reinit => 'site.pp.diff')
+file_create('site.pp.diff' => :facts) do
+  File.open("site.pp.new", 'w') do |f|
+    f.write(ERB.new(IO.read('bootstrap/site.pp.erb')).
+            result(@env.binding))
+  end
+  sh('diff -Nau /etc/pardalys/site.pp site.pp.new > site.pp.diff || echo Created suggested diff.')
+end
+
 ######################################################################
 # Instance
 ######################################################################

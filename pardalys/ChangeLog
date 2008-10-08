@@ -1,5 +1,7 @@
 2008-10-08  Gunnar Wrobel  <p@rdus.de>
 
+	* staging/Rakefile: Add a reinit task.
+
 	* modules/tool_portage/*: Add binhost_only option.
 
 	* modules/tool_pardalys/manifests/init.pp: Use unstable facter.

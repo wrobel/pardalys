@@ -108,7 +108,7 @@ class tool::ec2::tools {
     '/usr/bin/ec2-init.sh':
     source => 'puppet:///tool_ec2_tools/ec2-init.sh',
     mode   => 755;
-    '/usr/bin/ec2-get-metadate.sh':
+    '/usr/bin/ec2-get-metadata.sh':
     source => 'puppet:///tool_ec2_tools/ec2-get-metadata.sh',
     mode   => 755;
     '/usr/bin/ec2-import-sshkeys.sh':

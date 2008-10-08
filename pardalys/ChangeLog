@@ -1,5 +1,8 @@
 2008-10-08  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/tool_ec2_tools/plugins/facter/metadata.rb: Added the
+	module to fetch ec2 metadata.
+
 	* staging/Rakefile (chroot): Allow to customize the image name.
 
 	* modules/tool_ec2_kernel/manifests/init.pp: Fix the depmod call.

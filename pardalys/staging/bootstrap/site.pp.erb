@@ -30,6 +30,10 @@ node default {
 /dev/sda2 /mnt     ext3  user_xattr,noatime  0 2
 /dev/sda3 swap     swap  sw                  0 0
 <% end -%>'
+  $net = 'config_eth0=( "dhcp" )
+dhcp_eth0="nodns"
+dns_domain_eth0="localdomain"
+dns_servers_eth0=( "172.16.0.23" )'
 
   include meta::de::pardus::common
   include meta::de::pardus::ec2

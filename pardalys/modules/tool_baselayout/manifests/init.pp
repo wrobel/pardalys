@@ -55,7 +55,8 @@ class tool::baselayout {
   $override_virtual = get_var('override_virtual', false)
   $system_hostname     = get_var('hostname',   'localhost')
   $system_domainname   = get_var('domainname', 'localdomain')
-  $baselayout_fstab   = get_var('fstab', false)
+  $baselayout_fstab    = get_var('fstab', false)
+  $baselayout_net      = get_var('net', false)
 
   if $override_virtual {
     $build_virtual = $override_virtual
@@ -92,6 +93,17 @@ class tool::baselayout {
         require => Package['openrc'];
       }
     }
+    'physical':
+    'xenu':
+    {
+      if $baselayout_net {
+        file { 
+          '/etc/conf.d/net':
+          content  => template("tool_baselayout/net_real"),
+          require => Package['openrc'];
+        }
+      }
+    }
   }
 
   @line {'local_start_puppet_comment':
@@ -126,6 +138,7 @@ class tool::baselayout {
       }
       case $build_virtual {
         'physical':
+        'xenu':
         {
           file { 
             '/etc/runlevels/boot/consolefont':

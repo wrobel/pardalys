@@ -1,5 +1,8 @@
 2008-10-08  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/tool_baselayout/manifests/init.pp: Add support for the
+	net configuration.
+
 	* modules/tool_system/manifests/init.pp: Add basic dhcpcd package.
 
 	* modules/tool_ec2_kernel/manifests/init.pp: Fix path for the ec2

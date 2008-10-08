@@ -22,3 +22,6 @@ Provides the baselayout configuration.
 @param fstab            If set the contents of this parameter will be written
                         into /etc/fstab.
                         (Default: false)
+@param net              If set the contents of this parameter will be written
+                        into /etc/conf.d/net.
+                        (Default: false)

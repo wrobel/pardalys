@@ -92,6 +92,12 @@ class tool::system {
         tag      => 'buildhost'
       }
 
+      package { dhcpcd:
+        category => 'net-misc',
+        ensure   => 'installed',
+        tag      => 'buildhost'
+      }
+
       package { netkit-telnetd:
         category => 'net-misc',
         ensure   => 'installed',

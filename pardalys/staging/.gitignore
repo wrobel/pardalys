@@ -6,3 +6,4 @@ config.yml
 .download_dir
 .bootstrap
 .bundle
+site.pp.*

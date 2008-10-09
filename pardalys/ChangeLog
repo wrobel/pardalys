@@ -1,5 +1,8 @@
 2008-10-09  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_cyrusimap/manifests/init.pp: Draft version of
+	the imap installation.
+
 	* modules/meta_kolab_imap/manifests/init.pp: Start the definition
 	of the Kolab IMAP part.
 

@@ -33,10 +33,11 @@ class tool::openssl {
 
   $ssl_cert    = get_var('ssl_cert', '')
   $ssl_key    = get_var('ssl_key', '')
+  $ssl_access_group = get_var('ssl_access_group', 'kolab')
 
-  $ssl_cert_path = ''
-  $ssl_key_path = ''
-  $ssl_combined_path = ''
+  $ssl_cert_path = "$ssl_confdir/system/server.crt"
+  $ssl_key_path = "$ssl_confdir/system/server.key"
+  $ssl_combined_path = "$ssl_confdir/system/server.pem"
 
   file { 
     "$ssl_confdir/system":
@@ -46,24 +47,25 @@ class tool::openssl {
   if $ssl_cert {
     file { 
       "$ssl_confdir/system/server.crt":
-      content => $ssl_cert;
+        content => $ssl_cert,
+        mode => '644',
+        group => "$ssl_access_group";
     }
-    $ssl_cert_path = "$ssl_confdir/system/server.crt"
   }
   if $ssl_key {
     file { 
       "$ssl_confdir/system/server.key":
-      content => $ssl_key,
-      mode => '600';
+        content => $ssl_key,
+        mode => '640',
+        group => "$ssl_access_group";
     }
-    $ssl_key_path = "$ssl_confdir/system/server.key"
     if $ssl_cert {
       file { 
         "$ssl_confdir/system/server.pem":
-        content => "$ssl_cert\n$ssl_key",
-        mode => '600';
+          content => "$ssl_cert\n$ssl_key",
+          mode => '640',
+          group => "$ssl_access_group";
       }
-      $ssl_combined_path = "$ssl_confdir/system/server.pem"
     }
   }
 }

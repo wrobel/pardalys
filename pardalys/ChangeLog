@@ -1,5 +1,8 @@
 2008-10-09  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/tool_openssl/manifests/init.pp: Fix the handling of ssl
+	certificate paths.
+
 	* modules/tool_ec2_kernel/manifests/init.pp: Fixes to supress
 	rerunning the task.
 

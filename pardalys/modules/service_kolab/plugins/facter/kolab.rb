@@ -27,7 +27,6 @@ if FileTest.file?(Facter.kolab_globalsfile)
 end
 
 if FileTest.file?(Facter.kolab_configfile)
-  facts = {}
   File.open(Facter.kolab_configfile).each do |line|
     var = $1 and value = $2 if line =~ /^([^#][^:]+):(.+)$/
     if var != nil && value != nil
@@ -39,7 +38,6 @@ if FileTest.file?(Facter.kolab_configfile)
 end
 
 if FileTest.file?(Facter.kolab_bootstrapfile)
-  facts = {}
   File.open(Facter.kolab_bootstrapfile).each do |line|
     var = $1 and value = $2 if line =~ /^([^#][^:]+):(.+)$/
     if var != nil && value != nil

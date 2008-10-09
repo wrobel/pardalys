@@ -1,5 +1,8 @@
 2008-10-09  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_kolab/plugins/facter/kolab.rb: Do not empty the
+	facts before reading additional config files.
+
 	* modules/service_kolab/manifests/init.pp: Always use the groupadd
 	provider, fixes for the ssl certificate path.
 

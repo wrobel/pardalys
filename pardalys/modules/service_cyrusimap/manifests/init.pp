@@ -29,19 +29,33 @@ class service::cyrusimap {
 
   # Package installation
   case $operatingsystem {
-    gentoo:
-      gentoo_use_flags { cyrus-imapd:
-        context => 'service_cyrusimap_cyrus_imapd',
-        package => 'net-mail/cyrus-imapd',
-        use     => 'kolab ssl'
+    gentoo: {
+      gentoo_keywords { 'cyrus-imapd':
+        context  => 'service_cyrusimap_cyrus_imapd',
+        package  => '=net-mail/cyrus-imapd-2.3.12_p2',
+        keywords => "~$keyword",
+        tag      => 'buildhost'
+      }
+      gentoo_use_flags {
+        'cyrus-imapd':
+          context => 'service_cyrusimap_cyrus_imapd',
+          package => 'net-mail/cyrus-imapd',
+          use     => 'kolab ssl'
       }
       package { 'cyrus-imapd':
         category => 'net-mail',
         ensure   => 'installed',
-        require  => Gentoo_use_flags['cyrus-imapd'],
+        require  => [ Gentoo_use_flags['cyrus-imapd'],
+                      Gentoo_keywords['cyrus-imapd']],
         tag      => 'buildhost'
       }
-      gentoo_use_flags { cyrus-imap-admin:
+      gentoo_keywords { 'cyrus-imap-admin':
+        context  => 'service_cyrusimap_cyrus_imap_admin',
+        package  => '=net-mail/cyrus-imap-admin-2.3.12_p2',
+        keywords => "~$keyword",
+        tag      => 'buildhost'
+      }
+      gentoo_use_flags { "cyrus-imap-admin":
         context => 'service_cyrusimap_cyrus_imap_admin',
         package => 'net-mail/cyrus-imap-admin',
         use     => 'kolab ssl'
@@ -49,12 +63,12 @@ class service::cyrusimap {
       package { 'cyrus-imap-admin':
         category => 'net-mail',
         ensure   => 'installed',
-        require  => Gentoo_use_flags['cyrus-imapd'],
+        require  => [ Gentoo_use_flags['cyrus-imap-admin'],
+                      Gentoo_keywords['cyrus-imap-admin']],
         tag      => 'buildhost'
       }
     }
-    default:
-    {
+    default: {
       package { 'cyrus-imapd':
         ensure   => 'installed';
       }
@@ -65,19 +79,52 @@ class service::cyrusimap {
 
   $template_imapd = template_version($version_imapd, '2.3.12_p2@:2.3.12,', '2.3.12')
 
-  file { 
-    "${sysconfdir}/imapd.conf":
-    content => template("service_postfix/master.cf_${template_postfix}"),
-    mode    => 640,
-    require => [Package['postfix'], Package['perl-kolab']],
-    notify  => Service['postfix'];
-  }
+  $lmtp_socket   = '/var/imap/socket/lmtp'
+  $notify_socket = '/var/imap/socket/notify'
+  $sievedir      = '/var/imap/sieve'
+  $lmtp_external = get_var('imap_lmtp_external', false)
+  $cyrus_admins = get_var('kolab_cyrus_admins')
+  $sendmail = '/usr/sbin/sendmail'
 
-  service { 'cyrus-imapd':
-    ensure    => 'running',
-    enable    => true,
-    require => Package['cyrus-imapd'];
-  }
+  $ssl_cert_path  = $tool::openssl::ssl_cert_path
+  $ssl_key_path   = $tool::openssl::ssl_key_path
+
+#   file { 
+#     "${sysconfdir}/cyrus.conf":
+#       content => template("service_cyrusimap/cyrus.conf_${template_imapd}"),
+#       mode    => 640,
+#       owner => 'cyrus',
+#       group => 'mail',
+#       require => Package['cyrus-imapd'],
+#       notify  => Service['cyrus-imapd'];
+#     "${sysconfdir}/imapd.conf":
+#       content => template("service_cyrusimap/imapd.conf_${template_imapd}"),
+#       mode    => 640,
+#       owner => 'cyrus',
+#       group => 'mail',
+#       require => Package['cyrus-imapd'],
+#       notify  => Service['cyrus-imapd'];
+#     "${sysconfdir}/imapd.groups":
+#       content => template("service_cyrusimap/imapd.groups_${template_imapd}"),
+#       mode    => 640,
+#       owner => 'cyrus',
+#       group => 'mail',
+#       require => Package['cyrus-imapd'],
+#       notify  => Service['cyrus-imapd'];
+#     "${sysconfdir}/imapd.annotation_definitions":
+#       content => "puppet:///service_cyrusimap/imapd.annotation_definitions_${template_imapd}",
+#       mode    => 640,
+#       owner => 'cyrus',
+#       group => 'mail',
+#       require => Package['cyrus-imapd'],
+#       notify  => Service['cyrus-imapd'];
+#   }
+
+#   service { 'cyrus-imapd':
+#     ensure    => 'running',
+#     enable    => true,
+#     require => Package['cyrus-imapd'];
+#   }
 
   case $operatingsystem {
     gentoo: {

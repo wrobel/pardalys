@@ -1,5 +1,8 @@
 2008-10-09  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_cyrusimap/*: Continued the cyrus-imapd module
+	draft.
+
 	* modules/tool_system/manifests/init.pp: Screen should be on any
 	machine.
 

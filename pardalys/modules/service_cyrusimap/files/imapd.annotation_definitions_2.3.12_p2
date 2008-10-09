@@ -1,0 +1,7 @@
+/vendor/kolab/folder-test,mailbox,string,backend,value.shared value.priv,a
+/vendor/kolab/folder-type,mailbox,string,backend,value.shared value.priv,a
+/vendor/kolab/incidences-for,mailbox,string,backend,value.shared value.priv,a
+/vendor/kolab/pxfb-readable-for,mailbox,string,backend,value.shared value.priv,a
+/vendor/kolab/h-share-attr-desc,mailbox,string,backend,value.shared value.priv,a
+/vendor/horde/share-params,mailbox,string,backend,value.shared value.priv,a
+/vendor/x-toltec/test,mailbox,string,backend,value.shared value.priv,a

@@ -2,8 +2,9 @@ import 'os'
 import 'tool_openssl'
 import 'service_kolab'
 import 'service_openldap'
+import 'service_sasl'
 import 'service_cyrusimap'
-import 'service_kolabd'
+#import 'service_kolabd'
 
 # Class meta::kolab::imap
 #
@@ -16,10 +17,11 @@ import 'service_kolabd'
 class meta::kolab::imap {
 
   include os
-  include service::kolab
   include tool::openssl
+  include service::kolab
   include service::openldap
   include service::openldap::serve
+  include service::sasl
   include service::cyrusimap
-  include service::kolabd
+#  include service::kolabd
 }

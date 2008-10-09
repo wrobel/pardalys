@@ -1,0 +1,81 @@
+#   Warning: Do not use a trailing slash in paths!
+configdirectory:        @imap_statedir@
+partition-default:      @imap_spool@
+
+allowusermoves:         0
+admins:                 <%= cyrus-admins.join(' ') %>
+sasl_pwcheck_method:    saslauthd
+sasl_mech_list: 	plain
+sendmail:               <%= sendmail %>
+allowanonymouslogin:    no
+allowplaintext:         yes
+servername:             <%= hostname %>.<%= domainname %>
+reject8bit:             no
+munge8bit: 		no
+quotawarn:              <%= kolab_cyrus_quotawarn %>
+lmtp_over_quota_perm_failure: 1
+timeout:                30
+sievedir:		<%= sievedir %>
+lmtpsocket: 		<%= lmtpsocket %>
+
+allowapop:              no
+
+tls_cert_file: 		<%= ssl_cert_path %>
+tls_key_file: 		<%= ssl_key_path %>
+
+altnamespace:           0
+unixhierarchysep:       yes
+lmtp_downcase_rcpt:	yes
+username_tolower:       1
+
+hashimapspool:          yes
+#the fulldirhash optimization requires the rehash utility and the compile time switch --enable-fulldirhash
+#fulldirhash:           yes
+
+##virtdomains:            userid
+
+loginrealms:		<%= kolab_postfix_mydestination.join(' ') %>
+
+# support for lookup of mailbox name from local LDAP server
+ldap_uri:               <%= kolab_ldap_uri %>
+ldap_base:              <%= kolab_base_dn %>
+ldap_bind_dn:           <%= kolab_bind_dn_restricted %>
+ldap_password:          <%= kolab_bind_pw_restricted %>
+ldap_time_limit:        15
+
+virtdomains:            ldap
+
+## Murder slave setup
+#mupdate_server:         XXX
+#mupdate_port:           3905
+#mupdate_authname:       manager
+#mupdate_password:       xxx
+
+# add support for posting to shared folders
+postuser: kolab
+userprefix: user
+sharedprefix: shared
+
+# add support for sieve based notifications
+notifysocket: <%= notify_socket %>
+sievenotifier: mailto
+mailnotifier: mailto
+
+# the sieve extensions that should be enabled on the server
+sieve_extensions: fileinto reject vacation imapflags notify include envelope body relational regex subaddress copy
+
+# use berkeley db backend instead of skiplist
+annotation_db: berkeley
+mboxlist_db: berkeley
+
+# Don't discard emails with identical message-id header (enabled by default):
+duplicatesuppression: 0
+
+# The interval (in seconds) for polling the mailbox for changes while running the IDLE command.
+# This option is used when  idled  can not be contacted or when polling is used exclusively.
+# The minimum value is 1.  A value of 0 will disable polling (and disable IDLE if polling is
+# the only method available).
+imapidlepoll: 5
+
+# Load definitions for vendor annotations
+annotation_definitions: <%= sysconfdir %>/imapd.annotation_definitions

@@ -1,0 +1,12 @@
+KOLAB_META_START
+TARGET=@imap_confdir@/imapd.group
+PERMISSIONS=0640
+OWNERSHIP=@imap_usr@:@imap_grp@
+KOLAB_META_END
+##  Copyright (c) 2003 Martin Konold <martin.konold@erfrakon.de>
+##  Copyright (c) 2003 Tassilo Erlewein <tassilo.erlewein@erfrakon.de>
+## This program is Free Software under the GNU General Public License (>=v2).
+## Read the file COPYING that comes with this packages for details.
+
+# gid's over 60000 are reserved for LDAP groups !
+

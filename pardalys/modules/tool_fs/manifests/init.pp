@@ -61,10 +61,15 @@ class tool::fs {
       unless => "/sbin/lsmod | grep fuse 1>/dev/null",
     }
 
-    service { "autofs":
-      ensure => running,
-      enable => true,
-      require => Package['autofs']
+    exec { "modprobe-loop":
+      command => "/sbin/modprobe loop",
+      unless => "/sbin/lsmod | grep loop 1>/dev/null",
     }
+
+#     service { "autofs":
+#       ensure => running,
+#       enable => true,
+#       require => Package['autofs']
+#     }
   }
 }

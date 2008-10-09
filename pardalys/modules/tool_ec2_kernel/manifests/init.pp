@@ -47,10 +47,11 @@ class tool::ec2::kernel {
 
   file {
     '/usr/src/linux/.config':
-    source  => "puppet:///tool_ec2_kernel/dot_config_$ec2_architecture",
-    ensure => 'present',
-    notify => Exec["ec2-sources-conf"],
-    require => Package['ec2-sources'];
+      source  => "puppet:///tool_ec2_kernel/dot_config_$ec2_architecture",
+      ensure => 'present',
+      replace => false,
+      notify => Exec["ec2-sources-conf"],
+      require => Package['ec2-sources'];
   }
 
   exec { "ec2-sources-conf":
@@ -58,6 +59,7 @@ class tool::ec2::kernel {
     command => "/usr/bin/make oldconfig && \
                 /usr/bin/make prepare && \
                 /usr/bin/make headers_install",
+    refreshonly => true,
     require => File['/usr/src/linux/.config'];
   }
   file { "/lib/modules":

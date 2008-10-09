@@ -10,3 +10,6 @@ PROMPT_COMMAND=promptFunc
 
 # Comment if you are not fluent in german
 export LC_ALL=de_DE.utf8
+
+alias attach='grabssh ; screen -d -R'
+alias fs='source ~/.fixssh'

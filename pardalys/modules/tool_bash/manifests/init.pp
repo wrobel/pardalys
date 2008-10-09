@@ -64,5 +64,11 @@ class tool::bash {
     '/etc/skel/.bash-interactive':
     source  => 'puppet:///tool_bash/dot_bash_interactive',
     require => Package['bash'];
+    '/etc/skel/.screenrc':
+      source  => 'puppet:///tool_bash/dot_screenrc';
+    '/usr/bin/grabssh':
+      source  => 'puppet:///tool_bash/grabssh',
+      mode => 755,
+      require => Package['bash'];
   }
 }

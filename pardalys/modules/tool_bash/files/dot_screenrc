@@ -1,0 +1,15 @@
+#change the hardstatus settings to give an window list at the bottom of the
+#screen, with the time and date and with the current window highlighted
+hardstatus alwayslastline
+hardstatus string '%{= mK}%-Lw%{= KW}%50>%n%f* %t%{= mK}%+Lw%< %{= kG}%-=%D %d %M %Y %c:%s%{-}'
+
+bind -c selectHighs 0 select 10 #these three commands are 
+bind -c selectHighs 1 select 11 #added to the command-class
+bind -c selectHighs 2 select 12 #selectHighs
+bind -c selectHighs 3 select 13 
+bind -c selectHighs 4 select 14
+bind -c selectHighs 5 select 15 
+bind -c selectHighs 6 select 16 
+bind -c selectHighs 7 select 17 
+bind -c selectHighs 8 select 18 
+bind - command -c selectHighs

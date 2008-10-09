@@ -1,5 +1,8 @@
 2008-10-09  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/tool_bash/*: Provide a decent bash setup for using
+	screen sessions.
+
 	* modules/service_openldap/manifests/init.pp: Always use the
 	useradd provider, fixes for the ssl certificate path.
 

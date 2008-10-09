@@ -1,5 +1,8 @@
 2008-10-09  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/tool_ec2_kernel/manifests/init.pp: Fix kernel config
+	generation.
+
 	* modules/tool_fs/manifests/init.pp: Ensure the loop kernel module
 	is loaded. Disable autofs for now.
 

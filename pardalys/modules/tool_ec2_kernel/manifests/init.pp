@@ -48,6 +48,8 @@ class tool::ec2::kernel {
   file {
     '/usr/src/linux/.config':
     source  => "puppet:///tool_ec2_kernel/dot_config_$ec2_architecture",
+    ensure => 'present',
+    notify => Exec["ec2-sources-conf"]
     require => Package['ec2-sources'];
   }
 
@@ -56,7 +58,6 @@ class tool::ec2::kernel {
     command => "/usr/bin/make oldconfig && \
                 /usr/bin/make prepare && \
                 /usr/bin/make headers_install",
-    creates => "/usr/src/linux/vmlinux",
     require => File['/usr/src/linux/.config'];
   }
   file { "/lib/modules":

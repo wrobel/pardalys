@@ -53,7 +53,7 @@ $conf['fb']['redirect']     = false;
 /* What is the address of the current server where the calendar data is stored?
  * This is also used as the LDAP server address where user objects reside.
  */
-$conf['fb']['server']       = '<%= freebusy_vhost %>';
+$conf['kolab']['freebusy']['server'] = 'https://<%= freebusy_vhost %>';
 
 /* What is our default mail domain? This is used if any users do not have
  * '@domain' specified after their username as part of their email address.

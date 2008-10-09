@@ -200,7 +200,7 @@ class service::freebusy {
     }
   }
 
-  $template_freebusy = template_version($version_horde_kolab_freebusy, '0.0.3@:0.0.3,0.0.4.20080925@:0.0.4.20080925', '0.0.4.20080925')
+  $template_freebusy = template_version($version_horde_kolab_freebusy, '0.0.3@:0.0.3,0.0.4.20081001@:0.0.4.20081001', '0.0.4.20081001')
 
   $sysconfdir  = $os::sysconfdir
 

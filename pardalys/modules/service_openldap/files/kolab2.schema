@@ -107,7 +107,15 @@ attributetype ( 1.3.6.1.4.1.19419.1.1.1.1
 # fqdn of the imap server containg the actual user mailbox
 attributetype ( 1.3.6.1.4.1.19419.1.1.1.19
   NAME 'kolabImapServer'
-  DESC 'imap server which keeps the users mailbox'
+  DESC 'IMAP server which keeps the users mailbox'
+  EQUALITY caseIgnoreIA5Match
+  SUBSTR caseIgnoreIA5SubstringsMatch
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.26{256} )
+
+# fqdn of the free/busy server providing the users free/busy information
+attributetype ( 1.3.6.1.4.1.19419.1.1.1.20
+  NAME 'kolabFreeBusyServer'
+  DESC 'Free/Busy server which keeps the users free/busy information.'
   EQUALITY caseIgnoreIA5Match
   SUBSTR caseIgnoreIA5SubstringsMatch
   SYNTAX 1.3.6.1.4.1.1466.115.121.1.26{256} )
@@ -633,6 +641,7 @@ objectclass ( 1.3.6.1.4.1.19414.3.2.2
         alias $
         kolabHomeServer $
         kolabImapServer $
+        kolabFreeBusyServer $
         kolabHomeMTA $
         unrestrictedMailSize $
         kolabDelegate $

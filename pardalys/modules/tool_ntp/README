@@ -1,0 +1,5 @@
+Installs OpenNTP
+
+@author Gunnar Wrobel <p@rdus.de>
+@version 1.0
+@package tool_ntp

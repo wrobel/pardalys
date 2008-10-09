@@ -1,6 +1,7 @@
 import 'tool_ec2_kernel'
 import 'tool_ec2_tools'
 import 'tool_fs'
+import 'tool_ntp'
 
 # Class meta::de::pardus::ec2
 #
@@ -15,5 +16,6 @@ class meta::de::pardus::ec2 {
   include tool::ec2::kernel
   include tool::ec2::tools
   include tool::fs
+  include tool::ntp
 
 }

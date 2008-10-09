@@ -239,7 +239,7 @@ GENTOO_MIRRORS="<% mirrors.each do |mirror| %><%= mirror %> <% end %> http://dis
 #PORTAGE_BINHOST="ftp://login:pass@grp.mirror.site/pub/grp/i686/athlon-xp/"
 # This ftp connection is active ftp.
 #PORTAGE_BINHOST="ftp://login:pass@grp.mirror.site:21*/pub/grp/i686/athlon-xp/"
-<% if binhost %>
+<% if binhost and binhost != 'SELF' %>
 PORTAGE_BINHOST="<%= binhost %>"
 <% end %>
 
@@ -294,7 +294,7 @@ SYNC="<%= rsync_mirror %>"
 #     --usepkg and many others. Options that are not useful, such as --help,
 #     are not filtered.
 #EMERGE_DEFAULT_OPTS=""
-EMERGE_DEFAULT_OPTS="<% if emerge_opts %><%= emerge_opts %><% end %><% if binhost %> --usepkg --getbinpkg<% end %><% if binhost_only %>  --getbinpkgonly<% end %>"
+EMERGE_DEFAULT_OPTS="<% if emerge_opts %><%= emerge_opts %><% end %><% if binhost %> --usepkg<% end %><% if binhost and binhost != 'SELF'%> --getbinpkg<% end %><% if binhost_only %>  --getbinpkgonly<% end %>"
 #
 # INSTALL_MASK allows certain files to not be installed into your file system.
 #     This is useful when you wish to filter out a certain set of files from

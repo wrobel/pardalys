@@ -25,5 +25,5 @@ class meta::kolab::monitor::master {
   include tool::openssl
   include service::lighttpd
   include service::logwatch
-  include service::nagios
+#  include service::nagios
 }

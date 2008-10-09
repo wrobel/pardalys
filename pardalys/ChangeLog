@@ -1,5 +1,8 @@
 2008-10-09  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_openldap/manifests/init.pp: Always use the
+	useradd provider, fixes for the ssl certificate path.
+
 	* modules/service_kolab/plugins/facter/kolab.rb: Do not empty the
 	facts before reading additional config files.
 

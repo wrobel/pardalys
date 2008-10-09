@@ -21,8 +21,8 @@ include <%= openldap_schemadir %>/puppet.schema
 pidfile		<%= openldap_pidfile %>
 argsfile	<%= openldap_argsfile %>
 
-TLSCertificateFile     <%= sysconfdir %>/kolab/cert.pem
-TLSCertificateKeyFile  <%= sysconfdir %>/kolab/key.pem
+TLSCertificateFile     <%= ssl_cert_path %>
+TLSCertificateKeyFile  <%= ssl_key_path %>
 <% if ca_cert %>
 TLSCACertificateFile   <%= ca_cert %>
 TLSVerifyClient        never

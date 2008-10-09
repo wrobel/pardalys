@@ -87,15 +87,19 @@ class service::openldap::serve {
 
   user {
     "$openldap_rusr":
-    ensure     => 'present',
-    gid        => "$openldap_grp",
-    groups     => ["${service::kolab::kolab_grp}"],
-    membership => 'minimum';
+      ensure     => 'present',
+      gid        => "$openldap_grp",
+      groups     => ["${service::kolab::kolab_grp}"],
+      provider => 'useradd',
+      membership => 'minimum';
   }
 
   $openldap_master    = get_var('openldap_master', true)
   $openldap_slave     = get_var('openldap_slave', '')
   $ca_cert            = get_var('ca_cert', false)
+
+  $ssl_cert_path  = $tool::openssl::ssl_cert_path
+  $ssl_key_path   = $tool::openssl::ssl_key_path
 
   $template_openldap = template_version($version_openldap, '2.4.7@:2.4.7,', '2.4.7')
 

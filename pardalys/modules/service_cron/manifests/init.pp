@@ -23,6 +23,7 @@ class service::cron {
 
   group {'fcron':
     ensure => 'present',
+    provider => 'groupadd',
     require => Package['fcron']
   }
 

@@ -1,5 +1,8 @@
 2008-10-09  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_cron/manifests/init.pp: Always use the groupadd
+	provider.
+
 	* modules/service_clamav/manifests/init.pp: Always use the useradd
 	provider.
 

@@ -79,7 +79,8 @@ class service::kolab {
 
   group {
     "$kolab_grp":
-    ensure => "present"
+      ensure => "present",
+      provider => "groupadd"
   }
 
   case $kolab_slapd_recovery {
@@ -99,7 +100,7 @@ class service::kolab {
       if $kolab_bootstrap {
         sslcert{ 
           "$kolab_confdir":
-          require  => File["$kolab_confdir"],
+          require  => "${tool::openssl::ssl_confdir}/system",
           hostname => "$kolab_fqdnhostname",
           group    => "$kolab_grp",
           ensure   => 'present';

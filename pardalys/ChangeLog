@@ -1,5 +1,8 @@
 2008-10-09  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/tool_system/manifests/init.pp: Screen should be on any
+	machine.
+
 	* modules/tool_portage/templates/make.conf_2.1.4.4: Correct
 	handling of the binhost setting.
 

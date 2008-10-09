@@ -92,6 +92,12 @@ class tool::system {
         tag      => 'buildhost'
       }
 
+      package { screen:
+        category => 'app-misc',
+        ensure   => 'installed',
+        tag      => 'buildhost'
+      }
+
       package { dhcpcd:
         category => 'net-misc',
         ensure   => 'installed',

@@ -49,7 +49,7 @@ class tool::ec2::kernel {
     '/usr/src/linux/.config':
     source  => "puppet:///tool_ec2_kernel/dot_config_$ec2_architecture",
     ensure => 'present',
-    notify => Exec["ec2-sources-conf"]
+    notify => Exec["ec2-sources-conf"],
     require => Package['ec2-sources'];
   }
 

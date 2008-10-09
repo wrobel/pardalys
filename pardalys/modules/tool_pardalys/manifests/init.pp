@@ -156,7 +156,7 @@ class tool::pardalys {
   $pardalys_type =  get_var('pardalys_type', 'plain')
 
   case $pardalys_type {
-    slave: {
+    'slave': {
 
       $pardalys_modules =  get_var('pardalys_modules', 'meta_kolab_complete')
       $my_pardalys_modules =  split($pardalys_modules, ',')
@@ -172,7 +172,7 @@ class tool::pardalys {
         require  => File['/etc/pardalys'];
       }
     }
-    local: {
+    'local': {
       $pardalys_ldapserver = ''
       $pardalys_ldapbase = ''
       $pardalys_ldapuser = ''

@@ -71,8 +71,9 @@ class service::clamav {
     $socket  = '/var/amavis/clamd.sock'
     user {
       "$ruser":
-      ensure     => 'present',
-      require => Package['amavisd-new'];
+        ensure     => 'present',
+        provider => 'useradd',
+        require => Package['amavisd-new'];
     }
   } else {
     $ruser   = 'clamav'

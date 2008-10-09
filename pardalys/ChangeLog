@@ -1,5 +1,10 @@
 2008-10-09  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_clamav/manifests/init.pp: Always use the useradd
+	provider.
+
+	* modules/tool_ntp/manifests/init.pp: Added ntp module.
+
 	* modules/tool_ec2_kernel/manifests/init.pp: Fix kernel config
 	generation.
 

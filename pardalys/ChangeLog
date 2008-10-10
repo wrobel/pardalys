@@ -1,5 +1,8 @@
 2008-10-10  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/tool_baselayout/manifests/init.pp: Add the timezone
+	setting.
+
 	* modules/service_kolabd/manifests/init.pp: A draft module for the
 	kolabd daemon.
 

@@ -57,6 +57,7 @@ class tool::baselayout {
   $system_domainname   = get_var('domainname', 'localdomain')
   $baselayout_fstab    = get_var('fstab', false)
   $baselayout_net      = get_var('net', false)
+  $baselayout_timezone = get_var('timezone', false)
 
   if $override_virtual {
     $build_virtual = $override_virtual
@@ -80,6 +81,14 @@ class tool::baselayout {
     file { 
       '/etc/fstab':
       content  => template("tool_baselayout/fstab"),
+      require => Package['baselayout'];
+    }
+  }
+
+  if $baselayout_timezone {
+    file { 
+      '/etc/timezone':
+      content  => "TIMEZONE=$baselayout_timezone\n",
       require => Package['baselayout'];
     }
   }

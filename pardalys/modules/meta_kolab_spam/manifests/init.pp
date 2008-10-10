@@ -1,5 +1,5 @@
 import 'os'
-import 'service_kolab'
+import 'kolab_service_kolab'
 import 'service_amavisd_new'
 import 'service_clamav'
 import 'service_spamassassin'
@@ -16,7 +16,7 @@ import 'service_dspam'
 class meta::kolab::spam {
 
   include os
-  include service::kolab
+  include kolab::service::kolab
   include service::amavisd_new
   include service::clamav
   include service::spamassassin

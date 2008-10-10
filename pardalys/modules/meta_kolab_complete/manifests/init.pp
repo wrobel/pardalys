@@ -1,6 +1,7 @@
 import 'root'
 import 'os'
-import 'service_kolab'
+import 'kolab_service_kolab'
+import 'tool_openssl'
 import 'service_openldap'
 import 'service_sasl'
 import 'service_postfix'
@@ -16,7 +17,8 @@ import 'service_postfix'
 class meta::kolab::complete {
 
   include os
-  include service::kolab
+  include kolab::service::kolab
+  include tool::openssl
   include service::openldap
   include service::openldap::serve
   case $kolab_slapd_recovery {

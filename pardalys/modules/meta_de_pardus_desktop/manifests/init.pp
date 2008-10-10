@@ -1,5 +1,5 @@
 import 'os'
-import 'service_kolab'
+import 'kolab_service_kolab'
 import 'tool_cups'
 
 # Class meta::kolab::desktop
@@ -12,6 +12,6 @@ import 'tool_cups'
 #
 class meta::de::pardus::desktop {
   include os
-  include service::kolab
+  include kolab::service::kolab
   include tool::cups
 }

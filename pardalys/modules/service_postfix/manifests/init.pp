@@ -14,7 +14,7 @@ import 'os_gentoo'
 #                        paths.
 # @module os_gentoo      The os_gentoo module is required for Gentoo specific
 #                        package installation.
-# @module service_kolab  Provides the kolab configuration directory.
+# @module kolab_service_kolab  Provides the kolab configuration directory.
 # @module service_sasl   Provides the required saslauthd service.
 #
 # @fact operatingsystem  Allows to choose the correct package name

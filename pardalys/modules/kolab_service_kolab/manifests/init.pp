@@ -1,35 +1,12 @@
-# Class service::kolab
+# Class kolab::service::kolab
 #
-#  Provides basic Kolab server elements
+#  Provides the core configuration for the Kolab Server.
 #
 # @author Gunnar Wrobel <p@rdus.de>
 # @version 1.0
-# @package service_kolab
+# @package kolab_service_kolab
 #
-# @param os::sbindir           Path to administrator programs
-# @param os::sysconfdir        System configuration directory
-#
-# @fact kolab_confdir          Path to the kolab configuration directory
-# @fact kolab_configfile       Path to the kolab app configuration file
-# @fact kolab_globalsfile      Path to the kolab global configuration file
-#
-# @fact kolab_fqdnhostname     The fully qualified hostname
-# @fact kolab_is_master        Is this a master kolab server?
-# @fact kolab_postfix_mydomain The mail domain served by this server
-# @fact kolab_base_dn          Base LDAP DN for the server
-# @fact kolab_bind_dn          Manager DN for the server
-# @fact kolab_bind_pw          Manager pass for the server
-# @fact kolab_bind_pw_hash     Hash of the manager pass
-# @fact kolab_ldap_uri         Location of the LDAP server
-# @fact kolab_ldap_master_uri  Location of the LDAP master server
-# @fact kolab_php_dn           Unpriviled user DN
-# @fact kolab_php_pw           Unpriviled user password
-# @fact kolab_calendar_id      Calendar user id
-# @fact kolab_calendar_pw      Calendar user password
-#
-# @fact kolab_bootstrapfile    Path to the kolab bootstrap configuration
-#
-class service::kolab {
+class kolab::service::kolab {
 
   if $kolab_ldap_error {
     case $kolab_slapd_recovery {
@@ -67,16 +44,6 @@ class service::kolab {
     }
   }
 
-  $kolab_confscript = "${os::sbindir}/pardalys"
-  $kolab_usr        = 'root'
-  $kolab_grp        = 'kolab'
-  $kolab_rusr       = 'root'
-  $kolab_rgrp       = 'root'
-  $kolab_musr       = 'root'
-  $kolab_mgrp       = 'root'
-  $sysconfdir       = $os::sysconfdir
-  $sbindir          = $os::sbindir
-
   group {
     "$kolab_grp":
       ensure => "present",
@@ -89,21 +56,22 @@ class service::kolab {
         "$kolab_confdir":
         ensure  => 'directory';
         "$kolab_configfile":
-        content => template('service_kolab/kolab.conf'),
+        content => template('kolab_service_kolab/kolab.conf'),
+        replace => 'no',
         require => File["$kolab_confdir"];
         "$kolab_globalsfile":
-        content => template('service_kolab/kolab.globals'),
-        replace => 'no',
+        content => template('kolab_service_kolab/kolab.globals'),
         require => File["$kolab_confdir"];
       }
 
       if $kolab_bootstrap {
         sslcert{ 
           "$kolab_confdir":
-          require  => "${tool::openssl::ssl_confdir}/system",
-          hostname => "$kolab_fqdnhostname",
-          group    => "$kolab_grp",
-          ensure   => 'present';
+            require  => "$kolab_pki_dir",
+            hostname => "$kolab_fqdnhostname",
+            group    => "$kolab_grp",
+            ensure   => 'present',
+            require => Group["$kolab_grp"];
         }
 
         file {

@@ -1,3 +1,8 @@
+2008-10-10  Gunnar Wrobel  <p@rdus.de>
+
+	* modules/kolab_service_kolab/*: Renamed service_kolab module to
+	kolab_service_kolab.
+
 2008-10-09  Gunnar Wrobel  <p@rdus.de>
 
 	* modules/service_cyrusimap/*: Continued the cyrus-imapd module

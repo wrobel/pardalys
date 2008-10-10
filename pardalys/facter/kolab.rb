@@ -1,1 +1,1 @@
-../modules/service_kolab/plugins/facter/kolab.rb
+../modules/kolab_service_kolab/plugins/facter/kolab.rb

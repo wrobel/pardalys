@@ -1,0 +1,421 @@
+# ------------------------------------------------------------------------------
+#                     !!! DO NOT MODIFY THIS FILE !!!
+# ------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------------
+#                   The Kolab Server configuration system
+# ------------------------------------------------------------------------------
+#
+# This file belongs to the Kolab server configuration system. This header should
+# give you a short overview about the Kolab Server configuration hierarchy and
+# provide some details on the specific role of this file.
+#
+# The Kolab Server accepts information from six sources:
+#
+#  A) The hardcoded defaults for the distribution on which you installed the
+#     server
+#
+#  B) The <%= kolab_globalsfile %>
+#
+#  C) The <%= kolab_configfile %>
+#
+#  D) The bootstrap process
+#
+#  E) Internal default generation based on global system settings
+#
+#  F) Settings from LDAP
+#
+# The sources get evaluated in the order presented above. Each source will
+# overwrite the settings from the previous source.
+#
+# => The role of this file (B) <=
+#
+# This file will get generated during the initial server
+# installation/bootstrap. It holds all default values relevant for the different
+# Kolab Server components. It is only read by the tools from perl-kolab though
+# and most information in this file is just for your reference.
+# 
+# You should NEVER change values in this file as these are the core defaults
+# for Kolab. Site specific changes should go into <%= kolab_configfile %> or
+# LDAP.
+
+# ------------------------------------------------------------------------------
+#                               HARDCODED VARIABLES
+# ------------------------------------------------------------------------------
+#
+# WHILE THE VARIABLES BELOW ARE SHOWN FOR REFERENCE THEY ARE HARDCODED AND YOU
+# MAY NOT CHANGE THEM HERE OR ANYWHERE ELSE
+#
+
+# The directory where the Kolab Server configuration is being stored
+# confdir: <%= kolab_confdir %>
+
+# Full path to the Kolab Server core settings
+# globalsfile: <%= kolab_globalsfile %>
+
+# ------------------------------------------------------------------------------
+#                               DEVELOPER VARIABLES
+# ------------------------------------------------------------------------------
+#
+# DO NOT OVERRIDE THE VARIABLES BELOW IF YOU DON'T KNOW EXACTLY WHAT YOU ARE DOING
+#
+
+# Path to the Kolab configuration directory
+# FIXME: rename variable in line 2 to line 1
+confdir: <%= kolab_confdir %>
+kolabdir: <%= kolab_confdir %>
+
+# Full path to the Kolab Server application settings
+# FIXME: rename variable in line 2 to line 1
+configfile: <%= kolab_configfile %>
+kolab_locals: <%= kolab_configfile %>
+
+# Full path to the Kolab Server bootstrap settings
+bootstrapfile: <%= kolab_bootstrapfile %>
+
+# Full path to configuration tool that generates the Kolab Server configuration
+# FIXME: rename variable in line 2 to line 1
+confscript: <%= kolab_confscript %>
+kolabconf_script: <%= kolab_confscript %>
+
+# The path to the Kolab configuration files (only required when using kolabconf)
+templatedir: <%= kolab_templatedir %>
+
+# Kolab "root" user
+# FIXME: rename variable in line 2 to line 1
+usr: <%= kolab_usr %>
+kolab_usr: <%= kolab_usr %>
+
+# Kolab "root" group
+# FIXME: rename variable in line 2 to line 1
+grp: <%= kolab_grp %>
+kolab_grp: <%= kolab_grp %>
+
+# Kolab restricted user
+# FIXME: rename variable in line 2 to line 1
+rusr: <%= kolab_rusr %>
+kolab_rusr: <%= kolab_rusr %>
+
+# Kolab restricted group
+# FIXME: rename variable in line 2 to line 1
+rgrp: <%= kolab_rgrp %>
+kolab_rgrp: <%= kolab_rgrp %>
+
+# Kolab unprivileged user
+# FIXME: rename variable in line 2 to line 1
+musr: <%= kolab_musr %>
+kolab_musr: <%= kolab_musr %>
+
+# Kolab unprivileged group
+# FIXME: rename variable in line 2 to line 1
+mgrp: <%= kolab_mgrp %>
+kolab_mgrp: <%= kolab_mgrp %>
+
+# LDAP server user
+ldapserver_usr: <%= kolab_ldapserver_usr %>
+
+# LDAP server group
+ldapserver_grp: <%= kolab_ldapserver_grp %>
+
+# LDAP runtime user
+ldapserver_rusr: <%= kolab_ldapserver_rusr %>
+
+# LDAP runtime group
+ldapserver_rgrp: <%= kolab_ldapserver_rgrp %>
+
+# The path to the configuration directory of the OpenLDAP server
+ldapserver_confdir: <%= kolab_ldapserver_confdir %>
+
+# The path to the data directory of the OpenLDAP server
+ldapserver_dir: <%= kolab_ldapserver_dir %>
+
+# Name of the ldap service to restart
+# FIXME: rename variable in line 2 to line 1
+ldap_service: <%= kolab_ldap_service %>
+LDAPD: <%= kolab_ldap_service %>
+
+# Where should kolabd keep its PID file?
+# FIXME: rename variable in line 2 to line 1
+kolabd_pidfile: <%= kolab_kolabd_pidfile %>
+kolab_pidfile: <%= kolab_kolabd_pidfile %>
+
+# Where should kolabd keep its PID file?
+# FIXME: rename variable in line 2 to line 1
+kolabd_statedir: <%= kolab_kolabd_statedir %>
+kolab_statedir: <%= kolab_kolabd_statedir %>
+
+# Field names of user objects in the LDAP db (used by LDAP.pm in perl-kolab)
+user_field_deleted: kolabdeleteflag
+user_field_guid: entryUUID
+user_field_modified: modifytimestamp
+user_field_quota: cyrus-userquota
+user_object_class: inetOrgPerson
+
+# Field names of shared folder objects in the LDAP db (used by LDAP.pm in perl-kolab)
+sf_field_deleted: kolabdeleteflag
+sf_field_guid: entryUUID
+sf_field_modified: modifytimestamp
+sf_field_quota: cyrus-userquota
+sf_object_class: kolabsharedfolder
+
+# Field names of group objects in the LDAP db (used by LDAP.pm in perl-kolab)
+group_field_deleted: kolabdeleteflag
+group_field_guid: entryUUID
+group_field_modified: modifytimestamp
+group_object_class: inetOrgPerson
+
+# Only remove the kolab-related objectClasses when deleting rather than killing the LDAP object
+kolab_remove_objectclass: false
+
+# Space delimited list of kolab-related attributes that should get removed when deleting an object
+kolab_remove_attributes: 
+
+# Tool for regenerating the postfix databases
+postmapping: <%= kolab_sbindir %>/postmap -o <%= kolab_emailserver_confdir %>
+
+# Tool for handling service restarts (only required with kolabconf)
+# FIXME: rename variable in line 2 to line 1
+kolabrc: <%= kolab_kolabrc %>
+KOLABRC: <%= kolab_kolabrc %>
+
+# Method for generating password hashes
+hashmethod: <%= kolab_sbindir %>/slappasswd -s
+
+# Path to library executables
+libexecdir: <%= kolab_libexecdir %>
+
+# Path to the SASL config file for the smtpd daemon
+sasl_smtpconffile: <%= kolab_sasl_smtpconffile %>
+
+# A space delimited list of files that should be stored before running bootstrap
+# (only with kolab_bootstrap)
+backupfiles: <%= kolab_backupfiles %>
+
+# Path to the storage place for the backup archives (only with kolab_bootstrap)
+backupdir: <%= kolab_backupdir %>
+
+# Pths to cache dbs for LDAP.pm
+# FIXME: rename variable in line 2 to line 1
+mailboxuiddb: <%= kolab_mailboxuiddb %>
+kolab_mailboxuiddb: <%= kolab_mailboxuiddb %>
+graveyard_uidcache: <%= kolab_graveyard_uidcache %>
+graveyard_tscache: <%= kolab_graveyard_tscache %>
+
+# Are we bootstrapping for OpenPKG (only with kolab_bootstrap)?
+# FIXME: rename variable in line 2 to line 1
+with_openpkg: <%= kolab_with_openpkg %>
+WITHOPENPKG: <%= kolab_with_openpkg %>
+
+# Path to kolab helper scripts
+# FIXME: rename variable in line 2 to line 1
+scriptsdir: <%= kolab_scriptsdir %>
+kolab_scriptsdir: <%= kolab_scriptsdir %>
+
+# Group with access to the SSL certificates
+pki_grp: <%= kolab_pki_grp %>
+
+# Path to the tar binary (only with kolab_bootstrap)
+# FIXME: rename variable in line 2 to line 1
+tar_bin: <%= kolab_tar_bin %>
+TAR: <%= kolab_tar_bin %>
+
+# URL to the kolab admin webinterface (only with kolab_bootstrap)
+# FIXME: rename variable in line 2 to line 1
+wui: <%= kolab_wui %>
+kolab_wui: <%= kolab_wui %>
+
+# ------------------------------------------------------------------------------
+#                               TEMPLATE VARIABLES
+# ------------------------------------------------------------------------------
+#
+# THE FOLLOWING VARIABLES ARE USED FOR WRITING THE KOLAB CONFIGURATION. THEY ARE
+# ONLY PRESENTED AS A REFERENCE
+#
+
+# Path to the directory holding the system SSL certificates
+# FIXME: NEW
+# pki_dir: <%= kolab_pki_dir %>
+
+# Path to the saslauthd configuration
+# sasl_authdconffile: <%= kolab_sasl_authdconffile %>
+
+# Path to the saslauthd log file
+# sasl_logfile: <%= kolab_sasl_logfile %>
+
+# Path to the ldap db schemas
+# ldapserver_schemadir: <%= kolab_ldapserver_schemadir %>
+
+# Path to the pid file of the slapd process
+# ldapserver_pidfile: <% kolab_ldapserver_pidfile %>
+
+# Path to the args file of the slapd process
+# ldapserver_argsfile: <% kolab_ldapserver_argsfile %>
+
+# Path to the log file of the slapd process
+# ldapserver_logfile: <% kolab_ldapserver_logfile %>
+
+# Path to the pid file of the slurpd process
+# ldapserverslurpd_pidfile: <% kolab_ldapserverslurpd_pidfile %>
+
+# Path to the replication log of the slurpd process
+# ldapserver_replogfile: <% kolab_ldapserver_replogfile %>
+
+# Path to IMAP configuration directory
+# imap_confdir: <%= kolab_imap_confdir %>
+
+# Permissions of the configuration files
+# imap_confperm: <%= kolab_imap_confperm %>
+
+# IMAP user
+# imap_usr: <%= kolab_imap_usr %>
+
+# IMAP group
+# imap_grp: <%= kolab_imap_grp %>
+
+# Path to the log file of the cyrus imapd master process
+# imap_masterlogfile: <%= kolab_imap_masterlogfile %>
+
+# Path to the misc log file of cyrus imapd
+# imap_misclogfile: <%= kolab_imap_misclogfile %>
+
+# Path to the IMAP state dir
+# imap_statedir: <%= kolab_imap_statedir %>
+
+# Path to the IMAP spool dir containing the user mail
+# imap_spool: <%= kolab_imap_spool %>
+
+# Path to the sieve filter directory
+# imap_sievedir: <%= kolab_imap_sievedir %>
+
+# Path to the lmtp delivery socket
+# imap_lmtp: <%= kolab_imap_lmtp %>
+
+# Path to the notify socket
+# imap_notify_socket: <%= kolab_imap_notify_socket %>
+
+# Name of the IMAP package
+# imap_pkg: <%= kolab_imap_pkg %>
+
+
+# ------------------------------------------------------------------------------
+#                                  USER VARIABLES
+# ------------------------------------------------------------------------------
+#
+# THESE ARE VARIABLES THAT CAN BE MODIFIED IN <%= kolab_configfile %>
+#
+
+# NETWORK
+# ~~~~~~~
+
+# Interfaces we should bind to (e.g. postfix server)
+bind_addr: 0.0.0.0
+
+# Should the services bind to all IP addresses?
+bind_any: TRUE
+
+# Our local IP address
+local_addr: 127.0.0.1
+
+# To which syslog facility should log entries go if a tool logs to syslog?
+syslog_facility: user
+
+# General log level (mainly applies to the tools provided by perl-kolab)
+log_level: 2
+
+# Activate if tools logging to syslog should also present logging output on
+# STDERR
+debug: 0
+
+# Which LDAP backend should kolabd use?
+directory_mode: syncrepl
+
+# How often should kolabd sync with the LDAP server (valid for the "ad" and
+# "fds" LDAP backends of kolabd)?
+conn_refresh_period: 60
+
+# Parameters for the "slurpd" LDAP backend of kolabd
+slurpd_addr: 127.0.0.1
+slurpd_accept_addr: 127.0.0.1
+slurpd_port: 9999
+
+# How many minutes should we wait until the IMAP store of a deleted user is
+# cleared?
+gyard_deletion_period: 10080
+
+# ID of the calendar user
+calendar_id: calendar
+
+# ------------------------------------------------------------------------------
+#                                  SITE VARIABLES
+# ------------------------------------------------------------------------------
+#
+# THESE ARE VARIABLES THAT MUST BE MODIFIED IN <%= kolab_configfile %>. DO NOT
+# MODIFY THE VALUES HERE. THEY ARE JUST PRESENTED AS A REFERENCE.
+#
+
+# The fully qualified host name of this Kolab server
+# fqdnhostname: localhost
+
+# This is our LDAP master host
+# ldap_master_uri: ldap://127.0.0.1:389
+
+# This is the LDAP host we should connect to
+# ldap_uri: ldap://127.0.0.1:389
+
+# Is this server a Kolab master server?
+# is_master: true
+
+# Base DN of the LDAP server
+# base_dn: dc=example,dc=com
+
+# Bind with this DN to the LDAP server
+# bind_dn: cn=manager,cn=internal,dc=example,dc=com
+
+# Bind with this password to the LDAP server
+# bind_pw: XXXXXXXXXXXXXX
+
+# Password hash of the password given above
+# bind_pw: 0123456789abcdef
+
+# Primary mail domain of this Kolab server
+# postfix-mydomain: example.com
+
+# Password for the calendar user
+# calendar_pw: XXXXXXXXXXXXXX
+
+# ------------------------------------------------------------------------------
+#                                  LDAP VARIABLES
+# ------------------------------------------------------------------------------
+#
+# THESE ARE VARIABLES THAT SHOULD BE MODIFIED IN LDAP
+#
+
+# The cyrus admin accounts
+cyrus_admins: manager
+
+# The account tools should use for administrative work
+cyrus_admin: manager
+
+# Should the cyrus imap port be active?
+cyrus_imap: TRUE
+
+# Should the SSL encrypted cyrus imap port be active?
+cyrus_imaps: TRUE
+
+# Should the cyrus pop3 port be active?
+cyrus_pop3: FALSE
+
+# Should the SSL encrypted cyrus pop3 port be active?
+cyrus_pop3s: TRUE
+
+# Should cyrus offer sieve (filtering) capabilities?
+cyrus_sieve: TRUE
+
+# Warn the user once the mailbox space has been used up to this percentage
+cyrus_quotawarn: 80
+
+# Should we allow unauthenticated retrieval of free/busy information?
+apache-allow-unauthenticated-fb: FALSE
+
+#FIXME: postfix-allow-unauthenticated, postfix-enable-virus-scan, apache-http, MORE?
+

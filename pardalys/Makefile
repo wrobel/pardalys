@@ -15,6 +15,7 @@ datarootdir = $(prefix)/share
 datadir = $(datarootdir)
 docdir = $(datarootdir)/doc/$(PACKAGE)
 sysconfdir = $(prefix)/etc
+dist_conf = modules/service_kolab/plugins/facter/dist_conf
 
 .PHONY:
 install:
@@ -32,6 +33,7 @@ install:
 	do \
 	  ln -s ../$$FACT $(DESTDIR)$(datadir)/$(PACKAGE)/facter; \
 	done
+	ln -s ../$(dist_conf) $(DESTDIR)$(datadir)/$(PACKAGE)/facter; \
 	mkdir -p $(DESTDIR)$(docdir)
 	$(INSTALL_DATA) INSTALL HACKING README CHANGES $(DESTDIR)$(docdir)
 	mkdir -p $(DESTDIR)$(sysconfdir)/$(PACKAGE)

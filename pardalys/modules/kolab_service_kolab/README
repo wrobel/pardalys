@@ -1,0 +1,5 @@
+Provides the core configuration for the Kolab Server.
+
+@author Gunnar Wrobel <p@rdus.de>
+@version 1.0
+@package kolab_service_kolab

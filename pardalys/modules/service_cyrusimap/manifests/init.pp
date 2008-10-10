@@ -16,7 +16,7 @@ import 'os_gentoo'
 #                        paths.
 # @module os_gentoo      The os_gentoo module is required for Gentoo specific
 #                        package installation.
-# @module service_kolab  Provides the kolab configuration.
+# @module kolab_service_kolab  Provides the kolab configuration.
 #
 # @fact operatingsystem  Allows to choose the correct package name
 #                        depending on the operating system. In addition
@@ -77,48 +77,51 @@ class service::cyrusimap {
 
   $sysconfdir         = $os::sysconfdir
 
-  $template_imapd = template_version($version_imapd, '2.3.12_p2@:2.3.12,', '2.3.12')
+  $template_imapd = template_version($version_imapd, '2.3.12_p2@:2.3.12_p2,', '2.3.12_p2')
 
   $lmtp_socket   = '/var/imap/socket/lmtp'
   $notify_socket = '/var/imap/socket/notify'
   $sievedir      = '/var/imap/sieve'
-  $lmtp_external = get_var('imap_lmtp_external', false)
-  $cyrus_admins = get_var('kolab_cyrus_admins')
+  $statedir      = '/var/imap'
+  $spooldir      = '/var/spool/imap'
+  $lmtp_external   = get_var('imap_lmtp_external', false)
+  $cyrus_admins    = get_var('kolab_cyrus_admins')
+  $allow_anonymous = get_var('imap_allow_anonymous', 'no')
   $sendmail = '/usr/sbin/sendmail'
 
   $ssl_cert_path  = $tool::openssl::ssl_cert_path
   $ssl_key_path   = $tool::openssl::ssl_key_path
 
-#   file { 
-#     "${sysconfdir}/cyrus.conf":
-#       content => template("service_cyrusimap/cyrus.conf_${template_imapd}"),
-#       mode    => 640,
-#       owner => 'cyrus',
-#       group => 'mail',
-#       require => Package['cyrus-imapd'],
-#       notify  => Service['cyrus-imapd'];
-#     "${sysconfdir}/imapd.conf":
-#       content => template("service_cyrusimap/imapd.conf_${template_imapd}"),
-#       mode    => 640,
-#       owner => 'cyrus',
-#       group => 'mail',
-#       require => Package['cyrus-imapd'],
-#       notify  => Service['cyrus-imapd'];
-#     "${sysconfdir}/imapd.groups":
-#       content => template("service_cyrusimap/imapd.groups_${template_imapd}"),
-#       mode    => 640,
-#       owner => 'cyrus',
-#       group => 'mail',
-#       require => Package['cyrus-imapd'],
-#       notify  => Service['cyrus-imapd'];
-#     "${sysconfdir}/imapd.annotation_definitions":
-#       content => "puppet:///service_cyrusimap/imapd.annotation_definitions_${template_imapd}",
-#       mode    => 640,
-#       owner => 'cyrus',
-#       group => 'mail',
-#       require => Package['cyrus-imapd'],
-#       notify  => Service['cyrus-imapd'];
-#   }
+  file { 
+    "${sysconfdir}/cyrus.conf":
+      content => template("service_cyrusimap/cyrus.conf_${template_imapd}"),
+      mode    => 640,
+      owner => 'cyrus',
+      group => 'mail',
+#      notify  => Service['cyrus-imapd'],
+      require => Package['cyrus-imapd'];
+    "${sysconfdir}/imapd.conf":
+      content => template("service_cyrusimap/imapd.conf_${template_imapd}"),
+      mode    => 640,
+      owner => 'cyrus',
+      group => 'mail',
+#      notify  => Service['cyrus-imapd'],
+      require => Package['cyrus-imapd'];
+    "${sysconfdir}/imapd.groups":
+      content => template("service_cyrusimap/imapd.groups_${template_imapd}"),
+      mode    => 640,
+      owner => 'cyrus',
+      group => 'mail',
+#      notify  => Service['cyrus-imapd'],
+      require => Package['cyrus-imapd'];
+    "${sysconfdir}/imapd.annotation_definitions":
+      source => "puppet:///service_cyrusimap/imapd.annotation_definitions_${template_imapd}",
+      mode    => 640,
+      owner => 'cyrus',
+      group => 'mail',
+#      notify  => Service['cyrus-imapd'],
+      require => Package['cyrus-imapd'];
+  }
 
 #   service { 'cyrus-imapd':
 #     ensure    => 'running',

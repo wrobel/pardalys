@@ -1,0 +1,2 @@
+# gid's over 60000 are reserved for LDAP groups !
+<%= kolab_imap_groups %>

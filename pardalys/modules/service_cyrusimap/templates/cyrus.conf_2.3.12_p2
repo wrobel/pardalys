@@ -1,15 +1,17 @@
+# Standard standalone server configuration.
+
 START {
-  # do not delete this entry!
+  # Do not delete this entry!
   recover	cmd="ctl_cyrusdb -r"
 
-  # this is only necessary if using idled for IMAP IDLE
+  # This is only necessary if using idled for IMAP IDLE.
   #idled		cmd="idled"
 
   # Initial mupdate syncronisation
   #mupdatepush   cmd="ctl_mboxlist -m"
 }
 
-# UNIX sockets start with a slash and are put into /openpkg/var/imapd/sockets
+# UNIX sockets start with a slash and are put into /var/imap/socket.
 SERVICES {
 <% if kolab_cyrus_imap -%>
   imap cmd="imapd -C <%= sysconfdir %>/imapd.conf" listen="<%= kolab_bind_addr %>:143" prefork=0
@@ -22,10 +24,10 @@ SERVICES {
 <% if kolab_cyrus_pop3 -%>
   pop3 cmd="pop3d -C <%= sysconfdir %>/imapd.conf" listen="<%= kolab_bind_addr %>:110" prefork=0
 <% end -%>
-<% if kolab_cyrus_pop3s %>
+<% if kolab_cyrus_pop3s -%>
   pop3s cmd="pop3d -s -C <%= sysconfdir %>/imapd.conf" listen="<%= kolab_bind_addr %>:995" prefork=0
 <% end -%>
-<% if kolab_cyrus_sieve %>
+<% if kolab_cyrus_sieve -%>
   sieve cmd="timsieved -C <%= sysconfdir %>/imapd.conf" listen="<%= kolab_bind_addr %>:2000" prefork=0
 <% end -%>
 
@@ -33,24 +35,24 @@ SERVICES {
 #  mupdate       cmd="mupdate -m" listen=3905 prefork=1
 <% end -%>
 
-  # LMTP is required for delivery
+  # at least one LMTP is required for delivery
   lmtpunix	cmd="lmtpd" listen="<%= lmtp_socket %>" prefork=0
   lmtp          cmd="lmtpd -a" listen="<%= kolab_local_addr %>:2003"
 <% if lmtp_external %>
   lmtp          cmd="lmtpd" listen="<%= ipHostNumber %>:2003"
 <% end %>
   # this is only necessary if using notifications
-  notifyd	cmd="notifyd" listen="<%= notify_socket %>" proto="udp" prefork=1
+  notify	cmd="notifyd" listen="<%= notify_socket %>" proto="udp" prefork=1
 }
 
 EVENTS {
-  # this is required
+  # This is required.
   checkpoint	cmd="ctl_cyrusdb -c" period=30
 
-  # this is only necessary if using duplicate delivery suppression
+  # This is only necessary if using duplicate delivery suppression.
   delprune	cmd="cyr_expire -E 3" at=0400
 
-  # this is only necessary if caching TLS sessions
+  # This is only necessary if caching TLS sessions.
   tlsprune	cmd="tls_prune" period=1440
 
   # create SQUAT indexes for mailboxes

@@ -1,36 +1,53 @@
-#   Warning: Do not use a trailing slash in paths!
-configdirectory:        @imap_statedir@
-partition-default:      @imap_spool@
+# Warning: Do not use a trailing slash in paths!
 
+# Don't forget to use chattr +S (if you are using ext[23]) 
+# when you change these directories (read the docs).
+configdirectory:        <%= statedir %>
+partition-default:      <%= spooldir %>
+sievedir:		<%= sievedir %>
+
+tls_ca_path:            /etc/ssl/certs
+tls_cert_file: 		<%= ssl_cert_path %>
+tls_key_file: 		<%= ssl_key_path %>
+
+# Don't use an everyday user as admin.
+admins:                 <%= cyrus_admins.join(' ') %>
+
+hashimapspool:          yes
+#the fulldirhash optimization requires the rehash utility and the compile time switch --enable-fulldirhash
+#fulldirhash:           yes
+allowanonymouslogin:    <%= allow_anonymous %>
+allowplaintext:         yes
+
+# Allow renaming of top-level mailboxes.
 allowusermoves:         0
-admins:                 <%= cyrus-admins.join(' ') %>
+
+# Use this if sieve-scripts could be in ~user/.sieve.
+#sieveusehomedir:	yes
+
+# Use saslauthd if you want to use pam for imap.
+# But be warned: login with DIGEST-MD5 or CRAM-MD5 
+# is not possible using pam.
 sasl_pwcheck_method:    saslauthd
 sasl_mech_list: 	plain
+
 sendmail:               <%= sendmail %>
-allowanonymouslogin:    no
-allowplaintext:         yes
 servername:             <%= hostname %>.<%= domainname %>
 reject8bit:             no
 munge8bit: 		no
 quotawarn:              <%= kolab_cyrus_quotawarn %>
 lmtp_over_quota_perm_failure: 1
 timeout:                30
-sievedir:		<%= sievedir %>
-lmtpsocket: 		<%= lmtpsocket %>
+lmtpsocket: 		<%= lmtp_socket %>
 
 allowapop:              no
 
-tls_cert_file: 		<%= ssl_cert_path %>
-tls_key_file: 		<%= ssl_key_path %>
 
 altnamespace:           0
 unixhierarchysep:       yes
 lmtp_downcase_rcpt:	yes
 username_tolower:       1
 
-hashimapspool:          yes
-#the fulldirhash optimization requires the rehash utility and the compile time switch --enable-fulldirhash
-#fulldirhash:           yes
 
 ##virtdomains:            userid
 

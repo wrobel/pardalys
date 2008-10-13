@@ -74,6 +74,12 @@ class tool::system {
         tag      => 'buildhost'
       }
 
+      package { lsof:
+        category => 'sys-process',
+        ensure   => 'installed',
+        tag      => 'buildhost'
+      }
+
       package { sqlite:
         category => 'dev-db',
         ensure   => 'installed',

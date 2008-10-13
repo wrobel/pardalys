@@ -1,3 +1,7 @@
+2008-10-13  Gunnar Wrobel  <p@rdus.de>
+
+	* modules/tool_system/manifests/init.pp: Always install lsof.
+
 2008-10-10  Gunnar Wrobel  <p@rdus.de>
 
 	* modules/service_cyrusimap/manifests/init.pp: A first working

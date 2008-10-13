@@ -9,4 +9,5 @@ instance.yml
 .bundle
 .rebundle
 .update
+.release
 site.pp.*

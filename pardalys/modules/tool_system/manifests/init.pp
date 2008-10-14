@@ -18,7 +18,7 @@ class tool::system {
       gentoo_use_flags { perl:
         context => 'tools_system_common_perl',
         package => 'dev-lang/perl',
-        use     => '"berkdb gdbm',
+        use     => 'berkdb gdbm',
         tag     => 'buildhost'
       }
       package { perl:
@@ -26,6 +26,12 @@ class tool::system {
         ensure   => 'installed',
         tag      => 'buildhost',
         require  => Gentoo_use_flags['perl']
+      }
+
+      package { mercurial:
+        category => 'dev-util',
+        ensure   => 'installed',
+        tag      => 'buildhost'
       }
 
       gentoo_use_flags { libpcre:

@@ -1,5 +1,7 @@
 2008-10-14  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/tool_system/manifests/init.pp: Add mercurial.
+
 	* modules/tool_portage/manifests/init.pp: Allow ignoring eclass
 	overwrites on systems where we work with Gentoo CVS.
 

@@ -1,5 +1,8 @@
 2008-10-14  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/tool_baselayout/manifests/init.pp: Fixed timezone
+	setting.
+
 	* modules/service_cron/manifests/init.pp: Allow for a different
 	cron mode for systems that are not continuously running.
 

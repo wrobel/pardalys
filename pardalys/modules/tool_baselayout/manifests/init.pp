@@ -88,7 +88,7 @@ class tool::baselayout {
   if $baselayout_timezone {
     file { 
       '/etc/timezone':
-      content  => "TIMEZONE=$baselayout_timezone\n",
+      content  => "$baselayout_timezone",
       require => Package['baselayout'];
     }
   }

@@ -1,6 +1,8 @@
 import 'os'
 import 'kolab_service_kolab'
 import 'tool_cups'
+import 'tool_gfx'
+import 'tool_system_desktop'
 
 # Class meta::kolab::desktop
 #
@@ -14,4 +16,6 @@ class meta::de::pardus::desktop {
   include os
   include kolab::service::kolab
   include tool::cups
+  include tool::gfx
+  include tool::system::desktop
 }

@@ -1,3 +1,8 @@
+2008-10-14  Gunnar Wrobel  <p@rdus.de>
+
+	* modules/tool_emacs/manifests/init.pp: Extended the emacs
+	configuration.
+
 2008-10-13  Gunnar Wrobel  <p@rdus.de>
 
 	* modules/tool_system/manifests/init.pp: Always install lsof.

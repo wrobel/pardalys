@@ -1,5 +1,7 @@
 2008-10-14  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/tool_system_desktop/*: Added some desktop tools.
+
 	* modules/tool_gfx/*: Added some desktop gfx tools.
 
 	* modules/tool_baselayout/manifests/init.pp: openrc update.

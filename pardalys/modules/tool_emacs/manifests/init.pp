@@ -14,6 +14,25 @@ class tool::emacs {
   case $operatingsystem {
     gentoo:
     {
+      gentoo_use_flags { mercurial:
+        context => 'tools_emacs_mercurial',
+        package => 'dev-util/mercurial',
+        use     => 'emacs',
+        tag     => 'buildhost'
+      }
+      gentoo_use_flags { gettext:
+        context => 'tools_emacs_gettext',
+        package => 'sys-devel/gettext',
+        use     => 'emacs',
+        tag     => 'buildhost'
+      }
+      gentoo_use_flags { autoconf:
+        context => 'tools_emacs_autoconf',
+        package => 'sys-devel/autoconf',
+        use     => 'emacs',
+        tag     => 'buildhost'
+      }
+
       gentoo_use_flags { global:
         context => 'tool_emacs_global',
         package => 'dev-util/global',

@@ -1,5 +1,8 @@
 2008-10-14  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/tool_emacs/manifests/init.pp: Add the emacs use flag to
+	some packages.
+
 	* modules/tool_system/manifests/init.pp: Added keywords.
 
 	* modules/tool_emacs/manifests/init.pp: Added keywords.

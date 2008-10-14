@@ -109,7 +109,7 @@ class tool::emacs {
         tag      => 'buildhost'
       }
       gentoo_keywords { geben:
-        context  => 'tool_emacs_php_mode',
+        context  => 'tool_emacs_geben',
         package  => '=app-emacs/geben-0.13',
         keywords => "~$keyword",
         tag      => 'buildhost'

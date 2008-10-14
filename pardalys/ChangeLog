@@ -1,5 +1,8 @@
 2008-10-14  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_cron/manifests/init.pp: Allow for a different
+	cron mode for systems that are not continuously running.
+
 	* modules/service_ssmtp/manifests/init.pp: Fixed masked ssmtp
 	version.
 

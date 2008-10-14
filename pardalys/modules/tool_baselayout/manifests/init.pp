@@ -22,7 +22,7 @@ class tool::baselayout {
       }
       gentoo_keywords { openrc:
         context  => 'tool_baselayout_openrc',
-        package  => '=sys-apps/openrc-0.3.0',
+        package  => '=sys-apps/openrc-0.3.0-r1',
         keywords => "~$keyword",
         tag      => 'buildhost'
       }

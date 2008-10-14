@@ -64,6 +64,7 @@ class tool::portage {
   $config_protect       = split(get_var('portage_config_protect'), ',')
   $config_protect_mask  = split(get_var('portage_config_protect_mask'), ',')
   $linguas              = split(get_var('portage_linguas'), ',')
+  $eclass_warning       = get_var('portage_ignore_eclass_warning', false)
 
   $portage_sysadmin     = get_var('sysadmin',   'root@localhost')
   $portage_mailserver   = get_var('mailserver', 'localhost')
@@ -151,6 +152,13 @@ class tool::portage {
       file => '/etc/portage/make.conf.puppet',
       line => "PORTAGE_GPG_KEY=\"$portage_gpg_key\"",
       tag => 'buildhost'
+    }
+  }
+
+  if $eclass_warning {
+    @line {'make_conf_eclass_warning':
+      file => '/etc/portage/make.conf.puppet',
+      line => "PORTAGE_ECLASS_WARNING_ENABLE=\"0\""
     }
   }
 

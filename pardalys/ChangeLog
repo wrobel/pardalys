@@ -1,5 +1,8 @@
 2008-10-14  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/tool_portage/manifests/init.pp: Allow ignoring eclass
+	overwrites on systems where we work with Gentoo CVS.
+
 	* modules/tool_emacs/manifests/init.pp: Add the emacs use flag to
 	some packages.
 

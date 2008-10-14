@@ -1,0 +1,10 @@
+Provides graphic tools.
+
+@author Gunnar Wrobel <p@rdus.de>
+@version 1.0
+@package tool_gfx
+
+@module os_gentoo     The os_gentoo module is required for Gentoo support.
+
+@fact operatingsystem Allows to choose the correct actions depending
+                      on the operating system

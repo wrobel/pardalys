@@ -1,5 +1,9 @@
 2008-10-14  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/tool_system/manifests/init.pp: Added keywords.
+
+	* modules/tool_emacs/manifests/init.pp: Added keywords.
+
 	* modules/meta_de_pardus_desktop/manifests/init.pp: Add new
 	modules.
 

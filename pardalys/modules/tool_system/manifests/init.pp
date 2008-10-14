@@ -129,6 +129,59 @@ class tool::system {
         require  => Gentoo_keywords['scripts-gw']
       }
 
+      gentoo_keywords { cadaver:
+        context  => 'tool_system_cadaver',
+        package  => '=net-misc/cadaver-0.23.2',
+        keywords => "~$keyword",
+        tag      => 'buildhost'
+      }
+      package { cadaver:
+        category => 'net-misc',
+        ensure   => 'installed',
+        tag      => 'buildhost',
+        require  => Gentoo_keywords['cadaver']
+      }
+
+      gentoo_keywords { webpy:
+        context  => 'tool_system_webpy',
+        package  => '=dev-python/webpy-0.23',
+        keywords => "~$keyword",
+        tag      => 'buildhost'
+      }
+      package { webpy:
+        category => 'dev-python',
+        ensure   => 'installed',
+        tag      => 'buildhost',
+        require  => Gentoo_keywords['webpy']
+      }
+
+      gentoo_keywords { libgeier:
+        context  => 'tool_system_libgeier',
+        package  => '=dev-libs/libgeier-0.9',
+        keywords => "~$keyword",
+        tag      => 'buildhost'
+      }
+      gentoo_keywords { xmlsec:
+        context  => 'tool_system_xmlsec',
+        package  => '=dev-libs/xmlsec-1.2.11',
+        keywords => "~$keyword",
+        tag      => 'buildhost'
+      }
+      gentoo_keywords { ledger:
+        context  => 'tool_system_ledger',
+        package  => '=app-office/ledger-2.5-r2',
+        keywords => "~$keyword",
+        tag      => 'buildhost'
+      }
+      package { ledger:
+        category => 'app-office',
+        ensure   => 'installed',
+        tag      => 'buildhost',
+        require  => [Gentoo_keywords['libgeier'],
+                     Gentoo_keywords['xmlsec'],
+                     Gentoo_keywords['ledger']];
+      }
+
       package { iproute2:
         category => 'sys-apps',
         ensure   => 'installed',

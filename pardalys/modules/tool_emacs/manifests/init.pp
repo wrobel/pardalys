@@ -20,10 +20,17 @@ class tool::emacs {
         use     => 'doc emacs',
         tag     => 'buildhost'
       }
+      gentoo_keywords { global:
+        context  => 'tool_emacs_global',
+        package  => '=dev-util/global-5.7.1',
+        keywords => "~$keyword",
+        tag      => 'buildhost'
+      }
       package { global:
         category => 'dev-util',
         ensure   => 'installed',
-        require  =>  Gentoo_use_flags['global'],
+        require  =>  [Gentoo_use_flags['global'],
+                      Gentoo_keywords['global']],
         tag      => 'buildhost'
       }
       gentoo_keywords { delicious:

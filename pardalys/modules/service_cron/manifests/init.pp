@@ -20,6 +20,7 @@ class service::cron {
   $editor = get_var('global_editor', '/usr/bin/emacs')
   $cron_sysadmin = get_var('sysadmin', 'root@localhost')
   $cron_run_service = get_var('run_services', true)
+  $cron_system_continuous = get_var('system_continuous', true)
 
   group {'fcron':
     ensure => 'present',

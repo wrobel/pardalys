@@ -1,6 +1,14 @@
 !mailto(<%= cron_sysadmin %>)
+<% if cron_system_continuous %>
 0  *  * * *      rm -f /var/spool/cron/lastrun/cron.hourly
 1  3  * * *      rm -f /var/spool/cron/lastrun/cron.daily
 15 4  * * 6      rm -f /var/spool/cron/lastrun/cron.weekly
 30 5  1 * *      rm -f /var/spool/cron/lastrun/cron.monthly
+<% else %>
+@first(5)    1h   rm -f /var/spool/cron/lastrun/cron.hourly
+@first(60)   1d   rm -f /var/spool/cron/lastrun/cron.daily
+@first(180)  1w   rm -f /var/spool/cron/lastrun/cron.weekly
+@first(420)  1m   rm -f /var/spool/cron/lastrun/cron.monthly
+<% end %>
 &nice(15) */10  *  * * *      /usr/bin/test -x /usr/sbin/run-crons && /usr/sbin/run-crons
+

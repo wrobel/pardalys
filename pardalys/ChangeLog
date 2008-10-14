@@ -2,6 +2,9 @@
 
 	* modules/tool_baselayout/manifests/init.pp: openrc update.
 
+	* modules/tool_baselayout/manifests/init.pp: Fixed timezone
+	setting.
+
 	* modules/service_cron/manifests/init.pp: Allow for a different
 	cron mode for systems that are not continuously running.
 

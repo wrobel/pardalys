@@ -108,6 +108,18 @@ class tool::emacs {
         require  =>  Gentoo_keywords['php-mode'],
         tag      => 'buildhost'
       }
+      gentoo_keywords { geben:
+        context  => 'tool_emacs_php_mode',
+        package  => '=app-emacs/geben-0.13',
+        keywords => "~$keyword",
+        tag      => 'buildhost'
+      }
+      package { geben:
+        category => 'app-emacs',
+        ensure   => 'installed',
+        require  =>  Gentoo_keywords['geben'],
+        tag      => 'buildhost'
+      }
       package { python-mode:
         category => 'app-emacs',
         ensure   => 'installed',

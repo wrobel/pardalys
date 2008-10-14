@@ -38,6 +38,11 @@ class tool::emacs {
         require  =>  Gentoo_keywords['delicious'],
         tag      => 'buildhost'
       }
+      package { elscreen:
+        category => 'app-emacs',
+        ensure   => 'installed',
+        tag      => 'buildhost'
+      }
       gentoo_keywords { ssh:
         context  => 'tool_emacs_ssh',
         package  => '=app-emacs/ssh-1.9',
@@ -65,12 +70,24 @@ class tool::emacs {
         ensure   => 'installed',
         tag      => 'buildhost'
       }
+      gentoo_keywords { php-mode:
+        context  => 'tool_emacs_php_mode',
+        package  => '=app-emacs/php-mode-1.4.0_beta',
+        keywords => "~$keyword",
+        tag      => 'buildhost'
+      }
       package { php-mode:
+        category => 'app-emacs',
+        ensure   => 'installed',
+        require  =>  Gentoo_keywords['php-mode'],
+        tag      => 'buildhost'
+      }
+      package { python-mode:
         category => 'app-emacs',
         ensure   => 'installed',
         tag      => 'buildhost'
       }
-      package { python-mode:
+      package { emacs-w3m:
         category => 'app-emacs',
         ensure   => 'installed',
         tag      => 'buildhost'
@@ -81,9 +98,13 @@ class tool::emacs {
         tag      => 'buildhost'
       }
 
-      file{'/usr/share/emacs/site-lisp/site-gentoo.d/72git-gentoo.el':
-        source => 'puppet:///tool_emacs/72git-gentoo.el',
-        tag      => 'buildhost';
+      file{
+        '/usr/share/emacs/site-lisp/site-gentoo.d/72git-gentoo.el':
+          source => 'puppet:///tool_emacs/72git-gentoo.el',
+          tag      => 'buildhost';
+        '/usr/share/emacs/site-lisp/php-mode/php-mode.el':
+          source => 'puppet:///tool_emacs/php-mode.el_revision_70',
+          tag      => 'buildhost';
       }
 
       exec {'refresh_site_dir':
@@ -98,8 +119,23 @@ class tool::emacs {
 
       $screen_dark = get_var('screen_dark', false)
 
-      file{'/etc/skel/.emacs':
-        content => template('tool_emacs/dot_emacs');
+      file{
+        '/etc/skel/.emacs':
+          content => template('tool_emacs/dot_emacs');
+        '/etc/skel/.emacs.d':
+          ensure => 'directory';
+        '/etc/skel/.emacs.d/lisp':
+          ensure => 'directory',
+          require => File['/etc/skel/.emacs.d'];
+        '/etc/skel/.emacs.d/00_emacs.el':
+          source => 'puppet:///tool_emacs/ed_00_emacs.el',
+          require => File['/etc/skel/.emacs.d'];
+        '/etc/skel/.emacs.d/01_php_mode.el':
+          source => 'puppet:///tool_emacs/ed_01_php_mode.el',
+          require => File['/etc/skel/.emacs.d'];
+        '/etc/skel/.emacs.d/lisp/timer.el':
+          source => 'puppet:///tool_emacs/el_timer.el',
+          require => File['/etc/skel/.emacs.d/lisp'];
       }
     }
     default:

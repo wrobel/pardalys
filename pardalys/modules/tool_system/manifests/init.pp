@@ -135,6 +135,19 @@ class tool::system {
         require  => Gentoo_keywords['scripts-gw']
       }
 
+      gentoo_keywords { overlay-utils:
+        context  => 'tool_system_overlay-utils',
+        package  => 'app-portage/overlay-utils2',
+        keywords => "~$keyword",
+        tag      => 'buildhost'
+      }
+      package { overlay-utils:
+        category => 'app-portage',
+        ensure   => 'installed',
+        tag      => 'buildhost',
+        require  => Gentoo_keywords['overlay-utils']
+      }
+
       gentoo_keywords { cadaver:
         context  => 'tool_system_cadaver',
         package  => '=net-misc/cadaver-0.23.2',

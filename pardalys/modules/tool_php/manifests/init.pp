@@ -14,6 +14,18 @@ class tool::php {
   case $operatingsystem {
     gentoo:
     {
+      gentoo_use_flags { 'c-client':
+        context => 'tool_php_c_client',
+        package => 'net-libs/c-client',
+        use     => 'kolab',
+        tag     => 'buildhost'
+      }
+      package { 'c-client':
+        category => 'net-libs',
+        ensure   => 'installed',
+        require  =>  Gentoo_use_flags['c-client'],
+        tag      => 'buildhost'
+      }
       gentoo_use_flags { php:
         context => 'tool_php_php',
         package => 'dev-lang/php',
@@ -23,7 +35,14 @@ class tool::php {
       package { php:
         category => 'dev-lang',
         ensure   => 'installed',
-        require  =>  Gentoo_use_flags['php'],
+        require  =>  [Gentoo_use_flags['php'],
+                      Package['c-client']],
+        tag      => 'buildhost'
+      }
+
+      package { php-docs:
+        category => 'app-doc',
+        ensure   => 'installed',
         tag      => 'buildhost'
       }
 

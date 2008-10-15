@@ -1,5 +1,8 @@
 2008-10-15  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/tool_php/manifests/init.pp: Add the correct c-client use
+	flags and add php-docs.
+
 	* modules/tool_php/README: Add php installation.
 
 	* modules/tool_system/manifests/init.pp: Add overlay-utils.

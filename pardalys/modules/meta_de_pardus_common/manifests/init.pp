@@ -13,6 +13,7 @@ import 'tool_pardalys'
 import 'tool_portage'
 import 'tool_subversion'
 import 'tool_system'
+import 'tool_php'
 import 'service_monit'
 import 'service_syslog'
 import 'service_cron'
@@ -39,6 +40,7 @@ class meta::de::pardus::common {
   include tool::portage
   include tool::subversion
   include tool::system
+  include tool::php
   include service::monit
   include service::syslog
   include service::cron

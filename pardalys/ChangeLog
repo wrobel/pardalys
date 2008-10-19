@@ -1,5 +1,8 @@
 2008-10-19  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_lighttpd/manifests/init.pp: Fixed version
+	handling in the lighttpd module.
+
 	* modules/meta_kolab_www/manifests/init.pp: Add the php toolset.
 
 	* modules/service_apache/manifests/init.pp: Remove php here.

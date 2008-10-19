@@ -40,15 +40,7 @@ class service::lighttpd {
     }
   }
 
-  # Convert to template version
-  case $version_lighttpd {
-    default: {
-      fail("Unkown lighttpd version (Value: ${version_lighttpd})!")
-    }
-    '1.4.19-r2' : {
-      $template_lighttpd = '1.4.19-r2'
-    }
-  }
+  $template_lighttpd = template_version($version_portage, '1.4.19-r2@1.4.20@:1.4.19-r2,','1.4.19-r2')
 
   $my_lighttpd_modules = split($lighttpd_modules, ',')
 

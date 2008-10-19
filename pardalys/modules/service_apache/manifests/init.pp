@@ -40,12 +40,6 @@ class service::apache {
         use     => 'kolab imap ldap nls session xml apache2 ctype ftp gd json sqlite tokenizer spl pcre reflection',
         tag     => 'buildhost'
       }
-      package { 'php':
-        category => 'dev-lang',
-        ensure   => 'installed',
-        require  => Gentoo_use_flags['php-apache'],
-        tag      => 'buildhost';
-      }
       gentoo_use_flags { 'apr-util':
         context => 'service_apache_apr-util',
         package => 'dev-libs/apr-util',

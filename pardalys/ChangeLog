@@ -1,5 +1,7 @@
 2008-10-19  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_apache/manifests/init.pp: Remove php here.
+
 	* modules/service_openldap/manifests/init.pp: Fixed module name.
 
 	* modules/service_postfix/manifests/init.pp: Fix the use flag

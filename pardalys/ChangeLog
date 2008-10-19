@@ -1,3 +1,8 @@
+2008-10-19  Gunnar Wrobel  <p@rdus.de>
+
+	* modules/service_postfix/manifests/init.pp: Fix the use flag
+	name.
+
 2008-10-15  Gunnar Wrobel  <p@rdus.de>
 
 	* modules/tool_php/manifests/init.pp: Add the correct c-client use

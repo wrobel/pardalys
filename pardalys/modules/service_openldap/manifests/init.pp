@@ -89,7 +89,7 @@ class service::openldap::serve {
     "$openldap_rusr":
       ensure     => 'present',
       gid        => "$openldap_grp",
-      groups     => ["${service::kolab::kolab_grp}"],
+      groups     => ["${kolab::service::kolab::kolab_grp}"],
       provider => 'useradd',
       membership => 'minimum';
   }

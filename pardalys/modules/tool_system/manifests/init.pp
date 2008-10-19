@@ -137,7 +137,7 @@ class tool::system {
 
       gentoo_keywords { overlay-utils:
         context  => 'tool_system_overlay-utils',
-        package  => 'app-portage/overlay-utils2',
+        package  => 'app-portage/overlay-utils',
         keywords => "~$keyword",
         tag      => 'buildhost'
       }

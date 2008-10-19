@@ -1,5 +1,8 @@
 2008-10-19  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/tool_emacs/manifests/init.pp: A number of emacs config
+	settings with the focus on php editing.
+
 	* modules/service_lighttpd/manifests/init.pp: Fixed version
 	handling in the lighttpd module.
 

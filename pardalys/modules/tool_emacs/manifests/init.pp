@@ -171,8 +171,14 @@ class tool::emacs {
         '/etc/skel/.emacs.d/01_php_mode.el':
           source => 'puppet:///tool_emacs/ed_01_php_mode.el',
           require => File['/etc/skel/.emacs.d'];
+        '/etc/skel/.emacs.d/97_env.el':
+          source => 'puppet:///tool_emacs/ed_97_env.el',
+          require => File['/etc/skel/.emacs.d'];
         '/etc/skel/.emacs.d/lisp/timer.el':
           source => 'puppet:///tool_emacs/el_timer.el',
+          require => File['/etc/skel/.emacs.d/lisp'];
+        '/etc/skel/.emacs.d/lisp/backup-each-save.el':
+          source => 'puppet:///tool_emacs/el_backup-each-save.el',
           require => File['/etc/skel/.emacs.d/lisp'];
       }
     }

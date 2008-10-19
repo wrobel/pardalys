@@ -27,13 +27,16 @@
 (add-to-list 'load-path "/usr/share/emacs/site-lisp/elscreen")
 (timed-load "elscreen")
 
-
-(autoload 'php-mode "41_php-keys" "PHP editing mode." t)
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; CONFIGURATIONS
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(timed-load "01_php_mode")
+(autoload 'php-mode "01_php_mode" "PHP editing mode." t)
+
+(timed-load "02_emacs")
+
+(timed-load "97_env")
+
+(timed-load "99_keys")

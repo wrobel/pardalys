@@ -1,5 +1,7 @@
 2008-10-19  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/meta_kolab_www/manifests/init.pp: Add the php toolset.
+
 	* modules/service_apache/manifests/init.pp: Remove php here.
 
 	* modules/service_openldap/manifests/init.pp: Fixed module name.

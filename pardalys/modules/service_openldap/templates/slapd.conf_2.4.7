@@ -222,6 +222,6 @@ database	monitor
 
 access to *
 	by group/kolabGroupOfNames="cn=admin,cn=internal,<%= kolab_base_dn %>" write
-        by dn="cn=nobody,cn=internal,dc=pardus,dc=de" read
+        by dn="cn=nobody,cn=internal,<%= kolab_base_dn %>" read
 	by * none stop
 

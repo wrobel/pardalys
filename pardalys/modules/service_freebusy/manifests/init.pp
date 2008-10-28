@@ -64,6 +64,7 @@ class service::freebusy {
   $imap_host    = get_var('imap_host', 'localhost')
 
   $maildomain = get_var('freebusy_maildomain', get_var('domainname'))
+  $sysadmin = get_var('sysadmin', 'root@localhost')
 
   $apache_usr = 'apache'
   $apache_grp = 'apache'

@@ -1,3 +1,8 @@
+2008-10-30  Gunnar Wrobel  <p@rdus.de>
+
+	* modules/tool_php/manifests/init.pp: Add PEAR-CodeSniffer to the
+	php tools.
+
 2008-10-19  Gunnar Wrobel  <p@rdus.de>
 
 	* modules/tool_emacs/manifests/init.pp: A number of emacs config

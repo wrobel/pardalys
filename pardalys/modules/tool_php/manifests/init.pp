@@ -52,6 +52,20 @@ class tool::php {
         require  =>  Package['php'],
         tag      => 'buildhost'
       }
+
+      gentoo_keywords { 'PEAR-CodeSniffer':
+        context  => 'tool_php_pear_codesniffer',
+        package  => '=dev-php/PEAR-CodeSniffer-1.1.0',
+        keywords => "~$keyword",
+        tag      => 'buildhost'
+      }
+      package { 'PEAR-CodeSniffer':
+        category => 'dev-php',
+        ensure   => 'installed',
+        require  =>  [Package['php'],
+                      Gentoo_keywords['PEAR-CodeSniffer']],
+        tag      => 'buildhost'
+      }
     }
     default:
     {

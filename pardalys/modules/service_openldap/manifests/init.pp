@@ -21,12 +21,12 @@ class service::openldap {
     {
       gentoo_unmask { openldap:
         context => 'service_openldap',
-        package => '=net-nds/openldap-2.4.7',
+        package => '=net-nds/openldap-2.4.11',
         tag     => 'buildhost'
       }
       gentoo_keywords { openldap:
         context  => 'service_openldap',
-        package  => '=net-nds/openldap-2.4.7',
+        package  => '=net-nds/openldap-2.4.11',
         keywords => "~$keyword",
         tag      => 'buildhost'
       }
@@ -76,14 +76,14 @@ class service::openldap::serve {
 
   $sysconfdir         = $os::sysconfdir
 
-  $openldap_confdir   = "${os::sysconfdir}/openldap"
-  $openldap_schemadir = "${openldap_confdir}/schema"
-  $openldap_datadir   = "${os::statelibdir}/openldap-data"
-  $openldap_pidfile   = "${os::sysrundir}/openldap/slapd.pid"
-  $openldap_argsfile  = "${os::sysrundir}/openldap/slapd.args"
-  $openldap_usr       = 'root'
-  $openldap_rusr      = 'ldap'
-  $openldap_grp       = 'ldap'
+  $openldap_confdir   = $kolab_ldapserver_confdir
+  $openldap_schemadir = $kolab_ldapserver_schemadir
+  $openldap_datadir   = $kolab_ldapserver_dir
+  $openldap_pidfile   = $kolab_ldapserver_pidfile
+  $openldap_argsfile  = $kolab_ldapserver_argsfile
+  $openldap_usr       = $kolab_ldapserver_usr
+  $openldap_rusr      = $kolab_ldapserver_rusr
+  $openldap_grp       = $kolab_ldapserver_rgrp
 
   user {
     "$openldap_rusr":
@@ -92,6 +92,7 @@ class service::openldap::serve {
       groups     => ["${kolab::service::kolab::kolab_grp}"],
       provider => 'useradd',
       membership => 'minimum';
+
   }
 
   $openldap_master    = get_var('openldap_master', true)
@@ -101,7 +102,7 @@ class service::openldap::serve {
   $ssl_cert_path  = $tool::openssl::ssl_cert_path
   $ssl_key_path   = $tool::openssl::ssl_key_path
 
-  $template_openldap = template_version($version_openldap, '2.4.7@:2.4.7,', '2.4.7')
+  $template_openldap = template_version($version_openldap, '2.4.7@2.4.11@:2.4.7,', '2.4.7')
 
   # Make the fact available within the template
   $os = $operatingsystem

@@ -29,42 +29,42 @@ class tool::openssl {
     }
   }
 
-  $ssl_confdir    = "${os::sysconfdir}/ssl"
-
   $ssl_cert    = get_var('ssl_cert', '')
   $ssl_key    = get_var('ssl_key', '')
-  $ssl_access_group = get_var('ssl_access_group', 'kolab')
 
-  $ssl_cert_path = "$ssl_confdir/system/server.crt"
-  $ssl_key_path = "$ssl_confdir/system/server.key"
-  $ssl_combined_path = "$ssl_confdir/system/server.pem"
+  $ssl_cert_path = "${kolab_pki_dir}/server.crt"
+  $ssl_key_path = "${kolab_pki_dir}/server.key"
+  $ssl_combined_path = "${kolab_pki_dir}/server.pem"
 
   file { 
-    "$ssl_confdir/system":
+    "${kolab_pki_dir}":
     ensure => 'directory';
   }
 
   if $ssl_cert {
     file { 
-      "$ssl_confdir/system/server.crt":
+      "${kolab_pki_dir}/server.crt":
         content => $ssl_cert,
         mode => '644',
-        group => "$ssl_access_group";
+        group => "$kolab_pki_grp",
+        require => File["${kolab_pki_dir}"];
     }
   }
   if $ssl_key {
     file { 
-      "$ssl_confdir/system/server.key":
+      "${kolab_pki_dir}/server.key":
         content => $ssl_key,
         mode => '640',
-        group => "$ssl_access_group";
+        group => "$kolab_pki_grp",
+        require => File["${kolab_pki_dir}"];
     }
     if $ssl_cert {
       file { 
-        "$ssl_confdir/system/server.pem":
+        "${kolab_pki_dir}/server.pem":
           content => "$ssl_cert\n$ssl_key",
           mode => '640',
-          group => "$ssl_access_group";
+          group => "$kolab_pki_grp",
+          require => File["${kolab_pki_dir}"];
       }
     }
   }

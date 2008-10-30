@@ -1,5 +1,8 @@
 2008-10-30  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/tool_openssl/manifests/init.pp: Use the kolab variables
+	to indicate the ssl certificate locations.
+
 	* modules/service_sasl/manifests/init.pp: Use the kolab sasl conf
 	dir.
 

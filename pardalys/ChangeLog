@@ -1,5 +1,8 @@
 2008-10-30  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_sasl/manifests/init.pp: Use the kolab sasl conf
+	dir.
+
 	* modules/service_openldap/manifests/init.pp: Use
 	openldap-2.4.11. 2.4.7 still seems to have some serious bugs.
 

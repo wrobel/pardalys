@@ -54,10 +54,6 @@ class service::sasl {
     }
   }
 
-  $sysconfdir         = $os::sysconfdir
-
-  $sasl_confdir    = "${os::sysconfdir}/sasl2"
-
   $template_sasl = template_version($version_sasl, '2.1.22-r2@:2.1.22-r2,', '2.1.22-r2')
 
   $ldap_uri = get_var('kolab_ldap_uri', 'ldap://127.0.0.1:389')
@@ -67,7 +63,7 @@ class service::sasl {
   $mydomain = get_var('kolab_postfix_mydomain')
 
   file { 
-    "${sasl_confdir}/saslauthd.conf":
+    "${kolab_sasl_authdconffile}":
     content => template("service_sasl/saslauthd.conf_${template_sasl}"),
     mode    => 600,
     require => Package['cyrus-sasl'],

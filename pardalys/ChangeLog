@@ -1,5 +1,11 @@
 2008-10-31  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/meta_kolab_smtp/manifests/init.pp: The horde framework
+	has been moved to a separate module.
+
+	* modules/meta_kolab_www/manifests/init.pp: The horde framework
+	has been moved to a separate module.
+
 	* modules/meta_kolab_complete/manifests/init.pp: Include more
 	modules in the complete kolab server definition.
 

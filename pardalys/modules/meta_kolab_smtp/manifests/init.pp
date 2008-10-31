@@ -4,6 +4,8 @@ import 'tool_php'
 import 'kolab_service_kolab'
 import 'service_openldap'
 import 'service_sasl'
+import 'tool_php'
+import 'tool_horde_framework'
 import 'service_postfix'
 
 # Class meta::kolab::smtp
@@ -23,6 +25,8 @@ class meta::kolab::smtp {
   include service::openldap
   include service::openldap::serve
   include service::sasl
+  include tool::php
+  include tool::horde::framework
   include service::postfix
 
 }

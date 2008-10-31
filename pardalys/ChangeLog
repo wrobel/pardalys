@@ -1,3 +1,8 @@
+2008-10-31  Gunnar Wrobel  <p@rdus.de>
+
+	* modules/tool_horde_framework/manifests/init.pp: Do not define
+	the horde framework installation in separate modules.
+
 2008-10-30  Gunnar Wrobel  <p@rdus.de>
 
 	* modules/tool_openssl/manifests/init.pp: Use the kolab variables

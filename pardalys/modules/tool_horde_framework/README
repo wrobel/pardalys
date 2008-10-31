@@ -1,0 +1,11 @@
+This package provides the horde framework.
+
+@author Gunnar Wrobel <p@rdus.de>
+@version 1.0
+@package tool_horde_framework
+
+@module os_gentoo     The os_gentoo module is required for Gentoo support.
+@module tool_php      The tool_php module is required for PHP.
+
+@fact operatingsystem Allows to choose the correct actions depending
+                      on the operating system

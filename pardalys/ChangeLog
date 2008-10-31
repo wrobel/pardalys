@@ -1,5 +1,8 @@
 2008-10-31  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/tool_portage_extend/manifests/init.pp: Add a module for
+	extending /etc/make.conf.
+
 	* modules/service_freebusy/manifests/init.pp: Added gentoo_keyword
 	for PEAR_PEAR.
 

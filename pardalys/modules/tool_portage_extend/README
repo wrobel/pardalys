@@ -1,0 +1,5 @@
+Allows to extend /etc/make.conf
+
+@author Gunnar Wrobel <p@rdus.de>
+@version 1.0
+@package tool_portage_extend

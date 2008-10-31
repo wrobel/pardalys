@@ -9,6 +9,7 @@ import 'service_cyrusimap'
 import 'service_kolabd'
 import 'tool_php'
 import 'tool_horde_framework'
+import 'tool_portage_extend'
 import 'service_apache'
 import 'service_horde'
 import 'service_freebusy'
@@ -37,6 +38,7 @@ class meta::kolab::complete {
       include service::kolabd
       include tool::php
       include tool::horde::framework
+      include tool::portage::extend
       include service::apache
       include service::horde
       include service::freebusy

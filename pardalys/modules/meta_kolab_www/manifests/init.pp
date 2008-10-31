@@ -2,6 +2,7 @@ import 'os'
 import 'tool_openssl'
 import 'tool_php'
 import 'tool_horde_framework'
+import 'tool_portage_extend'
 import 'service_apache'
 import 'service_horde'
 import 'service_freebusy'
@@ -21,6 +22,7 @@ class meta::kolab::www {
   include tool::openssl
   include tool::php
   include tool::horde::framework
+  include service::apache
   include service::apache
   include service::horde
   include service::freebusy

@@ -11,6 +11,7 @@ import 'tool_openssl'
 import 'service_openldap'
 import 'tool_pardalys'
 import 'tool_portage'
+import 'tool_portage_extend'
 import 'tool_subversion'
 import 'tool_system'
 import 'tool_php'
@@ -38,6 +39,7 @@ class meta::de::pardus::common {
   include service::openldap
   include tool::pardalys
   include tool::portage
+  include tool::portage::extend
   include tool::subversion
   include tool::system
   include tool::php

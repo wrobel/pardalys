@@ -116,11 +116,11 @@ class service::postfix {
         use     => 'kolab',
         tag     => 'buildhost'
       }
-      gentoo_use_flags { 'php-postfix':
-        context => 'service_postfix_php',
-        package => 'dev-lang/php',
-        use     => 'kolab imap ldap nls session xml apache2 ctype ftp gd json sqlite',
-        tag     => 'buildhost'
+      gentoo_keywords { 'Horde_Argv_postfix':
+        context => 'service_postfix_Horde_Argv',
+        package => '=dev-php/Horde_Argv-0.1.0',
+        keywords => "~$keyword",
+        tag      => 'buildhost'
       }
       gentoo_unmask { 'Horde_Kolab_Filter':
         context => 'service_postfix_Horde_Kolab_Filter',
@@ -133,66 +133,12 @@ class service::postfix {
         keywords => "~$keyword",
         tag      => 'buildhost'
       }
-      gentoo_keywords { 'Horde_Framework_postfix':
-        context => 'service_postfix_Horde_Framework',
-        package => '=dev-php/Horde_Framework-0.0.2',
-        keywords => "~$keyword",
-        tag      => 'buildhost'
-      }
-      gentoo_keywords { 'Horde_Argv_postfix':
-        context => 'service_postfix_Horde_Argv',
-        package => '=dev-php/Horde_Argv-0.1.0',
-        keywords => "~$keyword",
-        tag      => 'buildhost'
-      }
-      gentoo_keywords { 'Horde_DOM_postfix':
-        context => 'service_postfix_Horde_DOM',
-        package => '=dev-php/Horde_DOM-0.1.0',
-        keywords => "~$keyword",
-        tag      => 'buildhost'
-      }
-      gentoo_keywords { 'Horde_Util_postfix':
-        context => 'service_postfix_Horde_Util',
-        package => '=dev-php/Horde_Util-0.1.0',
-        keywords => "~$keyword",
-        tag      => 'buildhost'
-      }
-      gentoo_keywords { 'Horde_MIME':
-        context => 'service_postfix_Horde_MIME',
-        package => '=dev-php/Horde_MIME-0.0.2',
-        keywords => "~$keyword",
-        tag      => 'buildhost'
-      }
-      gentoo_keywords { 'Horde_iCalendar':
-        context => 'service_postfix_Horde_iCalendar',
-        package => '=dev-php/Horde_iCalendar-0.1.0',
-        keywords => "~$keyword",
-        tag      => 'buildhost'
-      }
-      gentoo_keywords { 'Horde_LDAP_postfix':
-        context => 'service_postfix_Horde_LDAP',
-        package => '=dev-php/Horde_LDAP-0.0.2',
-        keywords => "~$keyword",
-        tag      => 'buildhost'
-      }
-      gentoo_keywords { 'Horde_Kolab_Server_postfix':
-        context => 'service_postfix_Horde_Kolab_Server',
-        package => 'dev-php/Horde_Kolab_Server',
-        keywords => "~$keyword",
-        tag      => 'buildhost'
-      }
       package { 'Horde_Kolab_Filter':
         category => 'dev-php',
         ensure   => 'installed',
         require  =>  [ Gentoo_use_flags['c-client-postfix'],
-                       Gentoo_use_flags['php-postfix'],
                        Gentoo_keywords['Horde_Kolab_Filter'],
                        Gentoo_keywords['Horde_Argv_postfix'],
-                       Gentoo_keywords['Horde_Framework_postfix'],
-                       Gentoo_keywords['Horde_DOM_postfix'],
-                       Gentoo_keywords['Horde_Util_postfix'],
-                       Gentoo_keywords['Horde_LDAP_postfix'],
-                       Gentoo_keywords['Horde_Kolab_Server_postfix'],
                        Gentoo_unmask['Horde_Kolab_Filter'] ],
         tag      => 'buildhost'
       }

@@ -1,5 +1,8 @@
 2008-10-31  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_freebusy/manifests/init.pp: The horde framework
+	has been moved to a separate module.
+
 	* modules/service_phpldapadmin/manifests/init.pp: Add phpldapadmin
 	as a basic LDAP manager.
 

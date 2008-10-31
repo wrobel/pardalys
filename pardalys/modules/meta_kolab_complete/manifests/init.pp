@@ -5,6 +5,14 @@ import 'tool_openssl'
 import 'service_openldap'
 import 'service_sasl'
 import 'service_postfix'
+import 'service_cyrusimap'
+import 'service_kolabd'
+import 'tool_php'
+import 'tool_horde_framework'
+import 'service_apache'
+import 'service_horde'
+import 'service_freebusy'
+import 'service_phpldapadmin'
 
 # Class meta::kolab::complete
 #
@@ -25,6 +33,14 @@ class meta::kolab::complete {
     default: {
       include service::sasl
       include service::postfix
+      include service::cyrusimap
+      include service::kolabd
+      include tool::php
+      include tool::horde::framework
+      include service::apache
+      include service::horde
+      include service::freebusy
+      include service::phpldapadmin
     }
     "true": {
       crit('LDAP recovery - Any additional Kolab configuration files remain untouched.')

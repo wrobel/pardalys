@@ -24,11 +24,18 @@ class service::freebusy {
   case $operatingsystem {
     gentoo:
     {
+      gentoo_keywords { 'PEAR_PEAR':
+        context => 'PEAR_PEAR',
+        package => '>=dev-php/PEAR-PEAR-1.7.0',
+        keywords => "~$keyword",
+        tag     => 'buildhost'
+      }
       gentoo_keywords { 'Kolab_FreeBusy':
         context => 'service_freebusy_Kolab_FreeBusy',
         package => '=dev-php/Horde_Kolab_FreeBusy-0.0.4.20081001',
         keywords => "~$keyword",
-        tag     => 'buildhost'
+        tag     => 'buildhost',
+        require => [ Gentoo_keywords['PEAR_PEAR'] ]
       }
       package { 'Horde_Kolab_FreeBusy':
         category => 'dev-php',

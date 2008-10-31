@@ -1,5 +1,8 @@
 2008-10-31  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_freebusy/manifests/init.pp: Added gentoo_keyword
+	for PEAR_PEAR.
+
 	* modules/meta_kolab_smtp/manifests/init.pp: The horde framework
 	has been moved to a separate module.
 

@@ -26,10 +26,11 @@ class tool::php {
         require  =>  Gentoo_use_flags['c-client'],
         tag      => 'buildhost'
       }
+      #FIXME: Use "realize" here so that dependant packages can define required use flags
       gentoo_use_flags { php:
         context => 'tool_php_php',
         package => 'dev-lang/php',
-        use     => 'kolab imap ldap nls session xml apache2 ctype ftp gd json sqlite tokenizer spl pcre reflection bzip2 mysql',
+        use     => 'apache2 bzip2 ctype ftp gd hash imap json kolab ldap mysql nls pcre reflection session spl sqlite tokenizer xml',
         tag     => 'buildhost'
       }
       package { php:

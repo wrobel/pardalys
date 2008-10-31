@@ -1,5 +1,8 @@
 2008-10-31  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/tool_php/manifests/init.pp: Add the "hash" use flag for
+	phpldapadmin and reorder the flags.
+
 	* modules/tool_horde_framework/manifests/init.pp: Do not define
 	the horde framework installation in separate modules.
 

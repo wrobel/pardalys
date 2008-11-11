@@ -1,3 +1,8 @@
+2008-11-11  Gunnar Wrobel  <p@rdus.de>
+
+	* modules/tool_cyrusimapadmin/manifests/init.pp: Extracted the
+	cyrus-imap-admin installation into a separate package.
+
 2008-10-31  Gunnar Wrobel  <p@rdus.de>
 
 	* modules/tool_portage_extend/manifests/init.pp: Add a module for

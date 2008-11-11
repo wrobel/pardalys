@@ -98,7 +98,7 @@ class service::openldap::serve {
   $openldap_master    = get_var('openldap_master', true)
   $openldap_slave     = get_var('openldap_slave', '')
   $ca_cert            = get_var('ca_cert', false)
-  $slapd_run_service = get_var('run_services', true)
+  $run_services = get_var('run_services', 'running')
 
   $ssl_cert_path  = $tool::openssl::ssl_cert_path
   $ssl_key_path   = $tool::openssl::ssl_key_path
@@ -181,12 +181,10 @@ class service::openldap::serve {
     }
   }
 
-  if $slapd_run_service {
-    service {
-      'slapd':
-      ensure    => 'running',
-      enable    => true
-    }
+  service {
+    'slapd':
+    ensure    => $run_services,
+    enable    => true
   }
 
   if $kolab_bootstrap {

@@ -87,6 +87,7 @@ class service::apache {
   $template_apache = template_version($version_apache, '2.2.9@:2.2.9,', '2.2.9')
 
   $apache_start_opts = get_var('apache_start_opts', '')
+  $apache_run_service = get_var('run_services', true)
 
   @line {'make_conf_puppet_apache':
     file => '/etc/portage/make.conf.puppet',
@@ -94,10 +95,12 @@ class service::apache {
     tag => 'buildhost'
   }
 
-  service { 'apache2':
-    ensure    => 'running',
-    enable    => true,
-    require => Package['apache'];
+  if $apache_run_service {
+    service { 'apache2':
+      ensure    => 'running',
+      enable    => true,
+      require => Package['apache'];
+    }
   }
 
   file { 

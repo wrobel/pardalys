@@ -1,5 +1,11 @@
 2008-11-11  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_openldap/manifests/init.pp: Start the service
+	only if requested.
+
+	* modules/service_apache/manifests/init.pp: Start the service only
+	if requested.
+
 	* modules/service_kolabd/manifests/init.pp: Use the new
 	perl-kolab package.
 

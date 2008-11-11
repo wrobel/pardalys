@@ -76,9 +76,10 @@ class service::freebusy {
   $apache_usr = 'apache'
   $apache_grp = 'apache'
 
+  # FIXME: I really need to return to webapp-config
   exec { freebusy_webapp:
     path => "/usr/bin:/usr/sbin:/bin",
-    command => "webapp-config -I -h $freebusy_vhost -d $freebusy_vhost_path Horde_Kolab_FreeBusy $version_kolab_freebusy",
+    command => "webapp-config -I -h $freebusy_vhost -d $freebusy_vhost_path Horde_Kolab_FreeBusy $version_horde_kolab_freebusy || echo FXIME",
     unless => "test -e ${freebusy_webroot}/freebusy.php",
     require => Package['Horde_Kolab_FreeBusy'];
   }

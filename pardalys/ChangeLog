@@ -1,5 +1,8 @@
 2008-11-11  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_freebusy/manifests/init.pp: Fix the freebusy
+	installation.
+
 	* modules/tool_pardalys/manifests/init.pp: Upgrade to newer
 	puppet.
 

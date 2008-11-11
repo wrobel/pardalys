@@ -1,5 +1,8 @@
 2008-11-11  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/tool_perl_kolab/manifests/init.pp: Extract the
+	perl-kolab installation into a separate package.
+
 	* modules/meta_kolab_complete/manifests/init.pp: Use the new
 	cyrus-imap-admin package.
 

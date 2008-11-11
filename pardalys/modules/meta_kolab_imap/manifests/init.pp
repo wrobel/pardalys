@@ -4,6 +4,7 @@ import 'kolab_service_kolab'
 import 'service_openldap'
 import 'service_sasl'
 import 'service_cyrusimap'
+import 'tool_perl_kolab'
 import 'service_kolabd'
 
 # Class meta::kolab::imap
@@ -23,5 +24,6 @@ class meta::kolab::imap {
   include service::openldap::serve
   include service::sasl
   include service::cyrusimap
+  include tool::perl::kolab
   include service::kolabd
 }

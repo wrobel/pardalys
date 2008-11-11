@@ -1,13 +1,16 @@
 2008-11-11  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_kolabd/manifests/init.pp: Use the new
+	perl-kolab package.
+
 	* modules/tool_perl_kolab/manifests/init.pp: Extract the
 	perl-kolab installation into a separate package.
 
 	* modules/meta_kolab_complete/manifests/init.pp: Use the new
-	cyrus-imap-admin package.
+	cyrus-imap-admin and perl-kolab packages.
 
 	* modules/meta_kolab_smtp/manifests/init.pp: Use the new
-	cyrus-imap-admin package.
+	cyrus-imap-admin and perl-kolab packages.
 
 	* modules/service_postfix/manifests/init.pp: Use the new
 	cyrus-imap-admin package.

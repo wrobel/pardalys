@@ -67,7 +67,6 @@ class service::cyrusimap {
   $statedir      = '/var/imap'
   $spooldir      = '/var/spool/imap'
   $lmtp_external   = get_var('imap_lmtp_external', false)
-  $cyrus_admins    = split(get_var('kolab_cyrus_admins', ''), ',')
   $allow_anonymous = get_var('imap_allow_anonymous', 'no')
   $domainname      = get_var('domainname')
 
@@ -78,6 +77,16 @@ class service::cyrusimap {
   $kolab_cyrus_sieve = get_var('kolab_cyrus_sieve', true)
 
   $kolab_cyrus_quotawarn = get_var('kolab_cyrus_quotawarn', 90)
+
+  $kca    = get_var('kolab_cyrus_admins', false)
+  case $kca {
+    false: {
+      $cyrus_admins = ['manager']
+    }
+    default: {
+      $cyrus_admins = $kca
+    }
+  }
 
   $kpm = get_var('kolab_postfix_mydestination', false)
   case $kpm {

@@ -49,24 +49,6 @@ class service::cyrusimap {
                       Gentoo_keywords['cyrus-imapd']],
         tag      => 'buildhost'
       }
-      gentoo_keywords { 'cyrus-imap-admin':
-        context  => 'service_cyrusimap_cyrus_imap_admin',
-        package  => '=net-mail/cyrus-imap-admin-2.3.12_p2',
-        keywords => "~$keyword",
-        tag      => 'buildhost'
-      }
-      gentoo_use_flags { "cyrus-imap-admin":
-        context => 'service_cyrusimap_cyrus_imap_admin',
-        package => 'net-mail/cyrus-imap-admin',
-        use     => 'kolab ssl'
-      }
-      package { 'cyrus-imap-admin':
-        category => 'net-mail',
-        ensure   => 'installed',
-        require  => [ Gentoo_use_flags['cyrus-imap-admin'],
-                      Gentoo_keywords['cyrus-imap-admin']],
-        tag      => 'buildhost'
-      }
     }
     default: {
       package { 'cyrus-imapd':
@@ -87,6 +69,13 @@ class service::cyrusimap {
   $lmtp_external   = get_var('imap_lmtp_external', false)
   $cyrus_admins    = get_var('kolab_cyrus_admins')
   $allow_anonymous = get_var('imap_allow_anonymous', 'no')
+  $domainname      = get_var('domainname')
+
+  $kolab_cyrus_imap  = get_var('kolab_cyrus_imap', false)
+  $kolab_cyrus_imaps = get_var('kolab_cyrus_imaps', false)
+  $kolab_cyrus_pop3  = get_var('kolab_cyrus_pop3', false)
+  $kolab_cyrus_pop3s = get_var('kolab_cyrus_pop3s', false)
+
   $sendmail = '/usr/sbin/sendmail'
 
   $ssl_cert_path  = $tool::openssl::ssl_cert_path

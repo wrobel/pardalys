@@ -75,40 +75,6 @@ class service::postfix {
         require  => Gentoo_use_flags['postfix'],
         tag      => 'buildhost';
       }
-      # We need kolab_smtpdpolicy from perl-kolab
-      gentoo_unmask { 'perl-kolab':
-        context => 'service_postfix_perlkolab',
-        package => '=dev-perl/perl-kolab-2.2*',
-        tag     => 'buildhost'
-      }
-      gentoo_keywords { 'perl-kolab':
-        context => 'service_postfix_perlkolab',
-        package => '=dev-perl/perl-kolab-2.2*',
-        keywords => "~$keyword",
-        tag      => 'buildhost'
-      }
-      # FIXME: This is bad as we should not require cyrus at this
-      #        point. Maybe perl-kolab can be split at some point.
-      gentoo_unmask { 'cyrus-imap-admin':
-        context => 'service_postfix_cyrusimapadmin',
-        package => '=net-mail/cyrus-imap-admin-2.3.12_p2',
-        tag     => 'buildhost'
-      }
-      gentoo_keywords { 'cyrus-imap-admin':
-        context => 'service_postfix_cyrusimapadmin',
-        package => '=net-mail/cyrus-imap-admin-2.3.12_p2',
-        keywords => "~$keyword",
-        tag      => 'buildhost'
-      }
-      package { 'perl-kolab':
-        category => 'dev-perl',
-        ensure   => 'installed',
-        require  =>  [ Gentoo_unmask['perl-kolab'],
-                       Gentoo_keywords['perl-kolab'],
-                       Gentoo_unmask['cyrus-imap-admin'],
-                       Gentoo_keywords['cyrus-imap-admin'] ],
-        tag      => 'buildhost'
-      }
       # We need the Horde::Kolab modules
       gentoo_use_flags { 'c-client-postfix':
         context => 'service_postfix_cclient',
@@ -208,12 +174,12 @@ class service::postfix {
     "${postfix_confdir}/master.cf":
     content => template("service_postfix/master.cf_${template_postfix}"),
     mode    => 640,
-    require => [Package['postfix'], Package['perl-kolab']],
+    require => Package['postfix'],
     notify  => Service['postfix'];
     "${postfix_confdir}/main.cf":
     content => template("service_postfix/main.cf_${template_postfix}"),
     mode    => 640,
-    require => [Package['postfix'], Package['perl-kolab']],
+    require => Package['postfix'],
     notify  => Service['postfix'];
     "${postfix_aliases}":
     source  => 'puppet:///service_postfix/aliases',
@@ -267,7 +233,7 @@ class service::postfix {
     notify  => Service['postfix'];
     "${kolab_confdir}/kolab_smtpdpolicy.conf":
     content => template("service_postfix/kolab_smtpdpolicy.conf"),
-    require => Package['perl-kolab'];
+    require => Package['postfix'];
     "${kolabfilterconfig}":
     content => template("service_postfix/kolabfilter.conf"),
     require => Package['Horde_Kolab_Filter'];

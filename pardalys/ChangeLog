@@ -1,5 +1,17 @@
 2008-11-11  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/meta_kolab_complete/manifests/init.pp: Use the new
+	cyrus-imap-admin package.
+
+	* modules/meta_kolab_smtp/manifests/init.pp: Use the new
+	cyrus-imap-admin package.
+
+	* modules/service_postfix/manifests/init.pp: Use the new
+	cyrus-imap-admin package.
+
+	* modules/service_cyrusimap/manifests/init.pp: Use the new
+	cyrus-imap-admin package.
+
 	* modules/tool_cyrusimapadmin/manifests/init.pp: Extracted the
 	cyrus-imap-admin installation into a separate package.
 

@@ -4,6 +4,8 @@ import 'kolab_service_kolab'
 import 'tool_openssl'
 import 'service_openldap'
 import 'service_sasl'
+import 'tool_cyrusimapadmin'
+import 'tool_perl_kolab'
 import 'service_postfix'
 import 'service_cyrusimap'
 import 'service_kolabd'
@@ -33,7 +35,9 @@ class meta::kolab::complete {
   case $kolab_slapd_recovery {
     default: {
       include service::sasl
+      include tool::perl::kolab
       include service::postfix
+      include tool::cyrusimapadmin
       include service::cyrusimap
       include service::kolabd
       include tool::php

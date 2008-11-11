@@ -6,6 +6,8 @@ import 'service_openldap'
 import 'service_sasl'
 import 'tool_php'
 import 'tool_horde_framework'
+import 'tool_cyrusimapadmin'
+import 'tool_perl_kolab'
 import 'service_postfix'
 
 # Class meta::kolab::smtp
@@ -27,6 +29,7 @@ class meta::kolab::smtp {
   include service::sasl
   include tool::php
   include tool::horde::framework
+  include tool::cyrusimapadmin
+  include tool::perl::kolab
   include service::postfix
-
 }

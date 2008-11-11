@@ -1,5 +1,8 @@
 2008-11-11  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/tool_pardalys/manifests/init.pp: Upgrade to newer
+	puppet.
+
 	* modules/tool_emacs/manifests/init.pp: Add missing config files.
 
 	* modules/service_openldap/manifests/init.pp: Fix

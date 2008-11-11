@@ -89,7 +89,7 @@ class tool::pardalys {
       }
       gentoo_keywords { puppet:
         context  => 'tools_puppet_common_puppet',
-        package  => '<=app-admin/puppet-0.24.4-r1',
+        package  => '=app-admin/puppet-0.24.5-r4',
         keywords => "~$keyword",
         tag      => 'buildhost'
       }

@@ -67,14 +67,37 @@ class service::cyrusimap {
   $statedir      = '/var/imap'
   $spooldir      = '/var/spool/imap'
   $lmtp_external   = get_var('imap_lmtp_external', false)
-  $cyrus_admins    = get_var('kolab_cyrus_admins')
+  $cyrus_admins    = split(get_var('kolab_cyrus_admins', ''), ',')
   $allow_anonymous = get_var('imap_allow_anonymous', 'no')
   $domainname      = get_var('domainname')
 
-  $kolab_cyrus_imap  = get_var('kolab_cyrus_imap', false)
-  $kolab_cyrus_imaps = get_var('kolab_cyrus_imaps', false)
-  $kolab_cyrus_pop3  = get_var('kolab_cyrus_pop3', false)
-  $kolab_cyrus_pop3s = get_var('kolab_cyrus_pop3s', false)
+  $kolab_cyrus_imap  = get_var('kolab_cyrus_imap', true)
+  $kolab_cyrus_imaps = get_var('kolab_cyrus_imaps', true)
+  $kolab_cyrus_pop3  = get_var('kolab_cyrus_pop3', true)
+  $kolab_cyrus_pop3s = get_var('kolab_cyrus_pop3s', true)
+  $kolab_cyrus_sieve = get_var('kolab_cyrus_sieve', true)
+
+  $kolab_cyrus_quotawarn = get_var('kolab_cyrus_quotawarn', 90)
+
+  $kpm = get_var('kolab_postfix_mydestination', false)
+  case $kpm {
+    false: {
+      $kolab_postfix_mydestination = ['localhost']
+    }
+    default: {
+      $kolab_postfix_mydestination = $kpm
+    }
+  }
+
+  $kig = get_var('kolab_imap_groups', false)
+  case $kig {
+    false: {
+      $kolab_imap_groups = []
+    }
+    default: {
+      $kolab_imap_groups = $kig
+    }
+  }
 
   $sendmail = '/usr/sbin/sendmail'
 

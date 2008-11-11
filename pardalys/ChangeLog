@@ -1,5 +1,8 @@
 2008-11-11  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_cyrusimap/manifests/init.pp: Added some
+	additional defaults.
+
 	* modules/service_openldap/manifests/init.pp: Start the service
 	only if requested.
 

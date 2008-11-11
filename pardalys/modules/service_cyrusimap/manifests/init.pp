@@ -32,7 +32,7 @@ class service::cyrusimap {
     gentoo: {
       gentoo_keywords { 'cyrus-imapd':
         context  => 'service_cyrusimap_cyrus_imapd',
-        package  => '=net-mail/cyrus-imapd-2.3.12_p2',
+        package  => '=net-mail/cyrus-imapd-2.3.13',
         keywords => "~$keyword",
         tag      => 'buildhost'
       }
@@ -59,7 +59,7 @@ class service::cyrusimap {
 
   $sysconfdir         = $os::sysconfdir
 
-  $template_imapd = template_version($version_imapd, '2.3.12_p2@:2.3.12_p2,', '2.3.12_p2')
+  $template_imapd = template_version($version_imapd, '2.3.12_p2@2.3.13@:2.3.12_p2,', '2.3.12_p2')
 
   $lmtp_socket   = '/var/imap/socket/lmtp'
   $notify_socket = '/var/imap/socket/notify'

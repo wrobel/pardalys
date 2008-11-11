@@ -31,7 +31,7 @@ class tool::cyrusimapadmin {
     gentoo: {
       gentoo_keywords { 'cyrus-imap-admin':
         context  => 'service_cyrusimap_cyrus_imap_admin',
-        package  => '=net-mail/cyrus-imap-admin-2.3.12_p2',
+        package  => '=net-mail/cyrus-imap-admin-2.3.13',
         keywords => "~$keyword",
         tag      => 'buildhost'
       }

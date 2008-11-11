@@ -1,5 +1,8 @@
 2008-11-11  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_apache/manifests/init.pp: Ensure that we have
+	the monit.d directory.
+
 	* modules/service_freebusy/manifests/init.pp: Fix the freebusy
 	installation.
 

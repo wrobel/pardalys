@@ -104,6 +104,8 @@ class service::apache {
   }
 
   file { 
+    '/etc/monit.d':
+    ensure => 'directory';
     '/etc/monit.d/apache2':
     source => 'puppet:///service_apache/monit_apache';
   }

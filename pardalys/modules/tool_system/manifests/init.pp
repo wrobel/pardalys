@@ -206,6 +206,17 @@ class tool::system {
         ensure   => 'installed',
         tag      => 'buildhost'
       }
+
+      package { sudo:
+        category => 'app-admin',
+        ensure   => 'installed',
+        tag      => 'buildhost'
+      }
+      package { keychain:
+        category => 'net-misc',
+        ensure   => 'installed',
+        tag      => 'buildhost'
+      }
     }
     default:
     {

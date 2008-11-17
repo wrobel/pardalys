@@ -16,6 +16,7 @@ munin:net-analyzer/munin@Gentoo
 nagios:net-analyzer/nagios@Gentoo
 openldap:net-nds/openldap@Gentoo
 openssh:net-misc/openssh@Gentoo
+php_docs:app-doc/php-docs@Gentoo
 portage:sys-apps/portage@Gentoo
 postfix:mail-mta/postfix@Gentoo
 syslog_ng:app-admin/syslog-ng@Gentoo

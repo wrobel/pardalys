@@ -1,3 +1,7 @@
+2008-11-17  Gunnar Wrobel  <p@rdus.de>
+
+	* etc/package_versions (php_docs): Add php-docs.
+
 2008-11-11  Gunnar Wrobel  <p@rdus.de>
 
 	* modules/service_apache/manifests/init.pp: Ensure that we have

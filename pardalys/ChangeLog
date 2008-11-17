@@ -1,5 +1,8 @@
 2008-11-17  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/tool_php/files/php_completions.sh: A script for building
+	a PHP completion library.
+
 	* modules/tool_emacs/files/ed_01_php_mode.el: Allow to run a
 	script with PHP.
 

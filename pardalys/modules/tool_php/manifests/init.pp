@@ -44,7 +44,21 @@ class tool::php {
       package { php-docs:
         category => 'app-doc',
         ensure   => 'installed',
-        tag      => 'buildhost'
+        tag      => 'buildhost',
+        notify   => Exec['rebuild_completions'];
+      }
+
+      file { '/usr/bin/php_completions.sh' :
+        source   => 'puppet:///tool_php/php_completions.sh',
+        mode     => '755',
+        require  => Package['php-docs'];
+      }
+
+      exec { "rebuild_completions":
+        cwd => "/usr/share/doc/${version_php_docs}/en/html/",
+        command => "/usr/bin/php_completions.sh",
+        refreshonly => true,
+        require => File['/usr/bin/php_completions.sh'];
       }
 
       package { xdebug:
@@ -65,6 +79,18 @@ class tool::php {
         ensure   => 'installed',
         require  =>  [Package['php'],
                       Gentoo_keywords['PEAR-CodeSniffer']],
+        tag      => 'buildhost'
+      }
+      package { phpunit:
+        category => 'dev-php5',
+        ensure   => 'installed',
+        require  =>  Package['php'],
+        tag      => 'buildhost'
+      }
+      package { PEAR-PhpDocumentor:
+        category => 'dev-php',
+        ensure   => 'installed',
+        require  =>  Package['php'],
         tag      => 'buildhost'
       }
     }

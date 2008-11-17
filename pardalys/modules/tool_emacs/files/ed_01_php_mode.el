@@ -78,6 +78,38 @@
 
 (setq whitespace-modes (append '(php-mode) whitespace-modes))
 
+(defun php-start-php-on-buffer()
+  (interactive)
+  (if (not buffer-file-read-only)
+      (save-buffer))
+  (setq currentdir (concat (file-name-directory buffer-file-name) "/"))
+  (while (and (not (file-exists-p (concat currentdir ".emacs.php.el")))
+	      (not (eq currentdir "/")))
+    (setq currentdir (file-name-directory (directory-file-name currentdir))))
+  (setq phpsettings (concat currentdir ".emacs.php.el"))
+  (if (file-exists-p phpsettings)
+      (load phpsettings)
+    (setq phpoptions ":/usr/share/php5:/usr/share/php\" -d log_errors=1 -d error_log=\"php-errors.log\" -d error_reporting=\"E_ALL\" "))
+  (if classname
+      (let ((compilation-error-regexp-alist ()))
+	(add-to-list 'compilation-error-regexp-alist
+		     '("^\\(\\/.*\.php\\):\\([0-9]+\\)$" 1 2 nil nil nil))
+	(add-to-list 'compilation-error-regexp-alist
+		     '("\\(^.*[Ee]rror.*\\|^.*Exception.*\\) in \\(.*\\) on line \\([0-9]+\\)$" 2 3 nil nil 1))
+	(add-to-list 'compilation-error-regexp-alist
+		     '("[0-9]+\. \\([^ ]*\\) \\([^ ]*\\):\\([0-9]+\\)$" 2 3 nil nil 1))
+	(set (make-local-variable 'phpunit-command)
+	     (concat
+	      "export XDEBUG_CONFIG=\"idekey=php_run\";cd "
+	      (file-name-directory buffer-file-name)
+	      "; php -d include_path=\".:"
+	      (file-name-directory buffer-file-name)
+	      phpoptions
+	      " -f "
+	      (file-name-nondirectory buffer-file-name)))
+	(compile phpunit-command))
+    (message "No possible test class found!")))
+
 (defun php-start-phpunit-on-buffer()
   (interactive)
   (if (not buffer-file-read-only)
@@ -181,6 +213,9 @@
 
 ;; Set Horde code style
 (define-key php-mode-map (kbd "<f3> H") 'php-setenv-horde)
+
+;; Run php script
+(define-key php-mode-map (kbd "<f3> <f7>") 'php-start-php-on-buffer)
 
 ;; Run unit tests
 (define-key php-mode-map (kbd "<f3> <f8>") 'php-start-phpunit-on-buffer)

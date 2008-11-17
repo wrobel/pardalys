@@ -1,5 +1,8 @@
 2008-11-17  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/tool_emacs/files/ed_01_php_mode.el: Allow to run a
+	script with PHP.
+
 	* etc/package_versions (php_docs): Add php-docs.
 
 2008-11-11  Gunnar Wrobel  <p@rdus.de>

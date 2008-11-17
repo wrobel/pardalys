@@ -1,5 +1,7 @@
 2008-11-17  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/tool_pardalys/manifests/init.pp: Add ldap use flag to puppet.
+
 	* modules/tool_system/manifests/init.pp: Add the sudo and keychain packages.
 
 	* modules/tool_php/files/php_completions.sh: A script for building

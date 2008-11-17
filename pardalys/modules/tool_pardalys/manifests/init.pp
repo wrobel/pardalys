@@ -96,7 +96,7 @@ class tool::pardalys {
       gentoo_use_flags { puppet:
         context => 'tool_pardalys_puppet',
         package => 'app-admin/puppet',
-        use     => 'emacs sqlite doc'
+        use     => 'emacs ldap'
       }
       package { puppet:
         category => 'app-admin',

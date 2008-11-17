@@ -237,9 +237,13 @@ class service::postfix {
     "${kolabfilterconfig}":
     content => template("service_postfix/kolabfilter.conf"),
     require => Package['Horde_Kolab_Filter'];
-#
-#    '/etc/monit.d/postfix':
-#    source  => 'puppet:///service_cron/monit_postfix';
+  }
+
+  if defined(File['/etc/monit.d']) {
+    file {
+      '/etc/monit.d/postfix':
+      source  => 'puppet:///service_cron/monit_postfix';
+    }
   }
 
   exec {

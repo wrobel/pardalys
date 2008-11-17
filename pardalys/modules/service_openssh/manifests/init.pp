@@ -46,8 +46,13 @@ class service::openssh {
     '/etc/ssh/sshd_config':
     content => template("service_openssh/sshd_config_${template_openssh}"),
     require => Package['openssh'];
-    '/etc/monit.d/sshd':
-    source => 'puppet:///service_openssh/monit_sshd';
+  }
+
+  if defined(File['/etc/monit.d']) {
+    file { 
+      '/etc/monit.d/sshd':
+      source => 'puppet:///service_openssh/monit_sshd';
+    }
   }
 
   if $sshd_run_service {

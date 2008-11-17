@@ -198,10 +198,13 @@ class service::openldap::serve {
     }
   }
 
-#       file { '/etc/monit.d/openldap':
-#         content => template("service_openldap/monit_ldap"),
-#         require => [Package['openldap'], Package['monit']]
-#       }
+  if defined(File['/etc/monit.d']) {
+    file {
+      '/etc/monit.d/openldap':
+      content => template("service_openldap/monit_ldap"),
+      require => Package['openldap']
+    }
+  }
 
 #       file {
 #         '/usr/libexec/munin/plugins/slapd_':

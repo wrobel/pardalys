@@ -1,5 +1,29 @@
 2008-11-17  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_syslog/manifests/init.pp: Fix the installation
+	of the monit configuration file.
+
+	* modules/service_postfix/manifests/init.pp: Fix the installation
+	of the monit configuration file.
+
+	* modules/service_openssh/manifests/init.pp: Fix the installation
+	of the monit configuration file.
+
+	* modules/service_openldap/manifests/init.pp: Fix the installation
+	of the monit configuration file.
+
+	* modules/service_munin/manifests/init.pp: Fix the installation of
+	the monit configuration file.
+
+	* modules/service_monit/manifests/init.pp: Fix the installation of
+	the monit configuration file.
+
+	* modules/service_cron/manifests/init.pp: Fix the installation of
+	the monit configuration file.
+
+	* modules/service_apache/manifests/init.pp: Fix the installation
+	of the monit configuration file.
+
 	* modules/tool_pardalys/manifests/init.pp: Add ldap use flag to puppet.
 
 	* modules/tool_system/manifests/init.pp: Add the sudo and keychain packages.

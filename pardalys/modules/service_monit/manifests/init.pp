@@ -29,8 +29,7 @@ class service::monit {
     }
   }
 
-  file { 'monit_config':
-    path   => '/etc/monit.d',
+  file { '/etc/monit.d':
     ensure => 'directory',
   }
 

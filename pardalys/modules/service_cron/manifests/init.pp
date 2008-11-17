@@ -35,10 +35,15 @@ class service::cron {
     group   => 'fcron',
     mode    => 640,
     require => Package['fcron'];
-    '/etc/monit.d/fcron':
-    source  => 'puppet:///service_cron/monit_fcron';
     '/etc/crontab':
     content => template("service_cron/crontab");
+  }
+
+  if defined(File['/etc/monit.d']) {
+    file { 
+      '/etc/monit.d/fcron':
+      source  => 'puppet:///service_cron/monit_fcron';
+    }
   }
 
   exec { root_crontab:

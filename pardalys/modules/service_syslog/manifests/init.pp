@@ -72,8 +72,13 @@ class service::syslog {
     '/etc/logrotate.d/syslog-ng':
     content => template("service_syslog/logrotate.d_syslog_${template_syslog_ng}"),
     require => Package['syslog-ng'];
-    '/etc/monit.d/syslog-ng':
-    content => template("service_syslog/monit_syslog_ng");
+  }
+
+  if defined(File['/etc/monit.d']) {
+    file { 
+      '/etc/monit.d/syslog-ng':
+      content => template("service_syslog/monit_syslog_ng");
+    }
   }
 
   if $syslog_run_service {

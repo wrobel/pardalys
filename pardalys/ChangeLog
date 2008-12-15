@@ -1,5 +1,8 @@
 2008-12-15  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_cyrusimap/manifests/init.pp: Get default values
+	for kolab_bind_addr and kolab_local_addr.
+
 	* modules/root/plugins/facter/package_versions.rb: Mark missing
 	packages explicitely as "missing".
 

@@ -70,6 +70,9 @@ class service::cyrusimap {
   $allow_anonymous = get_var('imap_allow_anonymous', 'no')
   $domainname      = get_var('domainname')
 
+  $bind_addr = get_var('kolab_bind_addr', '0.0.0.0')
+  $local_addr = get_var('kolab_local_addr', '127.0.0.1')
+
   $kolab_cyrus_imap  = get_var('kolab_cyrus_imap', true)
   $kolab_cyrus_imaps = get_var('kolab_cyrus_imaps', true)
   $kolab_cyrus_pop3  = get_var('kolab_cyrus_pop3', true)

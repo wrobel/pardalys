@@ -1,5 +1,8 @@
 2008-12-15  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/root/plugins/facter/package_versions.rb: Mark missing
+	packages explicitely as "missing".
+
 	* modules/tool_emacs/files/ed_99_keys.el: Remove reference to
 	bbdb-mode-map.
 

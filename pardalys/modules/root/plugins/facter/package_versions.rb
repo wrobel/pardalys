@@ -25,6 +25,7 @@ if FileTest.exists?(packages)
             end
             version = `/usr/bin/eix --nocolor --format "<installedversionsshort>" --pure-packages --exact --category-name #{pkgname}`.chomp
             version = $1 if version =~ /^(.*)\[\?\]/
+            version = 'missing' if version == '' 
             version
           else
             false

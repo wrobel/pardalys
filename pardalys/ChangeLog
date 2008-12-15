@@ -1,3 +1,14 @@
+2008-12-15  Gunnar Wrobel  <p@rdus.de>
+
+	* modules/tool_emacs/files/ed_99_keys.el: Remove reference to
+	bbdb-mode-map.
+
+	* modules/tool_ec2_tools/files/ec2-init.sh: Fix permissions on the
+	/tmp dir.
+
+	* modules/kolab_service_kolab/plugins/facter/kolab.rb: Fixed the
+	use of bindir/sbindir.
+
 2008-11-17  Gunnar Wrobel  <p@rdus.de>
 
 	* modules/service_syslog/manifests/init.pp: Fix the installation

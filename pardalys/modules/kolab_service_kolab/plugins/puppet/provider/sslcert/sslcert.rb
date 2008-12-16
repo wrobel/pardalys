@@ -11,6 +11,7 @@ Puppet::Type.type(:sslcert).provide(:kolab) do
     #        OpenSSL library Ruby provides. But as that would require
     #        writing new code it is something that needs to get fixed
     #        later.
+    `mkdir -p #{confdir}`
     `/usr/bin/kolab_ca -newca #{hostname}`
     `/usr/bin/kolab_ca -newkey #{hostname} #{confdir}/server.key`
     `/usr/bin/kolab_ca -newreq #{hostname} #{confdir}/server.key #{confdir}/server.newreq`
@@ -22,6 +23,7 @@ Puppet::Type.type(:sslcert).provide(:kolab) do
     `chmod 0640 #{confdir}/server.crt`
     `cat #{confdir}/server.crt > #{confdir}/server.pem`
     `cat #{confdir}/server.key >> #{confdir}/server.pem`
+    `chgrp #{group} #{confdir}/server.pem`
     `chmod 0640 #{confdir}/server.pem`
   end
 

@@ -45,7 +45,7 @@ class service::monit {
   $monit_mailserver = get_var('mailserver', 'localhost')
   $monit_hostname = get_var('hostname', 'localhost')
   $monit_domainname = get_var('domainname', 'localdomain')
-  $monit_sysadmin = get_var('sysadmin', '')
+  $monit_sysadmin = get_var('kolab_admin_mail',   'root@localhost')
   $monit_run_service = get_var('run_services', true)
 
   $monit_cert_path = $tool::openssl::ssl_combined_path

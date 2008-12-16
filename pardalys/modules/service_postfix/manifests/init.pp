@@ -92,6 +92,7 @@ class service::postfix {
         context => 'service_postfix_Horde_Kolab_Filter',
         package => 'dev-php/Horde_Kolab_Filter',
         keywords => "~$keyword",
+        require  =>  Package['Horde_Kolab_Storage'],
         tag      => 'buildhost'
       }
       package { 'Horde_Kolab_Filter':

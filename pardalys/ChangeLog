@@ -1,5 +1,9 @@
 2008-12-16  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_openldap/plugins/puppet/provider/kolabldap/kolabldap.rb:
+	It is not yet complete but the basic functionality is there and
+	the code is able to create the basic required Kolab LDAP entries.
+
 	* modules/kolab_service_kolab/plugins/facter/kolab.rb: Ensure LDAP
 	values get concatenated. A comma is too limited here but it should
 	be okay for now. Also added the admin_mail value.

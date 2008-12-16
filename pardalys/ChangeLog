@@ -1,5 +1,8 @@
 2008-12-16  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_freebusy/manifests/init.pp: Require the
+	Horde_Kolab_Storage package for installation.
+
 	* modules/service_cyrusimap/manifests/init.pp: Fix handling of
 	cyrus admins and postfix mail domains.
 

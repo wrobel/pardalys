@@ -40,7 +40,8 @@ class service::freebusy {
       package { 'Horde_Kolab_FreeBusy':
         category => 'dev-php',
         ensure   => 'installed',
-        require  => Gentoo_keywords['Kolab_FreeBusy'],
+        require  => [ Gentoo_keywords['Kolab_FreeBusy'],
+                      Package['Horde_Kolab_Storage'] ],
         tag      => 'buildhost';
       }
     }

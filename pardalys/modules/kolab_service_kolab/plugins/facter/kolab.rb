@@ -71,6 +71,11 @@ if !$facts.keys.include? 'postfix_mydomain'
   $facts['postfix_mydomain'] = $facts['fqdnhostname']
 end
 
+if !$facts.keys.include? 'admin_mail'
+  $facts['admin_mail'] = 'hostmaster@' + $facts['postfix_mydomain']
+end
+
+
 def dnfromdomain(domain)
   base_dn = ''
   domain.split('.').each do |domaincomp| 
@@ -175,7 +180,7 @@ if ldap_present
         elsif val[0] == 'FALSE'
           $facts[akey]  = false
         else
-          $facts[akey]  = val
+          $facts[akey]  = val.join(',')
         end
       end
     end

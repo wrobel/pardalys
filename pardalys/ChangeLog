@@ -1,5 +1,8 @@
 2008-12-16  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_postfix/manifests/init.pp: Remove obsolete
+	dependency.
+
 	* modules/tool_horde_framework/manifests/init.pp: Update to the
 	latest Horde package releases.
 

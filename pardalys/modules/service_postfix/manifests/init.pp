@@ -99,8 +99,7 @@ class service::postfix {
         ensure   => 'installed',
         require  =>  [ Gentoo_use_flags['c-client-postfix'],
                        Gentoo_keywords['Horde_Kolab_Filter'],
-                       Gentoo_keywords['Horde_Argv_postfix'],
-                       Gentoo_unmask['Horde_Kolab_Filter'] ],
+                       Gentoo_keywords['Horde_Argv_postfix']],
         tag      => 'buildhost'
       }
     }

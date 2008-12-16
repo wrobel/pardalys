@@ -1,3 +1,14 @@
+2008-12-16  Gunnar Wrobel  <p@rdus.de>
+
+	* modules/tool_horde_framework/manifests/init.pp: Update to the
+	latest Horde package releases.
+
+	* modules/service_postfix/manifests/init.pp: Horde_Kolab_Filter
+	does not need to be unmasked.
+
+	* modules/service_freebusy/manifests/init.pp: Update to the latest
+	Kolab_FreeBusy.
+
 2008-12-15  Gunnar Wrobel  <p@rdus.de>
 
 	* modules/service_cyrusimap/manifests/init.pp: Get default values

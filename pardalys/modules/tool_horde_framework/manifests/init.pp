@@ -100,7 +100,7 @@ class tool::horde::framework {
       }
       gentoo_keywords { 'Horde_Auth':
         context => 'tool_horde_framework_Horde_Auth',
-        package => '=dev-php/Horde_Auth-0.1.0',
+        package => '=dev-php/Horde_Auth-0.1.1',
         keywords => "~$keyword",
         tag     => 'buildhost'
       }
@@ -130,19 +130,19 @@ class tool::horde::framework {
       }
       gentoo_keywords { 'Kolab_Server':
         context => 'tool_horde_framework_Kolab_Server',
-        package => '=dev-php/Horde_Kolab_Server-0.1.1.20081001',
+        package => '=dev-php/Horde_Kolab_Server-0.3.0',
         keywords => "~$keyword",
         tag     => 'buildhost'
       }
       gentoo_keywords { 'Kolab_Format':
         context => 'tool_horde_framework_Kolab_Format',
-        package => '=dev-php/Horde_Kolab_Format-0.1.2.20080912',
+        package => '=dev-php/Horde_Kolab_Format-1.0.0',
         keywords => "~$keyword",
         tag     => 'buildhost'
       }
       gentoo_keywords { 'Kolab_Storage':
         context => 'tool_horde_framework_Kolab_Storage',
-        package => '=dev-php/Horde_Kolab_Storage-0.1.0.20081001',
+        package => '=dev-php/Horde_Kolab_Storage-0.3.0',
         keywords => "~$keyword",
         tag     => 'buildhost'
       }

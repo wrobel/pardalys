@@ -88,11 +88,6 @@ class service::postfix {
         keywords => "~$keyword",
         tag      => 'buildhost'
       }
-      gentoo_unmask { 'Horde_Kolab_Filter':
-        context => 'service_postfix_Horde_Kolab_Filter',
-        package => 'dev-php/Horde_Kolab_Filter',
-        tag     => 'buildhost'
-      }
       gentoo_keywords { 'Horde_Kolab_Filter':
         context => 'service_postfix_Horde_Kolab_Filter',
         package => 'dev-php/Horde_Kolab_Filter',

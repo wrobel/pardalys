@@ -1,5 +1,8 @@
 2008-12-16  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/meta_kolab_complete/manifests/init.pp: We need the horde
+	framework packages before installing/configuring postfix.
+
 	* modules/service_postfix/manifests/init.pp: Remove obsolete
 	dependency.
 

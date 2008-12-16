@@ -1,5 +1,8 @@
 2008-12-16  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/kolab_service_kolab/manifests/init.pp: Fix location of
+	the Kolab style generated SSL certificates.
+
 	* modules/meta_kolab_complete/manifests/init.pp: We need the horde
 	framework packages before installing/configuring postfix.
 

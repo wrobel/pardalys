@@ -1,5 +1,8 @@
 2008-12-16  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_cron/manifests/init.pp: Fix handling the admin
+	mail value.
+
 	* modules/kolab_service_kolab/templates/kolab.globals: Add a value
 	for the Kolab admin.
 

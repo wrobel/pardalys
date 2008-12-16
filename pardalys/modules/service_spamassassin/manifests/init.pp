@@ -79,6 +79,7 @@ class service::spamassassin {
   }
 
   $amavis_child      = get_var('amavis_child', true)
+  $amavis_sysadmin = get_var('kolab_admin_mail', 'root@localhost')
 
   # Possible configuration
   if $service_spamassassin_use_bayes {
@@ -129,14 +130,14 @@ class service::spamassassin {
   if $amavis_child {
     exec { razor_register:
       path => "/usr/bin:/usr/sbin:/bin",
-      command => "su -s /bin/bash - amavis -c \"razor-admin -create\" && su -s /bin/bash - amavis -c \"razor-admin -register -user $sysadmin\"",
+      command => "su -s /bin/bash - amavis -c \"razor-admin -create\" && su -s /bin/bash - amavis -c \"razor-admin -register -user $amavis_sysadmin\"",
       require => [Package['amavisd-new'], Package['razor']],
       unless => "test -e /var/amavis/.razor/identity"
     }
   } else {
     exec { razor_register:
       path => "/usr/bin:/usr/sbin:/bin",
-      command => "razor-admin -create -home=/etc/mail/spamassassin/.razor && razor-admin -register -home=/etc/mail/spamassassin/.razor -user $sysadmin",
+      command => "razor-admin -create -home=/etc/mail/spamassassin/.razor && razor-admin -register -home=/etc/mail/spamassassin/.razor -user $amavis_sysadmin",
       require => [Package['spamassassin'], Package['razor']],
       unless => "test -e /etc/mail/spamassassin/.razor/identity"
     }

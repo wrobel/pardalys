@@ -1,5 +1,8 @@
 2008-12-16  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_spamassassin/manifests/init.pp: Fix handling the
+	admin mail value.
+
 	* modules/service_postfix/manifests/init.pp: This is a template,
 	not a file. Fix handling the admin mail value.
 

@@ -64,15 +64,15 @@ class service::freebusy {
 
   $apache_allow_unauthenticated_fb = get_var('freebusy_allow_unauthenticated', false)
 
-  $ldap_host    = get_var('ldap_host', 'localhost')
-  $ldap_base_dn = get_var('base_dn')
-  $ldap_bind_dn = get_var('bind_dn_nobody')
-  $ldap_bind_pw = get_var('bind_pw_nobody')
+  $ldap_uri     = get_var('kolab_ldap_uri', 'localhost')
+  $ldap_base_dn = get_var('kolab_base_dn')
+  $ldap_bind_dn = get_var('kolab_bind_dn_restricted')
+  $ldap_bind_pw = get_var('kolab_bind_pw_restricted')
 
   $imap_host    = get_var('imap_host', 'localhost')
 
   $maildomain = get_var('freebusy_maildomain', get_var('domainname'))
-  $sysadmin = get_var('sysadmin', 'root@localhost')
+  $sysadmin = get_var('kolab_admin_mail', 'root@localhost')
 
   $apache_usr = 'apache'
   $apache_grp = 'apache'

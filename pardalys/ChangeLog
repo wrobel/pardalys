@@ -1,5 +1,8 @@
 2008-12-16  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_freebusy/templates/freebusy_config.php_0.0.4.20081001:
+	Fix ldap values.
+
 	* modules/service_freebusy/manifests/init.pp: Fix handling the
 	admin mail value. Fix ldap values.
 

@@ -66,7 +66,7 @@ class tool::portage {
   $linguas              = split(get_var('portage_linguas'), ',')
   $eclass_warning       = get_var('portage_ignore_eclass_warning', false)
 
-  $portage_sysadmin     = get_var('sysadmin',   'root@localhost')
+  $portage_sysadmin = get_var('kolab_admin_mail', 'root@localhost')
   $portage_mailserver   = get_var('mailserver', 'localhost')
   $portage_hostname     = get_var('hostname',   'localhost')
   $portage_domainname   = get_var('domainname', 'localdomain')

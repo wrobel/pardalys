@@ -45,4 +45,4 @@ system:             root
 
 # root:
 
-root:<%= sysadmin %>
+root:               <%= postfix_sysadmin %>

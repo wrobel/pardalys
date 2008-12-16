@@ -1,5 +1,8 @@
 2008-12-16  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_postfix/templates/aliases: This is a template,
+	not a file.
+
 	* modules/service_monit/manifests/init.pp: Fix handling the admin
 	mail value.
 

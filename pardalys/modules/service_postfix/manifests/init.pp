@@ -118,6 +118,8 @@ class service::postfix {
   $postfix_aliasdir   = "${os::sysconfdir}/mail"
   $postfix_aliases    = "${postfix_aliasdir}/aliases"
 
+  $postfix_sysadmin = get_var('kolab_admin_mail', 'root@localhost')
+
   $postfix_script_user = 'nobody'
 
   $template_postfix = template_version($version_postfix, '2.4.6-r2@:2.4.6-r2,', '2.4.6-r2')
@@ -177,7 +179,7 @@ class service::postfix {
     require => Package['postfix'],
     notify  => Service['postfix'];
     "${postfix_aliases}":
-    source  => 'puppet:///service_postfix/aliases',
+    content => template("service_postfix/aliases"),
     mode    => 640,
     require => Package['postfix'],
     notify  => [Service['postfix'], Exec['map_aliases']];

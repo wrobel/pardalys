@@ -1,5 +1,8 @@
 2008-12-16  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/service_postfix/templates/master.cf_2.4.6-r2: Adapt to
+	the option flags in the newer Horde_Kolab_Filter package.
+
 	* modules/service_postfix/manifests/init.pp: Require the
 	Horde_Kolab_Storage package for installation.
 

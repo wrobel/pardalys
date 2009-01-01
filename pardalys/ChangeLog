@@ -1,5 +1,7 @@
 2009-01-01  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/tool_portage/manifests/init.pp: Use unstable esearch.
+
 	* modules/service_freebusy/manifests/init.pp: Add newer free/busy
 	version.
 

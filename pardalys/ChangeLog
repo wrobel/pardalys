@@ -1,5 +1,7 @@
 2009-01-19  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/tool_system/manifests/init.pp: CVS should always be available.
+
 	* modules/tool_portage/manifests/init.pp: Fix typo, fix default profile.
 
 	* modules/tool_system/manifests/init.pp: A standard machine should

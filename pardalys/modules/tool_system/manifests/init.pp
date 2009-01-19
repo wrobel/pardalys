@@ -40,6 +40,12 @@ class tool::system {
         tag      => 'buildhost',
       }
 
+      package { cvs:
+        category => 'dev-util',
+        ensure   => 'installed',
+        tag      => 'buildhost'
+      }
+
       package { mercurial:
         category => 'dev-util',
         ensure   => 'installed',

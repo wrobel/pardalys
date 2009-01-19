@@ -24,10 +24,21 @@ class tool::portage {
     use     => 'doc epydoc',
     tag     => 'buildhost'
   }
+  gentoo_keywords { eserach:
+    context => 'tools_portage_esearch',
+    package => 'app-portage/esearch',
+    keywords => "~$keyword",
+    tag     => 'buildhost'
+  }
   package { 
-    ['esearch', 'euses', 'gentoolkit', 'gentoolkit-dev', 'mirrorselect',
+    ['euses', 'gentoolkit', 'gentoolkit-dev', 'mirrorselect',
     'portage-utils', 'pybugz']:
     ensure   => 'installed',
+    tag      => 'buildhost';
+    'esearch':
+    category => 'app-portage',
+    ensure   => 'installed',
+    require  => Gentoo_keywords['esearch'],
     tag      => 'buildhost';
     'eselect':
     category => 'app-admin',

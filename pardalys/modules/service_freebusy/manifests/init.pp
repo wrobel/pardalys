@@ -53,7 +53,7 @@ class service::freebusy {
     }
   }
 
-  $template_freebusy = template_version($version_horde_kolab_freebusy, '0.0.3@:0.0.3,0.0.4.20081001@:0.0.4.20081001', '0.0.4.20081001')
+  $template_freebusy = template_version($version_horde_kolab_freebusy, '0.0.3@:0.0.3,0.0.4.20081001@0.1.2@:0.0.4.20081001', '0.0.4.20081001')
 
   $sysconfdir  = $os::sysconfdir
 
@@ -80,7 +80,7 @@ class service::freebusy {
   # FIXME: I really need to return to webapp-config
   exec { freebusy_webapp:
     path => "/usr/bin:/usr/sbin:/bin",
-    command => "webapp-config -I -h $freebusy_vhost -d $freebusy_vhost_path Horde_Kolab_FreeBusy $version_horde_kolab_freebusy || echo FXIME",
+    command => "webapp-config -I -h $freebusy_vhost -d $freebusy_vhost_path Horde_Kolab_FreeBusy $version_horde_kolab_freebusy",
     unless => "test -e ${freebusy_webroot}/freebusy.php",
     require => Package['Horde_Kolab_FreeBusy'];
   }

@@ -6,6 +6,15 @@
 
 	* modules/tool_php/manifests/init.pp: Added soap and hash support to php.
 
+2009-01-01  Gunnar Wrobel  <p@rdus.de>
+
+	* modules/tool_portage/manifests/init.pp: Use unstable esearch.
+
+	* modules/service_freebusy/manifests/init.pp: Add newer free/busy
+	version.
+
+	* modules/tool_emacs/files/ed_99_keys.el: No bbdb installed.
+
 2008-12-16  Gunnar Wrobel  <p@rdus.de>
 
 	* modules/service_openldap/plugins/puppet/provider/kolabldap/kolabldap.rb:

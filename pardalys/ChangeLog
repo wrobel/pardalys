@@ -1,5 +1,9 @@
 2009-01-19  Gunnar Wrobel  <p@rdus.de>
 
+	* modules/tool_system/manifests/init.pp: A standard machine should
+	have java and tetex installed. Upgrade to the latest ledger
+	version.
+
 	* modules/tool_php/manifests/init.pp: Added soap and hash support to php.
 
 2008-12-16  Gunnar Wrobel  <p@rdus.de>

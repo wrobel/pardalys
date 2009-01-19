@@ -1,3 +1,7 @@
+2009-01-19  Gunnar Wrobel  <p@rdus.de>
+
+	* modules/tool_php/manifests/init.pp: Added soap and hash support to php.
+
 2008-12-16  Gunnar Wrobel  <p@rdus.de>
 
 	* modules/service_openldap/plugins/puppet/provider/kolabldap/kolabldap.rb:

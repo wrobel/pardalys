@@ -1,3 +1,7 @@
+2009-01-25  Gunnar Wrobel  <p@rdus.de>
+
+	* modules/service_ssmtp/manifests/init.pp: Mask all ssmtp-2.62*
+
 2009-01-19  Gunnar Wrobel  <p@rdus.de>
 
 	* modules/tool_system/manifests/init.pp: CVS should always be available.

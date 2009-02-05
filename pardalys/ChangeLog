@@ -1,3 +1,8 @@
+2009-02-06  Gunnar Wrobel  <p@rdus.de>
+
+	* modules/tool_system/manifests/init.pp: Install patchutils on all
+	systems.
+
 2009-01-25  Gunnar Wrobel  <p@rdus.de>
 
 	* modules/service_ssmtp/manifests/init.pp: Mask all ssmtp-2.62*

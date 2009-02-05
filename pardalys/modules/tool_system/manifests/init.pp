@@ -122,6 +122,12 @@ class tool::system {
         tag      => 'buildhost'
       }
 
+      package { patchutils:
+        category => 'dev-util',
+        ensure   => 'installed',
+        tag      => 'buildhost'
+      }
+
       package { screen:
         category => 'app-misc',
         ensure   => 'installed',

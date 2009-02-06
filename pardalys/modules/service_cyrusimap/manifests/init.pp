@@ -70,6 +70,9 @@ class service::cyrusimap {
   $allow_anonymous = get_var('imap_allow_anonymous', 'no')
   $domainname      = get_var('domainname')
 
+  $bind_addr = get_var('kolab_bind_addr', '0.0.0.0')
+  $local_addr = get_var('kolab_local_addr', '127.0.0.1')
+
   $kolab_cyrus_imap  = get_var('kolab_cyrus_imap', true)
   $kolab_cyrus_imaps = get_var('kolab_cyrus_imaps', true)
   $kolab_cyrus_pop3  = get_var('kolab_cyrus_pop3', true)
@@ -78,25 +81,8 @@ class service::cyrusimap {
 
   $kolab_cyrus_quotawarn = get_var('kolab_cyrus_quotawarn', 90)
 
-  $kca    = get_var('kolab_cyrus_admins', false)
-  case $kca {
-    false: {
-      $cyrus_admins = ['manager']
-    }
-    default: {
-      $cyrus_admins = $kca
-    }
-  }
-
-  $kpm = get_var('kolab_postfix_mydestination', false)
-  case $kpm {
-    false: {
-      $kolab_postfix_mydestination = ['localhost']
-    }
-    default: {
-      $kolab_postfix_mydestination = $kpm
-    }
-  }
+  $cyrus_admins  = split(get_var('kolab_cyrus_admins', 'manager'), ',')
+  $kolab_postfix_mydestination = split(get_var('kolab_postfix_mydestination', 'localhost'), ',')
 
   $kig = get_var('kolab_imap_groups', false)
   case $kig {

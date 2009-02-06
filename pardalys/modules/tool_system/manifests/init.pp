@@ -28,6 +28,24 @@ class tool::system {
         require  => Gentoo_use_flags['perl']
       }
 
+      package { sun-jdk:
+        category => 'dev-lang',
+        ensure   => 'installed',
+        tag      => 'buildhost',
+      }
+
+      package { tetex:
+        category => 'app-text',
+        ensure   => 'installed',
+        tag      => 'buildhost',
+      }
+
+      package { cvs:
+        category => 'dev-util',
+        ensure   => 'installed',
+        tag      => 'buildhost'
+      }
+
       package { mercurial:
         category => 'dev-util',
         ensure   => 'installed',
@@ -99,6 +117,12 @@ class tool::system {
       }
 
       package { ltrace:
+        category => 'dev-util',
+        ensure   => 'installed',
+        tag      => 'buildhost'
+      }
+
+      package { patchutils:
         category => 'dev-util',
         ensure   => 'installed',
         tag      => 'buildhost'
@@ -188,7 +212,7 @@ class tool::system {
       }
       gentoo_keywords { ledger:
         context  => 'tool_system_ledger',
-        package  => '=app-office/ledger-2.5-r2',
+        package  => '=app-office/ledger-2.6.1',
         keywords => "~$keyword",
         tag      => 'buildhost'
       }
@@ -203,6 +227,17 @@ class tool::system {
 
       package { iproute2:
         category => 'sys-apps',
+        ensure   => 'installed',
+        tag      => 'buildhost'
+      }
+
+      package { sudo:
+        category => 'app-admin',
+        ensure   => 'installed',
+        tag      => 'buildhost'
+      }
+      package { keychain:
+        category => 'net-misc',
         ensure   => 'installed',
         tag      => 'buildhost'
       }

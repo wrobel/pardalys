@@ -90,8 +90,13 @@ class service::munin {
     source => 'puppet:///service_munin/netstat',
     require => Package['munin'],
     mode    => 755;
-    '/etc/monit.d/munin-node':
-    source => 'puppet:///service_munin/monit_munin-node';
+  }
+
+  if defined(File['/etc/monit.d']) {
+    file{
+      '/etc/monit.d/munin-node':
+      source => 'puppet:///service_munin/monit_munin-node';
+    }
   }
 
   # Get the plugins that we should activate

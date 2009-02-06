@@ -6,11 +6,11 @@ import 'service_openldap'
 import 'service_sasl'
 import 'tool_cyrusimapadmin'
 import 'tool_perl_kolab'
+import 'tool_php'
+import 'tool_horde_framework'
 import 'service_postfix'
 import 'service_cyrusimap'
 import 'service_kolabd'
-import 'tool_php'
-import 'tool_horde_framework'
 import 'tool_portage_extend'
 import 'service_apache'
 import 'service_horde'
@@ -36,12 +36,12 @@ class meta::kolab::complete {
     default: {
       include service::sasl
       include tool::perl::kolab
+      include tool::php
+      include tool::horde::framework
       include service::postfix
       include tool::cyrusimapadmin
       include service::cyrusimap
       include service::kolabd
-      include tool::php
-      include tool::horde::framework
       include tool::portage::extend
       include service::apache
       include service::horde

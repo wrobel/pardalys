@@ -18,7 +18,7 @@ class service::cron {
   $template_fcron = template_version($version_fcron, '3.0.3@:3.0.3,', '3.0.3')
 
   $editor = get_var('global_editor', '/usr/bin/emacs')
-  $cron_sysadmin = get_var('sysadmin', 'root@localhost')
+  $cron_sysadmin = get_var('kolab_admin_mail', 'root@localhost')
   $cron_run_service = get_var('run_services', true)
   $cron_system_continuous = get_var('system_continuous', true)
 
@@ -35,10 +35,15 @@ class service::cron {
     group   => 'fcron',
     mode    => 640,
     require => Package['fcron'];
-    '/etc/monit.d/fcron':
-    source  => 'puppet:///service_cron/monit_fcron';
     '/etc/crontab':
     content => template("service_cron/crontab");
+  }
+
+  if defined(File['/etc/monit.d']) {
+    file { 
+      '/etc/monit.d/fcron':
+      source  => 'puppet:///service_cron/monit_fcron';
+    }
   }
 
   exec { root_crontab:

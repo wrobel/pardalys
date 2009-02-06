@@ -14,21 +14,21 @@ START {
 # UNIX sockets start with a slash and are put into /var/imap/socket.
 SERVICES {
 <% if kolab_cyrus_imap -%>
-  imap cmd="imapd -C <%= sysconfdir %>/imapd.conf" listen="<%= kolab_bind_addr %>:143" prefork=0
+  imap cmd="imapd -C <%= sysconfdir %>/imapd.conf" listen="<%= bind_addr %>:143" prefork=0
 <% else -%>
-  imap cmd="imapd -C <%= sysconfdir %>/imapd.conf" listen="<%= kolab_local_addr %>:143" prefork=0
+  imap cmd="imapd -C <%= sysconfdir %>/imapd.conf" listen="<%= local_addr %>:143" prefork=0
 <% end -%>
 <% if kolab_cyrus_imaps -%>
-  imaps cmd="imapd -s -C <%= sysconfdir %>/imapd.conf" listen="<%= kolab_bind_addr %>:993" prefork=0
+  imaps cmd="imapd -s -C <%= sysconfdir %>/imapd.conf" listen="<%= bind_addr %>:993" prefork=0
 <% end -%>
 <% if kolab_cyrus_pop3 -%>
-  pop3 cmd="pop3d -C <%= sysconfdir %>/imapd.conf" listen="<%= kolab_bind_addr %>:110" prefork=0
+  pop3 cmd="pop3d -C <%= sysconfdir %>/imapd.conf" listen="<%= bind_addr %>:110" prefork=0
 <% end -%>
 <% if kolab_cyrus_pop3s -%>
-  pop3s cmd="pop3d -s -C <%= sysconfdir %>/imapd.conf" listen="<%= kolab_bind_addr %>:995" prefork=0
+  pop3s cmd="pop3d -s -C <%= sysconfdir %>/imapd.conf" listen="<%= bind_addr %>:995" prefork=0
 <% end -%>
 <% if kolab_cyrus_sieve -%>
-  sieve cmd="timsieved -C <%= sysconfdir %>/imapd.conf" listen="<%= kolab_bind_addr %>:2000" prefork=0
+  sieve cmd="timsieved -C <%= sysconfdir %>/imapd.conf" listen="<%= bind_addr %>:2000" prefork=0
 <% end -%>
 
 <% if kolab_is_master %>
@@ -37,7 +37,7 @@ SERVICES {
 
   # at least one LMTP is required for delivery
   lmtpunix	cmd="lmtpd" listen="<%= lmtp_socket %>" prefork=0
-  lmtp          cmd="lmtpd -a" listen="<%= kolab_local_addr %>:2003"
+  lmtp          cmd="lmtpd -a" listen="<%= local_addr %>:2003"
 <% if lmtp_external %>
   lmtp          cmd="lmtpd" listen="<%= ipHostNumber %>:2003"
 <% end %>

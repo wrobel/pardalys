@@ -88,15 +88,11 @@ class service::postfix {
         keywords => "~$keyword",
         tag      => 'buildhost'
       }
-      gentoo_unmask { 'Horde_Kolab_Filter':
-        context => 'service_postfix_Horde_Kolab_Filter',
-        package => 'dev-php/Horde_Kolab_Filter',
-        tag     => 'buildhost'
-      }
       gentoo_keywords { 'Horde_Kolab_Filter':
         context => 'service_postfix_Horde_Kolab_Filter',
         package => 'dev-php/Horde_Kolab_Filter',
         keywords => "~$keyword",
+        require  =>  Package['Horde_Kolab_Storage'],
         tag      => 'buildhost'
       }
       package { 'Horde_Kolab_Filter':
@@ -104,8 +100,7 @@ class service::postfix {
         ensure   => 'installed',
         require  =>  [ Gentoo_use_flags['c-client-postfix'],
                        Gentoo_keywords['Horde_Kolab_Filter'],
-                       Gentoo_keywords['Horde_Argv_postfix'],
-                       Gentoo_unmask['Horde_Kolab_Filter'] ],
+                       Gentoo_keywords['Horde_Argv_postfix']],
         tag      => 'buildhost'
       }
     }
@@ -122,6 +117,8 @@ class service::postfix {
   $postfix_confdir    = "${os::sysconfdir}/postfix"
   $postfix_aliasdir   = "${os::sysconfdir}/mail"
   $postfix_aliases    = "${postfix_aliasdir}/aliases"
+
+  $postfix_sysadmin = get_var('kolab_admin_mail', 'root@localhost')
 
   $postfix_script_user = 'nobody'
 
@@ -182,7 +179,7 @@ class service::postfix {
     require => Package['postfix'],
     notify  => Service['postfix'];
     "${postfix_aliases}":
-    source  => 'puppet:///service_postfix/aliases',
+    content => template("service_postfix/aliases"),
     mode    => 640,
     require => Package['postfix'],
     notify  => [Service['postfix'], Exec['map_aliases']];
@@ -237,9 +234,13 @@ class service::postfix {
     "${kolabfilterconfig}":
     content => template("service_postfix/kolabfilter.conf"),
     require => Package['Horde_Kolab_Filter'];
-#
-#    '/etc/monit.d/postfix':
-#    source  => 'puppet:///service_cron/monit_postfix';
+  }
+
+  if defined(File['/etc/monit.d']) {
+    file {
+      '/etc/monit.d/postfix':
+      source  => 'puppet:///service_cron/monit_postfix';
+    }
   }
 
   exec {

@@ -30,7 +30,7 @@ class tool::php {
       gentoo_use_flags { php:
         context => 'tool_php_php',
         package => 'dev-lang/php',
-        use     => 'apache2 bzip2 ctype ftp gd hash imap json kolab ldap mysql nls pcre reflection session spl sqlite tokenizer xml',
+        use     => 'apache2 bzip2 ctype ftp gd hash imap json kolab ldap mysql nls pcre reflection session soap spl sqlite tokenizer xml',
         tag     => 'buildhost'
       }
       package { php:

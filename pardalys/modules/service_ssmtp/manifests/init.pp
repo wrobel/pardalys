@@ -23,7 +23,7 @@ class service::ssmtp {
       }
       gentoo_mask { 'ssmtp':
         context => 'service_ssmtp_ssmtp',
-        package => '=mail-mta/ssmtp-2.62-r3',
+        package => '=mail-mta/ssmtp-2.62*',
         tag     => 'buildhost'
       }
       package { 'ssmtp':

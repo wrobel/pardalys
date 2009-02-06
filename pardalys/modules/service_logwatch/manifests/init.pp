@@ -32,6 +32,8 @@ class service::logwatch {
     }
   }
 
+  $sysadmin = get_var('kolab_admin_mail', 'root@localhost')
+
   # Get the logwatch services we have
   $my_logwatch_services = split($logwatch_services, ',')
 

@@ -107,7 +107,7 @@ class service::horde {
 
   $horde_webroot = "/var/www/${horde_vhost}/htdocs${horde_vhost_path}"
 
-  $sysadmin = get_var('sysadmin')
+  $sysadmin = get_var('kolab_admin_mail', 'root@localhost')
   $horde_maildomain = get_var('horde_maildomain', get_var('domainname'))
 
   $horde_admins = split(get_var('horde_admins', ''), ',')

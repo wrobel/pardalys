@@ -66,8 +66,7 @@ class kolab::service::kolab {
 
       if $kolab_bootstrap {
         sslcert{ 
-          "$kolab_confdir":
-            require  => "$kolab_pki_dir",
+          "$kolab_pki_dir":
             hostname => "$kolab_fqdnhostname",
             group    => "$kolab_grp",
             ensure   => 'present',

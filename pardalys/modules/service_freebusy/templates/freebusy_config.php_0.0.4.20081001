@@ -27,7 +27,7 @@ $conf['log']['params']['append'] = array();
 ini_set('error_log', '/var/log/apache2/freebusy_php-error.log');
 
 /* Horde::Kolab::LDAP configuration */
-$conf['kolab']['ldap']['server'] = '<%= ldap_host %>';
+$conf['kolab']['ldap']['server'] = '<%= ldap_uri %>';
 $conf['kolab']['ldap']['basedn'] = '<%= ldap_base_dn %>';
 $conf['kolab']['ldap']['phpdn']  = '<%= ldap_bind_dn %>';
 $conf['kolab']['ldap']['phppw']  = '<%= ldap_bind_pw %>';

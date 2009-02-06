@@ -217,21 +217,21 @@ kolabfilter     unix  -       n       n       -       3       pipe user=<%= post
     -c /etc/php/cli-php5/php.ini
     -f /usr/bin/kolabfilter
     --
-    -h <%= kolab_hostname %>
-    -s ${sender}
+    --host=<%= kolab_hostname %>
+    --sender=${sender}
     --recipient=${recipient}
-    -c ${client_address}
-    -C <%= kolabfilterconfig %>
-    -u ${sasl_username}
+    --client=${client_address}
+    --user=${sasl_username}
+    --config=<%= kolabfilterconfig %>
 
 # Filter incoming mail for resource updates (iTip)
 kolabmailboxfilter     unix  -       n       n       -       3       pipe user=<%= postfix_script_user %> null_sender= argv=/usr/bin/php
     -c /etc/php/cli-php5/php.ini
     -f /usr/bin/kolabmailboxfilter
     --
-    -h <%= kolab_hostname %>
-    -s ${sender}
+    --host=<%= kolab_hostname %>
+    --sender=${sender}
     --recipient=${recipient}
-    -c ${client_address}
-    -C <%= kolabfilterconfig %>
+    --client=${client_address}
+    --config=<%= kolabfilterconfig %>
 

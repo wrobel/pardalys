@@ -71,6 +71,11 @@ if !$facts.keys.include? 'postfix_mydomain'
   $facts['postfix_mydomain'] = $facts['fqdnhostname']
 end
 
+if !$facts.keys.include? 'admin_mail'
+  $facts['admin_mail'] = 'hostmaster@' + $facts['postfix_mydomain']
+end
+
+
 def dnfromdomain(domain)
   base_dn = ''
   domain.split('.').each do |domaincomp| 
@@ -92,13 +97,13 @@ if !$facts.keys.include? 'bind_dn'
 end
 
 if !$facts.keys.include? 'bind_pw'
-  $facts['bind_pw'] = `#{$bindir}/openssl rand -base64 12`
+  $facts['bind_pw'] = `#{$facts['bindir']}/openssl rand -base64 12`
   bind_pw_sq = $facts['bind_pw'].gsub('/([\\"$]/','\\\1')
 end
 
 if !$facts.keys.include? 'bind_pw_hash'
   bind_pw_sq = $facts['bind_pw'].gsub('/([\\"$]/','\\\1')
-  $facts['bind_pw_hash'] = `#{$sbindir}/slappasswd -s #{bind_pw_sq}`
+  $facts['bind_pw_hash'] = `#{$facts['sbindir']}/slappasswd -s #{bind_pw_sq}`
 end
 
 if !$facts.keys.include? 'ldap_uri'
@@ -124,7 +129,7 @@ if !$facts.keys.include? 'bind_dn_restricted'
 end
 
 if !$facts.keys.include? 'bind_pw_restricted'
-  $facts['bind_pw_restricted'] = `#{$bindir}/openssl rand -base64 30`
+  $facts['bind_pw_restricted'] = `#{$facts['bindir']}/openssl rand -base64 30`
 end
 
 if !$facts.keys.include? 'calendar_id'
@@ -132,7 +137,7 @@ if !$facts.keys.include? 'calendar_id'
 end
 
 if !$facts.keys.include? 'calendar_pw'
-  $facts['calendar_pw'] = `#{$bindir}/openssl rand -base64 30`
+  $facts['calendar_pw'] = `#{$facts['bindir']}/openssl rand -base64 30`
 end
 
 ldap_present = false
@@ -175,7 +180,7 @@ if ldap_present
         elsif val[0] == 'FALSE'
           $facts[akey]  = false
         else
-          $facts[akey]  = val
+          $facts[akey]  = val.join(',')
         end
       end
     end

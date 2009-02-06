@@ -32,7 +32,7 @@ class service::freebusy {
       }
       gentoo_keywords { 'Kolab_FreeBusy':
         context => 'service_freebusy_Kolab_FreeBusy',
-        package => '=dev-php/Horde_Kolab_FreeBusy-0.0.4.20081001',
+        package => '=dev-php/Horde_Kolab_FreeBusy-0.1.2',
         keywords => "~$keyword",
         tag     => 'buildhost',
         require => [ Gentoo_keywords['PEAR_PEAR'] ]
@@ -40,7 +40,8 @@ class service::freebusy {
       package { 'Horde_Kolab_FreeBusy':
         category => 'dev-php',
         ensure   => 'installed',
-        require  => Gentoo_keywords['Kolab_FreeBusy'],
+        require  => [ Gentoo_keywords['Kolab_FreeBusy'],
+                      Package['Horde_Kolab_Storage'] ],
         tag      => 'buildhost';
       }
     }
@@ -52,7 +53,7 @@ class service::freebusy {
     }
   }
 
-  $template_freebusy = template_version($version_horde_kolab_freebusy, '0.0.3@:0.0.3,0.0.4.20081001@:0.0.4.20081001', '0.0.4.20081001')
+  $template_freebusy = template_version($version_horde_kolab_freebusy, '0.0.3@:0.0.3,0.0.4.20081001@0.1.2@:0.0.4.20081001', '0.0.4.20081001')
 
   $sysconfdir  = $os::sysconfdir
 
@@ -63,15 +64,15 @@ class service::freebusy {
 
   $apache_allow_unauthenticated_fb = get_var('freebusy_allow_unauthenticated', false)
 
-  $ldap_host    = get_var('ldap_host', 'localhost')
-  $ldap_base_dn = get_var('base_dn')
-  $ldap_bind_dn = get_var('bind_dn_nobody')
-  $ldap_bind_pw = get_var('bind_pw_nobody')
+  $ldap_uri     = get_var('kolab_ldap_uri', 'localhost')
+  $ldap_base_dn = get_var('kolab_base_dn')
+  $ldap_bind_dn = get_var('kolab_bind_dn_restricted')
+  $ldap_bind_pw = get_var('kolab_bind_pw_restricted')
 
   $imap_host    = get_var('imap_host', 'localhost')
 
   $maildomain = get_var('freebusy_maildomain', get_var('domainname'))
-  $sysadmin = get_var('sysadmin', 'root@localhost')
+  $sysadmin = get_var('kolab_admin_mail', 'root@localhost')
 
   $apache_usr = 'apache'
   $apache_grp = 'apache'
@@ -79,7 +80,7 @@ class service::freebusy {
   # FIXME: I really need to return to webapp-config
   exec { freebusy_webapp:
     path => "/usr/bin:/usr/sbin:/bin",
-    command => "webapp-config -I -h $freebusy_vhost -d $freebusy_vhost_path Horde_Kolab_FreeBusy $version_horde_kolab_freebusy || echo FXIME",
+    command => "webapp-config -I -h $freebusy_vhost -d $freebusy_vhost_path Horde_Kolab_FreeBusy $version_horde_kolab_freebusy",
     unless => "test -e ${freebusy_webroot}/freebusy.php",
     require => Package['Horde_Kolab_FreeBusy'];
   }

@@ -308,6 +308,9 @@ kolab_wui: <%= kolab_wui %>
 # ~~~~~~~
 
 # Interfaces we should bind to (e.g. postfix server)
+admin_mail: <%= kolab_admin_mail %>
+
+# Interfaces we should bind to (e.g. postfix server)
 bind_addr: 0.0.0.0
 
 # Should the services bind to all IP addresses?

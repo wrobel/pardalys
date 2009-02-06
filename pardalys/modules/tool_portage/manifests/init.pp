@@ -24,10 +24,21 @@ class tool::portage {
     use     => 'doc epydoc',
     tag     => 'buildhost'
   }
+  gentoo_keywords { esearch:
+    context => 'tools_portage_esearch',
+    package => 'app-portage/esearch',
+    keywords => "~$keyword",
+    tag     => 'buildhost'
+  }
   package { 
-    ['esearch', 'euses', 'gentoolkit', 'gentoolkit-dev', 'mirrorselect',
+    ['euses', 'gentoolkit', 'gentoolkit-dev', 'mirrorselect',
     'portage-utils', 'pybugz']:
     ensure   => 'installed',
+    tag      => 'buildhost';
+    'esearch':
+    category => 'app-portage',
+    ensure   => 'installed',
+    require  => Gentoo_keywords['esearch'],
     tag      => 'buildhost';
     'eselect':
     category => 'app-admin',
@@ -43,7 +54,7 @@ class tool::portage {
 
   $template_version = template_version($version_portage, '2.1.4.4@:2.1.4.4,','2.1.4.4')
 
-  $profile              = get_var('portage_profile',             '/usr/portage/profiles/default-linux/x86/2007.0')
+  $profile              = get_var('portage_profile',             '/usr/portage/profiles/default/linux/x86/2008.0')
   $use                  = get_var('portage_use',                  false)
   $chost                = get_var('portage_chost',                'i686-pc-linux-gnu')
   $cflags               = get_var('portage_cflags',               false)
@@ -66,7 +77,7 @@ class tool::portage {
   $linguas              = split(get_var('portage_linguas'), ',')
   $eclass_warning       = get_var('portage_ignore_eclass_warning', false)
 
-  $portage_sysadmin     = get_var('sysadmin',   'root@localhost')
+  $portage_sysadmin = get_var('kolab_admin_mail', 'root@localhost')
   $portage_mailserver   = get_var('mailserver', 'localhost')
   $portage_hostname     = get_var('hostname',   'localhost')
   $portage_domainname   = get_var('domainname', 'localdomain')

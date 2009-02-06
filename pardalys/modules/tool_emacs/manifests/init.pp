@@ -153,7 +153,7 @@ class tool::emacs {
       }
 
       $admin_fullname = get_var('admin_fullname', 'System Administrator')
-      $admin_mail = get_var('admin_mail', 'root@localhost')
+      $admin_mail = get_var('kolab_admin_mail', 'root@localhost')
 
       $screen_dark = get_var('screen_dark', false)
 

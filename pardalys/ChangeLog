@@ -1,4 +1,165 @@
+2009-02-06  Gunnar Wrobel  <p@rdus.de>
+
+	* modules/tool_system/manifests/init.pp: Install patchutils on all
+	systems.
+
+2009-01-25  Gunnar Wrobel  <p@rdus.de>
+
+	* modules/service_ssmtp/manifests/init.pp: Mask all ssmtp-2.62*
+
+2009-01-19  Gunnar Wrobel  <p@rdus.de>
+
+	* modules/tool_system/manifests/init.pp: CVS should always be available.
+
+	* modules/tool_portage/manifests/init.pp: Fix typo, fix default profile.
+
+	* modules/tool_system/manifests/init.pp: A standard machine should
+	have java and tetex installed. Upgrade to the latest ledger
+	version.
+
+	* modules/tool_php/manifests/init.pp: Added soap and hash support to php.
+
+2009-01-01  Gunnar Wrobel  <p@rdus.de>
+
+	* modules/tool_portage/manifests/init.pp: Use unstable esearch.
+
+	* modules/service_freebusy/manifests/init.pp: Add newer free/busy
+	version.
+
+	* modules/tool_emacs/files/ed_99_keys.el: No bbdb installed.
+
+2008-12-16  Gunnar Wrobel  <p@rdus.de>
+
+	* modules/service_openldap/plugins/puppet/provider/kolabldap/kolabldap.rb:
+	It is not yet complete but the basic functionality is there and
+	the code is able to create the basic required Kolab LDAP entries.
+
+	* modules/kolab_service_kolab/plugins/facter/kolab.rb: Ensure LDAP
+	values get concatenated. A comma is too limited here but it should
+	be okay for now. Also added the admin_mail value.
+
+	* staging/bootstrap/site.pp.erb: Fix handling the admin
+	mail value.
+
+	* modules/tool_portage/manifests/init.pp: Fix handling the admin
+	mail value.
+
+	* modules/tool_emacs/manifests/init.pp: Fix handling the admin
+	mail value.
+
+	* modules/service_spamassassin/manifests/init.pp: Fix handling the
+	admin mail value.
+
+	* modules/service_postfix/manifests/init.pp: This is a template,
+	not a file. Fix handling the admin mail value.
+
+	* modules/service_postfix/templates/aliases: This is a template,
+	not a file.
+
+	* modules/service_monit/manifests/init.pp: Fix handling the admin
+	mail value.
+
+	* modules/service_logwatch/manifests/init.pp: Fix handling the
+	admin mail value.
+
+	* modules/service_horde/manifests/init.pp: Fix handling the admin
+	mail value.
+
+	* modules/service_freebusy/templates/freebusy_vhost.conf: Fix ldap
+	values.
+
+	* modules/service_freebusy/templates/freebusy_config.php_0.0.4.20081001:
+	Fix ldap values.
+
+	* modules/service_freebusy/manifests/init.pp: Fix handling the
+	admin mail value. Fix ldap values.
+
+	* modules/service_cron/manifests/init.pp: Fix handling the admin
+	mail value.
+
+	* modules/kolab_service_kolab/templates/kolab.globals: Add a value
+	for the Kolab admin.
+
+	* modules/service_postfix/templates/master.cf_2.4.6-r2: Adapt to
+	the option flags in the newer Horde_Kolab_Filter package.
+
+	* modules/service_postfix/manifests/init.pp: Require the
+	Horde_Kolab_Storage package for installation.
+
+	* modules/service_freebusy/manifests/init.pp: Require the
+	Horde_Kolab_Storage package for installation.
+
+	* modules/service_cyrusimap/manifests/init.pp: Fix handling of
+	cyrus admins and postfix mail domains.
+
+	* modules/kolab_service_kolab/plugins/puppet/provider/sslcert/sslcert.rb:
+	Ensure teh target directory exists and that the joined certificate
+	has the correct group.
+
+	* modules/kolab_service_kolab/manifests/init.pp: Fix location of
+	the Kolab style generated SSL certificates.
+
+	* modules/meta_kolab_complete/manifests/init.pp: We need the horde
+	framework packages before installing/configuring postfix.
+
+	* modules/service_postfix/manifests/init.pp: Remove obsolete
+	dependency.
+
+	* modules/tool_horde_framework/manifests/init.pp: Update to the
+	latest Horde package releases.
+
+	* modules/service_postfix/manifests/init.pp: Horde_Kolab_Filter
+	does not need to be unmasked.
+
+	* modules/service_freebusy/manifests/init.pp: Update to the latest
+	Kolab_FreeBusy.
+
+2008-12-15  Gunnar Wrobel  <p@rdus.de>
+
+	* modules/service_cyrusimap/manifests/init.pp: Get default values
+	for kolab_bind_addr and kolab_local_addr.
+
+	* modules/root/plugins/facter/package_versions.rb: Mark missing
+	packages explicitely as "missing".
+
+	* modules/tool_emacs/files/ed_99_keys.el: Remove reference to
+	bbdb-mode-map.
+
+	* modules/tool_ec2_tools/files/ec2-init.sh: Fix permissions on the
+	/tmp dir.
+
+	* modules/kolab_service_kolab/plugins/facter/kolab.rb: Fixed the
+	use of bindir/sbindir.
+
 2008-11-17  Gunnar Wrobel  <p@rdus.de>
+
+	* modules/service_syslog/manifests/init.pp: Fix the installation
+	of the monit configuration file.
+
+	* modules/service_postfix/manifests/init.pp: Fix the installation
+	of the monit configuration file.
+
+	* modules/service_openssh/manifests/init.pp: Fix the installation
+	of the monit configuration file.
+
+	* modules/service_openldap/manifests/init.pp: Fix the installation
+	of the monit configuration file.
+
+	* modules/service_munin/manifests/init.pp: Fix the installation of
+	the monit configuration file.
+
+	* modules/service_monit/manifests/init.pp: Fix the installation of
+	the monit configuration file.
+
+	* modules/service_cron/manifests/init.pp: Fix the installation of
+	the monit configuration file.
+
+	* modules/service_apache/manifests/init.pp: Fix the installation
+	of the monit configuration file.
+
+	* modules/tool_pardalys/manifests/init.pp: Add ldap use flag to puppet.
+
+	* modules/tool_system/manifests/init.pp: Add the sudo and keychain packages.
 
 	* modules/tool_php/files/php_completions.sh: A script for building
 	a PHP completion library.

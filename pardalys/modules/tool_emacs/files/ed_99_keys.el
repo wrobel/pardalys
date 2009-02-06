@@ -107,8 +107,8 @@
 (global-set-key (kbd "<f9> p") 'make-password-here)
 
 ;; create an address
-(global-set-key (kbd "<f9> a") 'my-bbdb-create)
-(define-key bbdb-mode-map "c" 'my-bbdb-create)
+;;(global-set-key (kbd "<f9> a") 'my-bbdb-create)
+;;(define-key bbdb-mode-map "c" 'my-bbdb-create)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Formatting

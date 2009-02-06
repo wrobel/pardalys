@@ -141,7 +141,7 @@
 	     (concat
 	      "export XDEBUG_CONFIG=\"idekey=php_unit_run\";cd "
 	      (file-name-directory buffer-file-name)
-	      "; phpunit -d include_path=\".:"
+	      "; phpunit --verbose -d include_path=\".:"
 	      (file-name-directory buffer-file-name)
 	      phpunitoptions
 	      classname
@@ -181,7 +181,7 @@
 	     (concat
 	      "export XDEBUG_CONFIG=\"idekey=php_unit_run\";cd "
 	      (file-name-directory buffer-file-name)
-	      "; phpunit -d include_path=\".:"
+	      "; phpunit --story -d include_path=\".:"
 	      (file-name-directory buffer-file-name)
 	      phpunitoptions
 	      classname

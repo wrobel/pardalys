@@ -34,7 +34,7 @@ class tool::system {
         tag      => 'buildhost',
       }
 
-      package { tetex:
+      package { texlive:
         category => 'app-text',
         ensure   => 'installed',
         tag      => 'buildhost',

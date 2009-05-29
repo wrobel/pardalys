@@ -21,7 +21,7 @@ class tool::portage {
   gentoo_use_flags { portage:
     context => 'tools_portage_common_portage',
     package => 'sys-apps/portage',
-    use     => 'doc epydoc',
+    use     => 'doc',
     tag     => 'buildhost'
   }
   gentoo_keywords { esearch:

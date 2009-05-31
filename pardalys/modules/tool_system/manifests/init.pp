@@ -241,6 +241,12 @@ class tool::system {
         ensure   => 'installed',
         tag      => 'buildhost'
       }
+
+      package { ldapvi:
+        category => 'net-nds',
+        ensure   => 'installed',
+        tag      => 'buildhost'
+      }
     }
     default:
     {

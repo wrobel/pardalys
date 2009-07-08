@@ -21,12 +21,12 @@ class service::openldap {
     {
       gentoo_unmask { openldap:
         context => 'service_openldap',
-        package => '=net-nds/openldap-2.4.11',
+        package => '=net-nds/openldap-2.4.16',
         tag     => 'buildhost'
       }
       gentoo_keywords { openldap:
         context  => 'service_openldap',
-        package  => '=net-nds/openldap-2.4.11',
+        package  => '=net-nds/openldap-2.4.16',
         keywords => "~$keyword",
         tag      => 'buildhost'
       }
@@ -103,7 +103,7 @@ class service::openldap::serve {
   $ssl_cert_path  = $tool::openssl::ssl_cert_path
   $ssl_key_path   = $tool::openssl::ssl_key_path
 
-  $template_openldap = template_version($version_openldap, '2.4.7@2.4.11@:2.4.7,', '2.4.7')
+  $template_openldap = template_version($version_openldap, '2.4.7@2.4.11@2.4.16@:2.4.7,', '2.4.7')
 
   # Make the fact available within the template
   $os = $operatingsystem

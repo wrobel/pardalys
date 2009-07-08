@@ -144,13 +144,13 @@ class service::postfix {
   }
 
   $mydomain = get_var('kolab_postfix_mydomain')
-  $mynetworks = get_var('kolab_postfix_mynetworks')
-  $mydestination = get_var('kolab_postfix_mydestination')
+  $mynetworks = split(get_var('kolab_postfix_mynetworks'), ',')
+  $mydestination = split(get_var('kolab_postfix_mydestination'), ',')
 
   $relayhost = get_var('kolab_postfix_relayhost', false)
   $relayport = get_var('kolab_postfix_relayport', 25)
 
-  $permithosts = get_var('kolab_kolabhost')
+  $permithosts = split(get_var('kolab_kolabhost'), ',')
 
   $allow_unauthenticated = get_var('kolab_postfix_allow_unauthenticated', true)
   $enable_virus_scan = get_var('kolab_postfix_enable_virus_scan', true)

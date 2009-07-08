@@ -4,7 +4,7 @@
 
 server_host = <%= ldap_uri %>
 search_base = <%= base_dn %>
-query_filter = (&(!(kolabDeleteFlag=*))(|(alias=%s)(mail=%s))(!(cn:dn:=external)))
+query_filter = (&(!(kolabDeleteFlag=*))(|(alias=%s)(mail=%s))(!(cn:dn:=external))(!(cn:dn:=internal)))
 special_result_attribute = member
 result_attribute = 
 leaf_result_attribute = mail

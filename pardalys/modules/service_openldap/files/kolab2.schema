@@ -1,6 +1,6 @@
-# $Id: kolab2.schema,v 1.27 2007/10/17 17:57:13 thomas Exp $
+# $Id: kolab2.schema,v 1.38 2009/07/08 10:26:06 gunnar Exp $
 # (c) 2003, 2004 Tassilo Erlewein <tassilo.erlewein@erfrakon.de>
-# (c) 2003-2007  Martin Konold <martin.konold@erfrakon.de>
+# (c) 2003-2009  Martin Konold <martin.konold@erfrakon.de>
 # (c) 2003 Achim Frank <achim.frank@erfrakon.de>
 #
 # Redistribution and use in source and binary forms, with or without
@@ -38,19 +38,25 @@
 # include /kolab/etc/openldap/schema/rfc2739.schema
 # include /kolab/etc/openldap/schema/kolab2.schema
 
+# Prefix for OIDs: 1.3.6.1.4.1.19414 <- registered
+# Prefix for OIDs: 1.3.6.1.4.1.19414.2000 <-- temporarily reserved for ob
+# Prefix for attributes: 1.3.6.1.4.1.19414.1
+# Prefix for attributes: 1.3.6.1.4.1.19414.2
+# Prefix for objectclasses: 1.3.6.1.4.1.19414.3
+# nameprefix: kolab
 #
 ####################
 # kolab attributes #
 ####################
 
-# helper attribute to make the kolab root easily findable in 
+# helper attribute to make the kolab root easily findable in
 # a big ldap directory
 attributetype ( 1.3.6.1.4.1.19414.2.1.1
   NAME ( 'k' 'kolab' )
   DESC 'Kolab attribute'
   SUP name )
 
-# kolabDeleteflag used to be a boolean but describes with Kolab 2 
+# kolabDeleteflag used to be a boolean but describes with Kolab 2
 # the fqdn of the server which is requested to delete this objects
 # in its local store
 attributetype ( 1.3.6.1.4.1.19414.2.1.2
@@ -72,10 +78,10 @@ attributetype ( 1.3.6.1.4.1.19414.2.1.3
 # cleartext password. This is required in order to pass the password from
 # the maintainance/administration application to the kolabHomeServer running the
 # resource handler application in a secure manner.
-# Actually this attribute is deprecated as of Kolab 2.1. Instead we grant the 
-# calendar user dn: cn=calendar,cn=internal,dc=yourcompany,dc=com access to 
+# Actually this attribute is deprecated as of Kolab 2.1. Instead we grant the
+# calendar user dn: cn=calendar,cn=internal,dc=yourcompany,dc=com access to
 # the respective calendar folder using IMAP ACLs.
-attributetype ( 1.3.6.1.4.1.19419.2.1.4
+attributetype ( 1.3.6.1.4.1.19414.2.1.4
   NAME 'kolabEncryptedPassword'
   DESC 'base64 encoded public key encrypted Password'
   SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 )
@@ -96,41 +102,25 @@ attributetype ( 1.3.6.1.4.1.19414.2.1.6
   SUBSTR caseIgnoreIA5SubstringsMatch
   SYNTAX 1.3.6.1.4.1.1466.115.121.1.26{256} )
 
-# fqdn of the server handling user mail transport
-attributetype ( 1.3.6.1.4.1.19419.1.1.1.1
+# fqdn of the server containg the actual user mailbox
+attributetype ( 1.3.6.1.4.1.19414.1.1.1.1
   NAME 'kolabHomeServer'
-  DESC 'server which handles the users mail tansport'
-  EQUALITY caseIgnoreIA5Match
-  SUBSTR caseIgnoreIA5SubstringsMatch
-  SYNTAX 1.3.6.1.4.1.1466.115.121.1.26{256} )
-
-# fqdn of the imap server containg the actual user mailbox
-attributetype ( 1.3.6.1.4.1.19419.1.1.1.19
-  NAME 'kolabImapServer'
-  DESC 'IMAP server which keeps the users mailbox'
-  EQUALITY caseIgnoreIA5Match
-  SUBSTR caseIgnoreIA5SubstringsMatch
-  SYNTAX 1.3.6.1.4.1.1466.115.121.1.26{256} )
-
-# fqdn of the free/busy server providing the users free/busy information
-attributetype ( 1.3.6.1.4.1.19419.1.1.1.20
-  NAME 'kolabFreeBusyServer'
-  DESC 'Free/Busy server which keeps the users free/busy information.'
+  DESC 'server which keeps the users mailbox'
   EQUALITY caseIgnoreIA5Match
   SUBSTR caseIgnoreIA5SubstringsMatch
   SYNTAX 1.3.6.1.4.1.1466.115.121.1.26{256} )
 
 # flag for allowing unrestriced length of mails
-attributetype ( 1.3.6.1.4.1.19419.1.1.1.2
+attributetype ( 1.3.6.1.4.1.19414.1.1.1.2
   NAME 'unrestrictedMailSize'
   EQUALITY booleanMatch
   SYNTAX 1.3.6.1.4.1.1466.115.121.1.7 )
 
 # Specifies the email delegates.
-# An email delegate can send email on behalf of the account  
+# An email delegate can send email on behalf of the account
 # which means using the "from" of the account.
 # Delegates are specified by the syntax of rfc822 email addresses.
-attributetype ( 1.3.6.1.4.1.19419.1.1.1.3
+attributetype ( 1.3.6.1.4.1.19414.1.1.1.3
   NAME 'kolabDelegate'
   DESC 'Kolab user allowed to act as delegates - RFC822 Mailbox/Alias'
   EQUALITY caseIgnoreIA5Match
@@ -147,10 +137,10 @@ attributetype ( 1.3.6.1.4.1.19419.1.1.1.3
 #  ACT_REJECT_IF_CONFLICTS
 #  ACT_MANUAL_IF_CONFLICTS
 #  ACT_MANUAL
-# In addition one of these values may be prefixed with a primary email 
+# In addition one of these values may be prefixed with a primary email
 # address followed by a colon like
 # user@domain.tld: ACT_ALWAYS_ACCEPT
-attributetype ( 1.3.6.1.4.1.19419.1.1.1.4
+attributetype ( 1.3.6.1.4.1.19414.1.1.1.4
   NAME ( 'kolabInvitationPolicy' 'kolabResourceAction' )
   DESC 'defines how to respond to invitations'
   EQUALITY caseIgnoreIA5Match
@@ -159,16 +149,16 @@ attributetype ( 1.3.6.1.4.1.19419.1.1.1.4
 
 # time span from now to the future used for the free busy data
 # measured in days
-attributetype ( 1.3.6.1.4.1.19419.1.1.1.5
-  NAME 'kolabFreeBusyFuture' 
+attributetype ( 1.3.6.1.4.1.19414.1.1.1.5
+  NAME 'kolabFreeBusyFuture'
   DESC 'time in days for fb data towards the future'
   EQUALITY integerMatch
-  SYNTAX 1.3.6.1.4.1.1466.115.121.1.27 
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.27
   SINGLE-VALUE )
 
 # time span from now to the past used for the free busy data
 # measured in days
-attributetype ( 1.3.6.1.4.1.19419.1.1.1.6
+attributetype ( 1.3.6.1.4.1.19414.1.1.1.6
   NAME 'kolabFreeBusyPast'
   DESC 'time in days for fb data towards the past'
   EQUALITY integerMatch
@@ -178,7 +168,7 @@ attributetype ( 1.3.6.1.4.1.19419.1.1.1.6
 # fqdn of the server as the default SMTP MTA
 # not used in Kolab 2 currently as in Kolab 2 the
 # default MTA is equivalent to the kolabHomeServer
-attributetype ( 1.3.6.1.4.1.19419.1.1.1.7
+attributetype ( 1.3.6.1.4.1.19414.1.1.1.7
   NAME 'kolabHomeMTA'
   DESC 'fqdn of default MTA'
   EQUALITY caseIgnoreIA5Match
@@ -196,7 +186,7 @@ attributetype ( 1.3.6.1.4.1.19419.1.1.1.7
 # YYYYMMDDHHMMZ e.g. 200512311458Z.
 # see also: rfc 2252.
 # Currently this attribute is not used in Kolab.
-attributetype ( 1.3.6.1.4.1.19419.1.1.1.8
+attributetype ( 1.3.6.1.4.1.19414.1.1.1.8
   NAME 'kolabVacationBeginDateTime'
   DESC 'Begin date of vacation'
   EQUALITY generalizedTimeMatch
@@ -213,17 +203,17 @@ attributetype ( 1.3.6.1.4.1.19419.1.1.1.8
 # YYYYMMDDHHMMZ e.g. 200601012258Z.
 # see also: rfc 2252.
 # Currently this attribute is not used in Kolab.
-attributetype ( 1.3.6.1.4.1.19419.1.1.1.9
+attributetype ( 1.3.6.1.4.1.19414.1.1.1.9
   NAME 'kolabVacationEndDateTime'
   DESC 'End date of vacation'
   EQUALITY generalizedTimeMatch
   SYNTAX 1.3.6.1.4.1.1466.115.121.1.24
   SINGLE-VALUE )
 
-# Intervall in days after which senders get 
+# Intervall in days after which senders get
 # another vacation message.
 # Currently this attribute is not used in Kolab.
-attributetype ( 1.3.6.1.4.1.19419.1.1.1.10
+attributetype ( 1.3.6.1.4.1.19414.1.1.1.10
   NAME 'kolabVacationResendInterval'
   DESC 'Vacation notice interval in days'
   EQUALITY integerMatch
@@ -236,7 +226,7 @@ attributetype ( 1.3.6.1.4.1.19419.1.1.1.10
 # Default is the primary email address and all
 # email aliases of the kolabInetOrgPerson.
 # Currently this attribute is not used in Kolab.
-attributetype ( 1.3.6.1.4.1.19419.1.1.1.11
+attributetype ( 1.3.6.1.4.1.19414.1.1.1.11
   NAME 'kolabVacationAddress'
   DESC 'Email address for vacation to response upon'
   EQUALITY caseIgnoreIA5Match
@@ -247,7 +237,7 @@ attributetype ( 1.3.6.1.4.1.19419.1.1.1.11
 # unsolicited commercial email.
 # Default is no.
 # Currently this attribute is not used in Kolab.
-attributetype ( 1.3.6.1.4.1.19419.1.1.1.12
+attributetype ( 1.3.6.1.4.1.19414.1.1.1.12
   NAME 'kolabVacationReplyToUCE'
   DESC 'Enable vacation notices to UCE'
   EQUALITY booleanMatch
@@ -259,19 +249,19 @@ attributetype ( 1.3.6.1.4.1.19419.1.1.1.12
 # entries for each kolabInetOrgPerson
 # Default is to handle all domains.
 # Currently this attribute is not used in Kolab.
-attributetype ( 1.3.6.1.4.1.19419.1.1.1.13
+attributetype ( 1.3.6.1.4.1.19414.1.1.1.13
   NAME 'kolabVacationReactDomain'
   DESC 'Multivalued -- Email domain for vacation to response upon'
   EQUALITY caseIgnoreIA5Match
   SUBSTR caseIgnoreIA5SubstringsMatch
-  SYNTAX 1.3.6.1.4.1.1466.115.121.1.26{256} )  
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.26{256} )
 
 # Forward all incoming emails except UCE if kolabForwardUCE
 # is not set to this email address.
-# There can be multiple kolabForwardAddress entries for 
+# There can be multiple kolabForwardAddress entries for
 # each kolabInetOrgPerson.
 # Currently this attribute is not used in Kolab.
-attributetype ( 1.3.6.1.4.1.19419.1.1.1.14
+attributetype ( 1.3.6.1.4.1.19414.1.1.1.14
   NAME 'kolabForwardAddress'
   DESC 'Forward email to this address'
   EQUALITY caseIgnoreIA5Match
@@ -279,40 +269,40 @@ attributetype ( 1.3.6.1.4.1.19419.1.1.1.14
   SYNTAX 1.3.6.1.4.1.1466.115.121.1.26{256} )
 
 # Keep local copy when forwarding emails to list of
-# kolabForwardAddress. 
+# kolabForwardAddress.
 # Default is no.
 # Currently this attribute is not used in Kolab.
-attributetype ( 1.3.6.1.4.1.19419.1.1.1.15
+attributetype ( 1.3.6.1.4.1.19414.1.1.1.15
   NAME 'kolabForwardKeepCopy'
   DESC 'Keep copy when forwarding'
   EQUALITY booleanMatch
   SYNTAX 1.3.6.1.4.1.1466.115.121.1.7
   SINGLE-VALUE )
 
-# Enable forwarding of UCE. 
+# Enable forwarding of UCE.
 # Default is yes.
 # Currently this attribute is not used in Kolab.
-attributetype ( 1.3.6.1.4.1.19419.1.1.1.16
+attributetype ( 1.3.6.1.4.1.19414.1.1.1.16
   NAME 'kolabForwardUCE'
   DESC 'Enable forwarding of mails known as UCE'
   EQUALITY booleanMatch
-  SYNTAX 1.3.6.1.4.1.1466.115.121.1.7 
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.7
   SINGLE-VALUE )
 
 # comment when creating or deleting a kolab object
 # a comment might be appropriate. This is most useful
-# for tracability when users get moved to the graveyard 
+# for tracability when users get moved to the graveyard
 # instead of being really deleted. Every entry must be prefixed
-# with an ISO 8601 date string e.g 200604301458Z. All times must 
+# with an ISO 8601 date string e.g 200604301458Z. All times must
 # be in zulu timezone.
-attributetype ( 1.3.6.1.4.1.19419.1.1.1.17
+attributetype ( 1.3.6.1.4.1.19414.1.1.1.17
   NAME 'kolabComment'
   DESC 'multi-value comment'
   EQUALITY caseIgnoreMatch
   SUBSTR caseIgnoreSubstringsMatch
   SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{1024} )
 
-# describes the allowed or disallowed smtp addresses for 
+# describes the allowed or disallowed smtp addresses for
 # recipients. If this attribute is not set for a user no
 # kolab recipient policy does apply.
 # example entries:
@@ -326,28 +316,174 @@ attributetype ( 1.3.6.1.4.1.19419.1.1.1.17
 # -.domain.tld     - disallow mail to everyone in domain.tld and its subdomains
 # -user@domain.tld - disallow mail to explicit user@domain.tld
 # -user@           - disallow mail to this user but any domain
-attributetype ( 1.3.6.1.4.1.19419.1.1.1.18
+attributetype ( 1.3.6.1.4.1.19414.1.1.1.18
   NAME 'kolabAllowSMTPRecipient'
   DESC 'SMTP address allowed for destination (multi-valued)'
   EQUALITY caseIgnoreIA5Match
   SUBSTR caseIgnoreIA5SubstringsMatch
   SYNTAX 1.3.6.1.4.1.1466.115.121.1.26{512} )
 
+# Create the user mailbox on the kolabHomeServer only.
+# Default is no.
+attributetype ( 1.3.6.1.4.1.19414.1.1.1.19
+  NAME 'kolabHomeServerOnly'
+  DESC 'Create the user mailbox on the kolabHomeServer only'
+  EQUALITY booleanMatch
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.7
+  SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.19414.1.1.1.20
+  NAME 'kolabMaritalStatus'
+  DESC 'ledig(0), verh.(1)} DEFAULT ledig'
+  EQUALITY integerMatch
+  SINGLE-VALUE
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.27{1} )
+
+attributetype ( 1.3.6.1.4.1.19414.1.1.1.21
+  NAME ( 'homeFacsimileTelephoneNumber' 'homeFaxNumber' )
+  DESC 'private facsimilie telephone number'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.50{32} )
+
+attributetype ( 1.3.6.1.4.1.19414.1.1.1.25
+  NAME 'bylawURI'
+  DESC 'URI pointing at the bylaw'
+  SUP labeledURI
+  SINGLE-VALUE )
+
+# Single string with $ seperated lines consisting of
+# surname $
+# givenName $
+# dateOfBirth $
+# restrictions $
+# signer of contract ('true'/'false')
+attributetype ( 1.3.6.1.4.1.19414.1.1.1.27
+  NAME 'legalRepresentative'
+  DESC 'legal representative'
+  EQUALITY caseIgnoreListMatch
+  SUBSTR caseIgnoreListSubstringsMatch
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.41 )
+
+# Single string with $ seperated lines consisting of
+# surname $
+# givenName $
+# dateOfBirth $
+# restrictions $
+# signer of contract ('true'/'false')
+attributetype ( 1.3.6.1.4.1.19414.1.1.1.28
+  NAME 'commercialProcuration'
+  DESC 'described person which has commercial procuration'
+  EQUALITY caseIgnoreListMatch
+  SUBSTR caseIgnoreListSubstringsMatch
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.41 )
+
+attributetype ( 1.3.6.1.4.1.19414.1.1.1.29
+  NAME 'legalRepresentationPolicy'
+  DESC 'described how legal representation works'
+  EQUALITY caseIgnoreMatch
+  SUBSTR caseIgnoreSubstringsMatch
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 )
+
+attributetype ( 1.3.6.1.4.1.19414.1.1.1.31
+  NAME 'inLiquidation'
+  EQUALITY booleanMatch
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.7 )
+
+attributetype ( 1.3.6.1.4.1.19414.1.1.1.32
+  NAME 'tradeRegisterRegisteredCapital'
+  EQUALITY integerMatch
+  SINGLE-VALUE
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.27 )
+
+attributetype ( 1.3.6.1.4.1.19414.1.1.1.33
+  NAME 'tradeRegisterType'
+  SINGLE-VALUE
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
+
+attributetype ( 1.3.6.1.4.1.19414.1.1.1.36
+  NAME 'tradeRegisterURI'
+  SUP labeledURI
+  SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.19414.1.1.1.37
+  NAME 'tradeRegisterLastChangedDate'
+  EQUALITY generalizedTimeMatch
+  SINGLE-VALUE
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.24 )
+
+attributetype ( 1.3.6.1.4.1.19414.1.1.1.38
+  NAME 'kolabGermanBankAccountNumber'
+  DESC 'The 8-digits number of a german bank account without spaces'
+  SINGLE-VALUE
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.36{10} )
+
+attributetype ( 1.3.6.1.4.1.19414.1.1.1.39
+  NAME 'kolabGermanBankCode'
+  DESC 'The 8-digits number of a german bank code (BLZ) without spaces'
+  SINGLE-VALUE
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.36{8} )
+
+attributetype ( 1.3.6.1.4.1.19414.1.1.1.40
+  NAME 'kolabGermanBankName'
+  DESC 'The name of a german bank registered in the BLZ table published by Deutsche Bundesbank.'
+  SUP name
+  SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.19414.1.1.1.41
+  NAME 'kolabGermanBankAccountInfo'
+  DESC 'Composed field containing a one-line human-readable representation of all necessary information.'
+  SINGLE-VALUE
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 )
+
+attributetype ( 1.3.6.1.4.1.19414.1.1.1.42
+  NAME 'kolabGermanBankAccountHolder'
+  DESC 'The name of the holder of a german bank account commonly used as recipient name.'
+  SINGLE-VALUE
+  SUP name )
+
+# describes the allowed or disallowed smtp addresses for
+# recipients. If this attribute is not set for a user no
+# kolab recipient policy does apply.
+# example entries:
+# .tld             - allow mail to every recipient for this tld
+# domain.tld       - allow mail to everyone in domain.tld
+# .domain.tld      - allow mail to everyone in domain.tld and its subdomains
+# user@domain.tld  - allow mail to explicit user@domain.tld
+# user@            - allow mail to this user but any domain
+# -.tld            - disallow mail to every recipient for this tld
+# -domain.tld      - disallow mail to everyone in domain.tld
+# -.domain.tld     - disallow mail to everyone in domain.tld and its subdomains
+# -user@domain.tld - disallow mail to explicit user@domain.tld
+# -user@           - disallow mail to this user but any domain
+
+attributetype ( 1.3.6.1.4.1.19414.1.1.1.43
+  NAME 'kolabAllowSMTPFrom'
+  DESC 'SMTP address accepted for receiving (multi-valued)'
+  EQUALITY caseIgnoreIA5Match
+  SUBSTR caseIgnoreIA5SubstringsMatch
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.26{512} )
+
+attributetype ( 1.3.6.1.4.1.19414.1.1.1.44
+  NAME 'kolabSalutation'
+  DESC 'Salutation like Mr., Mrs, Herr, Frau)'
+  EQUALITY caseIgnoreMatch
+  SUBSTR caseIgnoreSubstringsMatch
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{64} )
+
 # kolabFolderType describes the kind of Kolab folder
-# as defined in the kolab format specification. 
-# We will annotate all folders with an entry 
-# /vendor/kolab/folder-type containing the attribute 
-# value.shared set to: <type>[.<subtype>]. 
-# The <type> can be: mail, event, journal, task, note, 
-# or contact. The <subtype> for a mail folder can be 
-# inbox, drafts, sentitems, or junkemail (this one holds 
-# spam mails). For the other <type>s, it can only be 
-# default, or not set.  For other types of folders 
-# supported by the clients, these should be prefixed with 
-# "k-" for KMail, "h-" for Horde and "o-" for Outlook, and 
+# as defined in the kolab format specification.
+# We will annotate all folders with an entry
+# /vendor/kolab/folder-type containing the attribute
+# value.shared set to: <type>[.<subtype>].
+# The <type> can be: mail, event, journal, task, note,
+# or contact. The <subtype> for a mail folder can be
+# inbox, drafts, sentitems, or junkemail (this one holds
+# spam mails). For the other <type>s, it can only be
+# default, or not set.  For other types of folders
+# supported by the clients, these should be prefixed with
+# "k-" for KMail, "h-" for Horde and "o-" for Outlook, and
 # look like for example "kolab.o-voicemail". Other third-party
 # clients shall use the "x-" prefix.
-# We then use the ANNOTATEMORE IMAP extension to 
+# We then use the ANNOTATEMORE IMAP extension to
 # associate the folder type with a folder.
 attributetype ( 1.3.6.1.4.1.19414.2.1.7
   NAME 'kolabFolderType'
@@ -406,7 +542,7 @@ attributetype ( 1.3.6.1.4.1.19414.2.1.507
 attributetype ( 1.3.6.1.4.1.19414.2.1.508
   NAME 'postfix-allow-unauthenticated'
   EQUALITY booleanMatch
-  SYNTAX 1.3.6.1.4.1.1466.115.121.1.7 
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.7
   SINGLE-VALUE )
 
 attributetype ( 1.3.6.1.4.1.19414.2.1.509
@@ -421,6 +557,11 @@ attributetype ( 1.3.6.1.4.1.19414.2.1.510
   SUBSTR caseIgnoreIA5SubstringsMatch
   SYNTAX 1.3.6.1.4.1.1466.115.121.1.26{256} )
 
+attributetype ( 1.3.6.1.4.1.19414.2.1.511
+  NAME 'postfix-message-size-limit'
+  EQUALITY integerMatch
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.27 )
+
 ##########################
 # cyrus imapd attributes #
 ##########################
@@ -428,7 +569,7 @@ attributetype ( 1.3.6.1.4.1.19414.2.1.510
 attributetype ( 1.3.6.1.4.1.19414.2.1.601
   NAME 'cyrus-autocreatequota'
   EQUALITY integerMatch
-  SYNTAX 1.3.6.1.4.1.1466.115.121.1.27 
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.27
   SINGLE-VALUE )
 
 attributetype ( 1.3.6.1.4.1.19414.2.1.602
@@ -437,11 +578,11 @@ attributetype ( 1.3.6.1.4.1.19414.2.1.602
   SUBSTR caseIgnoreIA5SubstringsMatch
   SYNTAX 1.3.6.1.4.1.1466.115.121.1.26{256} )
 
-# enable plain imap without ssl 
+# enable plain imap without ssl
 attributetype ( 1.3.6.1.4.1.19414.2.1.603
   NAME 'cyrus-imap'
   EQUALITY booleanMatch
-  SYNTAX 1.3.6.1.4.1.1466.115.121.1.7 
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.7
   SINGLE-VALUE )
 
 # enable legacy pop3
@@ -465,7 +606,7 @@ attributetype ( 1.3.6.1.4.1.19414.2.1.651
   SUBSTR caseIgnoreIA5SubstringsMatch
   SYNTAX 1.3.6.1.4.1.1466.115.121.1.26{256} )
 
-# enable secure imap 
+# enable secure imap
 attributetype ( 1.3.6.1.4.1.19414.2.1.606
   NAME 'cyrus-imaps'
   EQUALITY booleanMatch
@@ -483,12 +624,37 @@ attributetype ( 1.3.6.1.4.1.19414.2.1.608
   EQUALITY booleanMatch
   SYNTAX 1.3.6.1.4.1.1466.115.121.1.7 )
 
-# installation wide percentage which determines when to send a 
+# installation wide percentage which determines when to send a
 # warning to the user
 attributetype ( 1.3.6.1.4.1.19414.2.1.609
   NAME 'cyrus-quotawarn'
   EQUALITY integerMatch
   SYNTAX 1.3.6.1.4.1.1466.115.121.1.27 )
+
+# enable smmap support
+attributetype ( 1.3.6.1.4.1.19414.2.1.610
+  NAME 'cyrus-smmap'
+  EQUALITY booleanMatch
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.7 )
+
+# enable fulldirhash support
+attributetype ( 1.3.6.1.4.1.19414.2.1.611
+  NAME 'cyrus-fulldirhash'
+  EQUALITY booleanMatch
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.7 )
+
+# enable hashimapspool support
+attributetype ( 1.3.6.1.4.1.19414.2.1.612
+  NAME 'cyrus-hashimapspool'
+  EQUALITY booleanMatch
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.7 )
+
+# enable squatter support
+attributetype ( 1.3.6.1.4.1.19414.2.1.613
+  NAME 'cyrus-squatter'
+  EQUALITY booleanMatch
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.7 )
+
 
 #############################
 # apache and php attributes #
@@ -537,6 +703,17 @@ attributetype ( 1.3.6.1.4.1.19414.2.1.800
   EQUALITY booleanMatch
   SYNTAX 1.3.6.1.4.1.1466.115.121.1.7 )
 
+# Configurable list of ciphers considered to be secure enough for our purposes.
+# E.g. TLS 1.0 and SSL 3.0
+attributetype ( 1.3.6.1.4.1.19414.2.1.801
+  NAME 'kolabSecureCiphers'
+  DESC 'comma separated list of ciphers considered to be secure'
+  EQUALITY caseIgnoreIA5Match
+  SUBSTR caseIgnoreIA5SubstringsMatch
+  SINGLE-VALUE
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.26{256} )
+
+
 ######################################################
 # proftpd attributes (unused since Kolab Server 2.2) #
 ######################################################
@@ -554,6 +731,183 @@ attributetype ( 1.3.6.1.4.1.19414.2.1.902
 attributetype ( 1.3.6.1.4.1.19414.2.1.903
   NAME 'proftpd-userPassword'
   SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 )
+
+########################################################################
+# pop3 service attributes (suitable to integrate external pop3 sources #
+########################################################################
+
+attributetype ( 1.3.6.1.4.1.19414.2.1.1001
+  NAME 'externalPop3AccountDescription'
+  DESC 'a human readable description of the external POP3 account e.g. my gmail account'
+  SINGLE-VALUE
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{1024} )
+
+attributetype ( 1.3.6.1.4.1.19414.2.1.1002
+  NAME 'externalPop3AccountMail'
+  DESC 'email address associated with the external POP3 account e.g. givenname.surname@gmail.com'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.26{256} )
+
+attributetype ( 1.3.6.1.4.1.19414.2.1.1003
+  NAME 'externalPop3AccountServer'
+  DESC 'Pop3 server associated with the external POP3 account e.g. pop3.provider.com'
+  SINGLE-VALUE
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.26{256} )
+
+attributetype ( 1.3.6.1.4.1.19414.2.1.1004
+  NAME 'externalPop3AccountPort'
+  DESC 'TCP port number used for pop3 service associated with the external POP3 account e.g. 110'
+  EQUALITY integerMatch
+  SINGLE-VALUE
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.27{5} )
+
+attributetype ( 1.3.6.1.4.1.19414.2.1.1005
+  NAME 'externalPop3AccountUseSSL'
+  DESC 'boolean defining if SSL must be used for external POP3 account - requires suitable externalPop3AccountPort'
+  EQUALITY booleanMatch
+  SINGLE-VALUE
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.7 )
+
+attributetype ( 1.3.6.1.4.1.19414.2.1.1006
+  NAME 'externalPop3AccountUseTLS'
+  DESC 'boolean defining if TLS must be used for external POP3 account'
+  EQUALITY booleanMatch
+  SINGLE-VALUE
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.7 )
+
+# sometimes useful for self-signed certificates
+attributetype ( 1.3.6.1.4.1.19414.2.1.1007
+  NAME 'externalPop3AccountCheckServerCertificate'
+  DESC 'allows to disable checking server certificates when using SSL or TLS - beware of MIT-attacks!'
+  EQUALITY booleanMatch
+  SINGLE-VALUE
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.7 )
+
+attributetype ( 1.3.6.1.4.1.19414.2.1.1008
+  NAME 'externalPop3AccountLoginName'
+  DESC 'name used to login into pop3 account often this uid is equivalent to the email address'
+  SINGLE-VALUE 
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{256} )
+
+attributetype ( 1.3.6.1.4.1.19414.2.1.1009
+  NAME 'externalPop3EncryptedAccountPassword'
+  DESC 'encryped password for the external POP3 account - secret key must be known to the pop3 fetch service'
+  SINGLE-VALUE
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.40)
+
+attributetype ( 1.3.6.1.4.1.19414.2.1.1010
+  NAME 'externalPop3AccountKeepMailOnServer'
+  DESC 'controls if fetched message shall remain on external POP3 server - beware this is often unreliable'
+  EQUALITY booleanMatch
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.7 )
+
+attributetype ( 1.3.6.1.4.1.19414.2.1.1011
+  NAME 'externalPop3AccountLoginMethod'
+  DESC 'login method used for external POP3 account - currently these are plainText, LOGIN, PLAIN, NTLM, DIGEST-MD5, CRAM-MD5, GSSAPI and APOP'
+  EQUALITY caseIgnoreIA5Match
+  SUBSTR caseIgnoreIA5SubstringsMatch
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.26{32} )
+
+########################
+# external definitions #
+########################
+
+# extended from apple.schema
+attributetype ( 1.3.6.1.4.1.63.1000.1.1.1.1.27
+  NAME ( 'apple-birthday' 'dateOfBirth' 'dateOfIncorporation' )
+  DESC 'Birthday or date of incorporation'
+  EQUALITY generalizedTimeMatch
+  SUBSTR caseExactIA5SubstringsMatch
+  SINGLE-VALUE
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.24 )
+
+# from http://www.stroeder.com/stroeder.com.schema
+attributetype ( 1.3.6.1.4.1.5427.1.389.4.12
+  NAME ( 'birthPlace' 'placeOfBirth' )
+  DESC 'Place of birth'
+  SUP name
+  SINGLE-VALUE )
+
+# from http://www.stroeder.com/stroeder.com.schema
+attributetype ( 1.3.6.1.4.1.5427.1.389.4.14
+  NAME 'birthName'
+  DESC 'Last name at time of birth, e.g. maiden name'
+  SUP name
+  SINGLE-VALUE )
+
+# from http://www.stroeder.com/stroeder.com.schema
+# The following data items and codes are used (see ISO 5218):
+#       Not known       0
+#       Male            1
+#       Female          2
+#       Not specified   9
+#
+attributetype ( 1.3.6.1.4.1.5427.1.389.4.7
+  NAME 'gender'
+  DESC 'Representation of human sex (see ISO 5218)'
+  EQUALITY integerMatch
+  SINGLE-VALUE
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.27{1} )
+
+# from http://www.stroeder.com/stroeder.com.schema
+# tax ID of person or company within Germany
+#
+attributetype ( 1.3.6.1.4.1.5427.1.389.4.666
+  NAME 'germanTaxId'
+  DESC 'tax ID of person or company within Germany'
+  EQUALITY caseIgnoreMatch
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{20} )
+
+# rfc 3039
+# ISO 3166 Country Code
+# multiple citizenships are possible!
+attributetype ( 1.3.6.1.5.5.7.9.4
+  NAME 'countryOfCitizenship'
+  DESC 'Country of citizenship'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.11 )
+
+# ISO 3166 Country Code
+attributetype ( 1.3.6.1.5.5.7.9.5
+  NAME 'countryOfResidence'
+  DESC 'Country of residence'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.11 )
+
+# http://www.daasi.de/
+attributetype ( 1.3.6.1.4.1.5062.1.1.3.16
+  NAME 'legalForm'
+  DESC 'legal form of a company'
+  EQUALITY caseIgnoreMatch
+  SUBSTR caseIgnoreSubstringsMatch
+  SINGLE-VALUE
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 )
+
+# http://www.daasi.de/
+# location of the trade register authority
+attributetype ( 1.3.6.1.4.1.5062.1.1.3.17
+  NAME 'tradeRegisterLocation'
+  DESC 'Location of the trade registrar where the organization is registered'
+  SUP name
+  SINGLE-VALUE )
+
+# http://www.daasi.de/
+# registration number a the trade register authority
+attributetype ( 1.3.6.1.4.1.5062.1.1.3.18
+  NAME 'tradeRegisterIdentifier'
+  DESC 'Idientifier with which an organization is registered'
+  EQUALITY caseIgnoreMatch
+  SUBSTR caseIgnoreSubstringsMatch
+  SINGLE-VALUE
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 )
+
+# https://forxa.mancomun.org/plugins/scmsvn/viewcvs.php/trunk/ldap/dxpisi.schema?annotate=29&root=mancomun
+# VATNumber
+# Identifier number for companies and persons. In Spain it is the same as NIF/CIF.
+# In Germany it is called Umsatzsteueridentifikationsnummer.
+attributetype ( 1.3.6.1.4.1.27994.1.3.4
+  NAME 'VATNumber'
+  DESC 'Identifier number for companies and persons'
+  EQUALITY caseIgnoreMatch
+  SUBSTR caseIgnoreSubstringsMatch
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{10} )
 
 ########################
 # kolab object classes #
@@ -578,6 +932,7 @@ objectclass ( 1.3.6.1.4.1.19414.2.2.1
         postfix-virtual $
         postfix-enable-virus-scan $
         postfix-allow-unauthenticated $
+        postfix-message-size-limit $
         cyrus-quotawarn $
         cyrus-autocreatequota $
         cyrus-admins $
@@ -586,12 +941,17 @@ objectclass ( 1.3.6.1.4.1.19414.2.2.1
         cyrus-imaps $
         cyrus-pop3s $
         cyrus-sieve $
+        cyrus-smmap $
+        cyrus-fulldirhash $
+        cyrus-hashimapspool $
+        cyrus-squatter $
         apache-http $
         apache-allow-unauthenticated-fb $
         kolabfilter-verify-from-header $
         kolabfilter-allow-sender-header $
         kolabfilter-reject-forged-from-header $
         kolabPolicyDaemon $
+        kolabSecureCiphers $
         proftpd-ftp $
         proftpd-defaultquota $
         kolabFreeBusyFuture $
@@ -599,12 +959,12 @@ objectclass ( 1.3.6.1.4.1.19414.2.2.1
         uid $
         userPassword ) )
 
-# public folders are typically visible to everyone subscribed to 
+# public folders are typically visible to everyone subscribed to
 # the server without the need for an extra login. Subfolders are
 # defined using the hiarchy seperator '/' e.g. "sf/sub1". Please note
-# that the term public folder is prefered to shared folder because 
+# that the term public folder is prefered to shared folder because
 # normal user mailboxes can also share folders using acls.
-objectclass ( 1.3.6.1.4.1.19414.2.2.9 
+objectclass ( 1.3.6.1.4.1.19414.2.2.9
   NAME 'kolabSharedFolder'
   DESC 'Kolab public shared folder'
   SUP top STRUCTURAL
@@ -613,16 +973,15 @@ objectclass ( 1.3.6.1.4.1.19414.2.2.9
         alias $
         cyrus-userquota $
         kolabHomeServer $
-        kolabImapServer $
         kolabFolderType $
         kolabDeleteflag ) )
 
-# kolabNamedObject is used as a plain node for the LDAP tree. 
-# In contrast to unix filesystem directories LDAP nodes can 
-# and often do also have contents/attributes. We use the 
-# kolabNamedObject in order to put some structure in the 
+# kolabNamedObject is used as a plain node for the LDAP tree.
+# In contrast to unix filesystem directories LDAP nodes can
+# and often do also have contents/attributes. We use the
+# kolabNamedObject in order to put some structure in the
 # LDAP directory tree.
-objectclass ( 1.3.6.1.4.1.5322.13.1.1 
+objectclass ( 1.3.6.1.4.1.5322.13.1.1
   NAME 'kolabNamedObject'
   SUP top STRUCTURAL
   MAY (cn $ ou) )
@@ -630,18 +989,18 @@ objectclass ( 1.3.6.1.4.1.5322.13.1.1
 # kolab account
 # we use an auxiliary in order to ease integration
 # with existing inetOrgPerson objects
-# Please note that userPassword is a may 
+# Please note that userPassword is a may
 # attribute in the schema but is mandatory for
-# Kolab 
+# Kolab
 objectclass ( 1.3.6.1.4.1.19414.3.2.2
   NAME 'kolabInetOrgPerson'
   DESC 'Kolab Internet Organizational Person'
   SUP top AUXILIARY
   MAY ( c $
         alias $
+        pseudonym $
         kolabHomeServer $
-        kolabImapServer $
-        kolabFreeBusyServer $
+        kolabHomeServerOnly $
         kolabHomeMTA $
         unrestrictedMailSize $
         kolabDelegate $
@@ -650,21 +1009,36 @@ objectclass ( 1.3.6.1.4.1.19414.3.2.2
         kolabInvitationPolicy $
         kolabFreeBusyFuture $
         calFBURL $
-	kolabVacationBeginDateTime $
-	kolabVacationEndDateTime $
-	kolabVacationResendInterval $
-	kolabVacationAddress $
-	kolabVacationReplyToUCE $
-	kolabVacationReactDomain $
-	kolabForwardAddress $
-	kolabForwardKeepCopy $
+        kolabVacationBeginDateTime $
+        kolabVacationEndDateTime $
+        kolabVacationResendInterval $
+        kolabVacationAddress $
+        kolabVacationReplyToUCE $
+        kolabVacationReactDomain $
+        kolabForwardAddress $
+        kolabForwardKeepCopy $
         kolabForwardUCE $
-	kolabAllowSMTPRecipient $
+        kolabAllowSMTPRecipient $
+        kolabAllowSMTPFrom $
+        kolabSalutation $
+        kolabMaritalStatus $
+        dateOfBirth $
+        placeOfBirth $
+        birthName $
+        gender $
+        homeFacsimileTelephoneNumber $
+        countryOfCitizenship $
+        countryOfResidence $
+        legalForm $
+        tradeRegisterLocation $
+        tradeRegisterIdentifier $
+        VATNumber $
+        germanTaxId $
         kolabDeleteflag $
         kolabComment ) )
 
 # kolab organization with country support
-objectclass ( 1.3.6.1.4.1.19414.3.2.3 
+objectclass ( 1.3.6.1.4.1.19414.3.2.3
   NAME 'kolabOrganization'
   DESC 'RFC2256: a Kolab organization'
   SUP organization STRUCTURAL
@@ -674,7 +1048,7 @@ objectclass ( 1.3.6.1.4.1.19414.3.2.3
         alias ) )
 
 # kolab organizational unit with country support
-objectclass ( 1.3.6.1.4.1.19414.3.2.4 
+objectclass ( 1.3.6.1.4.1.19414.3.2.4
   NAME 'kolabOrganizationalUnit'
   DESC 'a Kolab organizational unit'
   SUP organizationalUnit STRUCTURAL
@@ -683,7 +1057,7 @@ objectclass ( 1.3.6.1.4.1.19414.3.2.4
         kolabDeleteflag $
         alias ) )
 
-# kolab groupOfNames with extra kolabDeleteflag and the required 
+# kolab groupOfNames with extra kolabDeleteflag and the required
 # attribute mail.
 # The mail attribute for kolab objects of the type kolabGroupOfNames
 # is not arbitrary but MUST be a single attribute of the form
@@ -696,3 +1070,29 @@ objectclass ( 1.3.6.1.4.1.19414.3.2.5
   SUP groupOfNames STRUCTURAL
   MAY ( mail $
         kolabDeleteflag ) )
+
+objectclass ( 1.3.6.1.4.1.19414.3.2.6
+  NAME 'kolabExternalPop3Account'
+  DESC 'kolab fetch messages via POP3 from external sources'
+  SUP top STRUCTURAL
+  MUST ( externalPop3AccountServer $
+         externalPop3AccountLoginName $
+         externalPop3EncryptedAccountPassword )
+  MAY ( externalPop3AccountDescription $
+        externalPop3AccountMail $
+        externalPop3AccountPort $
+        externalPop3AccountUseSSL $
+        externalPop3AccountUseTLS $
+        externalPop3AccountLoginMethod $
+        externalPop3AccountCheckServerCertificate $
+        externalPop3AccountKeepMailOnServer ) )
+
+objectclass ( 1.3.6.1.4.1.19414.3.2.7
+  NAME 'kolabGermanBankArrangement'
+  DESC 'German bank account information'
+  SUP top STRUCTURAL
+  MUST ( kolabGermanBankAccountNumber $
+         kolabGermanBankCode )
+  MAY ( kolabGermanBankAccountHolder $
+        kolabGermanBankName $
+        kolabGermanBankAccountInfo ) )

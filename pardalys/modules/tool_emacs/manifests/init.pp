@@ -20,6 +20,12 @@ class tool::emacs {
         use     => 'emacs',
         tag     => 'buildhost'
       }
+      gentoo_use_flags { ledger:
+        context => 'tools_emacs_ledger',
+        package => 'app-office/ledger',
+        use     => 'emacs',
+        tag     => 'buildhost'
+      }
       gentoo_use_flags { gettext:
         context => 'tools_emacs_gettext',
         package => 'sys-devel/gettext',

@@ -55,6 +55,7 @@ class tool::baselayout {
   $override_virtual = get_var('override_virtual', false)
   $system_hostname     = get_var('hostname',   'localhost')
   $system_domainname   = get_var('domainname', 'localdomain')
+  $ec2_hostname        = get_var('ec2_public_hostname',   false)
   $baselayout_fstab    = get_var('fstab', false)
   $baselayout_net      = get_var('net', false)
   $baselayout_timezone = get_var('timezone', false)

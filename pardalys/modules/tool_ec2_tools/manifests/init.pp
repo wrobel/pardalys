@@ -102,11 +102,20 @@ class tool::ec2::tools {
         require  => [Gentoo_Keywords['aws-sdb'],
                      Gentoo_Keywords['uuidtools']];
       }
+
+      package { 's3fs':
+        category => 'sys-fs',
+        ensure   => 'installed',
+        tag      => 'buildhost',
+      }
     }
   }
   file {
     '/usr/bin/ec2-init.sh':
     source => 'puppet:///tool_ec2_tools/ec2-init.sh',
+    mode   => 755;
+    '/usr/bin/binpkg-rsync.sh':
+    source => 'puppet:///tool_ec2_tools/binpkg-rsync.sh',
     mode   => 755;
     '/usr/bin/ec2-get-metadata.sh':
     source => 'puppet:///tool_ec2_tools/ec2-get-metadata.sh',

@@ -15,6 +15,19 @@ class tool::system {
   case $operatingsystem {
     gentoo:
     {
+      gentoo_use_flags { db:
+        context => 'tools_system_common_db',
+        package => 'sys-libs/db',
+        use     => 'doc',
+        tag     => 'buildhost'
+      }
+      package { db:
+        category => 'sys-libs',
+        ensure   => 'installed',
+        tag      => 'buildhost',
+        require  => Gentoo_use_flags['db']
+      }
+
       gentoo_use_flags { perl:
         context => 'tools_system_common_perl',
         package => 'dev-lang/perl',
@@ -34,10 +47,24 @@ class tool::system {
         tag      => 'buildhost',
       }
 
+      gentoo_use_flags { lcdf-typetools:
+        context => 'tools_system_common_lcdf_typetools',
+        package => 'app-text/lcdf-typetools',
+        use     => 'kpathsea',
+        tag     => 'buildhost'
+      }
+      package { lcdf-typetools:
+        category => 'app-text',
+        ensure   => 'installed',
+        tag      => 'buildhost',
+        require  => Gentoo_use_flags['lcdf-typetools']
+      }
+
       package { texlive:
         category => 'app-text',
         ensure   => 'installed',
         tag      => 'buildhost',
+        require  => Package['lcdf-typetools']
       }
 
       package { cvs:

@@ -26,6 +26,9 @@
 ;; Debugger startup command.
 (setq geben-dbgp-command-line "xdebug -p 9000")
 
+;; Initialize the PHPUnit format history
+(setq phpunit-format-history nil)
+
 ;; Customizations for Horde editing
 (defun php-mode-horde-hook ()
   (c-toggle-syntactic-indentation 1)
@@ -50,6 +53,33 @@
   (run-hooks 'php-mode-pear-hook)
 )
 
+;; Customizations for Horde editing
+(defun php-mode-zend-hook ()
+  (c-toggle-syntactic-indentation 1)
+  (c-toggle-electric-state 1)
+  (c-toggle-auto-hungry-state 1)
+  (c-toggle-auto-newline -1)
+  (c-set-offset 'arglist-intro '+)
+  (c-set-offset 'arglist-close '0)
+;;  (semantic-show-unmatched-syntax-mode nil)
+  (setq c-hanging-braces-alist '((brace-list-open)
+                                 (brace-entry-open)
+                                 (statement-cont)
+                                 (substatement-open after)
+                                 (block-close . c-snug-do-while)
+                                 (extern-lang-open after)
+                                 (namespace-open after)
+                                 (module-open after)
+                                 (composition-open after)
+                                 (inexpr-statement after)
+                                 (inexpr-class-close before)))
+  (setq fill-column 80)
+  (setq indent-tabs-mode 1)
+  (setq tab-width 4)
+  (setq c-basic-offset 4)
+  (run-hooks 'php-mode-pear-hook)
+)
+
 ;; taken from http://atomized.org/2008/10/php-lint-and-style-checking-from-emacs/
 (defun php-lint ()
   "Performs a PHP lint check on the current file."
@@ -60,20 +90,30 @@
              compilation-error-regexp-alist-alist)
     (compile (concat "php -l -f \"" (buffer-file-name) "\""))))
 
-;; taken from http://atomized.org/2008/10/php-lint-and-style-checking-from-emacs/
 (defun phpcs ()
-  "Performs a PHPCS lint-check on the current file."
+  "Performs a PEAR style PHP code sniffer check on the current file."
   (interactive)
-  (let ((compilation-error-regexp-alist '(php))
-        (compilation-error-regexp-alist-alist ()))
-    (pushnew '(php "\"\\([^\"]+\\)\",\\([0-9]+\\),\\([0-9]+\\),\\(\\(warning\\)\\|\\(error\\)\\),\\(.*\\)" 1 2 3 (5 . 6) 4)
-             compilation-error-regexp-alist-alist)
-    (compile (concat "phpcs --standard=PEAR --report=csv \"" (buffer-file-name) "\""))))
+  (let ((compilation-error-regexp-alist '(gnu)))
+    (compile (format "phpcs --standard=PEAR --report=emacs \"%s\""
+                     (buffer-file-name)))))
+ 
+(defun phpcs-zend ()
+  "Performs a Zend style PHP code sniffer check on the current file."
+  (interactive)
+  (let ((compilation-error-regexp-alist '(gnu)))
+    (compile (format "phpcs --standard=Zend --report=emacs \"%s\""
+                     (buffer-file-name)))))
  
 ;; Activate PHP Horde editing
 (defun php-setenv-horde ()
   (interactive)
   (add-hook 'php-mode-hook 'php-mode-horde-hook)
+  (php-mode-horde-hook))
+
+;; Activate PHP Horde editing
+(defun php-setenv-zend ()
+  (interactive)
+  (add-hook 'php-mode-hook 'php-mode-zend-hook)
   (php-mode-horde-hook))
 
 (setq whitespace-modes (append '(php-mode) whitespace-modes))
@@ -84,34 +124,34 @@
       (save-buffer))
   (setq currentdir (concat (file-name-directory buffer-file-name) "/"))
   (while (and (not (file-exists-p (concat currentdir ".emacs.php.el")))
-	      (not (eq currentdir "/")))
+	      (not (string= currentdir "/")))
     (setq currentdir (file-name-directory (directory-file-name currentdir))))
   (setq phpsettings (concat currentdir ".emacs.php.el"))
   (if (file-exists-p phpsettings)
       (load phpsettings)
     (setq phpoptions ":/usr/share/php5:/usr/share/php\" -d log_errors=1 -d error_log=\"php-errors.log\" -d error_reporting=\"E_ALL\" "))
-  (if classname
-      (let ((compilation-error-regexp-alist ()))
-	(add-to-list 'compilation-error-regexp-alist
-		     '("^\\(\\/.*\.php\\):\\([0-9]+\\)$" 1 2 nil nil nil))
-	(add-to-list 'compilation-error-regexp-alist
-		     '("\\(^.*[Ee]rror.*\\|^.*Exception.*\\) in \\(.*\\) on line \\([0-9]+\\)$" 2 3 nil nil 1))
-	(add-to-list 'compilation-error-regexp-alist
-		     '("[0-9]+\. \\([^ ]*\\) \\([^ ]*\\):\\([0-9]+\\)$" 2 3 nil nil 1))
-	(set (make-local-variable 'phpunit-command)
-	     (concat
-	      "export XDEBUG_CONFIG=\"idekey=php_run\";cd "
-	      (file-name-directory buffer-file-name)
-	      "; php -d include_path=\".:"
-	      (file-name-directory buffer-file-name)
-	      phpoptions
-	      " -f "
-	      (file-name-nondirectory buffer-file-name)))
-	(compile phpunit-command))
-    (message "No possible test class found!")))
+  (let ((compilation-error-regexp-alist ()))
+    (add-to-list 'compilation-error-regexp-alist
+		 '("^\\(\\/.*\.php\\):\\([0-9]+\\)$" 1 2 nil nil nil))
+    (add-to-list 'compilation-error-regexp-alist
+		 '("\\(^.*[Ee]rror.*\\|^.*Exception.*\\) in \\(.*\\) on line \\([0-9]+\\)$" 2 3 nil nil 1))
+    (add-to-list 'compilation-error-regexp-alist
+		 '("[0-9]+\. \\([^ ]*\\) \\([^ ]*\\):\\([0-9]+\\)$" 2 3 nil nil 1))
+    (set (make-local-variable 'phpunit-command)
+	 (concat
+	  "export XDEBUG_CONFIG=\"idekey=php_run\";cd "
+	  (file-name-directory buffer-file-name)
+	  "; php -d include_path=\".:"
+	  (file-name-directory buffer-file-name)
+	  phpoptions
+	  " -f "
+	  (file-name-nondirectory buffer-file-name)))
+    (compile phpunit-command)))
 
-(defun php-start-phpunit-on-buffer()
-  (interactive)
+(defun php-start-phpunit-on-buffer (format)
+  (interactive (list (completing-read "Output format: "
+                                      '(("Default" 1) ("Story" 2) ("Dox" 3))
+                                      nil t phpunit-format-history "Default")))
   (if (not buffer-file-read-only)
       (save-buffer))
   (save-excursion
@@ -121,14 +161,28 @@
      nil nil)
     (setq classname (buffer-substring-no-properties
 		     (match-beginning 1) (match-end 1))))
-  (setq currentdir (concat (file-name-directory buffer-file-name) "/"))
+  (setq currentdir (file-name-directory buffer-file-name))
   (while (and (not (file-exists-p (concat currentdir ".emacs.php.el")))
-	      (not (eq currentdir "/")))
+	      (not (string= currentdir "/")))
     (setq currentdir (file-name-directory (directory-file-name currentdir))))
   (setq phpsettings (concat currentdir ".emacs.php.el"))
   (if (file-exists-p phpsettings)
       (load phpsettings)
-    (setq phpunitoptions ":/usr/share/php5:/usr/share/php\" -d log_errors=1 -d error_log=\"php-errors.log\" -d error_reporting=\"E_ALL\" "))
+    (progn (setq phpunit_pre "export XDEBUG_CONFIG=\"idekey=php_unit_run\"")
+           (setq phpunit_options "--verbose")
+           (setq phpunit_phpoptions "-d log_errors=1 -d error_log=\"php-errors.log\" -d error_reporting=\"E_ALL\"")
+           (if (compare-strings "/kolab" 0 7
+                                (file-name-directory buffer-file-name) 0 7)
+               ;; A hack to support the default setup for the Kolab environment
+               (progn (setq phpunit_command "/kolab/bin/phpunit")
+                      (setq phpunit_includes "/kolab/lib/php"))
+             (progn (setq phpunit_command "phpunit")
+                    (setq phpunit_includes "/usr/share/php5:/usr/share/php")))))
+  (setq phpunit_options (concat phpunit_options
+                                " "
+                                (cond ((string= format "Story") "--story")
+                                      ((string= format "Dox") "--testdox")
+                                      (t ""))))
   (if classname
       (let ((compilation-error-regexp-alist ()))
 	(add-to-list 'compilation-error-regexp-alist
@@ -138,54 +192,15 @@
 	(add-to-list 'compilation-error-regexp-alist
 		     '("[0-9]+\. \\([^ ]*\\) \\([^ ]*\\):\\([0-9]+\\)$" 2 3 nil nil 1))
 	(set (make-local-variable 'phpunit-command)
-	     (concat
-	      "export XDEBUG_CONFIG=\"idekey=php_unit_run\";cd "
+	     (format "%s;cd %s;%s %s -d include_path=\".:%s:%s\" %s %s %s"
+	      phpunit_pre
 	      (file-name-directory buffer-file-name)
-	      "; phpunit --verbose -d include_path=\".:"
+	      phpunit_command
+	      phpunit_options
 	      (file-name-directory buffer-file-name)
-	      phpunitoptions
+	      phpunit_includes
+	      phpunit_phpoptions
 	      classname
-	      " "
-	      (file-name-nondirectory buffer-file-name)))
-	(compile phpunit-command))
-    (message "No possible test class found!")))
-
-(defun php-start-phpunit-story-on-buffer()
-  (interactive)
-  (if (not buffer-file-read-only)
-      (save-buffer))
-  (save-excursion
-    (goto-char (point-min))
-    (re-search-forward
-     "^\\s-*class\\s-+\\([[:alnum:]_]+\\)\\s-*"
-     nil nil)
-    (setq classname (buffer-substring-no-properties
-		     (match-beginning 1) (match-end 1))))
-  (setq currentdir (concat (file-name-directory buffer-file-name) "/"))
-  (while (and (not (file-exists-p (concat currentdir ".emacs.php.el")))
-	      (not (eq currentdir "/")))
-    (setq currentdir (file-name-directory (directory-file-name currentdir))))
-  (setq phpsettings (concat currentdir ".emacs.php.el"))
-  (if (file-exists-p phpsettings)
-      (load phpsettings)
-    (setq phpunitoptions ":/usr/share/php5:/usr/share/php\" -d log_errors=1 -d error_log=\"php-errors.log\" -d error_reporting=\"E_ALL\" "))
-  (if classname
-      (let ((compilation-error-regexp-alist ()))
-	(add-to-list 'compilation-error-regexp-alist
-		     '("^\\(\\/.*\.php\\):\\([0-9]+\\)$" 1 2 nil nil nil))
-	(add-to-list 'compilation-error-regexp-alist
-		     '("\\(^.*[Ee]rror.*\\|^.*Exception.*\\) in \\(.*\\) on line \\([0-9]+\\)$" 2 3 nil nil 1))
-	(add-to-list 'compilation-error-regexp-alist
-		     '("[0-9]+\. \\([^ ]*\\) \\([^ ]*\\):\\([0-9]+\\)$" 2 3 nil nil 1))
-	(set (make-local-variable 'phpunit-command)
-	     (concat
-	      "export XDEBUG_CONFIG=\"idekey=php_unit_run\";cd "
-	      (file-name-directory buffer-file-name)
-	      "; phpunit --story -d include_path=\".:"
-	      (file-name-directory buffer-file-name)
-	      phpunitoptions
-	      classname
-	      " "
 	      (file-name-nondirectory buffer-file-name)))
 	(compile phpunit-command))
     (message "No possible test class found!")))
@@ -214,20 +229,23 @@
 ;; Set Horde code style
 (define-key php-mode-map (kbd "<f3> H") 'php-setenv-horde)
 
+;; Set Zend code style
+(define-key php-mode-map (kbd "<f3> Z") 'php-setenv-zend)
+
 ;; Run php script
 (define-key php-mode-map (kbd "<f3> <f7>") 'php-start-php-on-buffer)
 
 ;; Run unit tests
 (define-key php-mode-map (kbd "<f3> <f8>") 'php-start-phpunit-on-buffer)
 
-;; Run a story test
-(define-key php-mode-map (kbd "<f3> <f9>") 'php-start-phpunit-story-on-buffer)
-
 ;; Check code
 (define-key php-mode-map (kbd "<f3> <f10>") 'php-lint)
 
 ;; Check code style
 (define-key php-mode-map (kbd "<f3> <f11>") 'phpcs)
+
+;; Check Zend code style
+(define-key php-mode-map (kbd "<f3> <f12>") 'phpcs-zend)
 
 ;; Move between functions
 (define-key php-mode-map (kbd "<f3> <up>")   'beginning-of-defun)

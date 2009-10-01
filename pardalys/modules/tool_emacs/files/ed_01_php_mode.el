@@ -90,18 +90,36 @@
              compilation-error-regexp-alist-alist)
     (compile (concat "php -l -f \"" (buffer-file-name) "\""))))
 
-(defun phpcs ()
+(defun get-file-in-hierarchy (file)
+  "Searches the directory tree upwards for the given file and returns the path."
+  (setq currentdir (file-name-directory buffer-file-name))
+  (while (and (not (file-exists-p (concat currentdir file)))
+	      (not (string= currentdir "/")))
+    (setq currentdir (file-name-directory (directory-file-name currentdir))))
+  (concat currentdir file))
+
+(defun phpcs-pear ()
   "Performs a PEAR style PHP code sniffer check on the current file."
   (interactive)
-  (let ((compilation-error-regexp-alist '(gnu)))
-    (compile (format "phpcs --standard=PEAR --report=emacs \"%s\""
-                     (buffer-file-name)))))
- 
+  (phpcs "PEAR"))
+
 (defun phpcs-zend ()
   "Performs a Zend style PHP code sniffer check on the current file."
   (interactive)
+  (phpcs "Zend"))
+ 
+(defun phpcs (format)
+  "Performs a PHP code sniffer check on the current file."
+  (interactive)
+  (setq phpsettings (get-file-in-hierarchy ".emacs.php.el"))
+  (if (file-exists-p phpsettings)
+      (load phpsettings)
+    (setq phpcs_command "phpcs"))
   (let ((compilation-error-regexp-alist '(gnu)))
-    (compile (format "phpcs --standard=Zend --report=emacs \"%s\""
+    (compile (format (concat phpcs_command
+			     " --standard="
+			     format
+			     " --report=emacs \"%s\"")
                      (buffer-file-name)))))
  
 ;; Activate PHP Horde editing
@@ -242,7 +260,7 @@
 (define-key php-mode-map (kbd "<f3> <f10>") 'php-lint)
 
 ;; Check code style
-(define-key php-mode-map (kbd "<f3> <f11>") 'phpcs)
+(define-key php-mode-map (kbd "<f3> <f11>") 'phpcs-pear)
 
 ;; Check Zend code style
 (define-key php-mode-map (kbd "<f3> <f12>") 'phpcs-zend)

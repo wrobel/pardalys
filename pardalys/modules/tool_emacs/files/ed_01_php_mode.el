@@ -97,13 +97,7 @@
   "Runs a compilation process with a number of PHP style checks."
   (interactive "p")
   (let ((compilation-error-regexp-alist (get-php-compilation-regexp)))
-    (setq cb (current-buffer))
     (php-loc arg)
-    (switch-to-buffer "*compilation*")
-    (if (get-buffer  "*php lines of code*")
-	(kill-buffer "*php lines of code*"))
-    (rename-buffer "*php lines of code*")
-    (switch-to-buffer cb)
     (php-pmd arg)
     (switch-to-buffer "*compilation*")
     (if (get-buffer  "*php mess detection*")
@@ -111,24 +105,8 @@
     (rename-buffer "*php mess detection*")
     (switch-to-buffer cb)
     (php-cpd arg)
-    (switch-to-buffer "*compilation*")
-    (if (get-buffer  "*php copy paste detection*")
-	(kill-buffer "*php copy paste detection*"))
-    (rename-buffer "*php copy paste detection*")
-    (switch-to-buffer cb)
     (phpcs arg)
-    (switch-to-buffer "*compilation*")
-    (if (get-buffer  "*php code style*")
-	(kill-buffer "*php code style*"))
-    (rename-buffer "*php code style*")
-    (switch-to-buffer cb)
-    (php-lint arg)
-    (switch-to-buffer "*compilation*")
-    (if (get-buffer  "*php lint*")
-	(kill-buffer "*php lint*"))
-    (rename-buffer "*php lint*")
-    (switch-to-buffer cb)
-    ))
+    (php-lint arg)))
 
 ;; taken from http://atomized.org/2008/10/php-lint-and-style-checking-from-emacs/
 (defun php-lint (arg)
@@ -141,7 +119,8 @@
 		    (buffer-file-name))))
     (compile (format "%s \"%s\""
 		     phplint_command
-		     file-arg))))
+		     file-arg)))
+  (switch-and-rename "*compilation*" "*php lint*"))
 
 (defun phpcs (arg)
   "Performs a PHP code sniffer check on the current file."
@@ -154,7 +133,8 @@
     (compile (format "%s %s %s"
 		     phpcs_command
 		     phpcs_options
-                     file-arg))))
+                     file-arg)))
+  (switch-and-rename "*compilation*" "*php code style*"))
  
 (defun php-loc (arg)
   (interactive "p")
@@ -168,7 +148,8 @@
     (compile (format "%s %s %s"
 		     plc_command
 		     plc_options
-		     file-arg))))
+		     file-arg)))
+  (switch-and-rename "*compilation*" "*php lines of code*"))
 
 (defun php-cpd (arg)
   (interactive "p")
@@ -182,7 +163,8 @@
     (compile (format "%s %s %s"
 		     pcp_command
 		     pcp_options
-		     file-arg))))
+		     file-arg)))
+  (switch-and-rename "*compilation*" "*php copy paste detection*"))
 
 (defun php-pmd (arg)
   (interactive "p")
@@ -200,7 +182,8 @@
 		     file-arg
 		     pmd_format
 		     pmd_codestyle
-		     pmd_options))))
+		     pmd_options)))
+  (switch-and-rename "*compilation*" "*php mess detection*"))
 
 (defun php-unit (format)
   (interactive (list (completing-read "Output format: "
@@ -250,7 +233,8 @@
 		     (file-name-directory buffer-file-name)
 		     phprun_command
 		     phprun_phpoptions
-		     buffer-file-name))))
+		     buffer-file-name)))
+  (switch-and-rename "*compilation*" "*php run*"))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -315,6 +299,14 @@
 	      (not (string= currentdir "/")))
     (setq currentdir (file-name-directory (directory-file-name currentdir))))
   currentdir)
+
+(defun switch-and-rename (target name)
+    (setq cb (current-buffer))
+    (switch-to-buffer target)
+    (if (get-buffer  name)
+	(kill-buffer name))
+    (rename-buffer name)
+    (switch-to-buffer cb))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;

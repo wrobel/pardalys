@@ -140,7 +140,7 @@
 	(file-arg (if (> arg 1) (get-one-below-dir-in-hierarchy package_dir)
 		    (buffer-file-name))))
     (compile (format "%s \"%s\""
-		     phplint_cmd
+		     phplint_command
 		     file-arg))))
 
 (defun phpcs (arg)
@@ -238,23 +238,19 @@
 	(compile phpunit-command))
     (message "No possible test class found!")))
 
-(defun php-start-php-on-buffer()
+(defun php-run()
   (interactive)
   (if (not buffer-file-read-only)
       (save-buffer))
   (setq phpsettings (get-file-in-hierarchy ".emacs.php.el"))
   (load phpsettings)
   (let ((compilation-error-regexp-alist (get-php-compilation-regexp)))
-    (set (make-local-variable 'phpunit-command)
-	 (concat
-	  "export XDEBUG_CONFIG=\"idekey=php_run\";cd "
-	  (file-name-directory buffer-file-name)
-	  "; php -d include_path=\".:"
-	  (file-name-directory buffer-file-name)
-	  phpoptions
-	  " -f "
-	  (file-name-nondirectory buffer-file-name)))
-    (compile phpunit-command)))
+    (compile (format "%s;cd %s;%s %s %s"
+		     phprun_pre
+		     (file-name-directory buffer-file-name)
+		     phprun_command
+		     phprun_phpoptions
+		     buffer-file-name))))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -347,11 +343,11 @@
 ;; Set Zend code style
 (define-key php-mode-map (kbd "<f3> Z") 'php-setenv-zend)
 
-;; Count lines of code
-(define-key php-mode-map (kbd "<f3> <f6>") 'php-loc)
-
 ;; Run php script
-(define-key php-mode-map (kbd "<f3> <f7>") 'php-start-php-on-buffer)
+(define-key php-mode-map (kbd "<f3> <f6>") 'php-run)
+
+;; Count lines of code
+(define-key php-mode-map (kbd "<f3> <f7>") 'php-loc)
 
 ;; Run unit tests
 (define-key php-mode-map (kbd "<f3> <f8>") 'php-unit)

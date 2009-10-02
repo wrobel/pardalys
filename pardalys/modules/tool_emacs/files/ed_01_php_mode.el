@@ -207,18 +207,17 @@
                                       (t ""))))
   (if classname
       (let ((compilation-error-regexp-alist (get-php-compilation-regexp)))
-	(set (make-local-variable 'phpunit-command)
-	     (format "%s;cd %s;%s %s -d include_path=\".:%s:%s\" %s %s %s"
-	      phpunit_pre
-	      (file-name-directory buffer-file-name)
-	      phpunit_command
-	      phpunit_options
-	      (file-name-directory buffer-file-name)
-	      phpunit_includes
-	      phpunit_phpoptions
-	      classname
-	      (file-name-nondirectory buffer-file-name)))
-	(compile phpunit-command))
+	(compile (format "%s;cd %s;%s %s -d include_path=\".:%s:%s\" %s %s %s"
+			 phpunit_pre
+			 (file-name-directory buffer-file-name)
+			 phpunit_command
+			 phpunit_options
+			 (file-name-directory buffer-file-name)
+			 phpunit_includes
+			 phpunit_phpoptions
+			 classname
+			 (file-name-nondirectory buffer-file-name)))
+	(switch-and-rename "*compilation*" "*php unit*"))
     (message "No possible test class found!")))
 
 (defun php-run()

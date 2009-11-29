@@ -205,6 +205,11 @@
                                 (cond ((string= format "Story") "--story")
                                       ((string= format "Dox") "--testdox")
                                       (t ""))))
+  (if (file-exists-p (concat (file-name-directory buffer-file-name) "phpunit.xml"))
+      (setq phpunit_options (concat phpunit_options
+				    " --configuration="
+				    (file-name-directory buffer-file-name)
+				    "phpunit.xml")))
   (if classname
       (let ((compilation-error-regexp-alist (get-php-compilation-regexp)))
 	(compile (format "%s;cd %s;%s %s -d include_path=\".:%s:%s\" %s %s %s"

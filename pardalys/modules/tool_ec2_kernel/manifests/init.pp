@@ -31,6 +31,11 @@ class tool::ec2::kernel {
         keywords => "~$keyword",
         tag      => 'buildhost';
       }
+      gentoo_mask { 'udev':
+        context => 'tools_ec2_kernel_udev',
+        package => '>sys-fs/udev-124-r2',
+        tag     => 'buildhost'
+      }
       package { 'ec2-sources':
         ensure   => 'installed',
         tag      => 'buildhost',

@@ -6,8 +6,10 @@
 # Modified by:  Patrick J. Volkerding, <volkerdi@ftp.cdrom.com>
 # Modified by:  Daniel Robbins, <drobbins@gentoo.org>
 # Modified by:  Martin Schlemmer, <azarah@gentoo.org>
+# Modified by:  Mike Frysinger, <vapier@gentoo.org>
+# Modified by:  Robin H. Johnson, <robbat2@gentoo.org>
 #
-# $Header: /var/cvsroot/gentoo-x86/sys-apps/sysvinit/files/inittab,v 1.5 2005/12/22 02:03:23 vapier Exp $
+# $Header: /var/cvsroot/gentoo-x86/sys-apps/sysvinit/files/inittab-2.87,v 1.1 2010/01/08 16:55:07 williamh Exp $
 
 # Default runlevel.
 id:3:initdefault:
@@ -19,13 +21,19 @@ si::sysinit:/sbin/rc sysinit
 rc::bootwait:/sbin/rc boot
 
 l0:0:wait:/sbin/rc shutdown
-l1:S1:wait:/sbin/rc single
+l0s:0:wait:/sbin/halt -dhp
+l1:1:wait:/sbin/rc single
 l2:2:wait:/sbin/rc nonetwork
 l3:3:wait:/sbin/rc default
 l4:4:wait:/sbin/rc default
 l5:5:wait:/sbin/rc default
 l6:6:wait:/sbin/rc reboot
+l6r:6:wait:/sbin/reboot -dk
 #z6:6:respawn:/sbin/sulogin
+
+# new-style single-user
+su0:S:wait:/sbin/rc single
+su1:S:wait:/sbin/sulogin
 
 # TERMINALS
 <% if build_virtual=="physical" -%>

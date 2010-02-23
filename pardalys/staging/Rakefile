@@ -3,7 +3,7 @@
 # http://www.opensource.org/licenses/mit-license.php
 
 %w(rubygems open-uri ostruct delegate
-   hpricot erb aws/s3 EC2 facter yaml pp).each do |l|
+   hpricot erb aws/s3 AWS AWS/EC2 facter yaml pp).each do |l|
   require(l)
 end
 
@@ -40,7 +40,7 @@ end
 
 task(:env) do
   @env.merge!(YAML.load(IO.read("env.yml")))
-  @ec2 = EC2::Base.new(@env.to_hash)
+  @ec2 = AWS::EC2::Base.new(@env.to_hash)
   @env.merge!(YAML.load(IO.read("defaults.yml")))
   if File.exists?('config.yml')
     @env.merge!(YAML.load(IO.read("config.yml")))
@@ -295,7 +295,7 @@ task(:group, [:domain] => :env) do |t, args|
   begin
     @ec2.create_security_group(:group_name => args.domain,
                                :group_description => "#{@env.group} group")
-  rescue EC2::InvalidGroupDuplicate ; end
+  rescue AWS::EC2::InvalidGroupDuplicate ; end
   # authorize all access inside the group
   begin
     @ec2.authorize_security_group_ingress(:group_name => args.domain,
@@ -303,7 +303,7 @@ task(:group, [:domain] => :env) do |t, args|
                                           args.domain,
                                           :source_security_group_owner_id =>
                                           @env.owner_id.to_s)
-  rescue EC2::InvalidPermissionDuplicate ; end
+  rescue AWS::EC2::InvalidPermissionDuplicate ; end
 end
 
 desc("gimme access on ssh")
@@ -317,7 +317,7 @@ task(:ingress, [:domain] => :group) do |t, args|
                                           :cidr_ip => cidr,
                                           :from_port => '22',
                                           :to_port => '22')
-  rescue EC2::InvalidPermissionDuplicate ; end
+  rescue AWS::EC2::InvalidPermissionDuplicate ; end
 end
 
 desc("run an instance")
@@ -330,12 +330,12 @@ task(:run, [:zone, :itype, :image, :domain, :master, :hostname] =>
       key = @ec2.create_keypair(:key_name => args.hostname).keyMaterial
       File.open(pem, "w+") { |f| f.write(key) }
       File.chmod(0600, pem)
-    rescue EC2::InvalidKeyPairDuplicate ; end
+    rescue AWS::EC2::InvalidKeyPairDuplicate ; end
     # create a host group
     begin
       @ec2.create_security_group(:group_name => args.hostname,
                                  :group_description => args.hostname)
-    rescue EC2::InvalidGroupDuplicate ; end
+    rescue AWS::EC2::InvalidGroupDuplicate ; end
     # create a bucket for this host
     AWS::S3::Base.establish_connection!(:access_key_id =>
                                         @env.access_key_id,

@@ -30,7 +30,7 @@ class tool::php {
       gentoo_use_flags { php:
         context => 'tool_php_php',
         package => 'dev-lang/php',
-        use     => 'apache2 bzip2 ctype ftp gd hash imap json kolab ldap mysql nls pcre reflection session soap spl sqlite tokenizer xml',
+        use     => 'apache2 bzip2 ctype filter ftp gd hash imap json kolab ldap mysql nls pcre reflection session simplexml soap spl sqlite tokenizer xml',
         tag     => 'buildhost'
       }
       package { php:
@@ -68,9 +68,9 @@ class tool::php {
         tag      => 'buildhost'
       }
 
-      gentoo_keywords { 'PEAR-CodeSniffer':
+      gentoo_keywords { 'PEAR-PHP_CodeSniffer':
         context  => 'tool_php_pear_codesniffer',
-        package  => '=dev-php/PEAR-CodeSniffer-1.1.0',
+        package  => '=dev-php/PEAR-PHP_CodeSniffer-1.2.0',
         keywords => "~$keyword",
         tag      => 'buildhost'
       }
@@ -78,7 +78,7 @@ class tool::php {
         category => 'dev-php',
         ensure   => 'installed',
         require  =>  [Package['php'],
-                      Gentoo_keywords['PEAR-CodeSniffer']],
+                      Gentoo_keywords['PEAR-PHP_CodeSniffer']],
         tag      => 'buildhost'
       }
       package { phpunit:

@@ -28,6 +28,11 @@ class gentoo::etc::portage::backup
   } else {
     $unmask = false
   }
+  if $license_isfile {
+    $license = file('/etc/portage/package.license')
+  } else {
+    $license = false
+  }
 }
 
 # Class gentoo::etc::portage::restore
@@ -61,6 +66,12 @@ class gentoo::etc::portage::restore
   if $gentoo::etc::portage::backup::unmask {
     file { '/etc/portage/package.unmask/package.unmask.original':
       content => $gentoo::etc::portage::backup::unmask,
+      tag     => 'buildhost'
+    }
+  }
+  if $gentoo::etc::portage::backup::license {
+    file { '/etc/portage/package.license/package.license.original':
+      content => $gentoo::etc::portage::backup::license,
       tag     => 'buildhost'
     }
   }
@@ -101,6 +112,12 @@ class gentoo::etc::portage
 
   file { 'package.unmask::directory':
     path   => '/etc/portage/package.unmask',
+    ensure => 'directory',
+    tag    => 'buildhost'
+  }
+
+  file { 'package.license::directory':
+    path   => '/etc/portage/package.license',
     ensure => 'directory',
     tag    => 'buildhost'
   }
@@ -184,6 +201,27 @@ define gentoo_mask ($context  = '',
   file { "/etc/portage/package.mask/${context}":
     content => "$package",
     require => File['package.mask::directory'],
+    tag    => 'buildhost'
+  }
+
+}
+
+# Function gentoo_license
+#
+#  Specify license for a package.
+#
+#  @param context  A unique context for the package
+#  @param package  The package atom
+#  @param license The license to apply
+#
+define gentoo_license ($context  = '',
+                       $package  = '', 
+                       $license = '')
+{
+
+  file { "/etc/portage/package.license/${context}":
+    content => "$package $license",
+    require => File['package.license::directory'],
     tag    => 'buildhost'
   }
 

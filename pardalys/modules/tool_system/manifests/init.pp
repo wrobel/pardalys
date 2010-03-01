@@ -41,10 +41,17 @@ class tool::system {
         require  => Gentoo_use_flags['perl']
       }
 
+      gentoo_license { sun-jdk:
+        context => 'tools_system_sun_jdk',
+        package => 'dev-java/sun-jdk',
+        license     => 'dlj-1.1',
+        tag     => 'buildhost'
+      }
       package { sun-jdk:
-        category => 'dev-lang',
+        category => 'dev-java',
         ensure   => 'installed',
         tag      => 'buildhost',
+        require  => Gentoo_license['sun-jdk']
       }
 
       gentoo_use_flags { lcdf-typetools:

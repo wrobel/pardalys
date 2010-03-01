@@ -47,3 +47,15 @@ Facter.add('unmask_isfile') do
     end
   end
 end
+
+package_license = '/etc/portage/package.license'
+
+Facter.add('license_isfile') do
+  setcode do
+    if FileTest.file?(package_license)
+      true
+    else
+      false
+    end
+  end
+end

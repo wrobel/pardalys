@@ -19,7 +19,7 @@ class tool::logrotate {
 
   file { 
     '/etc/logrotate.conf':
-    source => "puppet:///tool_logrotate/logrotate.conf_${template_logrotate}",
+    source => "puppet:///modules/tool_logrotate/logrotate.conf_${template_logrotate}",
     require => Package['logrotate'];
     '/var/backup/log':
     ensure => 'directory',

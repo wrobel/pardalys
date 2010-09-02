@@ -16,7 +16,7 @@ class tool::emacs {
     {
       gentoo_use_flags { mercurial:
         context => 'tools_emacs_mercurial',
-        package => 'dev-util/mercurial',
+        package => 'dev-vcs/mercurial',
         use     => 'emacs',
         tag     => 'buildhost'
       }

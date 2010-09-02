@@ -23,7 +23,7 @@ if FileTest.exists?(packages)
             if !FileTest.exists?('/var/cache/eix')
               `/usr/bin/update-eix`
             end
-            version = `/usr/bin/eix --nocolor --format "<installedversionsshort>" --pure-packages --exact --category-name #{pkgname}`.chomp
+            version = `/usr/bin/eix --nocolor --format "<installedversions:VERSION>" --pure-packages --exact --category-name #{pkgname}`.chomp
             version = $1 if version =~ /^(.*)\[\?\]/
             version = 'missing' if version == '' 
             version

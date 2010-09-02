@@ -108,12 +108,12 @@ class tool::pardalys {
       }
       gentoo_use_flags { git:
         context => 'tool_pardalys_git',
-        package => 'dev-util/git',
+        package => 'dev-vcs/git',
         use     => 'emacs bash-completion',
         tag     => 'buildhost'
       }
       package { git:
-        category => 'dev-utils',
+        category => 'dev-vcs',
         ensure   => 'installed',
         require  =>  Gentoo_use_flags['git'],
         tag      => 'buildhost'

@@ -18,12 +18,12 @@ class tool::subversion {
       # subversion anymore
       gentoo_use_flags { subversion:
         context => 'tool_subversion_subversion',
-        package => 'dev-util/subversion',
+        package => 'dev-vcs/subversion',
         use     => 'emacs bash-completion apache2 -dso',
         tag     => 'buildhost'
       }
       package { subversion:
-        category => 'dev-util',
+        category => 'dev-vcs',
         ensure   => 'installed',
         require  =>  Gentoo_use_flags['subversion'],
         tag      => 'buildhost'

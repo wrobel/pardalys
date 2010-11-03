@@ -54,7 +54,7 @@ class tool::portage {
 
   $template_version = template_version($version_portage, '2.1.4.4@:2.1.4.4,','2.1.4.4')
 
-  $profile              = get_var('portage_profile',             '/usr/portage/profiles/default/linux/x86/2008.0')
+  $profile              = get_var('portage_profile',             '/usr/portage/profiles/default/linux/x86/10.0')
   $use                  = get_var('portage_use',                  false)
   $chost                = get_var('portage_chost',                'i686-pc-linux-gnu')
   $cflags               = get_var('portage_cflags',               false)

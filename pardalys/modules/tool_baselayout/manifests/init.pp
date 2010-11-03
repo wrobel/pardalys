@@ -16,13 +16,13 @@ class tool::baselayout {
     {
       gentoo_keywords { baselayout:
         context  => 'tool_baselayout_baselayout',
-        package  => '=sys-apps/baselayout-2.0.0',
+        package  => '=sys-apps/baselayout-2.0.1',
         keywords => "~$keyword",
         tag      => 'buildhost'
       }
       gentoo_keywords { openrc:
         context  => 'tool_baselayout_openrc',
-        package  => '=sys-apps/openrc-0.3.0-r1',
+        package  => '=sys-apps/openrc-0.6.3',
         keywords => "~$keyword",
         tag      => 'buildhost'
       }

@@ -70,7 +70,7 @@ class tool::pardalys {
       }
       gentoo_keywords { mocha:
         context  => 'tool_pardalys_mocha',
-        package  => '=dev-ruby/mocha-0.5.6',
+        package  => '=dev-ruby/mocha-0.9.9',
         keywords => "~$keyword",
         tag      => 'buildhost'
       }

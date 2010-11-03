@@ -74,7 +74,7 @@ class tool::php {
         keywords => "~$keyword",
         tag      => 'buildhost'
       }
-      package { 'PEAR-CodeSniffer':
+      package { 'PEAR-PHP_CodeSniffer':
         category => 'dev-php',
         ensure   => 'installed',
         require  =>  [Package['php'],

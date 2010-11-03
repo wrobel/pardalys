@@ -144,10 +144,10 @@ class tool::emacs {
 
       file{
         '/usr/share/emacs/site-lisp/site-gentoo.d/72git-gentoo.el':
-          source => 'puppet:///tool_emacs/72git-gentoo.el',
+          source => 'puppet:///modules/tool_emacs/72git-gentoo.el',
           tag      => 'buildhost';
         '/usr/share/emacs/site-lisp/php-mode/php-mode.el':
-          source => 'puppet:///tool_emacs/php-mode.el_revision_70',
+          source => 'puppet:///modules/tool_emacs/php-mode.el_revision_70',
           tag      => 'buildhost';
       }
 
@@ -172,25 +172,25 @@ class tool::emacs {
           ensure => 'directory',
           require => File['/etc/skel/.emacs.d'];
         '/etc/skel/.emacs.d/00_emacs.el':
-          source => 'puppet:///tool_emacs/ed_00_emacs.el',
+          source => 'puppet:///modules/tool_emacs/ed_00_emacs.el',
           require => File['/etc/skel/.emacs.d'];
         '/etc/skel/.emacs.d/01_php_mode.el':
-          source => 'puppet:///tool_emacs/ed_01_php_mode.el',
+          source => 'puppet:///modules/tool_emacs/ed_01_php_mode.el',
           require => File['/etc/skel/.emacs.d'];
         '/etc/skel/.emacs.d/02_emacs.el':
-          source => 'puppet:///tool_emacs/ed_02_emacs.el',
+          source => 'puppet:///modules/tool_emacs/ed_02_emacs.el',
           require => File['/etc/skel/.emacs.d'];
         '/etc/skel/.emacs.d/97_env.el':
-          source => 'puppet:///tool_emacs/ed_97_env.el',
+          source => 'puppet:///modules/tool_emacs/ed_97_env.el',
           require => File['/etc/skel/.emacs.d'];
         '/etc/skel/.emacs.d/99_keys.el':
-          source => 'puppet:///tool_emacs/ed_99_keys.el',
+          source => 'puppet:///modules/tool_emacs/ed_99_keys.el',
           require => File['/etc/skel/.emacs.d'];
         '/etc/skel/.emacs.d/lisp/timer.el':
-          source => 'puppet:///tool_emacs/el_timer.el',
+          source => 'puppet:///modules/tool_emacs/el_timer.el',
           require => File['/etc/skel/.emacs.d/lisp'];
         '/etc/skel/.emacs.d/lisp/backup-each-save.el':
-          source => 'puppet:///tool_emacs/el_backup-each-save.el',
+          source => 'puppet:///modules/tool_emacs/el_backup-each-save.el',
           require => File['/etc/skel/.emacs.d/lisp'];
       }
     }

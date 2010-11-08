@@ -7,14 +7,14 @@ INSTALL_DIR = ${INSTALL} -m 755 -d
 
 PACKAGE=pardalys
 
-prefix = /usr/local
+prefix = /usr
 exec_prefix = $(prefix)
 bindir = $(exec_prefix)/bin
 sbindir = $(exec_prefix)/sbin
 datarootdir = $(prefix)/share
 datadir = $(datarootdir)
 docdir = $(datarootdir)/doc/$(PACKAGE)
-sysconfdir = $(prefix)/etc
+sysconfdir = /etc
 dist_conf = modules/service_kolab/plugins/facter/dist_conf
 
 .PHONY:

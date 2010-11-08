@@ -9,7 +9,7 @@
 class ubuntu::repositories::multiverse
 {
   @file { 
-    '/etc/apt/sources.list.d/multiverse':
+    '/etc/apt/sources.list.d/multiverse.list':
     source  => 'puppet:///modules/os_ubuntu/repository_multiverse';
   }
 }

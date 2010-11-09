@@ -284,34 +284,34 @@ class tool::system {
     }
     default:
     {
-      package { db }
-      package { perl }
-      package { sun-jdk }
-      package { lcdf-typetools }
-      package { texlive }
-      package { cvs }
-      package { mercurial }
-      package { libpcre }
-      package { ncurses }
-      package { host } # for the hostx tool
-      package { unzip }
-      package { slocate }
-      package { lsof }
-      package { sqlite }
-      package { strace }
-      package { ltrace }
-      package { patchutils }
-      package { screen }
-      package { dhcpcd }
-      package { netkit-telnetd }
-      package { scripts-gw } # Still required?
-      package { cadaver }
-      package { webpy }
-      package { ledger }
-      package { iproute2 }
-      package { sudo }
-      package { keychain }
-      package { ldapvi }
+      package { db: ensure => 'installed' }
+      package { perl: ensure => 'installed' }
+      package { sun-jdk: ensure => 'installed' }
+      package { lcdf-typetools: ensure => 'installed' }
+      package { texlive: ensure => 'installed' }
+      package { cvs: ensure => 'installed' }
+      package { mercurial: ensure => 'installed' }
+      package { libpcre: ensure => 'installed' }
+      package { ncurses: ensure => 'installed' }
+      package { host: ensure => 'installed' } # for the hostx tool
+      package { unzip: ensure => 'installed' }
+      package { slocate: ensure => 'installed' }
+      package { lsof: ensure => 'installed' }
+      package { sqlite: ensure => 'installed' }
+      package { strace: ensure => 'installed' }
+      package { ltrace: ensure => 'installed' }
+      package { patchutils: ensure => 'installed' }
+      package { screen: ensure => 'installed' }
+      package { dhcpcd: ensure => 'installed' }
+      package { netkit-telnetd: ensure => 'installed' }
+      package { scripts-gw: ensure => 'installed' } # Still required?
+      package { cadaver: ensure => 'installed' }
+      package { webpy: ensure => 'installed' }
+      package { ledger: ensure => 'installed' }
+      package { iproute2: ensure => 'installed' }
+      package { sudo: ensure => 'installed' }
+      package { keychain: ensure => 'installed' }
+      package { ldapvi: ensure => 'installed' }
     }
   }
 

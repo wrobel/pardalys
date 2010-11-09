@@ -281,6 +281,14 @@ class tool::system {
         ensure   => 'installed',
         tag      => 'buildhost'
       }
+
+      # Ensure the system knows how to handle the rxvt-unicode terminal
+      file {
+        '/usr/share/terminfo/r/rxvt-unicode':
+        source => 'puppet:///modules/tool_system/rxvt-unicode',
+        require => Package['ncurses'];
+      }
+
     }
     default:
     {
@@ -321,13 +329,6 @@ class tool::system {
     mode    => 755;
     '/root/.log':
     ensure => 'directory';
-  }
-
-  # Ensure the system knows how to handle the rxvt-unicode terminal
-  file {
-    '/usr/share/terminfo/r/rxvt-unicode':
-    source => 'puppet:///modules/tool_system/rxvt-unicode',
-    require => Package['ncurses'];
   }
 
 }

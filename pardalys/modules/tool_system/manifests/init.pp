@@ -292,14 +292,12 @@ class tool::system {
     }
     default:
     {
-      package { db: ensure => 'installed' }
       package { perl: ensure => 'installed' }
       package { default-jdk: ensure => 'installed' }
       package { lcdf-typetools: ensure => 'installed' }
       package { texlive: ensure => 'installed' }
       package { cvs: ensure => 'installed' }
       package { mercurial: ensure => 'installed' }
-      package { libpcre: ensure => 'installed' }
       package { host: ensure => 'installed' } # for the hostx tool
       package { unzip: ensure => 'installed' }
       package { slocate: ensure => 'installed' }

@@ -152,6 +152,8 @@ class tool::pardalys {
       package { mocha: ensure => 'installed' }
       package { rspec: ensure => 'installed' }
       package { ruby_ldap: ensure => 'installed' }
+
+      $pardalys_os = 'ubuntu'
     }
     default:
     {

@@ -313,7 +313,7 @@ class tool::system {
       package { cadaver: ensure => 'installed' }
       package { python-webpy: ensure => 'installed' }
       package { ledger: ensure => 'installed' }
-      package { iproute2: ensure => 'installed' }
+      package { iproute: ensure => 'installed' }
       package { sudo: ensure => 'installed' }
       package { keychain: ensure => 'installed' }
       package { ldapvi: ensure => 'installed' }

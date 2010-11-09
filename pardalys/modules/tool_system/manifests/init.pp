@@ -298,7 +298,7 @@ class tool::system {
       package { texlive: ensure => 'installed' }
       package { cvs: ensure => 'installed' }
       package { mercurial: ensure => 'installed' }
-      package { host: ensure => 'installed' } # for the hostx tool
+      package { bind9-host: ensure => 'installed' } # for the hostx tool
       package { unzip: ensure => 'installed' }
       package { mlocate: ensure => 'installed' }
       package { lsof: ensure => 'installed' }

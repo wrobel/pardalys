@@ -147,6 +147,7 @@ class tool::pardalys {
 
       realize File[pardus_list]
 
+      package { puppet-el: ensure => 'installed' }
       package { pardalys: ensure => 'installed' }
       package { git-core: ensure => 'installed' }
       package { libmocha-ruby: ensure => 'installed' }

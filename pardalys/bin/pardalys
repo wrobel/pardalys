@@ -41,14 +41,25 @@ MODULES="--modulepath=/usr/share/pardalys/modules"
 
 BUCKETDIR="/var/lib/puppet/clientbucket"
 
-if [ -d "/usr/share/pardalys/dev-pardalys/pardalys" ]; then
-    CONFDIR="/usr/share/pardalys/dev-pardalys/pardalys/etc"
-    MANIFEST="/usr/share/pardalys/dev-pardalys/pardalys/manifests/kolab.pp"
-    ENVIRONMENT="--environment=development"
-    FACTS="--factpath=/usr/share/pardalys/dev-pardalys/pardalys/facter"
-    MODULES="--modulepath=/usr/share/pardalys/dev-pardalys/pardalys/modules"
+if [ -f "/etc/pardalys/override.sh" ]; then
+    . /etc/pardalys/override.sh
+fi
 
-    cd /usr/share/pardalys/dev-pardalys && git pull origin master > /dev/null || ERROR="1"
+if [ -z "${DEV_REPOSITORY}" ]; then
+    DEV_REPOSITORY="/usr/share/pardalys/dev-pardalys"
+    DEV_UPDATE=1
+fi
+
+if [ -d "${DEV_REPOSITORY}/pardalys" ]; then
+    CONFDIR="${DEV_REPOSITORY}/pardalys/etc"
+    MANIFEST="${DEV_REPOSITORY}/pardalys/manifests/kolab.pp"
+    ENVIRONMENT="--environment=development"
+    FACTS="--factpath=${DEV_REPOSITORY}/pardalys/facter"
+    MODULES="--modulepath=${DEV_REPOSITORY}/pardalys/modules"
+
+    if [ -n "${DEV_UPDATE}" ]; then 
+	cd ${DEV_REPOSITORY} && git pull origin master > /dev/null || ERROR="1"
+    fi
     if [ -n "$ERROR" ]; then
 	echo "Updating the p@rdalys development repository failed! Check your connection."
     fi

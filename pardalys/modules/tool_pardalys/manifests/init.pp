@@ -145,21 +145,21 @@ class tool::pardalys {
     {
       include ubuntu::repositories::pardus
 
-      realize File[/etc/apt/sources.list.d/pardus.list]
+      realize File[pardus_list]
 
-      package { pardalys }
-      package { git }
-      package { mocha }
-      package { rspec }
-      package { ruby_ldap }
+      package { pardalys: ensure => 'installed' }
+      package { git: ensure => 'installed' }
+      package { mocha: ensure => 'installed' }
+      package { rspec: ensure => 'installed' }
+      package { ruby_ldap: ensure => 'installed' }
     }
     default:
     {
-      package { pardalys }
-      package { git }
-      package { mocha }
-      package { rspec }
-      package { ruby_ldap }
+      package { pardalys: ensure => 'installed' }
+      package { git: ensure => 'installed' }
+      package { mocha: ensure => 'installed' }
+      package { rspec: ensure => 'installed' }
+      package { ruby_ldap: ensure => 'installed' }
     }
   }
 

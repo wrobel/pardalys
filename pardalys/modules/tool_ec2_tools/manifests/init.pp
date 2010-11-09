@@ -127,15 +127,15 @@ class tool::ec2::tools {
     {
       include ubuntu::repositories::multiverse
 
-      realize File[/etc/apt/sources.list.d/multiverse.list]
+      realize File[multiverse_list]
 
-      package { 'ec2-ami-tools' }
-      package { 'ec2-api-tools' }
-      package { 'amazon-ec2' }
-      package { 'hpricot' }
-      package { 'aws-s3' }
-      package { 'aws-sdb' }
-      package { 's3fs' }
+      package { 'ec2-ami-tools': ensure   => 'installed' }
+      package { 'ec2-api-tools': ensure   => 'installed' }
+      package { 'amazon-ec2': ensure   => 'installed' }
+      package { 'hpricot': ensure   => 'installed' }
+      package { 'aws-s3': ensure   => 'installed' }
+      package { 'aws-sdb': ensure   => 'installed' }
+      package { 's3fs': ensure   => 'installed' }
     }
   }
   file {

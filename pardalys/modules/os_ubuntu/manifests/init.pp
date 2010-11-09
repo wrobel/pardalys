@@ -8,8 +8,8 @@
 #
 class ubuntu::repositories::multiverse
 {
-  @file { 
-    '/etc/apt/sources.list.d/multiverse.list':
+  @file { 'multiverse_list':
+    path => '/etc/apt/sources.list.d/multiverse.list',
     source  => 'puppet:///modules/os_ubuntu/repository_multiverse';
   }
 }
@@ -24,8 +24,8 @@ class ubuntu::repositories::multiverse
 #
 class ubuntu::repositories::pardus
 {
-  @file { 
-    '/etc/apt/sources.list.d/pardus.list':
+  @file { 'pardus_list':
+    path => '/etc/apt/sources.list.d/pardus.list',
     source  => 'puppet:///modules/os_ubuntu/repository_pardus';
   }
 }

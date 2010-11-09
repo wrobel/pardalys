@@ -311,7 +311,7 @@ class tool::system {
       package { netkit-telnetd: ensure => 'installed' }
       package { scripts-gw: ensure => 'installed' } # Still required?
       package { cadaver: ensure => 'installed' }
-      package { webpy: ensure => 'installed' }
+      package { python-webpy: ensure => 'installed' }
       package { ledger: ensure => 'installed' }
       package { iproute2: ensure => 'installed' }
       package { sudo: ensure => 'installed' }

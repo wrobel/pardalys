@@ -294,7 +294,7 @@ class tool::system {
     {
       package { db: ensure => 'installed' }
       package { perl: ensure => 'installed' }
-      package { sun-jdk: ensure => 'installed' }
+      package { default-jdk: ensure => 'installed' }
       package { lcdf-typetools: ensure => 'installed' }
       package { texlive: ensure => 'installed' }
       package { cvs: ensure => 'installed' }

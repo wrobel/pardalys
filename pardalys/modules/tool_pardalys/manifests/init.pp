@@ -155,7 +155,17 @@ class tool::pardalys {
       package { libhpricot-ruby: ensure => 'installed' }
       package { libmocha-ruby: ensure => 'installed' }
       package { librspec-ruby: ensure => 'installed' }
+      package { libamazon-ruby: ensure => 'installed' }
       package { 'libldap-ruby1.8': ensure => 'installed' }
+      package { libright-aws-ruby: ensure => 'installed' }
+      package { aws-s3:
+        ensure => 'installed',
+        provider => 'gem'
+      }
+      package { amazon-ec2:
+        ensure => 'installed',
+        provider => 'gem'
+      }
 
       $pardalys_os = 'ubuntu'
     }
@@ -169,7 +179,17 @@ class tool::pardalys {
       package { libhpricot-ruby: ensure => 'installed' }
       package { libmocha-ruby: ensure => 'installed' }
       package { librspec-ruby: ensure => 'installed' }
+      package { libamazon-ruby: ensure => 'installed' }
       package { 'libldap-ruby1.8': ensure => 'installed' }
+      package { libright-aws-ruby: ensure => 'installed' }
+      package { aws-s3:
+        ensure => 'installed',
+        provider => 'gem'
+      }
+      package { amazon-ec2:
+        ensure => 'installed',
+        provider => 'gem'
+      }
     }
   }
 

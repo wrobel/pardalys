@@ -1,4 +1,5 @@
 import 'os_gentoo'
+import 'os_ubuntu'
 
 # Class tool::pardalys
 #
@@ -140,11 +141,27 @@ class tool::pardalys {
         tag      => 'buildhost'
       }
     }
+    ubuntu:
+    {
+      include ubuntu::repositories::pardus
+
+      realize File[pardus_list]
+
+      package { pardalys: ensure => 'installed' }
+      package { git-core: ensure => 'installed' }
+      package { libmocha-ruby: ensure => 'installed' }
+      package { librspec-ruby: ensure => 'installed' }
+      package { 'libldap-ruby1.8': ensure => 'installed' }
+
+      $pardalys_os = 'ubuntu'
+    }
     default:
     {
-      package { pardalys:
-        ensure   => 'installed',
-      }
+      package { pardalys: ensure => 'installed' }
+      package { git-core: ensure => 'installed' }
+      package { libmocha-ruby: ensure => 'installed' }
+      package { librspec-ruby: ensure => 'installed' }
+      package { 'libldap-ruby1.8': ensure => 'installed' }
     }
   }
 

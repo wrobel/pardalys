@@ -1,5 +1,6 @@
 import 'root'
 import 'os_gentoo'
+import 'os_ubuntu'
 
 # Class tool::ec2::tools
 #
@@ -108,26 +109,44 @@ class tool::ec2::tools {
         ensure   => 'installed',
         tag      => 'buildhost',
       }
+
+      file {
+        '/usr/bin/binpkg-rsync.sh':
+        source => 'puppet:///modules/tool_ec2_tools/binpkg-rsync.sh',
+        mode   => 755;
+      }
+
+
+      @line {'local_start_ec2_access':
+        file => '/etc/conf.d/local.start',
+        line => '/usr/bin/ec2-init.sh',
+        tag => 'buildhost'
+      }
+    }
+    ubunutu:
+    {
+      include ubuntu::repositories::multiverse
+
+      realize File[multiverse_list]
+
+      package { 'ec2-ami-tools': ensure   => 'installed' }
+      package { 'ec2-api-tools': ensure   => 'installed' }
+      package { 'amazon-ec2': ensure   => 'installed' }
+      package { 'hpricot': ensure   => 'installed' }
+      package { 'aws-s3': ensure   => 'installed' }
+      package { 'aws-sdb': ensure   => 'installed' }
+      package { 's3fs': ensure   => 'installed' }
     }
   }
   file {
     '/usr/bin/ec2-init.sh':
-    source => 'puppet:///tool_ec2_tools/ec2-init.sh',
-    mode   => 755;
-    '/usr/bin/binpkg-rsync.sh':
-    source => 'puppet:///tool_ec2_tools/binpkg-rsync.sh',
+    source => 'puppet:///modules/tool_ec2_tools/ec2-init.sh',
     mode   => 755;
     '/usr/bin/ec2-get-metadata.sh':
-    source => 'puppet:///tool_ec2_tools/ec2-get-metadata.sh',
+    source => 'puppet:///modules/tool_ec2_tools/ec2-get-metadata.sh',
     mode   => 755;
     '/usr/bin/ec2-import-sshkeys.sh':
-    source => 'puppet:///tool_ec2_tools/ec2-import-sshkeys.sh',
+    source => 'puppet:///modules/tool_ec2_tools/ec2-import-sshkeys.sh',
     mode   => 755;
-  }
-
-  @line {'local_start_ec2_access':
-    file => '/etc/conf.d/local.start',
-    line => '/usr/bin/ec2-init.sh',
-    tag => 'buildhost'
   }
 }

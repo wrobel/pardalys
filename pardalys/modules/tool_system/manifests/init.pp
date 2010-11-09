@@ -281,25 +281,51 @@ class tool::system {
         ensure   => 'installed',
         tag      => 'buildhost'
       }
+
+      # Ensure the system knows how to handle the rxvt-unicode terminal
+      file {
+        '/usr/share/terminfo/r/rxvt-unicode':
+        source => 'puppet:///modules/tool_system/rxvt-unicode',
+        require => Package['ncurses'];
+      }
+
     }
     default:
     {
+      package { perl: ensure => 'installed' }
+      package { default-jdk: ensure => 'installed' }
+      package { lcdf-typetools: ensure => 'installed' }
+      package { texlive: ensure => 'installed' }
+      package { cvs: ensure => 'installed' }
+      package { mercurial: ensure => 'installed' }
+      package { bind9-host: ensure => 'installed' } # for the hostx tool
+      package { unzip: ensure => 'installed' }
+      package { mlocate: ensure => 'installed' }
+      package { lsof: ensure => 'installed' }
+      package { sqlite: ensure => 'installed' }
+      package { strace: ensure => 'installed' }
+      package { ltrace: ensure => 'installed' }
+      package { patchutils: ensure => 'installed' }
+      package { screen: ensure => 'installed' }
+      package { dhcpcd: ensure => 'installed' }
+      package { telnet: ensure => 'installed' }
+      package { scripts-gw: ensure => 'installed' } # Still required?
+      package { cadaver: ensure => 'installed' }
+      package { python-webpy: ensure => 'installed' }
+      package { ledger: ensure => 'installed' }
+      package { iproute: ensure => 'installed' }
+      package { sudo: ensure => 'installed' }
+      package { keychain: ensure => 'installed' }
+      package { ldapvi: ensure => 'installed' }
     }
   }
 
   file {
     '/etc/cron.daily/check_security':
-    source => 'puppet:///tool_system/check_security',
+    source => 'puppet:///modules/tool_system/check_security',
     mode    => 755;
     '/root/.log':
     ensure => 'directory';
-  }
-
-  # Ensure the system knows how to handle the rxvt-unicode terminal
-  file {
-    '/usr/share/terminfo/r/rxvt-unicode':
-    source => 'puppet:///tool_system/rxvt-unicode',
-    require => Package['ncurses'];
   }
 
 }

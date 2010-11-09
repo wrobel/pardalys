@@ -97,13 +97,21 @@ if !$facts.keys.include? 'bind_dn'
 end
 
 if !$facts.keys.include? 'bind_pw'
-  $facts['bind_pw'] = `#{$facts['bindir']}/openssl rand -base64 12`
-  bind_pw_sq = $facts['bind_pw'].gsub('/([\\"$]/','\\\1')
+  if FileTest.file?($facts['bindir'] + '/openssl')
+    $facts['bind_pw'] = `#{$facts['bindir']}/openssl rand -base64 12`
+    bind_pw_sq = $facts['bind_pw'].gsub('/([\\"$]/','\\\1')
+  else 
+    bind_pw_sq = ''
+  end
 end
 
 if !$facts.keys.include? 'bind_pw_hash'
-  bind_pw_sq = $facts['bind_pw'].gsub('/([\\"$]/','\\\1')
-  $facts['bind_pw_hash'] = `#{$facts['sbindir']}/slappasswd -s #{bind_pw_sq}`
+  if FileTest.file?($facts['bindir'] + '/slappasswd')
+    bind_pw_sq = $facts['bind_pw'].gsub('/([\\"$]/','\\\1')
+    $facts['bind_pw_hash'] = `#{$facts['sbindir']}/slappasswd -s #{bind_pw_sq}`
+  else
+    $facts['bind_pw_hash'] = ''
+  end
 end
 
 if !$facts.keys.include? 'ldap_uri'
@@ -129,7 +137,11 @@ if !$facts.keys.include? 'bind_dn_restricted'
 end
 
 if !$facts.keys.include? 'bind_pw_restricted'
-  $facts['bind_pw_restricted'] = `#{$facts['bindir']}/openssl rand -base64 30`
+  if FileTest.file?($facts['bindir'] + '/openssl')
+    $facts['bind_pw_restricted'] = `#{$facts['bindir']}/openssl rand -base64 30`
+  else 
+    $facts['bind_pw_restricted'] = ''
+  end
 end
 
 if !$facts.keys.include? 'calendar_id'
@@ -137,7 +149,11 @@ if !$facts.keys.include? 'calendar_id'
 end
 
 if !$facts.keys.include? 'calendar_pw'
-  $facts['calendar_pw'] = `#{$facts['bindir']}/openssl rand -base64 30`
+  if FileTest.file?($facts['bindir'] + '/openssl')
+    $facts['calendar_pw'] = `#{$facts['bindir']}/openssl rand -base64 30`
+  else
+    $facts['calendar_pw'] = ''
+  end
 end
 
 ldap_present = false

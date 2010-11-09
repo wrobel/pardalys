@@ -1,0 +1,1 @@
+../../modules/kolab_service_kolab/plugins/facter/dist_conf/Ubuntu.rb

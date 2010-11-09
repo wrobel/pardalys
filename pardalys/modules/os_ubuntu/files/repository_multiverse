@@ -1,0 +1,3 @@
+deb http://de.archive.ubuntu.com/ubuntu lucid multiverse
+deb http://de.archive.ubuntu.com/ubuntu lucid-updates multiverse
+deb http://de.archive.ubuntu.com/ubuntu lucid-security multiverse

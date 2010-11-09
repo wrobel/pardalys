@@ -123,7 +123,7 @@ class tool::ec2::tools {
         tag => 'buildhost'
       }
     }
-    ubunutu:
+    ubuntu:
     {
       include ubuntu::repositories::multiverse
 

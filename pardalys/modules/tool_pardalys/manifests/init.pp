@@ -150,6 +150,7 @@ class tool::pardalys {
       package { puppet-el: ensure => 'installed' }
       package { pardalys: ensure => 'installed' }
       package { git-core: ensure => 'installed' }
+      package { rake: ensure => 'installed' }
       package { libmocha-ruby: ensure => 'installed' }
       package { librspec-ruby: ensure => 'installed' }
       package { 'libldap-ruby1.8': ensure => 'installed' }
@@ -161,6 +162,7 @@ class tool::pardalys {
       package { puppet-el: ensure => 'installed' }
       package { pardalys: ensure => 'installed' }
       package { git-core: ensure => 'installed' }
+      package { rake: ensure => 'installed' }
       package { libmocha-ruby: ensure => 'installed' }
       package { librspec-ruby: ensure => 'installed' }
       package { 'libldap-ruby1.8': ensure => 'installed' }

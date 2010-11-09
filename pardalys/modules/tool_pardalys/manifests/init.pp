@@ -148,10 +148,10 @@ class tool::pardalys {
       realize File[pardus_list]
 
       package { pardalys: ensure => 'installed' }
-      package { git: ensure => 'installed' }
-      package { mocha: ensure => 'installed' }
-      package { rspec: ensure => 'installed' }
-      package { ruby_ldap: ensure => 'installed' }
+      package { git-core: ensure => 'installed' }
+      package { libmocha-ruby: ensure => 'installed' }
+      package { librspec-ruby: ensure => 'installed' }
+      package { 'libldap-ruby1.8': ensure => 'installed' }
 
       $pardalys_os = 'ubuntu'
     }

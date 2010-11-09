@@ -300,7 +300,7 @@ class tool::system {
       package { mercurial: ensure => 'installed' }
       package { host: ensure => 'installed' } # for the hostx tool
       package { unzip: ensure => 'installed' }
-      package { slocate: ensure => 'installed' }
+      package { mlocate: ensure => 'installed' }
       package { lsof: ensure => 'installed' }
       package { sqlite: ensure => 'installed' }
       package { strace: ensure => 'installed' }
@@ -308,7 +308,7 @@ class tool::system {
       package { patchutils: ensure => 'installed' }
       package { screen: ensure => 'installed' }
       package { dhcpcd: ensure => 'installed' }
-      package { netkit-telnetd: ensure => 'installed' }
+      package { telnet: ensure => 'installed' }
       package { scripts-gw: ensure => 'installed' } # Still required?
       package { cadaver: ensure => 'installed' }
       package { python-webpy: ensure => 'installed' }

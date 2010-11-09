@@ -157,6 +157,7 @@ class tool::pardalys {
     }
     default:
     {
+      package { puppet-el: ensure => 'installed' }
       package { pardalys: ensure => 'installed' }
       package { git-core: ensure => 'installed' }
       package { libmocha-ruby: ensure => 'installed' }

@@ -29,7 +29,7 @@ desc('build an image')
 task(:image => :upload)
 
 def chroot(chroot_dir, *a)
-  script = ['env-update', 'source /etc/profile', a].flatten.join(" && \n")
+  script = ['env-update', '. /etc/profile', a].flatten.join(" && \n")
   File.open("#{chroot_dir}/tmp/rake.sh", 'w')  { |f| f.write script }
   sh("chroot #{chroot_dir} /bin/bash /tmp/rake.sh")
 ensure
@@ -232,9 +232,9 @@ file_create('.rebundle' => :facts) do
   File.open("/tmp/cert.pem", 'w') do |f|
     f.write(@env.cert.strip)
   end
-  sh("source /etc/profile && ec2-bundle-vol -b -u #{@env.owner_id} " <<
+  sh(". /etc/profile && ec2-bundle-vol --batch -u #{@env.owner_id} " <<
      "-k /tmp/key.pem -c /tmp/cert.pem " <<
-     "-a -e /root,/dev,/proc,/sys,/tmp,/var/tmp,/mnt,/usr/portage " <<
+     "-a -e /root,/dev,/proc,/sys,/tmp,/var/tmp,/mnt,/kolab " <<
      "--no-inherit -r #{@env.architecture} " <<
      "--fstab /etc/fstab --kernel #{@env.ec2_kernel_id} -d /tmp")
   touch('.rebundle')
@@ -249,10 +249,10 @@ file_create('.update' => '.rebundle') do
                                       :secret_access_key =>
                                       @env.secret_access_key)
   AWS::S3::Bucket.create(bname)
-  sh("source /etc/profile && ec2-upload-bundle -b #{bname} -a #{@env.access_key_id} " <<
+  sh(". /etc/profile && ec2-upload-bundle -b #{bname} -a #{@env.access_key_id} " <<
      "-s #{@env.secret_access_key} -m /tmp/image.manifest.xml && " <<
      "ec2-register -K /tmp/key.pem -C /tmp/cert.pem " <<
-     "#{bname}/image.manifest.xml")
+     "-n #{bname} #{bname}/image.manifest.xml")
   touch('.update')
 end
 
@@ -267,7 +267,7 @@ file_create('.release' => :facts) do
   sh("rm -rf /etc/config-archive/* /var/backup/*.tar.gz /var/backup/log/* " <<
      "/var/lib/flexbackup/* /var/lib/puppet/clientbucket/* /var/lib/slocate/* " <<
      "/var/log/emerge* /var/log/syslog.d/* /var/log/flexbackup/* /var/log/portage/elog/*")
-  sh("source /etc/profile && ec2-bundle-vol -b -u #{@env.owner_id} " <<
+  sh(". /etc/profile && ec2-bundle-vol -b -u #{@env.owner_id} " <<
      "-k /tmp/key.pem -c /tmp/cert.pem " <<
      "-a -e /root,/dev,/proc,/sys,/tmp,/var/tmp,/mnt,/usr/portage,/etc/pardalys,/usr/share/pardalys " <<
      "--no-inherit -r #{@env.architecture} " <<
@@ -279,7 +279,7 @@ file_create('.release' => :facts) do
                                       :secret_access_key =>
                                       @env.secret_access_key)
   AWS::S3::Bucket.create(bname)
-  sh("source /etc/profile && ec2-upload-bundle -b #{bname} -a #{@env.access_key_id} " <<
+  sh(". /etc/profile && ec2-upload-bundle -b #{bname} -a #{@env.access_key_id} " <<
      "-s #{@env.secret_access_key} -m /tmp/image.manifest.xml && " <<
      "ec2-register -K /tmp/key.pem -C /tmp/cert.pem " <<
      "#{bname}/image.manifest.xml")

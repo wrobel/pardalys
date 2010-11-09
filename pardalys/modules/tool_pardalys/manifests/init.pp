@@ -152,6 +152,7 @@ class tool::pardalys {
       package { git-core: ensure => 'installed' }
       package { rake: ensure => 'installed' }
       package { rubygems: ensure => 'installed' }
+      package { libhpricot-ruby: ensure => 'installed' }
       package { libmocha-ruby: ensure => 'installed' }
       package { librspec-ruby: ensure => 'installed' }
       package { 'libldap-ruby1.8': ensure => 'installed' }
@@ -165,6 +166,7 @@ class tool::pardalys {
       package { git-core: ensure => 'installed' }
       package { rake: ensure => 'installed' }
       package { rubygems: ensure => 'installed' }
+      package { libhpricot-ruby: ensure => 'installed' }
       package { libmocha-ruby: ensure => 'installed' }
       package { librspec-ruby: ensure => 'installed' }
       package { 'libldap-ruby1.8': ensure => 'installed' }

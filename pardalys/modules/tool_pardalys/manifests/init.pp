@@ -1,4 +1,5 @@
 import 'os_gentoo'
+import 'os_ubuntu'
 
 # Class tool::pardalys
 #
@@ -140,11 +141,25 @@ class tool::pardalys {
         tag      => 'buildhost'
       }
     }
+    ubuntu:
+    {
+      include ubuntu::repositories::pardus
+
+      realize File['/etc/apt/sources.list.d/pardus.list]
+
+      package { pardalys }
+      package { git }
+      package { mocha }
+      package { rspec }
+      package { ruby_ldap }
+    }
     default:
     {
-      package { pardalys:
-        ensure   => 'installed',
-      }
+      package { pardalys }
+      package { git }
+      package { mocha }
+      package { rspec }
+      package { ruby_ldap }
     }
   }
 

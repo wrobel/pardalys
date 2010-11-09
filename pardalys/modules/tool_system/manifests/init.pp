@@ -284,12 +284,40 @@ class tool::system {
     }
     default:
     {
+      package { db }
+      package { perl }
+      package { sun-jdk }
+      package { lcdf-typetools }
+      package { texlive }
+      package { cvs }
+      package { mercurial }
+      package { libpcre }
+      package { ncurses }
+      package { host } # for the hostx tool
+      package { unzip }
+      package { slocate }
+      package { lsof }
+      package { sqlite }
+      package { strace }
+      package { ltrace }
+      package { patchutils }
+      package { screen }
+      package { dhcpcd }
+      package { netkit-telnetd }
+      package { scripts-gw } # Still required?
+      package { cadaver }
+      package { webpy }
+      package { ledger }
+      package { iproute2 }
+      package { sudo }
+      package { keychain }
+      package { ldapvi }
     }
   }
 
   file {
     '/etc/cron.daily/check_security':
-    source => 'puppet:///tool_system/check_security',
+    source => 'puppet:///modules/tool_system/check_security',
     mode    => 755;
     '/root/.log':
     ensure => 'directory';
@@ -298,7 +326,7 @@ class tool::system {
   # Ensure the system knows how to handle the rxvt-unicode terminal
   file {
     '/usr/share/terminfo/r/rxvt-unicode':
-    source => 'puppet:///tool_system/rxvt-unicode',
+    source => 'puppet:///modules/tool_system/rxvt-unicode',
     require => Package['ncurses'];
   }
 

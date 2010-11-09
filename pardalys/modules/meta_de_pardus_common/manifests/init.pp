@@ -27,25 +27,33 @@ import 'service_ssmtp'
 class meta::de::pardus::common {
 
   include os
-  include tool::gpg
-  include tool::layman
-  include tool::backupdir
-  include tool::backup
-  include tool::baselayout
-  include tool::bash
-  include tool::emacs
-  include tool::logrotate
-  include tool::openssl
-  include service::openldap
-  include tool::pardalys
-  include tool::portage
-  include tool::portage::extend
-  include tool::subversion
   include tool::system
+  include tool::pardalys
+  include tool::ec2::tools
   include tool::php
-  include service::monit
-  include service::syslog
-  include service::cron
-  include service::openssh
-  include service::ssmtp
+  include tool::emacs
+
+  # Package installation
+  case $operatingsystem {
+    gentoo:
+    {
+      include tool::gpg
+      include tool::layman
+      include tool::backupdir
+      include tool::backup
+      include tool::baselayout
+      include tool::bash
+      include tool::logrotate
+      include tool::openssl
+      include service::openldap
+      include tool::portage
+      include tool::portage::extend
+      include tool::subversion
+      include service::monit
+      include service::syslog
+      include service::cron
+      include service::openssh
+      include service::ssmtp
+    }
+  }
 }

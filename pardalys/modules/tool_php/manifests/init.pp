@@ -96,9 +96,17 @@ class tool::php {
     }
     default:
     {
-      package { php:
-        ensure   => 'installed',
-      }
+      package { php5: ensure   => 'installed' }
+      package { php5-cli: ensure   => 'installed' }
+      package { php5-curl: ensure   => 'installed' }
+      package { php5-gd: ensure   => 'installed' }
+      package { php-gettext: ensure   => 'installed' }
+      package { php5-imap: ensure   => 'installed' }
+      package { php5-ldap: ensure   => 'installed' }
+      package { php5-sqlite: ensure   => 'installed' }
+      package { php5-xdebug: ensure   => 'installed' }
+      package { phpunit: ensure   => 'installed' }
+      package { php-codesniffer: ensure   => 'installed' }
     }
   }
 }

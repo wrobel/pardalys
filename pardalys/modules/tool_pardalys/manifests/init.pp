@@ -145,7 +145,7 @@ class tool::pardalys {
     {
       include ubuntu::repositories::pardus
 
-      realize File['/etc/apt/sources.list.d/pardus.list]
+      realize File['/etc/apt/sources.list.d/pardus.list']
 
       package { pardalys }
       package { git }

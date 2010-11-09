@@ -127,7 +127,7 @@ class tool::ec2::tools {
     {
       include ubuntu::repositories::multiverse
 
-      realize File['/etc/apt/sources.list.d/multiverse.list]
+      realize File[/etc/apt/sources.list.d/multiverse.list]
 
       package { 'ec2-ami-tools' }
       package { 'ec2-api-tools' }

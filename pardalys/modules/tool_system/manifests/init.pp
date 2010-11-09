@@ -300,7 +300,6 @@ class tool::system {
       package { cvs: ensure => 'installed' }
       package { mercurial: ensure => 'installed' }
       package { libpcre: ensure => 'installed' }
-      package { ncurses: ensure => 'installed' }
       package { host: ensure => 'installed' } # for the hostx tool
       package { unzip: ensure => 'installed' }
       package { slocate: ensure => 'installed' }

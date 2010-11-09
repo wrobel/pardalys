@@ -160,7 +160,7 @@ class tool::pardalys {
       package { pardalys: ensure => 'installed' }
       package { git-core: ensure => 'installed' }
       package { mocha: ensure => 'installed' }
-      package { rspec: ensure => 'installed' }
+      package { librspec-ruby: ensure => 'installed' }
       package { ruby_ldap: ensure => 'installed' }
     }
   }

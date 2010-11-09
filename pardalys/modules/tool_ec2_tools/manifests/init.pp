@@ -141,12 +141,18 @@ class tool::ec2::tools {
   file {
     '/usr/bin/ec2-init.sh':
     source => 'puppet:///modules/tool_ec2_tools/ec2-init.sh',
+    owner => 'root',
+    group => 'root',
     mode   => 755;
     '/usr/bin/ec2-get-metadata.sh':
     source => 'puppet:///modules/tool_ec2_tools/ec2-get-metadata.sh',
+    owner => 'root',
+    group => 'root',
     mode   => 755;
     '/usr/bin/ec2-import-sshkeys.sh':
     source => 'puppet:///modules/tool_ec2_tools/ec2-import-sshkeys.sh',
+    owner => 'root',
+    group => 'root',
     mode   => 755;
   }
 }

@@ -131,11 +131,22 @@ class tool::ec2::tools {
 
       package { 'ec2-ami-tools': ensure   => 'installed' }
       package { 'ec2-api-tools': ensure   => 'installed' }
-      package { 'amazon-ec2': ensure   => 'installed' }
-      package { 'hpricot': ensure   => 'installed' }
-      package { 'aws-s3': ensure   => 'installed' }
-      package { 'aws-sdb': ensure   => 'installed' }
+      package { libhpricot-ruby: ensure => 'installed' }
+      package { libamazon-ruby: ensure => 'installed' }
+      package { libright-aws-ruby: ensure => 'installed' }
       package { 's3fs': ensure   => 'installed' }
+      package { aws-sdb:
+        ensure   => 'installed',
+        provider => 'gem'
+      }
+      package { amazon-ec2:
+        ensure => 'installed',
+        provider => 'gem'
+      }
+      package { aws-s3:
+        ensure => 'installed',
+        provider => 'gem'
+      }
     }
   }
   file {

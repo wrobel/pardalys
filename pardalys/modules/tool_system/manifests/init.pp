@@ -323,6 +323,8 @@ class tool::system {
   file {
     '/etc/cron.daily/check_security':
     source => 'puppet:///modules/tool_system/check_security',
+    owner => 'root',
+    group => 'root',
     mode    => 755;
     '/root/.log':
     ensure => 'directory';

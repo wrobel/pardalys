@@ -158,7 +158,7 @@ class tool::pardalys {
     default:
     {
       package { pardalys: ensure => 'installed' }
-      package { git: ensure => 'installed' }
+      package { git-core: ensure => 'installed' }
       package { mocha: ensure => 'installed' }
       package { rspec: ensure => 'installed' }
       package { ruby_ldap: ensure => 'installed' }

@@ -141,58 +141,6 @@ class tool::emacs {
         ensure   => 'installed',
         tag      => 'buildhost'
       }
-
-      file{
-        '/usr/share/emacs/site-lisp/site-gentoo.d/72git-gentoo.el':
-          source => 'puppet:///modules/tool_emacs/72git-gentoo.el',
-          tag      => 'buildhost';
-        '/usr/share/emacs/site-lisp/php-mode/php-mode.el':
-          source => 'puppet:///modules/tool_emacs/php-mode.el_revision_70',
-          tag      => 'buildhost';
-      }
-
-      exec {'refresh_site_dir':
-        path => '/usr/bin:/usr/sbin:/bin',
-        command => 'source /etc/init.d/functions.sh; source /usr/portage/eclass/elisp-common.eclass; elisp-site-regen',
-        subscribe   => File['/usr/share/emacs/site-lisp/site-gentoo.d/72git-gentoo.el'],
-        refreshonly => true;
-      }
-
-      $admin_fullname = get_var('admin_fullname', 'System Administrator')
-      $admin_mail = get_var('kolab_admin_mail', 'root@localhost')
-
-      $screen_dark = get_var('screen_dark', false)
-
-      file{
-        '/etc/skel/.emacs':
-          content => template('tool_emacs/dot_emacs');
-        '/etc/skel/.emacs.d':
-          ensure => 'directory';
-        '/etc/skel/.emacs.d/lisp':
-          ensure => 'directory',
-          require => File['/etc/skel/.emacs.d'];
-        '/etc/skel/.emacs.d/00_emacs.el':
-          source => 'puppet:///modules/tool_emacs/ed_00_emacs.el',
-          require => File['/etc/skel/.emacs.d'];
-        '/etc/skel/.emacs.d/01_php_mode.el':
-          source => 'puppet:///modules/tool_emacs/ed_01_php_mode.el',
-          require => File['/etc/skel/.emacs.d'];
-        '/etc/skel/.emacs.d/02_emacs.el':
-          source => 'puppet:///modules/tool_emacs/ed_02_emacs.el',
-          require => File['/etc/skel/.emacs.d'];
-        '/etc/skel/.emacs.d/97_env.el':
-          source => 'puppet:///modules/tool_emacs/ed_97_env.el',
-          require => File['/etc/skel/.emacs.d'];
-        '/etc/skel/.emacs.d/99_keys.el':
-          source => 'puppet:///modules/tool_emacs/ed_99_keys.el',
-          require => File['/etc/skel/.emacs.d'];
-        '/etc/skel/.emacs.d/lisp/timer.el':
-          source => 'puppet:///modules/tool_emacs/el_timer.el',
-          require => File['/etc/skel/.emacs.d/lisp'];
-        '/etc/skel/.emacs.d/lisp/backup-each-save.el':
-          source => 'puppet:///modules/tool_emacs/el_backup-each-save.el',
-          require => File['/etc/skel/.emacs.d/lisp'];
-      }
     }
     default:
     {

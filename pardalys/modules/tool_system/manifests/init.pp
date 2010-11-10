@@ -333,8 +333,11 @@ class tool::system {
       package { sudo: ensure => 'installed' }
       package { keychain: ensure => 'installed' }
       package { ldapvi: ensure => 'installed' }
-      package { ispell: ensure => 'installed' }
-      package { ingerman: ensure => 'installed' }
+      package { aspell: ensure => 'installed' }
+      package { aspell-en: ensure => 'installed' }
+      package { aspell-de: ensure => 'installed' }
+      package { aspell-fr: ensure => 'installed' }
+      package { aspell-sv: ensure => 'installed' }
       package { newsbeuter: ensure => 'installed' }
     }
   }

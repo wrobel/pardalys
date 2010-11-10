@@ -86,6 +86,21 @@ class tool::system {
         tag      => 'buildhost'
       }
 
+      # FIXME: Remove the "apache2" USE flag once we serve no
+      # subversion anymore
+      gentoo_use_flags { subversion:
+        context => 'tool_subversion_subversion',
+        package => 'dev-vcs/subversion',
+        use     => 'emacs bash-completion apache2 -dso',
+        tag     => 'buildhost'
+      }
+      package { subversion:
+        category => 'dev-vcs',
+        ensure   => 'installed',
+        require  =>  Gentoo_use_flags['subversion'],
+        tag      => 'buildhost'
+      }
+
       gentoo_use_flags { libpcre:
         context => 'tools_system_common_libpcre',
         package => 'dev-libs/libpcre',
@@ -298,6 +313,7 @@ class tool::system {
       package { texlive: ensure => 'installed' }
       package { cvs: ensure => 'installed' }
       package { mercurial: ensure => 'installed' }
+      package { subversion: ensure => 'installed' }
       package { bind9-host: ensure => 'installed' } # for the hostx tool
       package { unzip: ensure => 'installed' }
       package { mlocate: ensure => 'installed' }

@@ -13,7 +13,6 @@ import 'service_openldap'
 import 'tool_pardalys'
 import 'tool_portage'
 import 'tool_portage_extend'
-import 'tool_subversion'
 import 'tool_system'
 import 'tool_php'
 import 'service_monit'
@@ -49,7 +48,6 @@ class meta::de::pardus::common {
       include service::openldap
       include tool::portage
       include tool::portage::extend
-      include tool::subversion
       include service::monit
       include service::syslog
       include service::cron

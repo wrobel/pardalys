@@ -333,6 +333,9 @@ class tool::system {
       package { sudo: ensure => 'installed' }
       package { keychain: ensure => 'installed' }
       package { ldapvi: ensure => 'installed' }
+      package { ispell: ensure => 'installed' }
+      package { ingerman: ensure => 'installed' }
+      package { newsbeuter: ensure => 'installed' }
     }
   }
 

@@ -144,9 +144,8 @@ class tool::emacs {
     }
     default:
     {
-      package { emacs:
-        ensure   => 'installed',
-      }
+      package { emacs: ensure => 'installed' }
+      package { emacs-jabber: ensure => 'installed' }
     }
   }
 }

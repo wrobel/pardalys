@@ -146,6 +146,7 @@ class tool::emacs {
     {
       package { emacs: ensure => 'installed' }
       package { emacs-jabber: ensure => 'installed' }
+      package { w3m-el: ensure => 'installed' }
     }
   }
 }

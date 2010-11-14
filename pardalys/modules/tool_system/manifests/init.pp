@@ -309,6 +309,7 @@ class tool::system {
     {
       package { perl: ensure => 'installed' }
       package { default-jdk: ensure => 'installed' }
+      package { ant: ensure => 'installed' }
       package { lcdf-typetools: ensure => 'installed' }
       package { texlive: ensure => 'installed' }
       package { cvs: ensure => 'installed' }
@@ -333,6 +334,10 @@ class tool::system {
       package { sudo: ensure => 'installed' }
       package { keychain: ensure => 'installed' }
       package { ldapvi: ensure => 'installed' }
+      package { language-support-de: ensure => 'installed' }
+      package { language-support-en: ensure => 'installed' }
+      package { language-support-fr: ensure => 'installed' }
+      package { language-support-sv: ensure => 'installed' }
       package { aspell: ensure => 'installed' }
       package { aspell-en: ensure => 'installed' }
       package { aspell-de: ensure => 'installed' }

@@ -307,6 +307,7 @@ class tool::system {
     }
     default:
     {
+      package { tcl: ensure => 'installed' }
       package { perl: ensure => 'installed' }
       package { default-jdk: ensure => 'installed' }
       package { ant: ensure => 'installed' }
@@ -344,6 +345,7 @@ class tool::system {
       package { aspell-fr: ensure => 'installed' }
       package { aspell-sv: ensure => 'installed' }
       package { newsbeuter: ensure => 'installed' }
+      package { topgit: ensure => 'installed' }
     }
   }
 

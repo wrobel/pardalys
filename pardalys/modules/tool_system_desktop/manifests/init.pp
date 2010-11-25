@@ -35,11 +35,17 @@ class tool::system::desktop {
         tag      => 'buildhost'
       }
     }
+    ubuntu:
+    {
+      package { ubuntu-netbook: ensure   => 'installed' }
+      package { mplayer: ensure   => 'installed' }
+      package { luma: ensure   => 'installed' }
+      package { twinkle: ensure   => 'installed' }
+      package { skype: ensure   => 'installed' }
+    }
     default:
     {
-      package { luma:
-        ensure   => 'installed',
-      }
+      package { luma: ensure   => 'installed' }
     }
   }
 }

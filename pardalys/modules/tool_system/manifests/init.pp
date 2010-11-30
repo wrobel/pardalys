@@ -307,12 +307,20 @@ class tool::system {
     }
     default:
     {
+      package { bison: ensure => 'installed' }
+      package { flex: ensure => 'installed' }
+      package { gcc: ensure => 'installed' }
+      package { automake: ensure => 'installed' }
+      package { libtool: ensure => 'installed' }
+      package { autoconf: ensure => 'installed' }
       package { tcl: ensure => 'installed' }
       package { perl: ensure => 'installed' }
       package { default-jdk: ensure => 'installed' }
       package { ant: ensure => 'installed' }
       package { lcdf-typetools: ensure => 'installed' }
       package { texlive: ensure => 'installed' }
+      package { texlive-lang-german: ensure => 'installed' }
+      package { texlive-latex-extra: ensure => 'installed' }
       package { cvs: ensure => 'installed' }
       package { mercurial: ensure => 'installed' }
       package { subversion: ensure => 'installed' }

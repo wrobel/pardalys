@@ -42,6 +42,9 @@ class tool::system::desktop {
       package { luma: ensure   => 'installed' }
       package { twinkle: ensure   => 'installed' }
       package { skype: ensure   => 'installed' }
+      package { gimp: ensure   => 'installed' }
+      package { gimp-help-common: ensure   => 'installed' }
+      package { gimp-help-de: ensure   => 'installed' }
     }
     default:
     {

@@ -266,10 +266,10 @@ file_create('.release' => :facts) do
   end
   sh("rm -rf /etc/config-archive/* /var/backup/*.tar.gz /var/backup/log/* " <<
      "/var/lib/flexbackup/* /var/lib/puppet/clientbucket/* /var/lib/slocate/* " <<
-     "/var/log/emerge* /var/log/syslog.d/* /var/log/flexbackup/* /var/log/portage/elog/*")
-  sh(". /etc/profile && ec2-bundle-vol -b -u #{@env.owner_id} " <<
+     "/var/log/emerge* /var/log/syslog.d/* /var/log/flexbackup/* /var/log/portage/elog/* /var/backups/*")
+  sh(". /etc/profile && ec2-bundle-vol --batch -u #{@env.owner_id} " <<
      "-k /tmp/key.pem -c /tmp/cert.pem " <<
-     "-a -e /root,/dev,/proc,/sys,/tmp,/var/tmp,/mnt,/usr/portage,/etc/pardalys,/usr/share/pardalys " <<
+     "-a -e /root,/dev,/proc,/sys,/tmp,/var/tmp,/mnt,/etc/pardalys,/usr/share/pardalys,/home/ubuntu " <<
      "--no-inherit -r #{@env.architecture} " <<
      "--fstab /etc/fstab --kernel #{@env.ec2_kernel_id} -d /tmp")
   bname = "#{@env.image_name}-#{@env.ec2_instance_type}-#{@env.ec2_instance_cpu}"<<
@@ -282,7 +282,7 @@ file_create('.release' => :facts) do
   sh(". /etc/profile && ec2-upload-bundle -b #{bname} -a #{@env.access_key_id} " <<
      "-s #{@env.secret_access_key} -m /tmp/image.manifest.xml && " <<
      "ec2-register -K /tmp/key.pem -C /tmp/cert.pem " <<
-     "#{bname}/image.manifest.xml")
+     "-n #{bname} #{bname}/image.manifest.xml")
   touch('.release')
 end
 

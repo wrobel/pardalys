@@ -267,7 +267,7 @@ file_create('.release' => :facts) do
   sh("rm -rf /etc/config-archive/* /var/backup/*.tar.gz /var/backup/log/* " <<
      "/var/lib/flexbackup/* /var/lib/puppet/clientbucket/* /var/lib/slocate/* " <<
      "/var/log/emerge* /var/log/syslog.d/* /var/log/flexbackup/* /var/log/portage/elog/* /var/backups/* " <<
-     "/home/ubuntu/.backups /home/ubuntu/.bash_history /home/ubuntu/.osc*")
+     "/home/ubuntu/.backups /home/ubuntu/.bash_history /home/ubuntu/.osc* /etc/rc*.d/S99kolab")
   sh(". /etc/profile && ec2-bundle-vol --batch -u #{@env.owner_id} " <<
      "-k /tmp/key.pem -c /tmp/cert.pem " <<
      "-a -e /root,/dev,/proc,/sys,/tmp,/mnt,/etc/pardalys,/usr/share/pardalys,/home/ubuntu/.fixssh,/home/ubuntu/.ssh/authorized_keys,/home/ubuntu/environment/tools/pardalys/pardalys/staging/config.yml* " <<

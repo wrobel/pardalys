@@ -189,7 +189,7 @@ file_create('.bundle' => '.bootstrap') do
   chroot(@env.mnt_dir,
          "ec2-bundle-vol -b -u #{@env.owner_id} " <<
          "-k /tmp/key.pem -c /tmp/cert.pem " <<
-         "-a -e /root,/dev,/proc,/sys,/tmp,/var/tmp,/mnt,/usr/portage " <<
+         "-a -e /root,/dev,/proc,/sys,/tmp,/mnt " <<
          "--no-inherit -r #{@env.architecture} " <<
          "--fstab /etc/fstab --kernel #{@env.ec2_kernel_id} -d /tmp")
   touch('.bundle')
@@ -234,7 +234,7 @@ file_create('.rebundle' => :facts) do
   end
   sh(". /etc/profile && ec2-bundle-vol --batch -u #{@env.owner_id} " <<
      "-k /tmp/key.pem -c /tmp/cert.pem " <<
-     "-a -e /root,/dev,/proc,/sys,/tmp,/var/tmp,/mnt,/kolab " <<
+     "-a -e /root,/dev,/proc,/sys,/tmp,/mnt " <<
      "--no-inherit -r #{@env.architecture} " <<
      "--fstab /etc/fstab --kernel #{@env.ec2_kernel_id} -d /tmp")
   touch('.rebundle')
@@ -266,10 +266,11 @@ file_create('.release' => :facts) do
   end
   sh("rm -rf /etc/config-archive/* /var/backup/*.tar.gz /var/backup/log/* " <<
      "/var/lib/flexbackup/* /var/lib/puppet/clientbucket/* /var/lib/slocate/* " <<
-     "/var/log/emerge* /var/log/syslog.d/* /var/log/flexbackup/* /var/log/portage/elog/* /var/backups/*")
+     "/var/log/emerge* /var/log/syslog.d/* /var/log/flexbackup/* /var/log/portage/elog/* /var/backups/* " <<
+     "/home/ubuntu/.backups /home/ubuntu/.bash_history /home/ubuntu/.osc*")
   sh(". /etc/profile && ec2-bundle-vol --batch -u #{@env.owner_id} " <<
      "-k /tmp/key.pem -c /tmp/cert.pem " <<
-     "-a -e /root,/dev,/proc,/sys,/tmp,/var/tmp,/mnt,/etc/pardalys,/usr/share/pardalys,/home/ubuntu " <<
+     "-a -e /root,/dev,/proc,/sys,/tmp,/mnt,/etc/pardalys,/usr/share/pardalys,/home/ubuntu/.fixssh,/home/ubuntu/.ssh/authorized_keys,/home/ubuntu/environment/tools/pardalys/pardalys/staging/config.yml* " <<
      "--no-inherit -r #{@env.architecture} " <<
      "--fstab /etc/fstab --kernel #{@env.ec2_kernel_id} -d /tmp")
   bname = "#{@env.image_name}-#{@env.ec2_instance_type}-#{@env.ec2_instance_cpu}"<<

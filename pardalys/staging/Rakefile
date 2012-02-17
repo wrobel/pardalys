@@ -65,7 +65,7 @@ task(:cleanup => :facts) do
      "/var/lib/flexbackup/* /var/lib/puppet/clientbucket/* /var/lib/slocate/* " <<
      "/var/log/emerge* /var/log/syslog.d/* /var/log/flexbackup/* /var/log/portage/elog/* /var/backups/* " <<
      "/home/ubuntu/.backups /home/ubuntu/.bash_history /home/ubuntu/.osc* /etc/rc*.d/S99kolab" <<
-     "/var/cache/apt/archives/*.deb /home/ubuntu/environment/tools/pardalys/pardalys/staging/config.yml~"
+     "/var/cache/apt/archives/*.deb /home/ubuntu/environment/tools/pardalys/pardalys/staging/config.yml~" <<
      "/var/www/pear/cache/* /var/www/pear/download/*")
 end
 

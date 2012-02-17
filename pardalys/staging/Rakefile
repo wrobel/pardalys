@@ -60,6 +60,14 @@ task(:facts => :env) do
   end
 end
 
+task(:cleanup => :facts) do
+  sh("rm -rf /etc/config-archive/* /var/backup/*.tar.gz /var/backup/log/* " <<
+     "/var/lib/flexbackup/* /var/lib/puppet/clientbucket/* /var/lib/slocate/* " <<
+     "/var/log/emerge* /var/log/syslog.d/* /var/log/flexbackup/* /var/log/portage/elog/* /var/backups/* " <<
+     "/home/ubuntu/.backups /home/ubuntu/.bash_history /home/ubuntu/.osc* /etc/rc*.d/S99kolab" <<
+     "/var/cache/apt/archives/*.deb")
+end
+
 file_create('.download_dir' => :facts) do
   unless File.exists?("#{@env.download_dir}")
     mkdir_p("#{@env.download_dir}")
@@ -225,7 +233,7 @@ file_create('site.pp.diff' => :facts) do
 end
 
 task(:rebundle => '.rebundle')
-file_create('.rebundle' => :facts) do
+file_create('.rebundle' => :cleanup) do
   File.open("/tmp/key.pem", 'w') do |f|
     f.write(@env.key.strip)
   end
@@ -244,30 +252,21 @@ task(:update => '.update')
 file_create('.update' => '.rebundle') do
   bname = "#{@env.image_name}-#{@env.ec2_instance_type}-#{@env.ec2_instance_cpu}"<<
     "-#{Time.now.to_f}"
-  AWS::S3::Base.establish_connection!(:access_key_id =>
-                                      @env.access_key_id,
-                                      :secret_access_key =>
-                                      @env.secret_access_key)
-  AWS::S3::Bucket.create(bname)
   sh(". /etc/profile && ec2-upload-bundle -b #{bname} -a #{@env.access_key_id} " <<
-     "-s #{@env.secret_access_key} -m /tmp/image.manifest.xml && " <<
+     "-s #{@env.secret_access_key} --location #{@env.location} -m /tmp/image.manifest.xml && " <<
      "ec2-register -K /tmp/key.pem -C /tmp/cert.pem " <<
-     "-n #{bname} #{bname}/image.manifest.xml")
+     "--region #{@env.region} -n #{bname} #{bname}/image.manifest.xml")
   touch('.update')
 end
 
 task(:release => '.release')
-file_create('.release' => :facts) do
+file_create('.release' => :cleanup) do
   File.open("/tmp/key.pem", 'w') do |f|
     f.write(@env.key.strip)
   end
   File.open("/tmp/cert.pem", 'w') do |f|
     f.write(@env.cert.strip)
   end
-  sh("rm -rf /etc/config-archive/* /var/backup/*.tar.gz /var/backup/log/* " <<
-     "/var/lib/flexbackup/* /var/lib/puppet/clientbucket/* /var/lib/slocate/* " <<
-     "/var/log/emerge* /var/log/syslog.d/* /var/log/flexbackup/* /var/log/portage/elog/* /var/backups/* " <<
-     "/home/ubuntu/.backups /home/ubuntu/.bash_history /home/ubuntu/.osc* /etc/rc*.d/S99kolab")
   sh(". /etc/profile && ec2-bundle-vol --batch -u #{@env.owner_id} " <<
      "-k /tmp/key.pem -c /tmp/cert.pem " <<
      "-a -e /root,/dev,/proc,/sys,/tmp,/mnt,/etc/pardalys,/usr/share/pardalys,/home/ubuntu/.fixssh,/home/ubuntu/.ssh/authorized_keys,/home/ubuntu/environment/tools/pardalys/pardalys/staging/config.yml* " <<
@@ -275,15 +274,10 @@ file_create('.release' => :facts) do
      "--fstab /etc/fstab --kernel #{@env.ec2_kernel_id} -d /tmp")
   bname = "#{@env.image_name}-#{@env.ec2_instance_type}-#{@env.ec2_instance_cpu}"<<
     "-#{Time.now.to_f}"
-  AWS::S3::Base.establish_connection!(:access_key_id =>
-                                      @env.access_key_id,
-                                      :secret_access_key =>
-                                      @env.secret_access_key)
-  AWS::S3::Bucket.create(bname)
   sh(". /etc/profile && ec2-upload-bundle -b #{bname} -a #{@env.access_key_id} " <<
-     "-s #{@env.secret_access_key} -m /tmp/image.manifest.xml && " <<
+     "-s #{@env.secret_access_key} --location #{@env.location} -m /tmp/image.manifest.xml && " <<
      "ec2-register -K /tmp/key.pem -C /tmp/cert.pem " <<
-     "-n #{bname} #{bname}/image.manifest.xml")
+     "--region #{@env.region} -n #{bname} #{bname}/image.manifest.xml")
   touch('.release')
 end
 

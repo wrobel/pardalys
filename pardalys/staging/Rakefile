@@ -65,7 +65,8 @@ task(:cleanup => :facts) do
      "/var/lib/flexbackup/* /var/lib/puppet/clientbucket/* /var/lib/slocate/* " <<
      "/var/log/emerge* /var/log/syslog.d/* /var/log/flexbackup/* /var/log/portage/elog/* /var/backups/* " <<
      "/home/ubuntu/.backups /home/ubuntu/.bash_history /home/ubuntu/.osc* /etc/rc*.d/S99kolab" <<
-     "/var/cache/apt/archives/*.deb")
+     "/var/cache/apt/archives/*.deb /home/ubuntu/environment/tools/pardalys/pardalys/staging/config.yml~"
+     "/var/www/pear/cache/* /var/www/pear/download/*")
 end
 
 file_create('.download_dir' => :facts) do
@@ -269,7 +270,7 @@ file_create('.release' => :cleanup) do
   end
   sh(". /etc/profile && ec2-bundle-vol --batch -u #{@env.owner_id} " <<
      "-k /tmp/key.pem -c /tmp/cert.pem " <<
-     "-a -e /root,/dev,/proc,/sys,/tmp,/mnt,/etc/pardalys,/usr/share/pardalys,/home/ubuntu/.fixssh,/home/ubuntu/.ssh/authorized_keys,/home/ubuntu/environment/tools/pardalys/pardalys/staging/config.yml* " <<
+     "-a -e /root,/dev,/proc,/sys,/tmp,/mnt,/etc/pardalys,/usr/share/pardalys,/home/ubuntu/.fixssh,/home/ubuntu/.ssh/authorized_keys,/home/ubuntu/environment/tools/pardalys/pardalys/staging/config.yml " <<
      "--no-inherit -r #{@env.architecture} " <<
      "--fstab /etc/fstab --kernel #{@env.ec2_kernel_id} -d /tmp")
   bname = "#{@env.image_name}-#{@env.ec2_instance_type}-#{@env.ec2_instance_cpu}"<<

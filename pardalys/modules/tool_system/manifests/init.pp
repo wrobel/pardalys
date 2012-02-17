@@ -354,6 +354,7 @@ class tool::system {
       package { aspell-sv: ensure => 'installed' }
       package { newsbeuter: ensure => 'installed' }
       package { topgit: ensure => 'installed' }
+      package { html2ps: ensure => 'installed' }
     }
   }
 

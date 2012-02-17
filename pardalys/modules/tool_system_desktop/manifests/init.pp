@@ -45,6 +45,7 @@ class tool::system::desktop {
       package { gimp: ensure   => 'installed' }
       package { gimp-help-common: ensure   => 'installed' }
       package { gimp-help-de: ensure   => 'installed' }
+      package { taxbird: ensure   => 'installed' }
     }
     default:
     {

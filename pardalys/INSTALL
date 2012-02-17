@@ -73,6 +73,39 @@ on this platform.
      You can easily switch to p@rdalys developers mode. Refer to the
      instructions in the HACKING file in this directory.
 
+Installing the software on Ubuntu
+---------------------------------
+
+  sudo su
+  cat > /etc/apt/sources.list.d/pardus.list <<EOF
+deb http://files.pardus.de/packaging/xUbuntu_10.04/ ./
+EOF
+  wget http://files.pardus.de/packaging/xUbuntu_10.04/Release.key -O - | apt-key add -
+  apt-get update
+  apt-get install pardalys git-core
+  exit
+
+  git clone git@github.com:wrobel/environment.git
+  rsync -avz environment/environment/skeleton/ ./
+  cd environment/
+  git submodule init tools/pardalys
+  git submodule update tools/pardalys
+  cd tools/pardalys/
+  git checkout master
+
+  sudo su
+  cp pardalys/bin/pardalys /usr/sbin/pardalys 
+  cat > /etc/pardalys/override.sh <<EOF
+DEV_REPOSITORY=/home/ubuntu/environment/tools/pardalys
+EOF
+  cat > /etc/pardalys/site.pp <<EOF
+import 'meta_de_pardus_common'
+node default {
+  include meta::de::pardus::common
+}
+EOF
+  pardalys
+
 
 Installing the software on other systems
 ----------------------------------------
